@@ -68,10 +68,6 @@ function Router() {
       element: auth ? <Navigate to="/" /> : <Register />,
     },
     {
-      path: "/error-page",
-      element: <ErrorPage />,
-    },
-    {
       path: "*",
       element: <ErrorPage />,
     },

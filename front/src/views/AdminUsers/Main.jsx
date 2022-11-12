@@ -9,13 +9,19 @@ import {
   Modal,
   ModalBody,
 } from "@/base-components";
-import { faker as $f } from "@/utils";
-import * as $_ from "lodash";
-import { useState } from "react";
-import classnames from "classnames";
 
-function Main() {
+
+import { useState } from "react";
+
+
+import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { userListState } from "../../state/users-atom";
+import UsersTable from "./UsersTable";
+
+const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+
+  const [usersData, setUserState] = useRecoilStateLoadable(userListState);
 
   return (
     <>
@@ -25,7 +31,7 @@ function Main() {
           <button className="btn btn-primary shadow-md mr-2">
             Add New User
           </button>
-     
+
           <div className="hidden md:block mx-auto text-slate-500">
             Showing 1 to 10 of 150 entries
           </div>
@@ -44,65 +50,11 @@ function Main() {
           </div>
         </div>
         {/* BEGIN: Data List */}
+
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          <table className="table table-report -mt-2">
-            <thead>
-              <tr>
-                <th className="whitespace-nowrap">No</th>
-                <th className="whitespace-nowrap">Full Name</th>
-                <th className="text-center whitespace-nowrap">Email</th>
-        
-                <th className="text-center whitespace-nowrap">Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {$_.take($f(), 9).map((faker, fakerKey) => (
-                <tr key={fakerKey} className="intro-x">
-                  <td className="w-40">
-                   {fakerKey}
-                  </td>
-                  <td>
-                    <a href="" className="font-medium whitespace-nowrap">
-                      {faker.products[0].name}
-                    </a>
-                    <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                      {faker.products[0].category}
-                    </div>
-                  </td>
-                  <td className="text-center">{faker.stocks[0]}</td>
-                  <td className="w-40">
-                    <div
-                      className={classnames({
-                        "flex items-center justify-center": true,
-                        "text-success": faker.trueFalse[0],
-                        "text-danger": !faker.trueFalse[0],
-                      })}
-                    >
-                      <Lucide icon="CheckSquare" className="w-4 h-4 mr-2" />
-                      {faker.trueFalse[0] ? "Active" : "Inactive"}
-                    </div>
-                  </td>
-                  <td className="table-report__action w-56">
-                    <div className="flex justify-center items-center">
-                      <a className="flex items-center mr-3" href="#">
-                        <Lucide icon="CheckSquare" className="w-4 h-4 mr-1" />{" "}
-                        Edit
-                      </a>
-                      <a
-                        className="flex items-center text-danger"
-                        href="#"
-                        onClick={() => {
-                          setDeleteConfirmationModal(true);
-                        }}
-                      >
-                        <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {usersData.state === "hasValue" && (
+            <UsersTable users={usersData.contents} />
+          )}
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}
@@ -203,6 +155,6 @@ function Main() {
       {/* END: Delete Confirmation Modal */}
     </>
   );
-}
+};
 
-export default Main;
+export default AdminUsers;

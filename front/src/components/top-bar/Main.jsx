@@ -15,10 +15,12 @@ import dom from "@left4code/tw-starter/dist/js/dom";
 import * as $_ from "lodash";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-
-function Main(props) {
+import { Link, useNavigate } from "react-router-dom";
+const Logout = (props) =>{
   const [searchResultModal, setSearchResultModal] = useState(false);
   const searchInput = useRef(false);
+
+  
 
   // Show search result modal
   const showSearchResultModal = () => {
@@ -36,6 +38,13 @@ function Main(props) {
       setSearchResultModal(true);
     }
   });
+  let navigate = useNavigate();
+  const handelLogout = () => {
+    console.log("logged out");
+    localStorage.removeItem("loggedIn");
+
+    navigate("../", { replace: true });
+  };
 
   return (
     <>
@@ -274,7 +283,7 @@ function Main(props) {
                 <Lucide icon="HelpCircle" className="w-4 h-4 mr-2" /> Help
               </DropdownItem>
               <DropdownDivider />
-              <DropdownItem>
+              <DropdownItem onClick={handelLogout}>
                 <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
               </DropdownItem>
             </DropdownContent>
@@ -287,8 +296,8 @@ function Main(props) {
   );
 }
 
-Main.propTypes = {
+Logout.propTypes = {
   toggleMobileMenu: PropTypes.func,
 };
 
-export default Main;
+export default Logout;
