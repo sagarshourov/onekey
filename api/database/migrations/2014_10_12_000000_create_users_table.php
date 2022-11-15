@@ -19,8 +19,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+			$table->enum('status', array('pending', 'approved', 'rejected'));
+			$table->text('address')->nullable();
+			$table->string('postal_code', 10);
+			$table->string('user_phone', 20)->nullable();
+			$table->boolean('is_admin');
+			$table->string('birth_date', 20);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
+
         });
     }
 

@@ -1,14 +1,65 @@
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import logoUrl from "@/assets/images/logo.png";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
-import MainColorSwitcher from "@/components/main-color-switcher/Main";
 
-function Main() {
+import { Lucide } from "@/base-components";
+
+import axios from "axios";
+import { getBaseApi } from "../../configuration";
+import { useState } from "react";
+const Register = () => {
+  const [loading, setLoading] = useState(false);
+
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [err, setErr] = useState([]);
+  const [info, setInfo] = useState([]);
+
+  const LOGIN_URL = getBaseApi() + "register";
+
+  const handelRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ first, last, email, phone }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      setErr([]);
+
+      setInfo(["Regstration Success ! You will recive an short Message soon."]);
+      setFirst('');;
+      setLast('');
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+setInfo([]);
+      if (err?.response?.data.success) {
+        setErr([]);
+        console.log("success");
+      } else {
+        console.log("error");
+        err?.response?.data?.data &&
+          setErr(Object.values(err.response.data.data));
+      }
+
+      // console.log(err?.response?.data?.data);
+    }
+  };
+
   return (
     <>
       <div className="container">
         <DarkModeSwitcher />
-        <MainColorSwitcher />
+
         <div className="w-full min-h-screen p-5 md:p-20 flex items-center justify-center">
           <div className="w-96 intro-y">
             <img
@@ -20,43 +71,69 @@ function Main() {
               Register a New Account
             </div>
             <div className="box px-5 py-8 mt-10 max-w-[450px] relative before:content-[''] before:z-[-1] before:w-[95%] before:h-full before:bg-slate-200 before:border before:border-slate-200 before:-mt-5 before:absolute before:rounded-lg before:mx-auto before:inset-x-0 before:dark:bg-darkmode-600/70 before:dark:border-darkmode-500/60">
-              <input
-                type="text"
-                className="form-control py-3 px-4 block"
-                placeholder="First Name"
-              />
-              <input
-                type="text"
-                className="form-control py-3 px-4 block mt-4"
-                placeholder="Last Name"
-              />
-              <input
-                type="text"
-                className="form-control py-3 px-4 block mt-4"
-                placeholder="Email"
-              />
-              <input
-                type="password"
-                className="form-control py-3 block px-4 mt-4"
-                placeholder="Password"
-              />
-              <div className="w-full grid grid-cols-12 gap-4 h-1 mt-3">
-                <div className="col-span-3 h-full rounded bg-success"></div>
-                <div className="col-span-3 h-full rounded bg-success"></div>
-                <div className="col-span-3 h-full rounded bg-success"></div>
-                <div className="col-span-3 h-full rounded bg-slate-100 dark:bg-darkmode-800"></div>
+              {err.length > 0 &&
+                err.map((text, key) => {
+                  return (
+                    <h3 className="text-danger" key={key}>
+                      {text}
+                    </h3>
+                  );
+                })}
+
+              {info.length > 0 &&
+                info.map((text, key) => {
+                  return (
+                    <h3 className="text-info" key={key}>
+                      {text}
+                    </h3>
+                  );
+                })}
+
+              <div className="input-group pt-3">
+                <div id="input-group-fname" className="input-group-text">
+                  <Lucide icon="User" className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  onChange={(e) => setFirst(e.target.value)}
+                  className="form-control  px-4 block"
+                  placeholder="First Name"
+                />
               </div>
-              <a
-                href=""
-                className="text-slate-500 block mt-2 text-xs sm:text-sm"
-              >
-                What is a secure password?
-              </a>
-              <input
-                type="text"
-                className="form-control py-3 px-4 block mt-4"
-                placeholder="Password Confirmation"
-              />
+              <div className="input-group pt-3">
+                <div id="input-group-lname" className="input-group-text">
+                  <Lucide icon="User" className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  onChange={(e) => setLast(e.target.value)}
+                  className="form-control  px-4 block"
+                  placeholder="Last Name"
+                />
+              </div>
+              <div className="input-group pt-3">
+                <div id="input-group-email" className="input-group-text">
+                  <Lucide icon="Mail" className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-control  px-4 block"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="input-group pt-3 ">
+                <div id="input-group-email" className="input-group-text">
+                  <Lucide icon="Phone" className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="form-control px-4 block"
+                  placeholder="Phone"
+                />
+              </div>
+
               <div className="flex items-center text-slate-500 mt-4 text-xs sm:text-sm">
                 <input
                   id="remember-me"
@@ -75,10 +152,16 @@ function Main() {
                 .
               </div>
               <div className="mt-5 xl:mt-8 text-center xl:text-left">
-                <button className="btn btn-primary w-full xl:mr-3">
+                <button
+                  onClick={handelRegister}
+                  className="btn btn-primary w-full xl:mr-3"
+                >
                   Register
                 </button>
-                <Link to="/login" className="btn btn-outline-secondary w-full mt-3">
+                <Link
+                  to="/login"
+                  className="btn btn-outline-secondary w-full mt-3"
+                >
                   Sign in
                 </Link>
               </div>
@@ -88,6 +171,6 @@ function Main() {
       </div>
     </>
   );
-}
+};
 
-export default Main;
+export default Register;

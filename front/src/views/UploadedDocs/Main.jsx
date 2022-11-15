@@ -1,294 +1,154 @@
 import {
-  Dropzone,
-  PreviewComponent,
-  Preview,
-  Source,
-  Highlight,
+  Lucide,
+  Tippy,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownContent,
+  DropdownItem,
+  Modal,
+  ModalBody,
 } from "@/base-components";
-import { useEffect, useRef } from "react";
 
-function Main() {
-  const dropzoneSingleRef = useRef();
-  const dropzoneMultipleRef = useRef();
-  const dropzoneValidationRef = useRef();
+import { useState } from "react";
 
-  useEffect(() => {
-    const elDropzoneSingleRef = dropzoneSingleRef.current;
-    elDropzoneSingleRef.dropzone.on("success", () => {
-      alert("Added file.");
-    });
-    elDropzoneSingleRef.dropzone.on("error", () => {
-      alert("No more files please!");
-    });
+import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { adminUserListState } from "../../state/admin-atom";
+import Pagination from "./Pagination";
+import UsersTable from "./UsersTable";
 
-    const elDropzoneMultipleRef = dropzoneMultipleRef.current;
-    elDropzoneMultipleRef.dropzone.on("success", () => {
-      alert("Added file.");
-    });
-    elDropzoneMultipleRef.dropzone.on("error", () => {
-      alert("No more files please!");
-    });
+import { filter } from "lodash";
 
-    const elDropzoneValidationRef = dropzoneValidationRef.current;
-    elDropzoneValidationRef.dropzone.on("success", () => {
-      alert("Added file.");
-    });
-    elDropzoneValidationRef.dropzone.on("error", () => {
-      alert("No more files please!");
-    });
-  }, []);
+function applySortFilters(array, searchValue) {
+  return filter(array, (_items) => {
+    return (
+      _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+      _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+    );
+  });
+  console.log("sagar");
+}
+
+const AdminUsers = (props) => {
+  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+
+  const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
+  const [rowCount, setRowCount] = useState(10);
+
+  const [search, setSearch] = useState("");
+
+  const handelPageCount = (e) => {
+    console.log(e.target.value);
+
+    setRowCount(parseInt(e.target.value));
+  };
+
+  const handelLoad = () => {
+    let count = rowCount + 20;
+
+    setRowCount(count);
+  };
+
+  const handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  let filterData = applySortFilters(usersData.contents, search);
 
   return (
     <>
-      <div className="intro-y flex items-center mt-8">
-        <h2 className="text-lg font-medium mr-auto">Dropzone</h2>
-      </div>
+      <h2 className="intro-y text-lg font-medium mt-10">Uploaded Docs</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
-        <div className="intro-y col-span-12 lg:col-span-6">
-          {/* BEGIN: Single File Upload */}
-          <PreviewComponent className="intro-y box">
-            {({ toggle }) => (
-              <>
-                <div className="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                  <h2 className="font-medium text-base mr-auto">
-                    Single File Upload
-                  </h2>
-                  <div className="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
-                    <label
-                      className="form-check-label ml-0"
-                      htmlFor="show-example-1"
-                    >
-                      Show example code
-                    </label>
-                    <input
-                      onClick={toggle}
-                      className="form-check-input mr-0 ml-3"
-                      type="checkbox"
-                    />
-                  </div>
-                </div>
-                <div className="p-5">
-                  <Preview>
-                    <Dropzone
-                      getRef={(el) => {
-                        dropzoneSingleRef.current = el;
-                      }}
-                      options={{
-                        url: "https://httpbin.org/post",
-                        thumbnailWidth: 150,
-                        maxFilesize: 0.5,
-                        maxFiles: 1,
-                        headers: { "My-Awesome-Header": "header value" },
-                      }}
-                      className="dropzone"
-                    >
-                      <div className="text-lg font-medium">
-                        Drop files here or click to upload.
-                      </div>
-                      <div className="text-gray-600">
-                        This is just a demo dropzone. Selected files are
-                        <span className="font-medium">not</span> actually
-                        uploaded.
-                      </div>
-                    </Dropzone>
-                  </Preview>
-                  <Source>
-                    <Highlight>
-                      {`
-            <Dropzone
-              getRef={(el) => {
-                dropzoneSingleRef.current = el;
-              }}
-              options={{
-                url: "https://httpbin.org/post",
-                thumbnailWidth: 150,
-                maxFilesize: 0.5,
-                maxFiles: 1,
-                headers: { "My-Awesome-Header": "header value" },
-              }}
-              className="dropzone"
-            >
-              <div className="text-lg font-medium">
-                Drop files here or click to upload.
-              </div>
-              <div className="text-gray-600">
-                This is just a demo dropzone. Selected files are
-                <span className="font-medium">not</span> actually
-                uploaded.
-              </div>
-            </Dropzone>
-              `}
-                    </Highlight>
-                  </Source>
-                </div>
-              </>
-            )}
-          </PreviewComponent>
-          {/* END: Single File Upload */}
-          {/* BEGIN: Multiple File Upload */}
-          <PreviewComponent className="intro-y box mt-5">
-            {({ toggle }) => (
-              <>
-                <div className="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                  <h2 className="font-medium text-base mr-auto">
-                    Multiple File Upload
-                  </h2>
-                  <div className="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
-                    <label
-                      className="form-check-label ml-0"
-                      htmlFor="show-example-2"
-                    >
-                      Show example code
-                    </label>
-                    <input
-                      onClick={toggle}
-                      className="form-check-input mr-0 ml-3"
-                      type="checkbox"
-                    />
-                  </div>
-                </div>
-                <div className="p-5">
-                  <Preview>
-                    <Dropzone
-                      getRef={(el) => {
-                        dropzoneMultipleRef.current = el;
-                      }}
-                      options={{
-                        url: "https://httpbin.org/post",
-                        thumbnailWidth: 150,
-                        maxFilesize: 0.5,
-                        headers: { "My-Awesome-Header": "header value" },
-                      }}
-                      className="dropzone"
-                    >
-                      <div className="text-lg font-medium">
-                        Drop files here or click to upload.
-                      </div>
-                      <div className="text-gray-600">
-                        This is just a demo dropzone. Selected files are
-                        <span className="font-medium">not</span> actually
-                        uploaded.
-                      </div>
-                    </Dropzone>
-                  </Preview>
-                  <Source>
-                    <Highlight>
-                      {`
-            <Dropzone
-              getRef={(el) => {
-                dropzoneMultipleRef.current = el;
-              }}
-              options={{
-                url: "https://httpbin.org/post",
-                thumbnailWidth: 150,
-                maxFilesize: 0.5,
-                headers: { "My-Awesome-Header": "header value" },
-              }}
-              className="dropzone"
-            >
-              <div className="text-lg font-medium">
-                Drop files here or click to upload.
-              </div>
-              <div className="text-gray-600">
-                This is just a demo dropzone. Selected files are
-                <span className="font-medium">not</span> actually
-                uploaded.
-              </div>
-            </Dropzone>
-              `}
-                    </Highlight>
-                  </Source>
-                </div>
-              </>
-            )}
-          </PreviewComponent>
-          {/* END: Multiple File Upload */}
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+          <button className="btn btn-primary shadow-md mr-2">
+            Add New User
+          </button>
+
+          <div className="hidden md:block mx-auto text-slate-500">
+           Showng  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+          </div>
+          <select
+            onChange={handelPageCount.bind(this)}
+            className="w-20 form-select box mt-3 sm:mt-0"
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="35">35</option>
+            <option value="50">50</option>
+          </select>
+
+          <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+            <div className="w-56 relative text-slate-500">
+              <input
+                onChange={handelSearch.bind(this)}
+                type="text"
+                className="form-control w-56 box pr-10"
+                placeholder="Search..."
+              />
+              <Lucide
+                icon="Search"
+                className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+              />
+            </div>
+          </div>
         </div>
-        <div className="intro-y col-span-12 lg:col-span-6">
-          {/* BEGIN: File Type Validation */}
-          <PreviewComponent className="intro-y box">
-            {({ toggle }) => (
-              <>
-                <div className="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                  <h2 className="font-medium text-base mr-auto">
-                    File Type Validation
-                  </h2>
-                  <div className="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
-                    <label
-                      className="form-check-label ml-0"
-                      htmlFor="show-example-3"
-                    >
-                      Show example code
-                    </label>
-                    <input
-                      onClick={toggle}
-                      className="form-check-input mr-0 ml-3"
-                      type="checkbox"
-                    />
-                  </div>
-                </div>
-                <div className="p-5">
-                  <Preview>
-                    <Dropzone
-                      getRef={(el) => {
-                        dropzoneValidationRef.current = el;
-                      }}
-                      options={{
-                        url: "https://httpbin.org/post",
-                        thumbnailWidth: 150,
-                        maxFilesize: 0.5,
-                        acceptedFiles: "image/jpeg|image/png|image/jpg",
-                        headers: { "My-Awesome-Header": "header value" },
-                      }}
-                      className="dropzone"
-                    >
-                      <div className="text-lg font-medium">
-                        Drop files here or click to upload.
-                      </div>
-                      <div className="text-gray-600">
-                        This is just a demo dropzone. Selected files are
-                        <span className="font-medium">not</span> actually
-                        uploaded.
-                      </div>
-                    </Dropzone>
-                  </Preview>
-                  <Source>
-                    <Highlight>
-                      {`
-            <Dropzone
-              getRef={(el) => {
-                dropzoneValidationRef.current = el;
-              }}
-              options={{
-                url: "https://httpbin.org/post",
-                thumbnailWidth: 150,
-                maxFilesize: 0.5,
-                acceptedFiles: "image/jpeg|image/png|image/jpg",
-                headers: { "My-Awesome-Header": "header value" },
-              }}
-              className="dropzone"
-            >
-              <div className="text-lg font-medium">
-                Drop files here or click to upload.
-              </div>
-              <div className="text-gray-600">
-                This is just a demo dropzone. Selected files are
-                <span className="font-medium">not</span> actually
-                uploaded.
-              </div>
-            </Dropzone>
-              `}
-                    </Highlight>
-                  </Source>
-                </div>
-              </>
-            )}
-          </PreviewComponent>
-          {/* END: File Type Validation */}
+        {/* BEGIN: Data List */}
+
+        <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
+          {usersData.state === "hasValue" && (
+            <UsersTable
+              rowCount={rowCount}
+              users={filterData}
+            />
+          )}
         </div>
+        {/* END: Data List */}
+        {/* BEGIN: Pagination */}
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+          <button onClick={handelLoad} className="btn">
+            Load more..
+          </button>
+        </div>
+        {/* END: Pagination */}
       </div>
+      {/* BEGIN: Delete Confirmation Modal */}
+      <Modal
+        show={deleteConfirmationModal}
+        onHidden={() => {
+          setDeleteConfirmationModal(false);
+        }}
+      >
+        <ModalBody className="p-0">
+          <div className="p-5 text-center">
+            <Lucide
+              icon="XCircle"
+              className="w-16 h-16 text-danger mx-auto mt-3"
+            />
+            <div className="text-3xl mt-5">Are you sure?</div>
+            <div className="text-slate-500 mt-2">
+              Do you really want to delete these records? <br />
+              This process cannot be undone.
+            </div>
+          </div>
+          <div className="px-5 pb-8 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setDeleteConfirmationModal(false);
+              }}
+              className="btn btn-outline-secondary w-24 mr-1"
+            >
+              Cancel
+            </button>
+            <button type="button" className="btn btn-danger w-24">
+              Delete
+            </button>
+          </div>
+        </ModalBody>
+      </Modal>
+      {/* END: Delete Confirmation Modal */}
     </>
   );
-}
+};
 
-export default Main;
+export default AdminUsers;

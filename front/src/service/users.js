@@ -1,8 +1,8 @@
 import axios from "axios";
-import { getUserApiUrl } from "../configuration";
+import { getBaseApi } from "../configuration";
 
 export async function getUsers() {
-  const userApiUrl = getUserApiUrl();
+  const userApiUrl = getBaseApi();
   // console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl);
@@ -11,3 +11,5 @@ export async function getUsers() {
     throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
   }
 }
+
+

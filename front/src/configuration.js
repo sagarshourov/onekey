@@ -3,8 +3,6 @@
  * when the service is called, changes in the results
  * will cause our Recoil app state to be synchronized.
  */
-export const getUserApiUrl = () =>
-  `https://reqres.in/api/users?page=${Math.max(
-    1,
-    Math.round(Math.random()) * 2
-  )}`;
+export const getBaseApi = () => `http://localhost:8000/api/`;
+
+export const getAdmin = () => `http://localhost:8000/api/admin/`;

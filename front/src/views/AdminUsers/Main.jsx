@@ -10,18 +10,50 @@ import {
   ModalBody,
 } from "@/base-components";
 
-
 import { useState } from "react";
 
-
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
-import { userListState } from "../../state/users-atom";
+import { adminUserListState } from "../../state/admin-atom";
+import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
+
+import { filter } from "lodash";
+
+function applySortFilters(array, searchValue) {
+  return filter(array, (_items) => {
+    return (
+      _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+      _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+    );
+  });
+  console.log("sagar");
+}
 
 const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
-  const [usersData, setUserState] = useRecoilStateLoadable(userListState);
+  const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
+  const [rowCount, setRowCount] = useState(10);
+
+  const [search, setSearch] = useState("");
+
+  const handelPageCount = (e) => {
+    console.log(e.target.value);
+
+    setRowCount(parseInt(e.target.value));
+  };
+
+  const handelLoad = () => {
+    let count = rowCount + 20;
+
+    setRowCount(count);
+  };
+
+  const handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  let filterData = applySortFilters(usersData.contents, search);
 
   return (
     <>
@@ -33,11 +65,22 @@ const AdminUsers = (props) => {
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-            Showing 1 to 10 of 150 entries
+           Showng  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
+          <select
+            onChange={handelPageCount.bind(this)}
+            className="w-20 form-select box mt-3 sm:mt-0"
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="35">35</option>
+            <option value="50">50</option>
+          </select>
+
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
               <input
+                onChange={handelSearch.bind(this)}
                 type="text"
                 className="form-control w-56 box pr-10"
                 placeholder="Search..."
@@ -53,67 +96,18 @@ const AdminUsers = (props) => {
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
           {usersData.state === "hasValue" && (
-            <UsersTable users={usersData.contents} />
+            <UsersTable
+              rowCount={rowCount}
+              users={filterData}
+            />
           )}
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-          <nav className="w-full sm:w-auto sm:mr-auto">
-            <ul className="pagination">
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  <Lucide icon="ChevronsLeft" className="w-4 h-4" />
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  <Lucide icon="ChevronLeft" className="w-4 h-4" />
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  ...
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  1
-                </a>
-              </li>
-              <li className="page-item active">
-                <a className="page-link" href="#">
-                  2
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  3
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  ...
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  <Lucide icon="ChevronRight" className="w-4 h-4" />
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="#">
-                  <Lucide icon="ChevronsRight" className="w-4 h-4" />
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <select className="w-20 form-select box mt-3 sm:mt-0">
-            <option>10</option>
-            <option>25</option>
-            <option>35</option>
-            <option>50</option>
-          </select>
+          <button onClick={handelLoad} className="btn">
+            Load more..
+          </button>
         </div>
         {/* END: Pagination */}
       </div>
