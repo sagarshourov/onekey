@@ -17,7 +17,7 @@ export async function getAdminUsers() {
 }
 
 export async function getAllUsers() {
-  const userApiUrl = getBaseApi() + "users";
+  const userApiUrl = getAdmin() + "users";
   console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl,{headers});
@@ -37,3 +37,37 @@ export async function getAllTasks(user_id) {
     throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
   }
 }
+export async function getAllUniversities() {
+  const userApiUrl = getBaseApi() + "universities";
+
+  console.log('userApi',userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl,{headers});
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+export async function getAllVisaTypes() {
+  const userApiUrl = getBaseApi() + "visa_types";
+  try {
+    const response = await axios.get(userApiUrl,{headers});
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+export async function getAllStudent() {
+  const userApiUrl = getAdmin() + "all_students";
+  try {
+    const response = await axios.get(userApiUrl,{headers});
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+
+

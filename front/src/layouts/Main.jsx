@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useCallbackState, helper as $h } from "@/utils";
 import { sideMenu as useSideMenuStore } from "@/stores/side-menu";
+import { UsersideMenu as useUserSideMenuStore } from "@/stores/side-menu";
 import { useRecoilValue } from "recoil";
 import { linkTo, nestedMenu, enter, leave } from "./index";
 import { Lucide } from "@/base-components";
@@ -19,7 +20,19 @@ function Main() {
   const location = useLocation();
   const [formattedMenu, setFormattedMenu] = useState([]);
   const sideMenuStore = useRecoilValue(useSideMenuStore);
-  const sideMenu = () => nestedMenu($h.toRaw(sideMenuStore.menu), location);
+
+  const userSideMenuStore = useRecoilValue(useUserSideMenuStore);
+
+  const sideMenu = () => {
+    if (localStorage.isAdmin) {
+      return nestedMenu($h.toRaw(sideMenuStore.menu), location);
+    } else {
+      return nestedMenu($h.toRaw(userSideMenuStore.menu), location);
+    }
+
+    //  nestedMenu($h.toRaw(sideMenuStore.menu), location)
+  };
+
   const [simpleMenu, setSimpleMenu] = useCallbackState({
     active: false,
     hover: false,

@@ -16,11 +16,9 @@ import * as $_ from "lodash";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
-const Logout = (props) =>{
+const Logout = (props) => {
   const [searchResultModal, setSearchResultModal] = useState(false);
   const searchInput = useRef(false);
-
-  
 
   // Show search result modal
   const showSearchResultModal = () => {
@@ -41,9 +39,9 @@ const Logout = (props) =>{
   let navigate = useNavigate();
   const handelLogout = () => {
     console.log("logged out");
-    localStorage.removeItem("loggedIn");
+    localStorage.clear();
 
-    navigate("../", { replace: true });
+    window.location.reload();
   };
 
   return (
@@ -56,9 +54,7 @@ const Logout = (props) =>{
             <li className="breadcrumb-item">
               <a href="#">App</a>
             </li>
-            <li className="breadcrumb-item">
-              <a href="#">Administrator</a>
-            </li>
+          
             <li className="breadcrumb-item active" aria-current="page">
               Dashboard
             </li>
@@ -79,9 +75,7 @@ const Logout = (props) =>{
         </div>
         {/* END: Mobile Menu */}
         {/* BEGIN: Search */}
-        <div className="intro-x relative ml-auto sm:mx-auto">
-          
-        </div>
+        <div className="intro-x relative ml-auto sm:mx-auto"></div>
         {/* END: Search */}
         {/* BEGIN: Search Result */}
         <Modal
@@ -245,7 +239,7 @@ const Logout = (props) =>{
         </div>
         {/* END: Notifications */}
         {/* BEGIN: Notifications */}
-        
+
         {/* END: Notifications */}
         {/* BEGIN: Account Menu */}
         <Dropdown className="intro-x text-slate-200 h-10">
@@ -294,7 +288,7 @@ const Logout = (props) =>{
       {/* END: Top Bar */}
     </>
   );
-}
+};
 
 Logout.propTypes = {
   toggleMobileMenu: PropTypes.func,

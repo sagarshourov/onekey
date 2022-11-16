@@ -12,6 +12,8 @@ const Calendar = Loadable(lazy(() => import('../views/calendar/Main')));
 
 const DashboardOverview = Loadable(lazy(() => import('../views/dashboard/Main')));
 
+const UserDashboardOverview = Loadable(lazy(() => import('../views/dashboard/UserMain')));
+
 const AdminUsers = Loadable(lazy(() => import('../views/AdminUsers/Main')));
 const AllUsers = Loadable(lazy(() => import('../views/Users/Main')));
 const Users = Loadable(lazy(() => import('../views/Users/Main')));
@@ -31,9 +33,9 @@ const MyDocuments = Loadable(lazy(() => import('../views/MyDocuments/Main')));
 const UserAppStatus = Loadable(lazy(() => import('../views/UserAppStatus/Main')));
 
 const UploadedDocs = Loadable(lazy(() => import('../views/UploadedDocs/Main')));
+const AddFiles = Loadable(lazy(() => import('../views/UploadedDocs/AddFiles')));
 
-
-
+const StudentInfo = Loadable(lazy(() => import('../views/StudentInfo/Main')));
 
 
 
@@ -69,6 +71,10 @@ function Router() {
           element: <UserAppStatus />,
         },
         {
+          path: "/student_info",
+          element: <StudentInfo />,
+        },
+        {
           path: "/files",
           element: <UploadedDocs />,
         },
@@ -82,7 +88,7 @@ function Router() {
 
         {
           path: "/forms/:type",
-          element: <Users />,
+          element: <FormGroups />,
         },
 
         {
@@ -127,12 +133,9 @@ function Router() {
       children: [
         {
           path: "/",
-          element: <DashboardOverview />,
+          element: <UserDashboardOverview />,
         },
-        {
-          path: "/admin_users",
-          element: <AdminUsers />,
-        },
+      
 
         {
           path: "/user_list",
@@ -151,6 +154,15 @@ function Router() {
           path: "/files",
           element: <UploadedDocs />,
         },
+        {
+          path: "/add_files",
+          element: <AddFiles />,
+        },
+
+        
+
+
+
         {
           path: "/tasks",
           element: <ToDoList />,

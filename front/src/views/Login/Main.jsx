@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getBaseApi } from "../../configuration";
 
-
 import { useState } from "react";
+
+import { LoadingIcon } from "@/base-components";
 
 const Login = (props) => {
   let navigate = useNavigate();
@@ -16,10 +17,18 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
 
   const LOGIN_URL = getBaseApi() + "login";
+  const [err, setErr] = useState([]);
 
+  
   const handelLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+
+    if(email =='' || password == ''){
+      setErr(['User E-mail and password is required!']);
+    }
+
     try {
       const response = await axios.post(
         LOGIN_URL,
@@ -32,11 +41,10 @@ const Login = (props) => {
       const accessToken = response?.data?.data?.token;
       const roles = response?.data?.data?.user?.is_admin;
 
-      if (roles === 1) {
+      console.log(roles);
+      if (roles == 1) {
         localStorage.setItem("isAdmin", true);
       }
-
-
 
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("token", accessToken);
@@ -45,6 +53,8 @@ const Login = (props) => {
     } catch (err) {
       setLoading(false);
       console.log(err?.response?.data);
+      err?.response?.data?.data &&
+      setErr(Object.values(err.response.data.data));
     }
   };
   return (
@@ -61,9 +71,18 @@ const Login = (props) => {
             />
             <div className="text-white dark:text-slate-300 text-2xl font-medium text-center mt-14">
               Login to Your Account!
-              {loading && <h1>Loading..</h1>}
             </div>
             <div className="box px-5 py-8 mt-10 max-w-[450px] relative before:content-[''] before:z-[-1] before:w-[95%] before:h-full before:bg-slate-200 before:border before:border-slate-200 before:-mt-5 before:absolute before:rounded-lg before:mx-auto before:inset-x-0 before:dark:bg-darkmode-600/70 before:dark:border-darkmode-500/60">
+             
+            {err.length > 0 &&
+                err.map((text, key) => {
+                  return (
+                    <h3 className="text-danger py-3 text-center" key={key}>
+                      {text}
+                    </h3>
+                  );
+                })}
+             
               <input
                 type="text"
                 className="form-control py-3 px-4 block"
@@ -98,6 +117,13 @@ const Login = (props) => {
                   className="btn btn-primary w-full xl:mr-3"
                 >
                   Login
+                  {loading && (
+                    <LoadingIcon
+                      icon="three-dots"
+                      color="white"
+                      className="w-4 h-4 ml-2"
+                    />
+                  )}
                 </button>
                 <Link
                   to="/register"

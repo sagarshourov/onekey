@@ -36,12 +36,12 @@ const Register = () => {
       setErr([]);
 
       setInfo(["Regstration Success ! You will recive an short Message soon."]);
-      setFirst('');;
-      setLast('');
+      setFirst("");
+      setLast("");
       setLoading(false);
     } catch (err) {
       setLoading(false);
-setInfo([]);
+      setInfo([]);
       if (err?.response?.data.success) {
         setErr([]);
         console.log("success");
