@@ -32,6 +32,12 @@ Route::get('visa_types', 'App\Http\Controllers\Admin\UserController@visa_types')
 Route::post('student_info', 'App\Http\Controllers\Admin\UserController@student_info');
 
 
+Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
+
+Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');
+
+
+
 
 Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin."], function () {
     // Route::get('users', [UserController::class, 'index']);
@@ -44,6 +50,19 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('update_user_status', 'App\Http\Controllers\Admin\UserController@update_user_status');
     
 
+    Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
+
+    Route::get('forms/{id}', 'App\Http\Controllers\Admin\FormController@getforms');
+    Route::post('save_form', 'App\Http\Controllers\Admin\FormController@save_form');
+    Route::post('update_form', 'App\Http\Controllers\Admin\FormController@update_form');
+    
+
+
+    Route::post('update_form_status', 'App\Http\Controllers\Admin\FormController@update_form_status');
+
+    
+
+    
     
 
 

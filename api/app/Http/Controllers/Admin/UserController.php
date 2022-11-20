@@ -17,6 +17,20 @@ class UserController extends BaseController
 {
     //
 
+    public function save_form(Request $request)
+    {
+
+        return $this->sendResponse($request->all(), 'Users retrieved successfully.');
+    }
+
+    public function get_form(Request $request)
+    {
+
+        return $this->sendResponse($request->all(), 'Users retrieved successfully.');
+    }
+
+    
+
     public function index()
     {
         $users =    User::where('is_admin', 1)->orderByDesc('id')->get();
@@ -94,17 +108,18 @@ class UserController extends BaseController
     }
 
 
-    public function update_user_status(Request $request){
+    public function update_user_status(Request $request)
+    {
 
         $input = $request->all();
 
-        if($input['type']=='remove'){
+        if ($input['type'] == 'remove') {
             $user = User::find($input['user_id']);
 
 
 
-        $user->delete();
-        return $this->sendResponse(['Success'], 'Removed successfully.');
+            $user->delete();
+            return $this->sendResponse(['Success'], 'Removed successfully.');
         }
 
 
@@ -113,12 +128,5 @@ class UserController extends BaseController
         $user->save();
 
         return $this->sendResponse(['Success'], 'Saved successfully.');
-
     }
-
-    
-
-
-
-    
 }

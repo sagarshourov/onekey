@@ -17,7 +17,7 @@ const UserDashboardOverview = Loadable(lazy(() => import('../views/dashboard/Use
 const AdminUsers = Loadable(lazy(() => import('../views/AdminUsers/Main')));
 const AllUsers = Loadable(lazy(() => import('../views/Users/Main')));
 const Users = Loadable(lazy(() => import('../views/Users/Main')));
-const FormGroups = Loadable(lazy(() => import('../views/formGroups/Main')));
+
 
 
 const ToDoList = Loadable(lazy(() => import('../views/ToDoList/Main')));
@@ -36,8 +36,11 @@ const UploadedDocs = Loadable(lazy(() => import('../views/UploadedDocs/Main')));
 const AddFiles = Loadable(lazy(() => import('../views/UploadedDocs/AddFiles')));
 
 const StudentInfo = Loadable(lazy(() => import('../views/StudentInfo/Main')));
+const AllForms = Loadable(lazy(() => import('../views/Forms/Main')));
+const AddForm = Loadable(lazy(() => import('../views/Forms/Addfrom')));
+const EditForm = Loadable(lazy(() => import('../views/Forms/EditForm')));
 
-
+const UserFrom = Loadable(lazy(() => import('../views/UserFroms/Main')));
 
 //import Calendar from "../views/calendar/Main";
 
@@ -61,10 +64,7 @@ function Router() {
           path: "/user_list",
           element: <AllUsers />,
         },
-        {
-          path: "/form_groups",
-          element: <FormGroups />,
-        },
+      
 
         {
           path: "/app_status",
@@ -84,11 +84,17 @@ function Router() {
         },
 
         
-
-
         {
-          path: "/forms/:type",
-          element: <FormGroups />,
+          path: "/forms/add",
+          element: <AddForm />,
+        },
+        {
+          path: "/forms/edit/:id",
+          element: <EditForm />,
+        },
+        {
+          path: "/forms/all",
+          element: <AllForms />,
         },
 
         {
@@ -141,10 +147,7 @@ function Router() {
           path: "/user_list",
           element: <AllUsers />,
         },
-        {
-          path: "/form_groups",
-          element: <FormGroups />,
-        },
+       
 
         {
           path: "/app_status",
@@ -158,22 +161,15 @@ function Router() {
           path: "/add_files",
           element: <AddFiles />,
         },
-
-        
-
-
-
         {
           path: "/tasks",
           element: <ToDoList />,
         },
 
-        
-
 
         {
-          path: "/forms/:type",
-          element: <Users />,
+          path: "/forms/:id",
+          element: <UserFrom />,
         },
 
         {

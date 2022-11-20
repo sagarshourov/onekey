@@ -1,16 +1,35 @@
-import { atom, selector } from "recoil";
+import { atom, selector,atomFamily } from "recoil";
 import {
   getAdminUsers,
   getAllUsers,
   getAllTasks,
   getAllUniversities,
   getAllVisaTypes,
-  getAllStudent
+  getAllStudent,
+  getAllForms,
+  getEditForm
 } from "../service/admin";
 
 /**
  * Populate the default selector return value with a service call.
  */
+
+
+ export const getEditfrom = selector({
+  key: "getEditfrom",
+  get: async ({ get }) => {
+    try {
+      const response = await getEditForm(3);
+      return response.data || [];
+    } catch (error) {
+      console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+
 export const adminUserState = selector({
   key: "adminUserState",
   get: async ({ get }) => {
@@ -90,10 +109,49 @@ export const allStudentSelect = selector({
   },
 });
 
+export const allFormListSelect = selector({
+  key: "allFormListSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getAllForms();
+      return response.data || [];
+    } catch (error) {
+      console.error(`TasksListState -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+
+
+export const editFormState = atomFamily({
+  key: 'editFormState',
+  default: getEditfrom,
+});
+
+
+
+
+
+export const allFormListState = atom({
+  key: "allFormListState",
+  default: allFormListSelect,
+});
+
+
+
+
+
+
 export const allstudentListState = atom({
   key: "allstudentListState",
   default: allStudentSelect,
 });
+
+
+
+
 
 
 

@@ -14,11 +14,11 @@ const UsersTable = (props) => {
 
   const [loading, setLoading] = useState(false);
 
-  const handelStatus = async (e, type, user_id) => {
+  const handelStatus = async (e, type, form_id) => {
     e.preventDefault();
     setLoading(true);
-    console.log(user_id + " " + type);
-    const LOGIN_URL = getAdmin() + "update_user_status";
+  
+    const LOGIN_URL = getAdmin() + "update_form_status";
 
     const token = localStorage.getItem("token");
 
@@ -30,13 +30,13 @@ const UsersTable = (props) => {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        { type, user_id },
+        { type, form_id },
         {
           headers,
         }
       );
 
-     window.location.reload();
+      window.location.reload();
     } catch (err) {
       setLoading(false);
     }
@@ -47,10 +47,10 @@ const UsersTable = (props) => {
       <thead>
         <tr>
           <th className="whitespace-nowrap">No</th>
-          <th className="whitespace-nowrap">Full Name</th>
-          <th className="text-center whitespace-nowrap">Email</th>
-          <th className="text-center whitespace-nowrap">Approval Status</th>
-          <th className="text-center whitespace-nowrap">Created At</th>
+          <th className="whitespace-nowrap">Title</th>
+
+          <th className="text-center whitespace-nowrap">Allow Edit</th>
+          <th className="text-center whitespace-nowrap">Visibility</th>
         </tr>
       </thead>
       <tbody>
@@ -61,57 +61,56 @@ const UsersTable = (props) => {
               <td className="w-40">{count}</td>
               <td>
                 <a href="" className="font-medium whitespace-nowrap">
-                  {user.first_name}
+                  {user.title}
                 </a>
-                <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                  {user.last_name}
+              </td>
+
+              <td className="text-center">
+                {user.allows_edit === 1 ? (
+                  <span className="text-xs whitespace-nowrap text-white bg-success border border-success/20 rounded-full px-2 py-1">
+                    Allowed
+                  </span>
+                ) : (
+                  <span className="text-xs whitespace-nowrap text-white bg-warning border border-warning/20 rounded-full px-2 py-1">
+                    Disallowed
+                  </span>
+                )}
+              </td>
+
+              <td className="text-center">
+                <div className="flex justify-center items-center">
+                  {user.visibility === 1 ? (
+                    <a
+                      className="flex items-center text-success px-2"
+                      href="#"
+                      onClick={(e) => {
+                        handelStatus(e, "public", user.id);
+                      }}
+                    >
+                      <Lucide icon="Unlock" className="w-4 h-4 mr-1" /> Public
+                    </a>
+                  ) : (
+                    <a
+                      className="flex items-center text-danger px-2"
+                      href="#"
+                      onClick={(e) => {
+                        handelStatus(e, "private", user.id);
+                      }}
+                    >
+                      <Lucide icon="Lock" className="w-4 h-4 mr-1" /> Private
+                    </a>
+                  )}
                 </div>
               </td>
-              <td className="text-center">{user.email}</td>
-              <td className="text-center">
-                {user.status === "approved" && (
-                  <span className="text-xs whitespace-nowrap text-white bg-success border border-success/20 rounded-full px-2 py-1">
-                    Approved
-                  </span>
-                )}
-                {user.status === "pending" && (
-                  <span className="text-xs whitespace-nowrap text-white bg-warning border border-warning/20 rounded-full px-2 py-1">
-                    Pending
-                  </span>
-                )}
-                 {user.status === "rejected" && (
-                  <span className="text-xs whitespace-nowrap text-white bg-danger border border-danger/20 rounded-full px-2 py-1">
-                    Rejected
-                  </span>
-                )}
-              </td>
-              <td className="text-center">{formatDate(user.created_at)}</td>
+
               <td className="table-report__action w-64">
                 <div className="flex justify-center items-center">
-                  {user.status == "pending" && (
-                    <>
-                      <a
-                        className="flex items-center text-success px-2"
-                        href="#"
-                        onClick={(e) => {
-                          handelStatus(e, "approved", user.id);
-                        }}
-                      >
-                        <Lucide icon="Trash2" className="w-4 h-4 mr-1" />{" "}
-                        Approve
-                      </a>
-                      <a
-                        className="flex items-center text-warning px-2"
-                        href="#"
-                        onClick={(e) => {
-                          handelStatus(e, "rejected", user.id);
-                        }}
-                      >
-                        <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Reject
-                      </a>
-                    </>
-                  )}
-
+                  <a
+                    className="flex items-center text-primary  px-2"
+                    href={"/forms/edit/" + user.id}
+                  >
+                    <Lucide icon="Edit" className="w-4 h-4 mr-1" /> Edit
+                  </a>
                   <a
                     className="flex items-center text-danger px-2"
                     href="#"

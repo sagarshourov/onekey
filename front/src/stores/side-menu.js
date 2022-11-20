@@ -29,11 +29,6 @@ let sideMenu = atom({
       },
 
       {
-        icon: "LayoutGrid",
-        pathname: "/form_groups",
-        title: "Form Groups",
-      },
-      {
         icon: "LayoutList",
         title: "Forms",
         subMenu: [
@@ -98,6 +93,34 @@ let UsersideMenu = atom({
         title: "Dashboard",
         pathname: "/",
       },
+      {
+        icon: "Home",
+        title: "Client Form",
+        pathname: "/forms/1",
+      },
+      {
+        icon: "Home",
+        title: "DS-160 For F-1 Student",
+        pathname: "/forms/2",
+      },
+
+      {
+        icon: "Upload",
+        title: "Forms for Dependents",
+        subMenu: [
+          {
+            icon: "",
+            pathname: "/forms/3",
+            title: "DS-160 For Spouse",
+          },
+          {
+            icon: "",
+            pathname: "/add_files",
+            title: "/forms/4",
+          },
+        ],
+      },
+      
 
       {
         icon: "Upload",

@@ -19,6 +19,8 @@ const Register = () => {
   const [err, setErr] = useState([]);
   const [info, setInfo] = useState([]);
 
+  
+
   const LOGIN_URL = getBaseApi() + "register";
 
   const handelRegister = async (e) => {
@@ -157,6 +159,15 @@ const Register = () => {
                   className="btn btn-primary w-full xl:mr-3"
                 >
                   Register
+
+                  
+                  {loading && (
+                    <LoadingIcon
+                      icon="three-dots"
+                      color="white"
+                      className="w-4 h-4 ml-2"
+                    />
+                  )}
                 </button>
                 <Link
                   to="/login"
