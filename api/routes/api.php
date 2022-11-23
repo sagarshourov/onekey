@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'App\Http\Controllers\AuthController@login');
 
 Route::post('register', 'App\Http\Controllers\AuthController@register');
+Route::get('countries', 'App\Http\Controllers\UserController@countries');
 
 Route::get('tasks/{user_id?}', 'App\Http\Controllers\TasksController@task_list');
 Route::get('events/{user_id?}', 'App\Http\Controllers\EventsController@all_events');
@@ -52,7 +53,7 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
 
-    Route::get('forms/{id}', 'App\Http\Controllers\Admin\FormController@getforms');
+    Route::get('forms/{type}/{id}', 'App\Http\Controllers\Admin\FormController@getforms');
     Route::post('save_form', 'App\Http\Controllers\Admin\FormController@save_form');
     Route::post('update_form', 'App\Http\Controllers\Admin\FormController@update_form');
     

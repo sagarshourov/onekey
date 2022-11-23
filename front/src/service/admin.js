@@ -5,8 +5,28 @@ const token = localStorage.getItem("token");
 
 const headers = { Authorization: `Bearer ${token}` };
 
+
+
+
+
+
+export async function getForm(id) {
+  const userApiUrl = getAdmin() + "forms/read/" + id;
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+
+
+
+
 export async function getEditForm(id) {
-  const userApiUrl = getAdmin() + "forms/" + id;
+  const userApiUrl = getAdmin() + "forms/edit/" + id;
   // console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });

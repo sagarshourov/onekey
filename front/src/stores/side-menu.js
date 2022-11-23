@@ -1,5 +1,8 @@
 import { atom } from "recoil";
 
+
+
+
 let sideMenu = atom({
   key: "sideMenu",
   default: {
@@ -94,18 +97,18 @@ let UsersideMenu = atom({
         pathname: "/",
       },
       {
-        icon: "Home",
+        icon: "FileText",
         title: "Client Form",
         pathname: "/forms/1",
       },
       {
-        icon: "Home",
+        icon: "Clipboard",
         title: "DS-160 For F-1 Student",
         pathname: "/forms/2",
       },
 
       {
-        icon: "Upload",
+        icon: "Book",
         title: "Forms for Dependents",
         subMenu: [
           {
@@ -115,12 +118,20 @@ let UsersideMenu = atom({
           },
           {
             icon: "",
-            pathname: "/add_files",
-            title: "/forms/4",
+            pathname: "/forms/4",
+            title: "DS-160 For Child one",
+          },  {
+            icon: "",
+            pathname: "/forms/5",
+            title: "DS-160 For Child Two",
           },
         ],
       },
-      
+      {
+        icon: "Layout",
+        title: "Resume Builder",
+        pathname: "/forms/6",
+      },
 
       {
         icon: "Upload",

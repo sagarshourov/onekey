@@ -11,7 +11,7 @@ import "./styles.css";
 import { getAdmin } from "../../configuration";
 
 import { editFormState } from "../../state/admin-atom";
-
+import "formiojs/dist/formio.full.min.css";
 function Main() {
   let { id } = useParams();
 
@@ -27,8 +27,12 @@ function Main() {
 
   useEffect(() => {
     if (post.state === "hasValue" && loading) {
-      setFormVal(JSON.parse(post.contents.content));
-      setTitle(post.contents.title)
+
+
+
+
+      post.contents && setFormVal(JSON.parse(post.contents.data.content));
+      setTitle(post.contents.data.title)
       //setLoading(false);
 
       console.log("loading", loading);
@@ -89,7 +93,7 @@ function Main() {
                   onChange={(e) => handeltitle(e)}
                   className="form-control form-control-rounded py-3"
                   placeholder="Form Title"
-                  defaultValue={post.contents.title}
+                  defaultValue={title}
                 />
               )}
             </div>

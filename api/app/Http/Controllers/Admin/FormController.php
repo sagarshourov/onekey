@@ -19,11 +19,23 @@ class FormController extends BaseController
         return $this->sendResponse($forms, 'Forms retrieved successfully.');
     }
 
-    public function getforms($id)
+    public function getforms($type, $id)
     {
         $forms =  Forms::find($id);
 
-        return $this->sendResponse($forms, 'Forms retrieved successfully.');
+        $return['title'] = $forms->title;
+        $return['con'] = json_decode($forms->content);
+
+        if ($type == 'read') {
+            return $this->sendResponse($return, 'Forms retrieved successfully.');
+        } else {
+            return $this->sendResponse($forms, 'Forms retrieved successfully.');
+        }
+
+
+
+
+        //return $this->sendResponse($forms, 'Forms retrieved successfully.');
     }
 
 

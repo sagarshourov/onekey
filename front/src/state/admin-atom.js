@@ -1,4 +1,4 @@
-import { atom, selector,atomFamily } from "recoil";
+import { atom, selector, atomFamily, selectorFamily } from "recoil";
 import {
   getAdminUsers,
   getAllUsers,
@@ -7,28 +7,56 @@ import {
   getAllVisaTypes,
   getAllStudent,
   getAllForms,
-  getEditForm
+  getEditForm,
+  getForm,
 } from "../service/admin";
 
 /**
  * Populate the default selector return value with a service call.
  */
 
-
- export const getEditfrom = selector({
+export const getEditfrom = selectorFamily({
   key: "getEditfrom",
-  get: async ({ get }) => {
-    try {
-      const response = await getEditForm(3);
-      return response.data || [];
-    } catch (error) {
-      console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
-      return [];
-    }
-  },
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getEditForm(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
+});
+
+export const getFormSelect = selectorFamily({
+  key: "getFormSelect",
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getForm(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
 });
 
 
+
+
+export const formIdAtom = atomFamily({
+  key: "formIdAtom",
+  default: (id) => id,
+});
+
+export const editFormState = atomFamily({
+  key: "editFormState",
+  default: async (id) => await getEditForm(id),
+});
 
 export const adminUserState = selector({
   key: "adminUserState",
@@ -95,7 +123,6 @@ export const allVisaTypeSelect = selector({
   },
 });
 
-
 export const allStudentSelect = selector({
   key: "allStudentTypeSelect",
   get: async ({ get }) => {
@@ -122,47 +149,20 @@ export const allFormListSelect = selector({
   },
 });
 
-
-
-
-export const editFormState = atomFamily({
-  key: 'editFormState',
-  default: getEditfrom,
-});
-
-
-
-
+// export const editFormState = atomFamily({
+//   key: "editFormState",
+//   default: getEditfrom,
+// });
 
 export const allFormListState = atom({
   key: "allFormListState",
   default: allFormListSelect,
 });
 
-
-
-
-
-
 export const allstudentListState = atom({
   key: "allstudentListState",
   default: allStudentSelect,
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const adminUserListState = atom({
   key: "adminUserListState",
@@ -186,8 +186,3 @@ export const visaTypeState = atom({
   key: "visaTypeState",
   default: allVisaTypeSelect,
 });
-
-
-
-
-
