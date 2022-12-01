@@ -1,46 +1,60 @@
-import {lazy} from 'react'
+import { lazy } from "react";
 
-import { useRoutes ,Navigate} from "react-router-dom";
+import { useRoutes, Navigate } from "react-router-dom";
 import MainLayout from "../layouts/Main";
 
+import Loadable from "../components/Loadable";
 
-import Loadable from '../components/Loadable';
+const StatusView = Loadable(
+  lazy(() => import("../views/UserAppStatus/StatusView"))
+);
+
+const AdminCalender = Loadable(lazy(() => import("../views/calendar/AdminCalender")));
+
+const UserCalender = Loadable(lazy(() => import("../views/calendar/UserCalender")));
+
+const DashboardOverview = Loadable(
+  lazy(() => import("../views/dashboard/Main"))
+);
+
+const UserDashboardOverview = Loadable(
+  lazy(() => import("../views/dashboard/UserMain"))
+);
+
+const AdminUsers = Loadable(lazy(() => import("../views/AdminUsers/Main")));
+const AllUsers = Loadable(lazy(() => import("../views/Users/Main")));
+const Users = Loadable(lazy(() => import("../views/Users/Main")));
+
+const ToDoList = Loadable(lazy(() => import("../views/ToDoList/Main")));
+
+const Login = Loadable(lazy(() => import("../views/Login/Main")));
+const Register = Loadable(lazy(() => import("../views/Register/Main")));
+const ErrorPage = Loadable(lazy(() => import("../views/ErrorPage/Main")));
+
+const Notification = Loadable(lazy(() => import("../views/Notification/Main")));
+
+const MyDocuments = Loadable(lazy(() => import("../views/MyDocuments/Main")));
+
+const UserAppStatus = Loadable(
+  lazy(() => import("../views/UserAppStatus/Main"))
+);
+
+const UploadedDocs = Loadable(lazy(() => import("../views/UploadedDocs/Main")));
+const AddFiles = Loadable(lazy(() => import("../views/UploadedDocs/AddFiles")));
+
+const StudentInfo = Loadable(lazy(() => import("../views/StudentInfo/Main")));
+const AllForms = Loadable(lazy(() => import("../views/Forms/Main")));
+const AddForm = Loadable(lazy(() => import("../views/Forms/Addfrom")));
+const EditForm = Loadable(lazy(() => import("../views/Forms/EditForm")));
+const ViewForm = Loadable(lazy(() => import("../views/Forms/View")));
+
+const UserFrom = Loadable(lazy(() => import("../views/UserFroms/Main")));
+
+const ViewDataForm = Loadable(lazy(() => import("../views/Forms/ViewData")));
 
 
+const AdminStatusView = Loadable(lazy(() => import("../views/UserAppStatus/AdminStatusView")));
 
-const Calendar = Loadable(lazy(() => import('../views/calendar/Main')));
-
-const DashboardOverview = Loadable(lazy(() => import('../views/dashboard/Main')));
-
-const UserDashboardOverview = Loadable(lazy(() => import('../views/dashboard/UserMain')));
-
-const AdminUsers = Loadable(lazy(() => import('../views/AdminUsers/Main')));
-const AllUsers = Loadable(lazy(() => import('../views/Users/Main')));
-const Users = Loadable(lazy(() => import('../views/Users/Main')));
-
-
-
-const ToDoList = Loadable(lazy(() => import('../views/ToDoList/Main')));
-
-const Login = Loadable(lazy(() => import('../views/Login/Main')));
-const Register = Loadable(lazy(() => import('../views/Register/Main')));
-const ErrorPage = Loadable(lazy(() => import('../views/ErrorPage/Main')));
-
-const Notification = Loadable(lazy(() => import('../views/Notification/Main')));
-
-const MyDocuments = Loadable(lazy(() => import('../views/MyDocuments/Main')));
-
-const UserAppStatus = Loadable(lazy(() => import('../views/UserAppStatus/Main')));
-
-const UploadedDocs = Loadable(lazy(() => import('../views/UploadedDocs/Main')));
-const AddFiles = Loadable(lazy(() => import('../views/UploadedDocs/AddFiles')));
-
-const StudentInfo = Loadable(lazy(() => import('../views/StudentInfo/Main')));
-const AllForms = Loadable(lazy(() => import('../views/Forms/Main')));
-const AddForm = Loadable(lazy(() => import('../views/Forms/Addfrom')));
-const EditForm = Loadable(lazy(() => import('../views/Forms/EditForm')));
-
-const UserFrom = Loadable(lazy(() => import('../views/UserFroms/Main')));
 
 //import Calendar from "../views/calendar/Main";
 
@@ -64,11 +78,14 @@ function Router() {
           path: "/user_list",
           element: <AllUsers />,
         },
-      
 
         {
           path: "/app_status",
           element: <UserAppStatus />,
+        },
+        {
+          path: "/app_status/:id",
+          element: <AdminStatusView />,
         },
         {
           path: "/student_info",
@@ -83,7 +100,6 @@ function Router() {
           element: <ToDoList />,
         },
 
-        
         {
           path: "/forms/add",
           element: <AddForm />,
@@ -93,13 +109,21 @@ function Router() {
           element: <EditForm />,
         },
         {
+          path: "/forms/view/:id",
+          element: <ViewForm />,
+        },
+        {
+          path: "/forms/viewdata/:id",
+          element: <ViewDataForm />,
+        },
+        {
           path: "/forms/all",
           element: <AllForms />,
         },
 
         {
           path: "/calender",
-          element: <Calendar />,
+          element: <AdminCalender />,
         },
 
         {
@@ -107,18 +131,13 @@ function Router() {
           element: <MyDocuments />,
         },
 
-        
         {
           path: "/notifications",
           element: <Notification />,
         },
-
-        
-
-    
       ],
     },
-    
+
     {
       path: "/login",
       element: auth ? <Navigate to="/" /> : <Login />,
@@ -141,17 +160,15 @@ function Router() {
           path: "/",
           element: <UserDashboardOverview />,
         },
-      
 
         {
           path: "/user_list",
           element: <AllUsers />,
         },
-       
 
         {
           path: "/app_status",
-          element: <UserAppStatus />,
+          element: <StatusView />,
         },
         {
           path: "/files",
@@ -166,15 +183,15 @@ function Router() {
           element: <ToDoList />,
         },
 
-
         {
           path: "/forms/:id",
           element: <UserFrom />,
         },
+       
 
         {
           path: "/calender",
-          element: <Calendar />,
+          element: <UserCalender />,
         },
 
         {
@@ -182,18 +199,13 @@ function Router() {
           element: <MyDocuments />,
         },
 
-        
         {
           path: "/notifications",
           element: <Notification />,
         },
-
-        
-
-    
       ],
     },
-    
+
     {
       path: "/login",
       element: auth ? <Navigate to="/" /> : <Login />,
@@ -208,13 +220,11 @@ function Router() {
     },
   ];
 
-  if(localStorage.isAdmin){
+  if (localStorage.isAdmin) {
     return useRoutes(adminRoutes);
-  }else{
+  } else {
     return useRoutes(userRoutes);
   }
-
-  
 }
 
 export default Router;

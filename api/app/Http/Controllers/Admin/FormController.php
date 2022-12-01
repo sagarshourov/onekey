@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\FormData;
 use App\Models\Forms;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FormController extends BaseController
 {
@@ -18,6 +20,68 @@ class FormController extends BaseController
 
         return $this->sendResponse($forms, 'Forms retrieved successfully.');
     }
+
+    public function formbyid($id)
+    {
+        $forms =  FormData::with(['user', 'form'])->where('form_id', $id)->get(['id', 'user_id', 'form_id']);
+
+        return $this->sendResponse($forms, 'Formby id successfully.');
+    }
+
+
+    public function formdata($id)
+    {
+
+        if (Auth::user()->is_admin) {
+
+
+            $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
+            $form_con =  Forms::find($forms[0]->form_id);
+            $return['form_id'] = $forms[0]->form_id;
+            $return['val'] = json_decode($forms[0]->content);
+
+            $return['con'] = json_decode($form_con->content);
+        } else {
+            $user_id =  Auth::user()->id;
+            $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->get(['id', 'user_id', 'form_id', 'content']);
+
+            if (isset($forms[0]))  $return['val'] = json_decode($forms[0]->content);
+
+
+            $form_con =  Forms::find($id);
+            $return['con'] = json_decode($form_con->content);
+        }
+
+
+
+
+
+
+        return $this->sendResponse($return, 'Formby id successfully.');
+
+
+        // $forms = Forms::all();
+
+        // $return = [];
+
+        // foreach ($forms as $key => $value) {
+
+        //     $return[] = json_decode($value->content);
+
+        //     $return[]['title'] = 'some';
+
+        // }
+
+
+
+
+        // return $this->sendResponse($return, 'Forms retrieved successfully.');
+    }
+
+
+
+
+
 
     public function getforms($type, $id)
     {
@@ -106,5 +170,28 @@ class FormController extends BaseController
             $user->save();
             return $this->sendResponse(['Success'], 'Priivate successfully.');
         }
+    }
+
+
+    public function submit_form(Request $request)
+    {
+        $input = $request->all();
+
+        $user_id = Auth::id();
+
+
+        FormData::updateOrCreate([
+            'user_id'   =>   $user_id,
+            'form_id' => $input['form_id']
+        ], [
+            'user_id'   =>    $user_id,
+            'content' => json_encode($input['data']),
+            'form_id' => $input['form_id']
+
+        ]);
+
+
+
+        return $this->sendResponse($input, 'save form data successfully.');
     }
 }

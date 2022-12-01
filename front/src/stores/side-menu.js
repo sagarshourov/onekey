@@ -93,7 +93,7 @@ let UsersideMenu = atom({
       "START MENU",
       {
         icon: "Home",
-        title: "Dashboard",
+        title: "Profile",
         pathname: "/",
       },
       {

@@ -1,0 +1,125 @@
+.formio-form nav::before {
+  background-color: red;
+  width: 100%;
+  display: block;
+  height: 20px;
+  margin-top: 1rem;
+  position: absolute;
+}
+.formio-form nav {
+  /* background-color: #eee; */
+  margin-bottom: 1rem;
+}
+
+.formio-form .pagination .page-link {
+  border-radius: 50px !important;
+  padding: 1rem;
+}
+
+.formio-form .pagination {
+  justify-content: center;
+}
+
+.formio-wizard-nav-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.formio-wizard-nav-container button {
+  margin-left: 20px;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+}
+.formio-wizard-nav-container .btn-secondary {
+  background-color: #eee;
+}
+
+.wizard-page {
+  overflow: auto;
+}
+
+.card-body{
+  background-color: #fff;
+}
+
+.formio-form .form-group {
+  /* margin-top: 1rem; */
+  /* width: 50%;
+  float: left;
+  clear: right; */
+  /* padding-right: 1rem; */
+}
+.formio-form .form-group div {
+  margin-top: 0.5rem;
+}
+.col-md-6 {
+  width: 50%;
+  float: left;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.tab-pane {
+  border-color: #eee;
+  border-style: solid;
+  border-width: 0px 1px 1px 1px;
+
+  padding-bottom: 1rem;
+}
+
+.formio-component {
+  overflow: auto;
+  padding: 5px 5px
+}
+.form-check-inline {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0;
+  margin-right: 0.75rem;
+}
+
+.card-header {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #dddddd;
+  border-bottom-color: rgb(221, 221, 221);
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+}
+
+.col-form-label{
+  font-weight: bold;
+}
+
+.input-group > .form-control:not(:first-child) {
+  border-left: 1px solid #eee;
+}
+
+.formio-select-autocomplete-input {
+  opacity: 0;
+  position: relative;
+  z-index: -1;
+  display: block;
+  height: 0;
+  border: none;
+}
+
+.field-required::after {
+  position: relative;
+  z-index: 10;
+}
+.field-required::after, .tab-error::after {
+  content: " *";
+  color: #eb0000;
+}
+.form-text.error{
+  color: #eb0000;
+
+}
+@media screen and (max-width: 480px) {
+  .formio-form .form-group {
+    width: 100%;
+  }
+
+  .col-md-6 {
+    width: 100%;
+  }
+}

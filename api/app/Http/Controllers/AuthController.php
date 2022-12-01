@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 
 use App\Models\User;
+use App\Models\Files;
 use Validator;
+
 class AuthController extends BaseController
 {
     //
@@ -18,6 +20,7 @@ class AuthController extends BaseController
             $user = Auth::user();
             $success['token'] = $user->createToken('authToken')->accessToken;
             $success['user'] = $user;
+            $success['profile_image'] = Files::where(['user_id' => $user->id, 'doc_type' => 2])->first('file_path');
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
@@ -48,7 +51,7 @@ class AuthController extends BaseController
         $input['email'] = $input['email'];
         $input['is_admin'] = 0;
         $input['status'] = 'pending';
-        
+
 
 
         $user = User::create($input);

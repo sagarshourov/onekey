@@ -60,9 +60,7 @@ const AdminUsers = (props) => {
       <h2 className="intro-y text-lg font-medium mt-10">All Users List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <button className="btn btn-primary shadow-md mr-2">
-            Add New User
-          </button>
+         
 
           <div className="hidden md:block mx-auto text-slate-500">
            Showng  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}

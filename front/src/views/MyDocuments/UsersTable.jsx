@@ -13,10 +13,9 @@ const UsersTable = (props) => {
     <table className="table table-report -mt-2">
       <thead>
         <tr>
-          <th className="whitespace-nowrap">No</th>
-          <th className="whitespace-nowrap">Full Name</th>
-          <th className="text-center whitespace-nowrap">Email</th>
-          <th className="text-center whitespace-nowrap">Status</th>
+          <th className="whitespace-nowrap">Sr.no</th>
+          <th className="whitespace-nowrap">Document Title</th>
+          <th className="text-center whitespace-nowrap">Document</th>
           <th className="text-center whitespace-nowrap">Created At</th>
         </tr>
       </thead>

@@ -1,5 +1,5 @@
 import { Lucide, TomSelect, Tippy } from "@/base-components";
-import { faker as $f } from "@/utils";
+
 import * as $_ from "lodash";
 import { useState } from "react";
 

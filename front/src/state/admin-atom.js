@@ -9,11 +9,68 @@ import {
   getAllForms,
   getEditForm,
   getForm,
+  getFormById,
+  getFormData,
+  getAdminAppStatus
 } from "../service/admin";
 
 /**
  * Populate the default selector return value with a service call.
  */
+
+
+ 
+
+ export const appStatusSlect = selectorFamily({
+  key: "appStatusSlect",
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getAdminAppStatus(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`getAdminAppStatus -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
+});
+
+
+ export const formDataSelect = selectorFamily({
+  key: "formDataSelect",
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getFormData(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`formByIdSelect -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
+});
+
+
+
+ export const formByIdSelect = selectorFamily({
+  key: "formByIdSelect",
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getFormById(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`formByIdSelect -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
+});
+
+
+
 
 export const getEditfrom = selectorFamily({
   key: "getEditfrom",

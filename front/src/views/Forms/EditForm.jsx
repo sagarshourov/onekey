@@ -1,13 +1,14 @@
 import { Lucide, TomSelect, Tippy } from "@/base-components";
-import { faker as $f } from "@/utils";
+
 import * as $_ from "lodash";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { Form, FormBuilder } from "react-formio";
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 
 import "./styles.css";
+import axios from "axios";
 import { getAdmin } from "../../configuration";
 
 import { editFormState } from "../../state/admin-atom";
@@ -106,7 +107,7 @@ function Main() {
         </div>
       </div>
 
-      <div className="p-5 mt-5">
+      <div className="md:p-5 mt-5">
         {!loading && (
           <FormBuilder
             form={formVal}

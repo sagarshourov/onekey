@@ -17,7 +17,7 @@ const UsersTable = (props) => {
   const handelStatus = async (e, type, form_id) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const LOGIN_URL = getAdmin() + "update_form_status";
 
     const token = localStorage.getItem("token");
@@ -49,7 +49,7 @@ const UsersTable = (props) => {
           <th className="whitespace-nowrap">No</th>
           <th className="whitespace-nowrap">Title</th>
 
-          <th className="text-center whitespace-nowrap">Allow Edit</th>
+          {/* <th className="text-center whitespace-nowrap">Allow Edit</th> */}
           <th className="text-center whitespace-nowrap">Visibility</th>
         </tr>
       </thead>
@@ -65,7 +65,7 @@ const UsersTable = (props) => {
                 </a>
               </td>
 
-              <td className="text-center">
+              {/* <td className="text-center">
                 {user.allows_edit === 1 ? (
                   <span className="text-xs whitespace-nowrap text-white bg-success border border-success/20 rounded-full px-2 py-1">
                     Allowed
@@ -75,7 +75,7 @@ const UsersTable = (props) => {
                     Disallowed
                   </span>
                 )}
-              </td>
+              </td> */}
 
               <td className="text-center">
                 <div className="flex justify-center items-center">
@@ -119,6 +119,13 @@ const UsersTable = (props) => {
                     }}
                   >
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Remove
+                  </a>
+
+                  <a
+                    className="flex items-center text-info px-2"
+                    href={"/forms/view/" + user.id}
+                  >
+                    <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View
                   </a>
                 </div>
               </td>

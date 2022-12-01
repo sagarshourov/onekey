@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownContent,
   DropdownItem,
+  LoadingIcon,
   Modal,
   ModalBody,
 } from "@/base-components";
@@ -13,30 +14,37 @@ import {
 import { useState } from "react";
 
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
-import { adminUserListState } from "../../state/admin-atom";
+import { userFileListState } from "../../state/users-atom";
 import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
-
+import axios from "axios";
 import { filter } from "lodash";
+import { getBaseApi } from "../../configuration";
+
+const token = localStorage.getItem("token");
+
+const headers = {
+  Authorization: `Bearer ${token}`,
+  ContentType: "application/json",
+};
 
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
-    return (
-      _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-      _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
-    );
+    return _items.title
+      ? _items.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+      : true;
   });
-  console.log("sagar");
 }
 
-const AdminUsers = (props) => {
+const AllDocs = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
-  const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
+  const [usersData, setUserState] = useRecoilStateLoadable(userFileListState);
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [selectId, setSelectId] = useState(0);
   const handelPageCount = (e) => {
     console.log(e.target.value);
 
@@ -53,6 +61,21 @@ const AdminUsers = (props) => {
     setSearch(e.target.value);
   };
 
+  const handelDelete = async (id) => {
+    setLoading(true);
+    axios.post(
+      getBaseApi() + "delete_file",
+      { id: id },
+      {
+        headers,
+      }
+    );
+
+    setDeleteConfirmationModal(false);
+
+    //window.location.reload();
+  };
+
   let filterData = applySortFilters(usersData.contents, search);
 
   return (
@@ -65,7 +88,8 @@ const AdminUsers = (props) => {
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-           Showng  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+            Showng {filterData.length} out of{" "}
+            {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}
@@ -97,6 +121,8 @@ const AdminUsers = (props) => {
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
           {usersData.state === "hasValue" && (
             <UsersTable
+              setSelectId={setSelectId}
+              setDeleteConfirmationModal={setDeleteConfirmationModal}
               rowCount={rowCount}
               users={filterData}
             />
@@ -140,8 +166,19 @@ const AdminUsers = (props) => {
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-danger w-24">
+            <button
+              onClick={() => handelDelete(selectId)}
+              type="button"
+              className="btn btn-danger w-24"
+            >
               Delete
+              {loading && (
+                <LoadingIcon
+                  icon="three-dots"
+                  color="white"
+                  className="w-4 h-4 ml-2"
+                />
+              )}
             </button>
           </div>
         </ModalBody>
@@ -151,4 +188,4 @@ const AdminUsers = (props) => {
   );
 };
 
-export default AdminUsers;
+export default AllDocs;

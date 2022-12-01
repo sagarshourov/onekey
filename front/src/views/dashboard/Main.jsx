@@ -13,26 +13,11 @@ import {
   TabPanels,
   TabPanel,
 } from "@/base-components";
-import { faker as $f } from "@/utils";
+
 import * as $_ from "lodash";
-import classnames from "classnames";
-import ReportBarChart1 from "@/components/report-bar-chart-1/Main";
-import ReportLineChart1 from "@/components/report-line-chart-1/Main";
-import ReportLineChart2 from "@/components/report-line-chart-2/Main";
-import ReportDonutChart1 from "@/components/report-donut-chart-1/Main";
+
 import { useState } from "react";
-import unitedStatesUrl from "@/assets/images/united-states.svg";
-import franceUrl from "@/assets/images/france.svg";
-import spainUrl from "@/assets/images/spain.svg";
-import unitedKingdomUrl from "@/assets/images/united-kingdom.svg";
-import indiaUrl from "@/assets/images/india.svg";
-import brazilUrl from "@/assets/images/brazil.svg";
-import switzerlandUrl from "@/assets/images/switzerland.svg";
-import chromeUrl from "@/assets/images/chrome.png";
-import edgeUrl from "@/assets/images/edge.png";
-import firefoxUrl from "@/assets/images/firefox.png";
-import operaUrl from "@/assets/images/opera.png";
-import safariUrl from "@/assets/images/safari.png";
+
 
 function Main() {
   const [generalReportFilter, setGeneralReportFilter] = useState();

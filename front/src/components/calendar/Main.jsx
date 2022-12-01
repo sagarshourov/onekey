@@ -21,7 +21,7 @@ function event_format(data) {
 }
 
 const Main = (props) => {
-  const { events } = props;
+  const { type, events } = props;
 
   //console.log(events.contents);
   const [modelTitle, setModelTitle] = useState("");
@@ -37,7 +37,7 @@ const Main = (props) => {
     aspectRatio: 1.5,
     navLinks: true,
     editable: true,
-    events: event_format(events.contents),
+    events: event_format(events),
     eventClick: function (info) {
       console.log(info);
       // alert("Event: " + info.event._def.extendedProps.description);
@@ -68,9 +68,7 @@ const Main = (props) => {
               className="w-16 h-16 text-info mx-auto mt-3"
             />
             <div className="text-3xl mt-5">{modelTitle}</div>
-            <div className="text-slate-500 mt-2">
-             {modelDescription}
-            </div>
+            <div className="text-slate-500 mt-2">{modelDescription}</div>
           </div>
           <div className="px-5 pb-8 text-center">
             <button
@@ -82,9 +80,11 @@ const Main = (props) => {
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-danger w-24">
-              Delete
-            </button>
+            {type == 1 && (
+              <button type="button" className="btn btn-danger w-24">
+                Delete
+              </button>
+            )}
           </div>
         </ModalBody>
       </Modal>

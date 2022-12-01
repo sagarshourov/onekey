@@ -9,6 +9,44 @@ const headers = { Authorization: `Bearer ${token}` };
 
 
 
+export async function getAdminAppStatus(id) {
+  const userApiUrl = getAdmin() + "app_status/" + id;
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+
+
+export async function getFormData(id) {
+  const userApiUrl = getAdmin() + "formdata/" + id;
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+
+export async function getFormById(id) {
+  const userApiUrl = getAdmin() + "formbyid/" + id;
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
+
+
 
 export async function getForm(id) {
   const userApiUrl = getAdmin() + "forms/read/" + id;
@@ -37,7 +75,7 @@ export async function getEditForm(id) {
 }
 
 export async function getAllForms() {
-  const userApiUrl = getAdmin() + "forms";
+  const userApiUrl = getBaseApi() + "forms";
   // console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
@@ -69,8 +107,8 @@ export async function getAllUsers() {
   }
 }
 
-export async function getAllTasks(user_id) {
-  const userApiUrl = getBaseApi() + "tasks/" + user_id;
+export async function getAllTasks() {
+  const userApiUrl = getBaseApi() + "tasks";
   console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });

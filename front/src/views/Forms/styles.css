@@ -305,3 +305,17 @@ button {
   padding-left: 0;
   margin-right: 0.75rem;
 }
+
+
+@media screen and (max-width: 480px) {
+  .formio-form .form-group {
+    width: 100%;
+  }
+  .col-md-2{
+    width: 100%;
+  }
+
+  .col-md-6 {
+    width: 100%;
+  }
+}

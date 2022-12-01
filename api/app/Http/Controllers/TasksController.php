@@ -6,16 +6,29 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController as BaseController;
 
 use App\Models\Tasks;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends BaseController
 {
     //
 
 
-    public function task_list($user_id)
+    public function task_list()
     {
-        $tasks = Tasks::with(['users','stage'])->orderByDesc('id')->get();
 
-        return $this->sendResponse($tasks, 'Tasks retrieved successfully.');
+
+
+        $user_id = Auth::user()->id;
+    //    return $this->sendResponse($user_id, 'Tasks retrieved successfully.');
+
+        if (Auth::user()->is_admin) {
+
+            $users =  Tasks::with(['users', 'stage'])->orderByDesc('id')->get();
+            //$users = Events::select('user_id', 'notes', 'note_date')->with(['users'])->get();
+        } else {
+            $users =  Tasks::with(['users', 'stage'])->where('user_id',  $user_id)->orderByDesc('id')->get();
+        }
+
+        return $this->sendResponse($users, 'Tasks retrieved successfully.');
     }
 }

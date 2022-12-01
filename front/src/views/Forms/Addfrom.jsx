@@ -1,5 +1,5 @@
 import { Lucide, TomSelect, Tippy } from "@/base-components";
-import { faker as $f } from "@/utils";
+
 import * as $_ from "lodash";
 import { useState } from "react";
 import axios from "axios";
@@ -84,7 +84,7 @@ function Main() {
         </div>
       </div>
 
-      <div className="p-5 mt-5">
+      <div className="p-5 intro-y  mt-5">
         <FormBuilder
           form={{ display: type }}
           onChange={(schema) => setSchema(schema)}

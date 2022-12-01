@@ -1,102 +1,263 @@
-import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  Litepicker,
-  TabGroup,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@/base-components";
+import { Lucide, LoadingIcon, Dropzone, Input } from "@/base-components";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
 
-const  UserMain =() =>{
+import { useEffect, useState, useRef } from "react";
+import { getBaseApi } from "../../configuration";
+import { userSelect } from "../../state/users-atom";
+const token = localStorage.getItem("token");
+
+const UserMain = () => {
+  const dropzoneSingleRef = useRef();
+  const userData = useRecoilValue(userSelect(1));
+
+
+
+  const [val, setValue] = useState(userData);
+  const [edit, setEdit] = useState(true);
+  const [editProfile, handelEditProfileClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handelEditClick = (val) => {
+    handelEditProfileClick(false);
+    setEdit(val);
+  };
+
+  const handelSave = async (e) => {
+    e.preventDefault();
+
+    if (val.password !== val.rpassword) {
+      alert("Password and retype password not matching !");
+      return;
+    }
+
+    setLoading(true);
+    const LOGIN_URL = getBaseApi() + "save_user";
+
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    };
+
+    try {
+      const response = await axios.post(LOGIN_URL, val, {
+        headers,
+      });
+      setLoading(false);
+      setEdit(true);
+      //window.location.reload();
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-12 2xl:col-span-8">
+      <div className="col-span-12 md:col-span-9 xl:col-span-9">
         <div className="grid grid-cols-12 gap-6">
           {/* BEGIN: General Report */}
           <div className="col-span-12 mt-6">
-            <div className="intro-y block sm:flex items-center h-10">
-              <h2 className="text-lg font-medium truncate mr-5">
-                Recent Activities
-              </h2>
+            <div className="intro-y block sm:flex items-center h-20">
+              <h2 className="text-lg font-medium truncate mr-5">Profile</h2>
             </div>
-            <div className="intro-y report-box mt-12 sm:mt-4">
-              <div className="box py-0 xl:py-5 grid grid-cols-12 gap-0 divide-y xl:divide-y-0 divide-x divide-dashed divide-slate-200 dark:divide-white/5">
-                <div className="report-box__item py-5 xl:py-0 px-5 col-span-12 ">
-                  <h3 className="text-lg py-3 mb-4">Student Information</h3>
-                  <div>
-                    <label htmlFor="vertical-form-1" className="form-label">
-                      SEVIS ID number
-                    </label>
+            <div className="box intro-y p-5">
+              <div className="flex justify-between border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div className="font-medium truncate ">GENERALS</div>
 
-                    <div className="input-group w-full">
-                      <div className="input-group-text">
-                        <Lucide icon="Code" className="w-4 h-4 mt-2" />
-                      </div>
-                      <input
-                        type="text"
-                        className=" py-4 form-control"
-                        placeholder=""
-                        disabled
-                      />
-                    </div>
+                {!edit && (
+                  <div className="flex">
+                    <button
+                      onClick={() => handelEditClick(true)}
+                      className="btn btn-rounded-secondary w-24 mr-1 mb-2"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handelSave}
+                      className="btn btn-rounded-primary  w-24 mr-1 mb-2"
+                    >
+                      Save
+                      {loading && (
+                        <LoadingIcon
+                          icon="three-dots"
+                          color="white"
+                          className="w-4 h-4 ml-2"
+                        />
+                      )}
+                    </button>
                   </div>
-                  <div className="mt-5">
-                    <label htmlFor="vertical-form-1" className="form-label">
-                      Interview
-                    </label>
+                )}
 
-                    <div className="input-group w-full">
-                      <div className="input-group-text">
-                        <Lucide icon="Calendar" className="w-4 h-4 mt-2" />
-                      </div>
-                      <input
-                        type="text"
-                        className=" py-4 form-control"
-                        placeholder=""
-                        disabled
+                <button className="" onClick={() => handelEditClick(false)}>
+                  <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
+                </button>
+              </div>
+              <div className=" md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    First Name
+                  </label>
+                  <Input
+                    setValue={setValue}
+                    name="first_name"
+                    value={val}
+                    readOnly={edit}
+                    type="text"
+                    className="form-control"
+                    placeholder="Type here"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Middle Name
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    name="middle_name"
+                    type="text"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Type here"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Last Name
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    name="last_name"
+                    type="text"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Last name"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 mb-5  md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Username
+                  </label>
+                  <Input
+                    setValue={setValue}
+                    type="text"
+                    name="email"
+                    value={val}
+                    readOnly={true}
+                    className="form-control"
+                    placeholder="Enter Name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Password
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="password"
+                    name="password"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Enter Password"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Re-type Password
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="password"
+                    name="rpassword"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Enter Password"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="box intro-y p-5 mt-5 pb-5">
+              <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div className="font-medium truncate ">Contact</div>
+              </div>
+              <div className=" mb-5 md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Mobile Phone
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="Phone"
+                        className="w-4 h-4 text-slate-500 ml-auto"
                       />
                     </div>
+
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="user_phone"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Phone no."
+                    />
                   </div>
-                  <div className="mt-5">
-                    <label htmlFor="vertical-form-1" className="form-label">
-                      University / Institution
-                    </label>
-
-                    <div className="input-group w-full">
-                      <div id="input-group-email" className="input-group-text">
-                        <Lucide icon="Home" className="w-4 h-4 mt-2" />
-                      </div>
-                      <input
-                        type="text"
-                        className=" py-4 form-control"
-                        placeholder=""
-                        disabled
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Whatsapp
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="PhoneCall"
+                        className="w-4 h-4 text-slate-500 ml-auto"
                       />
                     </div>
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="whatsapp"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Phone no."
+                    />
                   </div>
-                  <div className="mt-5">
-                    <label htmlFor="vertical-form-1" className="form-label">
-                      Visa Type Status
-                    </label>
-
-                    <div className="input-group w-full">
-                      <div id="input-group-email" className="input-group-text">
-                      <Lucide icon="Info" className="w-5 h-4 mt-2" />
-                      </div>
-                      <input
-                        type="text"
-                        className=" py-4 form-control"
-                        placeholder=""
-                        disabled
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Email
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="Mail"
+                        className="w-4 h-4 text-slate-500 ml-auto"
                       />
                     </div>
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="email"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Email"
+                    />
                   </div>
                 </div>
               </div>
@@ -105,21 +266,96 @@ const  UserMain =() =>{
           {/* END: General Report */}
         </div>
       </div>
-      <div className="col-span-12 2xl:col-span-4">
-        <div className="2xl:border-l border-slate-300/50 h-full 2xl:pt-6 pb-6">
-          <div className="2xl:pl-6 grid grid-cols-12 gap-x-6 gap-y-8">
+      <div className="col-span-12 md:col-span-3 xl:col-span-3">
+        <div className="border-l border-slate-300/50 h-full pt-6 pb-6">
+          <div className="pl-6 grid grid-cols-12 gap-x-6 gap-y-8">
             {/* BEGIN: Attachments */}
-            <div className="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12">
+            <div className="col-span-12 md:col-span-12 xl:col-span-12 col-span-12">
               <div className="mt-4">
-                <div className="intro-x">
-                  <div className="file box px-5 py-5 mb-3 flex items-center">
-                    
-                    <div className="ml-5 mr-auto">
-                      <h1 className="font-large">Sagar Roy</h1>
-                      <div className="text-slate-500 text-xs mt-1">
-                       
-                      </div>
+                <div className="intro-x box h-screen">
+                  <div className="flex justify-end">
+                    <button
+                      className="ml-auto mt-2 mr-2"
+                      onClick={() => {
+                        handelEditProfileClick(true);
+                        setEdit(true);
+                      }}
+                    >
+                      <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
+                    </button>
+                  </div>
+
+                  <div className="col-span-12 my-5 flex items-center">
+                    <div className="image-fit w-40 h-40 rounded-full border-4 border-white shadow-md overflow-hidden m-auto">
+                      <img
+                        alt="Profile Image"
+                        src={
+                          getBaseApi() + "file/" + val?.profile_image?.file_path
+                        }
+                      />
                     </div>
+                  </div>
+                  {editProfile && (
+                    <div className="col-span-12 my-5 flex items-center justify-center ">
+                      <Dropzone
+                        getRef={(el) => {
+                          dropzoneSingleRef.current = el;
+                        }}
+                        options={{
+                          url: getBaseApi() + "file_upload",
+                          thumbnailWidth: 150,
+                          maxFilesize: 5,
+                          maxFiles: 1,
+                          headers: { Authorization: `Bearer ${token}` },
+                          params: { type: 2 },
+
+                          init: function () {
+                            this.on("addedfile", function (file) {}),
+                              this.on("success", function (file, res) {
+                                handelEditProfileClick(false);
+                                // setValue([] res.data.file_path);
+                                const obj = {
+                                  profile_image: {
+                                    file_path: res.data.file_path,
+                                  },
+                                };
+                                setValue({
+                                  ...val,
+                                  ...obj,
+                                });
+                              });
+                          },
+                        }}
+                        className="dropzone"
+                      >
+                        <div className="text-lg font-medium">
+                          Drop files here or click to upload.
+                        </div>
+                        <div className="text-gray-600">
+                          File size
+                          <span className="font-medium">not</span> more than 5
+                          MB
+                        </div>
+                      </Dropzone>
+                    </div>
+                  )}
+                  <div className="col-span-12 my-5 flex items-center">
+                    <h1 className=" m-auto text-2xl font-medium">
+                      {val.first_name + " " + val.last_name}
+                    </h1>
+                    <div className="text-slate-500 text-xs mt-1"></div>
+                  </div>
+
+                  <div className="col-span-12 h-20"></div>
+                  {val.user_phone !== null && (
+                    <div className="col-span-12 pt-5  border-t flex items-center justify-center ">
+                      <Lucide icon="Phone" className="w-6 h-6 mr-2" />+{" "}
+                      {val?.user_phone}
+                    </div>
+                  )}
+                  <div className="col-span-12 mt-4 mb-5 flex items-center justify-center ">
+                    <Lucide icon="Mail" className="w-6 h-6 mr-2" />
+                    {val?.email}
                   </div>
                 </div>
               </div>
@@ -129,6 +365,6 @@ const  UserMain =() =>{
       </div>
     </div>
   );
-}
+};
 
 export default UserMain;

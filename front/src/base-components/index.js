@@ -15,6 +15,10 @@ import Dropzone from "./dropzone/Main";
 import FullCalendar from "./calendar/Main";
 import FullCalendarDraggable from "./calendar/Draggable";
 import Notification from "./notification/Main";
+
+
+import Input from "./input/Main";
+
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "./modal";
 import {
   Dropdown,
@@ -86,4 +90,5 @@ export {
   Source,
   Highlight,
   Lucide,
+  Input
 };

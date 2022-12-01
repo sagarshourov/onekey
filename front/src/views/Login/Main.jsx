@@ -48,6 +48,8 @@ const Login = (props) => {
 
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", JSON.stringify(response?.data?.data?.user));
+      localStorage.setItem("profile_image", response?.data?.data?.profile_image?.file_path);
 
       navigate("../", { replace: true });
     } catch (err) {
