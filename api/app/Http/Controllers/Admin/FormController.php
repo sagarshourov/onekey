@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Controller;
+
 use App\Models\FormData;
 use App\Models\Forms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\Notifications;
+use Illuminate\Support\Facades\Mail;
 
 class FormController extends BaseController
 {
@@ -23,7 +26,29 @@ class FormController extends BaseController
 
     public function formbyid($id)
     {
+
+
         $forms =  FormData::with(['user', 'form'])->where('form_id', $id)->get(['id', 'user_id', 'form_id']);
+        // return $this->sendResponse($assign, 'Formby id successfully.');
+        // $assign = $this->assignUsers();
+        // if ($assign) {
+
+        //     $filterClause = function ($query) use ($assign) {
+        //         return $query->whereIn('id', $assign);
+        //     };
+
+        //     $forms = FormData::with(['user' => $filterClause,'form'])
+        //         ->whereHas('user', $filterClause)
+        //         ->where('form_id', $id)
+        //         ->get();
+        // } else {
+        //     $forms =  FormData::with(['user', 'form'])->where('form_id', $id)->get(['id', 'user_id', 'form_id']);
+        // }
+
+
+
+
+
 
         return $this->sendResponse($forms, 'Formby id successfully.');
     }
@@ -55,7 +80,7 @@ class FormController extends BaseController
 
 
 
-
+        $return['title'] = $form_con->title;
 
         return $this->sendResponse($return, 'Formby id successfully.');
 
@@ -117,7 +142,6 @@ class FormController extends BaseController
         ], [
             'title' => $input['title'],
             'content' => json_encode($input['data']),
-            'group_id' => 1,
             'visibility' => 1,
             'allows_edit' => 1
 
@@ -136,7 +160,6 @@ class FormController extends BaseController
         ], [
             'title' => $input['title'],
             'content' => json_encode($input['data']),
-            'group_id' => 1,
             'visibility' => 1,
             'allows_edit' => 1
 
@@ -175,10 +198,18 @@ class FormController extends BaseController
 
     public function submit_form(Request $request)
     {
+
+
         $input = $request->all();
+
+
+
+        $user = Auth::user();
 
         $user_id = Auth::id();
 
+
+        //  return $this->sendResponse($this->assignAdminEmail($user_id), 'save form data successfully.');
 
         FormData::updateOrCreate([
             'user_id'   =>   $user_id,
@@ -191,7 +222,26 @@ class FormController extends BaseController
         ]);
 
 
+        if ($input['last_step'] == true) {
+            $noti =  Notifications::create([
+                'user_id' =>   $user_id,
+                'title' => 'Form Submited',
+                'notification' =>  $user->first_name . ' has submited ' . $input['title'] . ' form',
+                'is_read' => 0,
+                'reciver' => 1
+            ]);
+            $assignAmin = $this->assignAdminEmail($user_id);
 
-        return $this->sendResponse($input, 'save form data successfully.');
+            Mail::send('email.form_submit', ['user' => $user, 'form' => $input['title']], function ($message) use ($assignAmin) {
+                $message->to($assignAmin, 'Admin')->subject('New Form Submited');
+                $message->from("info@onekeyclient.us", 'Admin');
+            });
+        }
+
+
+
+
+
+        return $this->sendResponse(['success'], 'save form data successfully.');
     }
 }

@@ -1,7 +1,7 @@
 import { Lucide } from "@/base-components";
 import * as $_ from "lodash";
 import classnames from "classnames";
-
+import { Link } from "react-router-dom";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -38,12 +38,12 @@ const UsersTable = (props) => {
               <td className="text-center">{formatDate(user.created_at)}</td>
 
               <td className="text-center">
-                <a
+                <Link
                   className="flex items-center text-info px-2"
-                  href={"/app_status/" + user.id}
+                  to={"/app_status/" + user.id}
                 >
                   <Lucide icon="Eye" className="w-4 h-4 mr-1" /> Change
-                </a>
+                </Link>
               </td>
             </tr>
           );

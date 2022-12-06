@@ -69,7 +69,7 @@ const Events = (props) => {
 
       //  console.log(response.data);
 
-      // window.location.reload();
+       window.location.reload();
     } catch (err) {
       setLoading(false);
     }

@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'email', 'password', 'is_admin', 'user_phone', 'whatsapp'
+        'first_name', 'middle_name', 'last_name', 'email', 'password', 'is_admin', 'user_phone', 'whatsapp', 'birth_date', 'gendar', 'package'
     ];
 
     /**
@@ -47,13 +47,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-
-
-
-
     public function student_info()
     {
         return $this->hasOne(StudentInfo::class, 'user_id', 'id');
+    }
+
+    public function profile()
+    {
+        return $this->hasMany(Files::class, 'user_id', 'id');
+    }
+
+    public function package()
+    {
+        return $this->hasOne(Packages::class, 'package', 'id');
     }
 }

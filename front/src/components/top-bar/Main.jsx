@@ -21,7 +21,7 @@ import { first } from "lodash";
 
 let image = localStorage.profile_image
   ? localStorage.getItem("profile_image")
-  : "";
+  : undefined;
 
 let user = localStorage.user ? JSON.parse(localStorage.getItem("user")) : "";
 

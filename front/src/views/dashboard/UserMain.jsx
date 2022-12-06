@@ -9,9 +9,7 @@ const token = localStorage.getItem("token");
 
 const UserMain = () => {
   const dropzoneSingleRef = useRef();
-  const userData = useRecoilValue(userSelect(1));
-
-
+  const userData = useRecoilValue(userSelect(0));
 
   const [val, setValue] = useState(userData);
   const [edit, setEdit] = useState(true);
@@ -50,6 +48,10 @@ const UserMain = () => {
     } catch (err) {
       setLoading(false);
     }
+  };
+
+  const saveRadio = (gendar) => {
+    setValue({ ...val, gendar: gendar });
   };
 
   return (
@@ -184,6 +186,68 @@ const UserMain = () => {
                     className="form-control"
                     placeholder="Enter Password"
                   />
+                </div>
+              </div>
+
+              <div className="mt-5 mb-5  md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Age
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="number"
+                    name="birth"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder=""
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Gendar
+                  </label>
+                  <div className="flex flex-col sm:flex-row mt-2">
+                    <div className="form-check mr-2">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="gendar"
+                        value="male"
+                        checked={val.gendar == "male"}
+                        onChange={() => saveRadio("male")}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="radio-switch-4"
+                      >
+                        Male
+                      </label>
+                    </div>
+                    <div className="form-check mr-2 mt-2 sm:mt-0">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="gendar"
+                        value="female"
+                        checked={val.gendar == "female"}
+                        onChange={() => saveRadio("female")}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="radio-switch-5"
+                      >
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    {""}
+                  </label>
                 </div>
               </div>
             </div>
@@ -344,6 +408,12 @@ const UserMain = () => {
                       {val.first_name + " " + val.last_name}
                     </h1>
                     <div className="text-slate-500 text-xs mt-1"></div>
+                  </div>
+
+                  <div className="col-span-12 my-5 flex items-center">
+                    <h4 className=" m-auto  font-medium">
+                      <small> Case Type : </small> {val?.package}
+                    </h4>
                   </div>
 
                   <div className="col-span-12 h-20"></div>

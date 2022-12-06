@@ -11,13 +11,27 @@ import {
   getForm,
   getFormById,
   getFormData,
-  getAdminAppStatus
+  getAdminAppStatus,
+  getAllNotificatioin,
+  getAssignUsers
 } from "../service/admin";
 
 /**
  * Populate the default selector return value with a service call.
  */
 
+ export const assignSelect = selectorFamily({
+  key: "assignSelect",
+  get:  (id) => async ({ get }) => {
+    try {
+      const response = await getAssignUsers(id);
+      return response.data || [];
+    } catch (error) {
+      console.error(`getAssignUsers -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
 
  
 
@@ -210,6 +224,37 @@ export const allFormListSelect = selector({
 //   key: "editFormState",
 //   default: getEditfrom,
 // });
+export const notificationSelect = selector({
+  key: "notificationSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getAllNotificatioin();
+      return response.data || [];
+    } catch (error) {
+      console.error(`getAllNotificatioin -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const notificationListState = atom({
+  key: "notificationListState",
+  default: notificationSelect,
+});
+
+
 
 export const allFormListState = atom({
   key: "allFormListState",

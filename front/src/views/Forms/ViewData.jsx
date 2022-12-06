@@ -96,7 +96,7 @@ const AllForms = (props) => {
           {formData.con && (
             <Form
               options={{
-                readOnly: true,
+                readOnly: false,
                 renderMode: "flat",
                 buttonSettings: {
                   showSubmit: false,

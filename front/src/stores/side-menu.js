@@ -1,8 +1,5 @@
 import { atom } from "recoil";
 
-
-
-
 let sideMenu = atom({
   key: "sideMenu",
   default: {
@@ -59,7 +56,7 @@ let sideMenu = atom({
       },
       {
         icon: "Home",
-        title: "Stduent Info",
+        title: "Student Info",
         pathname: "/student_info",
       },
       {
@@ -67,11 +64,11 @@ let sideMenu = atom({
         pathname: "/calender",
         title: "Calender",
       },
-      {
-        icon: "ListChecks",
-        pathname: "/tasks",
-        title: "To Do List",
-      },
+      // {
+      //   icon: "ListChecks",
+      //   pathname: "/tasks",
+      //   title: "To Do List",
+      // },
       {
         icon: "Files",
         pathname: "/my_doc",
@@ -120,7 +117,8 @@ let UsersideMenu = atom({
             icon: "",
             pathname: "/forms/4",
             title: "DS-160 For Child one",
-          },  {
+          },
+          {
             icon: "",
             pathname: "/forms/5",
             title: "DS-160 For Child Two",
@@ -165,11 +163,11 @@ let UsersideMenu = atom({
         pathname: "/my_doc",
         title: "Dwonload Docs",
       },
-      {
-        icon: "ListChecks",
-        pathname: "/tasks",
-        title: "To Do List",
-      },
+      // {
+      //   icon: "ListChecks",
+      //   pathname: "/tasks",
+      //   title: "To Do List",
+      // },
     ],
   },
 });

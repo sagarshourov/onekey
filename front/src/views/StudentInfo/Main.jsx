@@ -30,10 +30,10 @@ const AdminUsers = (props) => {
 
   const [students, setStudents] = useRecoilStateLoadable(allstudentListState);
 
-  const [universities, setUniversity] =
-    useRecoilStateLoadable(allUniverstyState);
+  // const [universities, setUniversity] =
+  //   useRecoilStateLoadable(allUniverstyState);
 
-  const [visaType, setVisaTypes] = useRecoilStateLoadable(visaTypeState);
+  // const [visaType, setVisaTypes] = useRecoilStateLoadable(visaTypeState);
 
   const [rowCount, setRowCount] = useState(10);
 
@@ -44,10 +44,13 @@ const AdminUsers = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [fdata, setFdata] = useState({
-    user_id: userId,
+    user_id: 0,
     code: "",
     date: "",
     university: "",
+    package: 0,
+    time: "",
+    type: "",
   });
 
   const handelPageCount = (e) => {
@@ -66,8 +69,28 @@ const AdminUsers = (props) => {
     setSearch(e.target.value);
   };
 
+  const handelModel = (val, user = {}) => {
+    setShowStudentInfrmation(val);
+    if (val === true) {
+      setFdata({
+        user_id: user.id,
+        code: user.student_info?.code,
+        interview_date: user.student_info?.interview_date,
+        university: user.student_info?.university,
+        package: user.package,
+        interview_time: user.student_info?.interview_time,
+        visa_type: user.student_info?.visa_type,
+      });
+    } else {
+      setFdata({});
+      console.log("sagar");
+    }
+
+    console.log("user", user);
+  };
+
   const updateInformation = async (e) => {
-    e.preventDefault();
+    console.log("update button clicked");
 
     const LOGIN_URL = getBaseApi() + "student_info";
     const token = localStorage.getItem("token");
@@ -79,21 +102,23 @@ const AdminUsers = (props) => {
 
     setLoading(true);
 
+    setFdata((fdata) => ({ ...fdata, user_id: userId }));
+
     try {
       // const response = await axios.post(LOGIN_URL, JSON.stringify(fdata), {
       //   headers,
       // });
-      fdata.user_id = userId;
 
       const response = await axios.post(LOGIN_URL, fdata, {
         headers,
       });
 
+      if (response?.data?.success) {
+        setShowStudentInfrmation(false);
+       window.location.reload();
+      }
       setLoading(false);
-      setShowStudentInfrmation(false);
-      window.location.reload();
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
   };
@@ -141,13 +166,24 @@ const AdminUsers = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {students.state === "hasValue" && (
+          {students.state === "hasValue" ? (
             <UsersTable
               rowCount={rowCount}
+              setFdata={setFdata}
               users={filterData}
               setUserId={setUserId}
-              studentInformation={setShowStudentInfrmation}
+              handelModel={handelModel}
             />
+          ) : (
+            <div className="h-full w-full bg-gray-50/75 grid  absolute z-40">
+              <div className="w-8 h-8 place-self-center">
+                <LoadingIcon
+                  icon="ball-triangle"
+                  color="gray"
+                  className="w-4 h-4 ml-2"
+                />
+              </div>
+            </div>
           )}
         </div>
         {/* END: Data List */}
@@ -163,7 +199,7 @@ const AdminUsers = (props) => {
       <Modal
         show={showStudentInfrmation}
         onHidden={() => {
-          setShowStudentInfrmation(false);
+          handelModel(false);
         }}
       >
         <ModalBody className="p-0">
@@ -184,10 +220,40 @@ const AdminUsers = (props) => {
                   type="text"
                   className=" py-4 form-control"
                   placeholder=""
+                  defaultValue={fdata.code}
                   onChange={(e) =>
                     setFdata((fdata) => ({ ...fdata, code: e.target.value }))
                   }
                 />
+              </div>
+            </div>
+            <div className="mt-5">
+              <label htmlFor="vertical-form-1" className="form-label">
+                Case Type
+              </label>
+
+              <div className="input-group w-full">
+                <div className="input-group-text">
+                  <Lucide icon="Award" className="w-4 h-4 mt-2" />
+                </div>
+                <select
+                  name="package"
+
+                  defaultValue={fdata.package}
+                  onChange={(e) =>
+                    setFdata((fdata) => ({
+                      ...fdata,
+                      package: parseInt(e.target.value),
+                    }))
+                  }
+                  className=" py-4 form-control"
+                >
+                  <option>Select ... </option>
+                  <option value="1">Platinum Packege </option>
+                  <option value="2">Gold Packege </option>
+                  <option value="3">Silver Packege </option>
+                  <option value="0">Other Packege </option>
+                </select>
               </div>
             </div>
             <div className="mt-5">
@@ -203,8 +269,12 @@ const AdminUsers = (props) => {
                   type="date"
                   className=" py-4 form-control"
                   placeholder=""
+                  defaultValue={fdata.interview_date}
                   onChange={(e) =>
-                    setFdata((fdata) => ({ ...fdata, date: e.target.value }))
+                    setFdata((fdata) => ({
+                      ...fdata,
+                      interview_date: e.target.value,
+                    }))
                   }
                 />
               </div>
@@ -222,8 +292,12 @@ const AdminUsers = (props) => {
                   type="time"
                   className=" py-4 form-control"
                   placeholder=""
+                  defaultValue={fdata.interview_time}
                   onChange={(e) =>
-                    setFdata((fdata) => ({ ...fdata, time: e.target.value }))
+                    setFdata((fdata) => ({
+                      ...fdata,
+                      interview_time: e.target.value,
+                    }))
                   }
                 />
               </div>
@@ -237,24 +311,18 @@ const AdminUsers = (props) => {
                 <div id="input-group-email" className="input-group-text">
                   <Lucide icon="Home" className="w-4 h-4 mt-2" />
                 </div>
-                <select
-                  className="form-control py-4"
+
+                <input
+                  type="text"
+                  className=" py-4 form-control"
+                  defaultValue={fdata.university}
                   onChange={(e) =>
                     setFdata((fdata) => ({
                       ...fdata,
                       university: e.target.value,
                     }))
                   }
-                >
-                  <option value="">Select </option>
-
-                  {universities.state === "hasValue" &&
-                    universities.contents.map((university, key) => (
-                      <option key={key} value={university.id}>
-                        {university.title}
-                      </option>
-                    ))}
-                </select>
+                />
               </div>
             </div>
             <div className="mt-5">
@@ -266,20 +334,18 @@ const AdminUsers = (props) => {
                 <div className="input-group-text">
                   <Lucide icon="Info" className="w-5 h-4 mt-2" />
                 </div>
-                <select
-                  className="form-control py-4"
+
+                <input
+                  type="text"
+                  className=" py-4 form-control"
+                  defaultValue={fdata.visa_type}
                   onChange={(e) =>
-                    setFdata((fdata) => ({ ...fdata, type: e.target.value }))
+                    setFdata((fdata) => ({
+                      ...fdata,
+                      visa_type: e.target.value,
+                    }))
                   }
-                >
-                  <option value="">Select </option>
-                  {visaType.state === "hasValue" &&
-                    visaType.contents.map((visaTyp, key) => (
-                      <option key={key} value={visaTyp.id}>
-                        {visaTyp.title}
-                      </option>
-                    ))}
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -287,7 +353,7 @@ const AdminUsers = (props) => {
             <button
               type="button"
               onClick={() => {
-                setShowStudentInfrmation(false);
+                handelModel(false);
               }}
               className="btn btn-outline-secondary w-24 mr-1"
             >

@@ -21,6 +21,8 @@ import axios from "axios";
 import { filter } from "lodash";
 import { getBaseApi } from "../../configuration";
 
+import { Link } from "react-router-dom";
+
 const token = localStorage.getItem("token");
 
 const headers = {
@@ -83,9 +85,9 @@ const AllDocs = (props) => {
       <h2 className="intro-y text-lg font-medium mt-10">Uploaded Docs</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <button className="btn btn-primary shadow-md mr-2">
-            Add New User
-          </button>
+          <Link to="/add_files" className="btn btn-primary shadow-md mr-2">
+            Add New Documents
+          </Link>
 
           <div className="hidden md:block mx-auto text-slate-500">
             Showng {filterData.length} out of{" "}

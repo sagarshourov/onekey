@@ -17,6 +17,11 @@ import { adminUserListState } from "../../state/admin-atom";
 import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 
+import axios from "axios";
+import { getAdmin } from "../../configuration";
+
+import { LoadingIcon } from "@/base-components";
+
 import { filter } from "lodash";
 
 function applySortFilters(array, searchValue) {
@@ -31,11 +36,14 @@ function applySortFilters(array, searchValue) {
 
 const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
-
+  const [newUserModal, setNewUserModal] = useState(false);
   const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
   const [rowCount, setRowCount] = useState(10);
-
+  const [formdata, setFormdata] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  
 
   const handelPageCount = (e) => {
     console.log(e.target.value);
@@ -55,17 +63,87 @@ const AdminUsers = (props) => {
 
   let filterData = applySortFilters(usersData.contents, search);
 
+  const handelChange = (e) => {
+    var value = e.target.value;
+
+    let val = { [e.target.name]: value };
+    setFormdata({ ...formdata, ...val });
+  };
+
+  const createAdmin = async () => {
+    const URL = getAdmin() + "create_admin_users";
+    if (formdata.password !== formdata.cpassword) {
+      alert("Password Not mathing !");
+
+      return false;
+    }
+    if (formdata.first_name == "") {
+      alert("First Name Not mathing !");
+      return false;
+    }
+
+    if (formdata.last_name == "") {
+      alert("Last Name Not mathing !");
+      return false;
+    }
+
+    if (formdata.email == "") {
+      alert("E-mail required !");
+      return false;
+    }
+
+    if (formdata.password == "") {
+      alert("Password required !");
+      return false;
+    }
+
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    };
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(URL, formdata, {
+        headers,
+      });
+
+
+ 
+
+      if(response.data.success){
+        window.location.reload();
+
+      }else{
+        alert('Something is worng please try again later!')
+      }
+
+
+
+
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">Admin Users List</h2>
+      <h2 className="intro-y text-lg font-medium mt-10 ">Admin Users List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <button className="btn btn-primary shadow-md mr-2">
-            Add New User
+          <button
+            className="btn btn-primary shadow-md mr-2"
+            onClick={() => setNewUserModal(true)}
+          >
+            Add New Admin
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-           Showng  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+            Showng {filterData.length} out of{" "}
+            {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}
@@ -98,6 +176,7 @@ const AdminUsers = (props) => {
           {usersData.state === "hasValue" && (
             <UsersTable
               rowCount={rowCount}
+              setDeleteConfirmationModal={setDeleteConfirmationModal}
               users={filterData}
             />
           )}
@@ -147,6 +226,99 @@ const AdminUsers = (props) => {
         </ModalBody>
       </Modal>
       {/* END: Delete Confirmation Modal */}
+
+      <Modal
+        show={newUserModal}
+        onHidden={() => {
+          setNewUserModal(false);
+        }}
+      >
+        <ModalBody className="p-0">
+          <h3 className="text-3xl p-5 text-center">Create New Admin</h3>
+
+          <div className="p-5">
+            <div className="form-inline">
+              <label htmlFor="horizontal-form-1" className="form-label sm:w-20">
+                First name
+              </label>
+              <input
+                onChange={(e) => handelChange(e)}
+                name="first_name"
+                type="text"
+                className="form-control"
+                placeholder="Jon"
+              />
+            </div>
+            <div className="form-inline mt-5">
+              <label htmlFor="horizontal-form-1" className="form-label sm:w-20">
+                Last name
+              </label>
+              <input
+                onChange={(e) => handelChange(e)}
+                name="last_name"
+                type="text"
+                className="form-control"
+                placeholder="Doe"
+              />
+            </div>
+            <div className="form-inline mt-5">
+              <label htmlFor="horizontal-form-1" className="form-label sm:w-20">
+                Email
+              </label>
+              <input
+                name="email"
+                onChange={(e) => handelChange(e)}
+                type="text"
+                className="form-control"
+                placeholder="example@gmail.com"
+              />
+            </div>
+            <div className="form-inline mt-5">
+              <label htmlFor="horizontal-form-2" className="form-label sm:w-20">
+                Password
+              </label>
+              <input
+                onChange={(e) => handelChange(e)}
+                name="password"
+                type="password"
+                className="form-control"
+                placeholder="secret"
+              />
+            </div>
+            <div className="form-inline mt-5">
+              <label htmlFor="horizontal-form-2" className="form-label sm:w-20">
+                Confrim Password
+              </label>
+              <input
+                onChange={(e) => handelChange(e)}
+                name="cpassword"
+                type="password"
+                className="form-control"
+                placeholder="secret"
+              />
+            </div>
+          </div>
+
+          <div className="px-5 pb-8 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setNewUserModal(false);
+              }}
+              className="btn btn-outline-secondary w-24 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={createAdmin}
+              type="button"
+              className="btn btn-primary w-24"
+            >
+              Save
+            </button>
+          </div>
+        </ModalBody>
+      </Modal>
     </>
   );
 };

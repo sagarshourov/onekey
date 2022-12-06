@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 const formatDate = (dat) => {
   //const date = dat.split(" ");
-  return dat.split("T")[0];
+  return dat ? dat.split("T")[0] : "";
 };
 const UsersTable = (props) => {
   const { users, rowCount , setDeleteConfirmationModal , setSelectId} = props;

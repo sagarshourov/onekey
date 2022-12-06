@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { useState } from "react";
 import { getAdmin, getBaseApi } from "../../configuration";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -105,12 +105,12 @@ const UsersTable = (props) => {
 
               <td className="table-report__action w-64">
                 <div className="flex justify-center items-center">
-                  <a
+                  <Link
                     className="flex items-center text-primary  px-2"
-                    href={"/forms/edit/" + user.id}
+                    to={"/forms/edit/" + user.id}
                   >
                     <Lucide icon="Edit" className="w-4 h-4 mr-1" /> Edit
-                  </a>
+                  </Link>
                   <a
                     className="flex items-center text-danger px-2"
                     href="#"
@@ -121,12 +121,12 @@ const UsersTable = (props) => {
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Remove
                   </a>
 
-                  <a
+                  <Link
                     className="flex items-center text-info px-2"
-                    href={"/forms/view/" + user.id}
+                    to={"/forms/view/" + user.id}
                   >
                     <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View
-                  </a>
+                  </Link>
                 </div>
               </td>
             </tr>

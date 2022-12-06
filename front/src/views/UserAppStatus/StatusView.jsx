@@ -39,7 +39,7 @@ const StatusView = (props) => {
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">Add New Documents</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">User App Status</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
         <div className="intro-y box  p-5 mt-2">
@@ -63,7 +63,7 @@ const StatusView = (props) => {
                       <a
                         href="#"
                         className="key_sub_sec"
-                        onClick={() => handelMain(statu.id)}
+                       
                       ></a>
                     </div>
                     <div className="timeline-panel">
@@ -112,7 +112,7 @@ const StatusView = (props) => {
               status.contents.notes.map((note, index) => (
                 <li key={index} className="mb-10 ml-6">
                   <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                    <img className="rounded-full shadow-lg" src="" alt="A" />
+                    A
                   </span>
                   <div className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm dark:bg-gray-700 dark:border-gray-600">
                     <div className="justify-between items-center mb-3 sm:flex">

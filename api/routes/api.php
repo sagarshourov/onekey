@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
+Route::post('forgot', 'App\Http\Controllers\AuthController@forgot');
+
+
 
 Route::post('register', 'App\Http\Controllers\AuthController@register');
 Route::get('countries', 'App\Http\Controllers\UserController@countries');
@@ -38,6 +41,13 @@ Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
 Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');
 Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
 
+
+Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_password');
+
+
+
+//Route::get('has/{pass}', 'App\Http\Controllers\UserController@has_pass');
+
 //Route::post('file_upload', 'App\Http\Controllers\FileController@file_upload');
 
 Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], function () {
@@ -55,16 +65,10 @@ Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], f
 
     Route::get('app_status/{id}', 'App\Http\Controllers\UserController@app_status');
 
-   
+
     Route::get('tasks', 'App\Http\Controllers\TasksController@task_list');
-    
+
     Route::post('submit_form', 'App\Http\Controllers\Admin\FormController@submit_form');
- 
-
-    
-    
-
-    
 });
 
 
@@ -72,7 +76,7 @@ Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], f
 Route::get('file/{folder}/{path}', 'App\Http\Controllers\FileController@getFile');
 
 
-
+Route::get('dwonload/{folder}/{path}', 'App\Http\Controllers\FileController@dwonload');
 
 
 
@@ -83,8 +87,22 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     // Route::get('users', 'App\Http\Controllers\Admin\UserController@index');
     Route::get('users', 'App\Http\Controllers\Admin\UserController@all_users');
-
+    Route::get('admin_users', 'App\Http\Controllers\Admin\UserController@admin_users');
+    Route::post('create_admin_users', 'App\Http\Controllers\Admin\UserController@create_admin_users');
     Route::post('update_user_status', 'App\Http\Controllers\Admin\UserController@update_user_status');
+    Route::post('assign_admin_users', 'App\Http\Controllers\Admin\UserController@assign_admin_users');
+
+    Route::post('delete_admin_users', 'App\Http\Controllers\Admin\UserController@delete_admin_users');
+
+    
+
+    Route::get('assign_users/{id}', 'App\Http\Controllers\Admin\UserController@assign_users');
+    
+
+    
+
+
+
 
 
     Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
@@ -100,7 +118,7 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::post('save_form', 'App\Http\Controllers\Admin\FormController@save_form');
     Route::post('update_form', 'App\Http\Controllers\Admin\FormController@update_form');
-  
+
     Route::post('update_form_status', 'App\Http\Controllers\Admin\FormController@update_form_status');
 
 
@@ -112,6 +130,17 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('save_notes', 'App\Http\Controllers\UserController@save_notes');
 
     Route::post('save_event', 'App\Http\Controllers\EventsController@save_event');
+
+
+
+    Route::get('notifications', 'App\Http\Controllers\UserController@notifications');
+
+
+    Route::post('delete_noti', 'App\Http\Controllers\UserController@delete_notification');
+
+
+
+
     
 });
 

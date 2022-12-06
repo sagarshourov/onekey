@@ -11,7 +11,7 @@ class Forms extends Model
     public $timestamps = true;
 
     protected $fillable = [
-       'title', 'content', 'group_id', 'content', 'visibility', 'allows_edit'
+       'title', 'content', 'content', 'visibility', 'allows_edit'
     ];
 
     public function from_groups()

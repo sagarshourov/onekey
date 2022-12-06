@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use App\Models\AdminUsers;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -11,11 +13,40 @@ use App\Models\VisaType;
 use App\Models\VisaStatus;
 use App\Models\Universty;
 use App\Models\StudentInfo;
-use Validator;
+use Illuminate\Support\Facades\Mail;
+
+
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Str;
 
 class UserController extends BaseController
 {
     //
+
+
+    public function assign_admin_users(Request $request)
+    {
+        $input = $request->all();
+
+        if (count($input['data'])  > 0) {
+
+            foreach ($input['data'] as $user_id) {
+                AdminUsers::create([
+                    'admin_id' => $input['user_id'],
+                    'user_id' => $user_id,
+                ]);
+            }
+        } else {
+            return $this->sendError($request->all(), 'Something worng.');
+        }
+
+
+
+
+
+        return $this->sendResponse($request->all(), 'Admin retrieved successfully.');
+    }
 
     public function save_form(Request $request)
     {
@@ -29,7 +60,7 @@ class UserController extends BaseController
         return $this->sendResponse($request->all(), 'Users retrieved successfully.');
     }
 
-    
+
 
     public function index()
     {
@@ -40,10 +71,95 @@ class UserController extends BaseController
 
     public function all_users()
     {
+        // $assign = $this->assignUsers();
+
+
+        // if ($assign) {
+        //     $users =  User::whereIn('id', $assign)->orderByDesc('id')->get();
+        // } else {
+        //     $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
+        // }
+
         $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
 
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
+
+
+
+
+    public function create_admin_users(Request $request)
+    {
+
+        $input = $request->all();
+
+
+
+        $validator = Validator::make($input, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|unique:users',
+        ]);
+
+
+        if ($validator->fails()) {
+
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+
+
+        $input['password'] = bcrypt($input['password']);
+        $input['first_name'] = $input['first_name'];
+        $input['last_name'] = $input['last_name'];
+        $input['email'] = $input['email'];
+        $input['is_admin'] = 1;
+        $input['status'] = 'approved';
+
+
+
+        $user = User::create($input);
+
+        return $this->sendResponse($user, 'Users retrieved successfully.');
+    }
+
+
+
+    public function assign_users($id)
+    {
+        // $users =  AdminUsers::with(['user'])->where('admin_id', 1)->orderByDesc('id')->get();
+
+        $users =  AdminUsers::with('users')->where('admin_id', $id)->orderByDesc('id')->get();
+        return $this->sendResponse($users, 'Users retrieved successfully.');
+    }
+
+    public function delete_admin_users(Request $request)
+    {
+        $input = $request->all();
+
+
+        AdminUsers::where(['admin_id' => $input['admin_id'], 'user_id' => $input['user_id']])->delete();
+
+        return $this->sendResponse(['success'], 'Users retrieved successfully.');
+    }
+
+
+
+
+    public function admin_users()
+    {
+        $users =  User::with(['profile' => function ($query) {
+            $query->where('doc_type', 2);
+        }])->where('is_admin', 1)->orderByDesc('id')->get();
+
+
+
+        return $this->sendResponse($users, 'Users retrieved successfully.');
+    }
+
+
+
+
 
     public function visa_types()
     {
@@ -67,42 +183,71 @@ class UserController extends BaseController
     {
         $input = $request->all();
 
-        $validator = Validator::make($input, [
-            'code' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'university' => 'required',
-            'type' => 'required',
-        ]);
-        if ($validator->fails()) {
+        // $validator = Validator::make($input, [
+        //     'code' => 'required',
+        //     'date' => 'required',
+        //     'time' => 'required',
+        //     'university' => 'required',
+        //     'type' => 'required',
+        //     'package' => 'required',
+        // ]);
+        // if ($validator->fails()) {
 
-            return $this->sendError('Validation Error.', $validator->errors());
+        //     return $this->sendError('Validation Error.', $validator->errors());
+        // }
+
+        $input['visa_status'] = 1;
+
+
+        if (isset($input['package'])) {
+            User::where('id',  $input['user_id'])
+                ->update(['package' => $input['package']]);
         }
 
         StudentInfo::updateOrCreate([
             'user_id'   => $input['user_id'],
-        ], [
-            'code' => $input['code'],
-            'interview_date' => $input['date'],
-            'interview_time' => $input['time'],
-            'university' => $input['university'],
-            'visa_status' => 1,
-            'user_id'   => $input['user_id'],
-            'visa_type'   => $input['type'],
+        ],  $input);
 
-        ]);
 
-        return $this->sendResponse(['success'], 'You will recive an email within short time.');
+
+
+
+
+        return $this->sendResponse($input, 'You will recive an email within short time.');
         //
     }
 
     public function all_students()
     {
-        $students =  User::with(array(
+        // $assign = $this->assignUsers();
+        // if ($assign) { //when master admin 
+        //     $students =  User::with(array(
+        //         'student_info',
+        //         'student_info.university',
+        //         'student_info.visa_type'
+        //     ))->whereIn('id', $assign)->orderByDesc('id')->get();;
+
+        //     return $this->sendResponse($students, 'Users retrieved successfully.');
+        // } else {
+        //     $students =  User::with(array(
+        //         'student_info',
+        //         'student_info.university',
+        //         'student_info.visa_type'
+        //     ))->orderByDesc('id')->get();;
+
+        //     return $this->sendResponse($students, 'Users retrieved successfully.');
+        // }
+
+        // $students =  User::with(array(
+        //     'student_info',
+        //     'student_info.university',
+        //     'student_info.visa_type'
+        // ))->orderByDesc('id')->get();;
+
+
+        $students =  User::with(
             'student_info',
-            'student_info.university',
-            'student_info.visa_type'
-        ))->orderByDesc('id')->get();;
+        )->orderByDesc('id')->get();;
 
         return $this->sendResponse($students, 'Users retrieved successfully.');
     }
@@ -115,9 +260,6 @@ class UserController extends BaseController
 
         if ($input['type'] == 'remove') {
             $user = User::find($input['user_id']);
-
-
-
             $user->delete();
             return $this->sendResponse(['Success'], 'Removed successfully.');
         }
@@ -125,6 +267,31 @@ class UserController extends BaseController
 
         $user = User::find($input['user_id']);
         $user->status = $input['type'];
+
+
+
+        $name =  $user->first_name;
+
+        $email =  $user->email;
+
+        $password = Str::random(10);
+
+
+
+
+        if ($input['type'] == 'approved') {
+            Mail::send('email.request_approved', ['name' => $name, 'email' => $email, 'password' => $password], function ($message) use ($email, $name) {
+
+                $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
+
+                $message->to($email, $name)->subject('Approved - Your Request has been approved');
+            });
+
+            $user->password = Hash::make($password);
+        }
+
+
+
         $user->save();
 
         return $this->sendResponse(['Success'], 'Saved successfully.');

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { getAdmin, getBaseApi } from "../../configuration";
 import axios from "axios";
 
+import { Link } from "react-router-dom";
+
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -36,7 +38,7 @@ const UsersTable = (props) => {
         }
       );
 
-     window.location.reload();
+      window.location.reload();
     } catch (err) {
       setLoading(false);
     }
@@ -60,12 +62,10 @@ const UsersTable = (props) => {
             <tr key={key} className="intro-x">
               <td className="w-40">{count}</td>
               <td>
-                <a href="" className="font-medium whitespace-nowrap">
-                  {user.first_name}
-                </a>
-                <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                  {user.last_name}
-                </div>
+                <Link to={"/profile/" + user.id} className="font-medium whitespace-nowrap">
+                  {user.first_name}   {user.last_name}
+                </Link>
+               
               </td>
               <td className="text-center">{user.email}</td>
               <td className="text-center">
@@ -79,7 +79,7 @@ const UsersTable = (props) => {
                     Pending
                   </span>
                 )}
-                 {user.status === "rejected" && (
+                {user.status === "rejected" && (
                   <span className="text-xs whitespace-nowrap text-white bg-danger border border-danger/20 rounded-full px-2 py-1">
                     Rejected
                   </span>
@@ -88,7 +88,7 @@ const UsersTable = (props) => {
               <td className="text-center">{formatDate(user.created_at)}</td>
               <td className="table-report__action w-64">
                 <div className="flex justify-center items-center">
-                  {user.status == "pending" && (
+                  {user.status == "pending" ? (
                     <>
                       <a
                         className="flex items-center text-success px-2"
@@ -110,6 +110,12 @@ const UsersTable = (props) => {
                         <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Reject
                       </a>
                     </>
+                  ) : (
+                    <Link className="flex items-center text-success px-2" to={"/profile/" + user.id}>
+                      {" "}
+                      <Lucide icon="User" className="w-4 h-4 mr-1" /> View
+                      Profile
+                    </Link>
                   )}
 
                   <a

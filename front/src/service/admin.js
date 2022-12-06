@@ -5,9 +5,27 @@ const token = localStorage.getItem("token");
 
 const headers = { Authorization: `Bearer ${token}` };
 
+export async function getAssignUsers(id) {
+  const userApiUrl = getAdmin() + "assign_users/"+id;
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
 
-
-
+export async function getAllNotificatioin() {
+  const userApiUrl = getAdmin() + "notifications";
+  // console.log("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
 
 export async function getAdminAppStatus(id) {
   const userApiUrl = getAdmin() + "app_status/" + id;
@@ -20,8 +38,6 @@ export async function getAdminAppStatus(id) {
   }
 }
 
-
-
 export async function getFormData(id) {
   const userApiUrl = getAdmin() + "formdata/" + id;
   // console.log("userApiUrl", userApiUrl);
@@ -32,7 +48,6 @@ export async function getFormData(id) {
     throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
   }
 }
-
 
 export async function getFormById(id) {
   const userApiUrl = getAdmin() + "formbyid/" + id;
@@ -45,9 +60,6 @@ export async function getFormById(id) {
   }
 }
 
-
-
-
 export async function getForm(id) {
   const userApiUrl = getAdmin() + "forms/read/" + id;
   // console.log("userApiUrl", userApiUrl);
@@ -58,10 +70,6 @@ export async function getForm(id) {
     throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
   }
 }
-
-
-
-
 
 export async function getEditForm(id) {
   const userApiUrl = getAdmin() + "forms/edit/" + id;
@@ -86,7 +94,7 @@ export async function getAllForms() {
 }
 
 export async function getAdminUsers() {
-  const userApiUrl = getAdmin() + "users";
+  const userApiUrl = getAdmin() + "admin_users";
   // console.log("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });

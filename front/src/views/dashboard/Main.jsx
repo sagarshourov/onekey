@@ -1,275 +1,434 @@
-import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  Litepicker,
-  TabGroup,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@/base-components";
+import { Lucide, LoadingIcon, Dropzone, Input } from "@/base-components";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
 
-import * as $_ from "lodash";
+import { useEffect, useState, useRef } from "react";
+import { getBaseApi } from "../../configuration";
+import { userSelect } from "../../state/users-atom";
+const token = localStorage.getItem("token");
 
-import { useState } from "react";
+const UserMain = () => {
+  const dropzoneSingleRef = useRef();
+  const userData = useRecoilValue(userSelect(0));
 
+  const [val, setValue] = useState(userData);
+  const [edit, setEdit] = useState(true);
+  const [editProfile, handelEditProfileClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handelEditClick = (val) => {
+    handelEditProfileClick(false);
+    setEdit(val);
+  };
 
-function Main() {
-  const [generalReportFilter, setGeneralReportFilter] = useState();
-  const [salesReportFilter, setSalesReportFilter] = useState();
-  const salesPerformance = () => {
-    return [
-      "bg-opacity-60",
-      "bg-opacity-40",
-      "bg-opacity-30",
-      "bg-opacity-20",
-      "bg-opacity-10",
-    ][$_.random(0, 4)];
+  const handelSave = async (e) => {
+    e.preventDefault();
+
+    if (val.password !== val.rpassword) {
+      alert("Password and retype password not matching !");
+      return;
+    }
+
+    setLoading(true);
+    const LOGIN_URL = getBaseApi() + "save_user";
+
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    };
+
+    try {
+      const response = await axios.post(LOGIN_URL, val, {
+        headers,
+      });
+      setLoading(false);
+      setEdit(true);
+      window.location.reload();
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
+  const saveRadio = (gendar) => {
+    setValue({ ...val, gendar: gendar });
   };
 
   return (
     <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-12 2xl:col-span-9">
+      <div className="col-span-12 md:col-span-9 xl:col-span-9">
         <div className="grid grid-cols-12 gap-6">
           {/* BEGIN: General Report */}
-          {/* <div className="col-span-12 mt-6">
-            <div className="intro-y block sm:flex items-center h-10">
-              <h2 className="text-lg font-medium truncate mr-5">
-                General Report
-              </h2>
-              <div className="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                <Lucide
-                  icon="Calendar"
-                  className="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                />
-                <Litepicker
-                  value={generalReportFilter}
-                  onChange={setGeneralReportFilter}
-                  options={{
-                    autoApply: false,
-                    singleMode: false,
-                    numberOfColumns: 2,
-                    numberOfMonths: 2,
-                    showWeekNumbers: true,
-                    dropdowns: {
-                      minYear: 1990,
-                      maxYear: null,
-                      months: true,
-                      years: true,
-                    },
-                  }}
-                  className="form-control sm:w-56 box pl-10"
-                />
-              </div>
+          <div className="col-span-12 mt-6">
+            <div className="intro-y block sm:flex items-center h-20">
+              <h2 className="text-lg font-medium truncate mr-5">Profile</h2>
             </div>
-            <div className="intro-y report-box mt-12 sm:mt-4">
-              <div className="box py-0 xl:py-5 grid grid-cols-12 gap-0 divide-y xl:divide-y-0 divide-x divide-dashed divide-slate-200 dark:divide-white/5">
-                <div className="report-box__item py-5 xl:py-0 px-5 col-span-12 sm:col-span-6 xl:col-span-3">
-                  <div className="report-box__content">
-                    <div className="flex">
-                      <div className="report-box__item__icon text-primary bg-primary/20 border border-primary/20 flex items-center justify-center rounded-full">
-                        <Lucide icon="PieChart" />
-                      </div>
-                      <div className="ml-auto">
-                        <Tippy
-                          tag="div"
-                          className="report-box__item__indicator text-success cursor-pointer"
-                          content="5.2% Higher than last month"
-                        >
-                          +5.2%
-                          <Lucide icon="ArrowUp" className="w-4 h-4 ml-0.5" />
-                        </Tippy>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-medium leading-7 mt-6">
-                      $149,300
-                    </div>
-                    <div className="text-slate-500 mt-1">Total Assets</div>
+            <div className="box intro-y p-5">
+              <div className="flex justify-between border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div className="font-medium truncate ">GENERALS</div>
+
+                {!edit && (
+                  <div className="flex">
+                    <button
+                      onClick={() => handelEditClick(true)}
+                      className="btn btn-rounded-secondary w-24 mr-1 mb-2"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handelSave}
+                      className="btn btn-rounded-primary  w-24 mr-1 mb-2"
+                    >
+                      Save
+                      {loading && (
+                        <LoadingIcon
+                          icon="three-dots"
+                          color="white"
+                          className="w-4 h-4 ml-2"
+                        />
+                      )}
+                    </button>
                   </div>
+                )}
+
+                <button className="" onClick={() => handelEditClick(false)}>
+                  <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
+                </button>
+              </div>
+              <div className=" md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    First Name
+                  </label>
+                  <Input
+                    setValue={setValue}
+                    name="first_name"
+                    value={val}
+                    readOnly={edit}
+                    type="text"
+                    className="form-control"
+                    placeholder="Type here"
+                  />
                 </div>
-                <div className="report-box__item py-5 xl:py-0 px-5 sm:!border-t-0 col-span-12 sm:col-span-6 xl:col-span-3">
-                  <div className="report-box__content">
-                    <div className="flex">
-                      <div className="report-box__item__icon text-pending bg-pending/20 border border-pending/20 flex items-center justify-center rounded-full">
-                        <Lucide icon="CreditCard" />
-                      </div>
-                      <div className="ml-auto">
-                        <Tippy
-                          tag="div"
-                          className="report-box__item__indicator text-danger cursor-pointer"
-                          content="2% Lower than last month"
-                        >
-                          -2%
-                          <Lucide icon="ArrowDown" className="w-4 h-4 ml-0.5" />
-                        </Tippy>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-medium leading-7 mt-6">
-                      5.241
-                    </div>
-                    <div className="text-slate-500 mt-1">New Transactions</div>
-                  </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Middle Name
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    name="middle_name"
+                    type="text"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Type here"
+                  />
                 </div>
-                <div className="report-box__item py-5 xl:py-0 px-5 col-span-12 sm:col-span-6 xl:col-span-3">
-                  <div className="report-box__content">
-                    <div className="flex">
-                      <div className="report-box__item__icon text-warning bg-warning/20 border border-warning/20 flex items-center justify-center rounded-full">
-                        <Lucide icon="ShoppingBag" />
-                      </div>
-                      <div className="ml-auto">
-                        <Tippy
-                          tag="div"
-                          className="report-box__item__indicator text-success cursor-pointer"
-                          content="4.1% Higher than last month"
-                        >
-                          +4.1%
-                          <Lucide icon="ArrowDown" className="w-4 h-4 ml-0.5" />
-                        </Tippy>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-medium leading-7 mt-6">
-                      1.405
-                    </div>
-                    <div className="text-slate-500 mt-1">New Products</div>
-                  </div>
-                </div>
-                <div className="report-box__item py-5 xl:py-0 px-5 col-span-12 sm:col-span-6 xl:col-span-3">
-                  <div className="report-box__content">
-                    <div className="flex">
-                      <div className="report-box__item__icon text-success bg-success/20 border border-success/20 flex items-center justify-center rounded-full">
-                        <Lucide icon="HardDrive" />
-                      </div>
-                      <div className="ml-auto">
-                        <Tippy
-                          tag="div"
-                          className="report-box__item__indicator text-danger cursor-pointer"
-                          content="1% Lower than last month"
-                        >
-                          -1%
-                          <Lucide icon="ArrowDown" className="w-4 h-4 ml-0.5" />
-                        </Tippy>
-                      </div>
-                    </div>
-                    <div className="text-2xl font-medium leading-7 mt-6">
-                      2.034
-                    </div>
-                    <div className="text-slate-500 mt-1">New Stores</div>
-                  </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Last Name
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    name="last_name"
+                    type="text"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Last name"
+                  />
                 </div>
               </div>
+
+              <div className="mt-5 mb-5  md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Username
+                  </label>
+                  <Input
+                    setValue={setValue}
+                    type="text"
+                    name="email"
+                    value={val}
+                    readOnly={true}
+                    className="form-control"
+                    placeholder="Enter Name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Password
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="password"
+                    name="password"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Enter Password"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Re-type Password
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="password"
+                    name="rpassword"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder="Enter Password"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 mb-5  md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Date Of Birth
+                  </label>
+
+                  <Input
+                    setValue={setValue}
+                    type="date"
+                    name="birth"
+                    value={val}
+                    readOnly={edit}
+                    className="form-control"
+                    placeholder=""
+                  />
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Gendar
+                  </label>
+                  <div className="flex flex-col sm:flex-row mt-2">
+                    <div className="form-check mr-2">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="gendar"
+                        value="male"
+                        checked={val.gendar == "male"}
+                        onChange={() => saveRadio("male")}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="radio-switch-4"
+                      >
+                        Male
+                      </label>
+                    </div>
+                    <div className="form-check mr-2 mt-2 sm:mt-0">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="gendar"
+                        value="female"
+                        checked={val.gendar == "female"}
+                        onChange={() => saveRadio("female")}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="radio-switch-5"
+                      >
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    {""}
+                  </label>
+                </div>
+              </div>
             </div>
-          </div> */}
+
+            <div className="box intro-y p-5 mt-5 pb-5">
+              <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div className="font-medium truncate ">Contact</div>
+              </div>
+              <div className=" mb-5 md:columns-3">
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Mobile Phone
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="Phone"
+                        className="w-4 h-4 text-slate-500 ml-auto"
+                      />
+                    </div>
+
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="user_phone"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Phone no."
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Whatsapp
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="PhoneCall"
+                        className="w-4 h-4 text-slate-500 ml-auto"
+                      />
+                    </div>
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="whatsapp"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Phone no."
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="regular-form-1" className="form-label">
+                    Email
+                  </label>
+                  <div className="input-group">
+                    <div className="input-group-text">
+                      <Lucide
+                        icon="Mail"
+                        className="w-4 h-4 text-slate-500 ml-auto"
+                      />
+                    </div>
+                    <Input
+                      setValue={setValue}
+                      type="text"
+                      name="email"
+                      value={val}
+                      readOnly={edit}
+                      className="form-control"
+                      placeholder="Email"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* END: General Report */}
-         
-       
         </div>
       </div>
-      <div className="col-span-12 2xl:col-span-3">
-        <div className="2xl:border-l border-slate-300/50 h-full 2xl:pt-6 pb-6">
-          <div className="2xl:pl-6 grid grid-cols-12 gap-x-6 gap-y-8">
+      <div className="col-span-12 md:col-span-3 xl:col-span-3">
+        <div className="border-l border-slate-300/50 h-full pt-6 pb-6">
+          <div className="pl-6 grid grid-cols-12 gap-x-6 gap-y-8">
             {/* BEGIN: Attachments */}
-            {/* <div className="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12">
-              <div className="intro-x flex items-center h-10">
-                <h2 className="text-lg font-medium truncate mr-5">
-                  Shared Files
-                </h2>
-                <a href="" className="ml-auto text-slate-500 truncate">
-                  View More
-                </a>
-              </div>
+            <div className="col-span-12 md:col-span-12 xl:col-span-12 col-span-12">
               <div className="mt-4">
-                <div className="intro-x">
-                  <div className="file box px-5 py-3 mb-3 flex items-center">
-                    <div className="w-12 file__icon file__icon--directory"></div>
-                    <div className="ml-4 mr-auto">
-                      <div className="font-medium">Documentation.pdf</div>
-                      <div className="text-slate-500 text-xs mt-1">
-                        1 KB Document File
-                      </div>
-                    </div>
-                    <Dropdown>
-                      <DropdownToggle className="w-5 h-5 text-slate-500">
-                        <Lucide icon="MoreVertical" className="w-4 h-4" />
-                      </DropdownToggle>
-                      <DropdownMenu className="w-40">
-                        <DropdownContent>
-                          <DropdownItem>
-                            <Lucide icon="Copy" className="w-4 h-4 mr-2" /> Copy
-                            Link
-                          </DropdownItem>
-                          <DropdownItem>
-                            <Lucide icon="Trash" className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownItem>
-                        </DropdownContent>
-                      </DropdownMenu>
-                    </Dropdown>
+                <div className="intro-x box h-screen">
+                  <div className="flex justify-end">
+                    <button
+                      className="ml-auto mt-2 mr-2"
+                      onClick={() => {
+                        handelEditProfileClick(true);
+                        setEdit(true);
+                      }}
+                    >
+                      <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
+                    </button>
                   </div>
-                  <div className="file box px-5 py-3 mb-3 flex items-center">
-                    <div className="w-12 file__icon file__icon--file"></div>
-                    <div className="ml-4 mr-auto">
-                      <div className="font-medium">Rocketman.xd</div>
-                      <div className="text-slate-500 text-xs mt-1">
-                        20 MB Audio File
-                      </div>
+
+                  <div className="col-span-12 my-5 flex items-center">
+                    <div className="image-fit w-40 h-40 rounded-full border-4 border-white shadow-md overflow-hidden m-auto">
+                      <img
+                        alt="Profile Image"
+                        src={
+                          getBaseApi() + "file/" + val?.profile_image?.file_path
+                        }
+                      />
                     </div>
-                    <Dropdown>
-                      <DropdownToggle className="w-5 h-5 text-slate-500">
-                        <Lucide icon="MoreVertical" className="w-4 h-4" />
-                      </DropdownToggle>
-                      <DropdownMenu className="w-40">
-                        <DropdownContent>
-                          <DropdownItem>
-                            <Lucide icon="Copy" className="w-4 h-4 mr-2" /> Copy
-                            Link
-                          </DropdownItem>
-                          <DropdownItem>
-                            <Lucide icon="Trash" className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownItem>
-                        </DropdownContent>
-                      </DropdownMenu>
-                    </Dropdown>
                   </div>
-                  <div className="file box px-5 py-3 mb-3 flex items-center">
-                    <div className="w-12 file__icon file__icon--empty-directory"></div>
-                    <div className="ml-4 mr-auto">
-                      <div className="font-medium">Latest Report.xls</div>
-                      <div className="text-slate-500 text-xs mt-1">
-                        20 KB Zipped File
-                      </div>
+                  {editProfile && (
+                    <div className="col-span-12 my-5 flex items-center justify-center ">
+                      <Dropzone
+                        getRef={(el) => {
+                          dropzoneSingleRef.current = el;
+                        }}
+                        options={{
+                          url: getBaseApi() + "file_upload",
+                          thumbnailWidth: 150,
+                          maxFilesize: 5,
+                          maxFiles: 1,
+                          headers: { Authorization: `Bearer ${token}` },
+                          params: { type: 2 },
+
+                          init: function () {
+                            this.on("addedfile", function (file) {}),
+                              this.on("success", function (file, res) {
+                                handelEditProfileClick(false);
+                                // setValue([] res.data.file_path);
+                                const obj = {
+                                  profile_image: {
+                                    file_path: res.data.file_path,
+                                  },
+                                };
+                                setValue({
+                                  ...val,
+                                  ...obj,
+                                });
+                              });
+                          },
+                        }}
+                        className="dropzone"
+                      >
+                        <div className="text-lg font-medium">
+                          Drop files here or click to upload.
+                        </div>
+                        <div className="text-gray-600">
+                          File size
+                          <span className="font-medium">not</span> more than 5
+                          MB
+                        </div>
+                      </Dropzone>
                     </div>
-                    <Dropdown>
-                      <DropdownToggle className="w-5 h-5 text-slate-500">
-                        <Lucide icon="MoreVertical" className="w-4 h-4" />
-                      </DropdownToggle>
-                      <DropdownMenu className="w-40">
-                        <DropdownContent>
-                          <DropdownItem>
-                            <Lucide icon="Copy" className="w-4 h-4 mr-2" /> Copy
-                            Link
-                          </DropdownItem>
-                          <DropdownItem>
-                            <Lucide icon="Trash" className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownItem>
-                        </DropdownContent>
-                      </DropdownMenu>
-                    </Dropdown>
+                  )}
+                  <div className="col-span-12 my-5 flex items-center">
+                    <h1 className=" m-auto text-2xl font-medium">
+                      {val.first_name + " " + val.last_name}
+                    </h1>
+                    <div className="text-slate-500 text-xs mt-1"></div>
+                  </div>
+
+                  <div className="col-span-12 h-20"></div>
+                  {val.user_phone !== null && (
+                    <div className="col-span-12 pt-5  border-t flex items-center justify-center ">
+                      <Lucide icon="Phone" className="w-6 h-6 mr-2" />+{" "}
+                      {val?.user_phone}
+                    </div>
+                  )}
+                  <div className="col-span-12 mt-4 mb-5 flex items-center justify-center ">
+                    <Lucide icon="Mail" className="w-6 h-6 mr-2" />
+                    {val?.email}
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Main;
+export default UserMain;

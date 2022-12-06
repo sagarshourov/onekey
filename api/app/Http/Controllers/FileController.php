@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Files;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class FileController extends BaseController
 {
@@ -22,9 +23,16 @@ class FileController extends BaseController
     }
 
 
-    public function dwonload(Request $request)
+    public function dwonload($folder,  $filename)
     {
-        return $request;
+
+        $headers = array(
+            'Content-Type' => 'application/pdf',
+        );
+
+        if (Storage::exists($folder . '/' . $filename)) {
+            return Storage::download($folder . '/' . $filename, '', $headers);
+        }
     }
 
     public function delete_file(Request $request)
@@ -48,7 +56,11 @@ class FileController extends BaseController
 
 
         $path = $request->file('file')->store('files');
-        $user_id = Auth::id();
+
+
+        $user = Auth::user();
+
+        $user_id =  $user->id;
 
         $input = $request->all();
 
@@ -74,6 +86,14 @@ class FileController extends BaseController
 
             $file->save();
         }
+
+
+        $assignAmin = $this->assignAdminEmail($user_id);
+
+        Mail::send('email.file_upload', ['user' =>  $user, 'title' => $input['title']], function ($message) use ($assignAmin) {
+            $message->to($assignAmin, 'Admin')->subject('New Document Uploaded');
+            $message->from("info@onekeyclient.us", 'Admin');
+        });
 
 
 

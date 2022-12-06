@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
-import { adminUserListState } from "../../state/admin-atom";
+import { allUserListState } from "../../state/admin-atom";
 import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 
@@ -32,7 +32,7 @@ function applySortFilters(array, searchValue) {
 const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
-  const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
+  const [usersData, setUserState] = useRecoilStateLoadable(allUserListState);
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");

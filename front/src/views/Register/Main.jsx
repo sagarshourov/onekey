@@ -3,7 +3,7 @@ import logoUrl from "@/assets/images/logo.png";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
 
 import { Lucide } from "@/base-components";
-
+import { LoadingIcon } from "@/base-components";
 import axios from "axios";
 import { getBaseApi } from "../../configuration";
 import { useState } from "react";
@@ -19,8 +19,6 @@ const Register = () => {
   const [err, setErr] = useState([]);
   const [info, setInfo] = useState([]);
 
-  
-
   const LOGIN_URL = getBaseApi() + "register";
 
   const handelRegister = async (e) => {
@@ -35,11 +33,22 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      setErr([]);
 
-      setInfo(["Regstration Success ! You will recive an short Message soon."]);
-      setFirst("");
-      setLast("");
+      console.log(response);
+
+      if (response?.data.success) {
+        setErr([]);
+
+        setInfo([
+          "Regstration Success ! You will recive an short Message soon.",
+        ]);
+        setFirst("");
+        setLast("");
+      }else{
+        setInfo([]);
+        setErr(Object.values(response.data.data));
+      }
+
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -159,8 +168,6 @@ const Register = () => {
                   className="btn btn-primary w-full xl:mr-3"
                 >
                   Register
-
-                  
                   {loading && (
                     <LoadingIcon
                       icon="three-dots"

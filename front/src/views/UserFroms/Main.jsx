@@ -1,29 +1,35 @@
-import { Lucide, TomSelect, Tippy } from "@/base-components";
+import { Lucide, Alert, LoadingIcon } from "@/base-components";
 
-import * as $_ from "lodash";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+
 import { Form } from "react-formio";
-import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
-import { getAdmin, getBaseApi } from "../../configuration";
-
-import {
-  editFormState,
-  formIdAtom,
-  getFormSelect,
-  formDataSelect,
-} from "../../state/admin-atom";
+import { getBaseApi } from "../../configuration";
+import axios from "axios";
+import { formDataSelect } from "../../state/admin-atom";
 
 function Main() {
   let { id } = useParams();
   const formData = useRecoilValue(formDataSelect(id));
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmitData = (e) => {
-    let data = e.submission ? e.submission.data : e.data;
+  const [dismiss, setDismiss] = useState(false);
+
+  const handleSubmitData = async (e) => {
+    console.log("submit form");
+    let data = {};
+
+    let last_step = false;
+
+    if (e.submission) {
+      data = e.submission.data;
+    } else {
+      data = e.data;
+      last_step = true;
+    }
 
     setLoading(true);
     const LOGIN_URL = getBaseApi() + "submit_form";
@@ -33,17 +39,31 @@ function Main() {
       ContentType: "application/json",
     };
     try {
-      const response = axios.post(
+      const response = await axios.post(
         LOGIN_URL,
-        { form_id: id, data: data },
+        {
+          form_id: id,
+          data: data,
+          title: formData.title,
+          last_step: last_step,
+        },
         {
           headers,
         }
       );
-      console.log(response);
-      // window.location.reload();
+
+      if (response?.data?.success) {
+        if (!e.submission) {
+          setDismiss(true);
+
+          setTimeout(setDismiss(false), 5000);
+        }
+
+        setLoading(false);
+      }
     } catch (error) {
       console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+      setLoading(false);
     }
   };
 
@@ -57,17 +77,46 @@ function Main() {
         </div>
       </div>
 
-      <div className=" box px-5 pb-5 sm:px-20 mt-5 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-        {formData.con && (
-          <Form
-            form={formData.con}
-            submission={{
-              data: formData.val,
-            }}
-            onSubmit={(e) => handleSubmitData(e)}
-            onNextPage={handleSubmitData}
-          />
+      <div className="relative box  border-t border-slate-200/60 dark:border-darkmode-400">
+        {loading && (
+          <div className="h-full w-full bg-gray-50/75 grid  absolute z-40">
+            <div className="w-24 h-24 place-self-center">
+              <LoadingIcon
+                icon="three-dots"
+                color="gray"
+                className="w-4 h-4 ml-2"
+              />
+            </div>
+          </div>
         )}
+
+        <div className="p-10">
+          {dismiss && (
+            <Alert className="alert-outline-success flex items-center mb-2">
+              <Lucide icon="CheckCircle" className="w-6 h-6 mr-2" />
+              Thank You! Your form has been submitted and will be reviewed by
+              your consultants
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setDismiss(false)}
+                aria-label="Close"
+              >
+                <Lucide icon="X" className="w-4 h-4" />
+              </button>
+            </Alert>
+          )}
+          {formData.con && (
+            <Form
+              form={formData.con}
+              submission={{
+                data: formData.val,
+              }}
+              onSubmit={(e) => handleSubmitData(e)}
+              onNextPage={handleSubmitData}
+            />
+          )}
+        </div>
       </div>
 
       {/* <div>

@@ -1,10 +1,11 @@
 import logoUrl from "@/assets/images/logo.png";
 
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { getBaseApi } from "../../configuration";
 
 import { useState } from "react";
+
+import axios from "axios";
+import { getBaseApi } from "../../configuration";
 
 import { LoadingIcon } from "@/base-components";
 
@@ -19,14 +20,12 @@ const Login = (props) => {
   const LOGIN_URL = getBaseApi() + "login";
   const [err, setErr] = useState([]);
 
-  
   const handelLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-
-    if(email =='' || password == ''){
-      setErr(['User E-mail and password is required!']);
+    if (email == "" || password == "") {
+      setErr(["User E-mail and password is required!"]);
     }
 
     try {
@@ -38,25 +37,39 @@ const Login = (props) => {
           withCredentials: true,
         }
       );
-      const accessToken = response?.data?.data?.token;
-      const roles = response?.data?.data?.user?.is_admin;
 
-      console.log(roles);
-      if (roles == 1) {
-        localStorage.setItem("isAdmin", true);
+      if (response?.data.success) {
+        const accessToken = response?.data?.data?.token;
+        const roles = response?.data?.data?.user?.is_admin;
+
+        console.log(roles);
+        if (roles == 1) {
+          localStorage.setItem("isAdmin", true);
+        }
+
+        localStorage.setItem("loggedIn", true);
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response?.data?.data?.user)
+        );
+        localStorage.setItem(
+          "profile_image",
+          response?.data?.data?.profile_image?.file_path
+        );
+
+        navigate("../", { replace: true });
+      } else {
+        setLoading(false);
+
+      console.log(response);
+        setErr(Object.values(response.data.data));
       }
-
-      localStorage.setItem("loggedIn", true);
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("user", JSON.stringify(response?.data?.data?.user));
-      localStorage.setItem("profile_image", response?.data?.data?.profile_image?.file_path);
-
-      navigate("../", { replace: true });
     } catch (err) {
       setLoading(false);
-      console.log(err?.response?.data);
+
       err?.response?.data?.data &&
-      setErr(Object.values(err.response.data.data));
+        setErr(Object.values(err.response.data.data));
     }
   };
   return (
@@ -75,8 +88,7 @@ const Login = (props) => {
               Login to Your Account!
             </div>
             <div className="box px-5 py-8 mt-10 max-w-[450px] relative before:content-[''] before:z-[-1] before:w-[95%] before:h-full before:bg-slate-200 before:border before:border-slate-200 before:-mt-5 before:absolute before:rounded-lg before:mx-auto before:inset-x-0 before:dark:bg-darkmode-600/70 before:dark:border-darkmode-500/60">
-             
-            {err.length > 0 &&
+              {err.length > 0 &&
                 err.map((text, key) => {
                   return (
                     <h3 className="text-danger py-3 text-center" key={key}>
@@ -84,7 +96,7 @@ const Login = (props) => {
                     </h3>
                   );
                 })}
-             
+
               <input
                 type="text"
                 className="form-control py-3 px-4 block"
@@ -111,7 +123,7 @@ const Login = (props) => {
                     Remember me
                   </label>
                 </div>
-                <a href="#">Forgot Password?</a>
+                <Link to="/forgot">Forgot Password?</Link>
               </div>
               <div className="mt-5 xl:mt-8 text-center xl:text-left">
                 <button

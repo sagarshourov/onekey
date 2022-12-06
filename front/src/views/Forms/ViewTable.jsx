@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { useState } from "react";
 import { getAdmin, getBaseApi } from "../../configuration";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -61,7 +61,7 @@ const ViewTable = (props) => {
               <td className="w-40">{count}</td>
               <td>
                 <a href="" className="font-medium whitespace-nowrap">
-                  {user.user.first_name + " " + user.user.last_name}
+                  {user?.user?.first_name + " " + user?.user?.last_name}
                 </a>
               </td>
 
@@ -69,12 +69,12 @@ const ViewTable = (props) => {
 
               <td className="table-report__action w-64">
                 <div className="flex justify-center items-center">
-                  <a
+                  <Link
                     className="flex items-center text-info  px-2"
-                    href={"/forms/viewdata/" + user.id}
+                    to={"/forms/viewdata/" + user?.id}
                   >
                     <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View Data
-                  </a>
+                  </Link>
                   <a
                     className="flex items-center text-danger px-2"
                     href="#"
