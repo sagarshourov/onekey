@@ -48,6 +48,18 @@ class UserController extends BaseController
         return $this->sendResponse($request->all(), 'Admin retrieved successfully.');
     }
 
+    public function admin_users()
+    {
+        $users =  User::with(['profile' => function ($query) {
+            $query->where('doc_type', 2);
+        }])->where('is_admin', 1)->orderByDesc('id')->get();
+
+
+
+        return $this->sendResponse($users, 'Users retrieved successfully.');
+    }
+
+
     public function save_form(Request $request)
     {
 
@@ -115,12 +127,27 @@ class UserController extends BaseController
         $input['email'] = $input['email'];
         $input['is_admin'] = 1;
         $input['status'] = 'approved';
+        $input['package'] = 1;
 
 
 
-        $user = User::create($input);
 
-        return $this->sendResponse($user, 'Users retrieved successfully.');
+
+
+        User::create($input);
+
+        return  $this->admin_users();
+    }
+
+
+    public function delete_admins(Request $request)
+    {
+        $input = $request->all();
+
+
+        User::find($input['user_id'])->delete();
+
+        return $this->admin_users();
     }
 
 
@@ -146,17 +173,7 @@ class UserController extends BaseController
 
 
 
-    public function admin_users()
-    {
-        $users =  User::with(['profile' => function ($query) {
-            $query->where('doc_type', 2);
-        }])->where('is_admin', 1)->orderByDesc('id')->get();
-
-
-
-        return $this->sendResponse($users, 'Users retrieved successfully.');
-    }
-
+  
 
 
 
@@ -200,8 +217,8 @@ class UserController extends BaseController
 
 
         if (isset($input['package'])) {
-            User::where('id',  $input['user_id'])
-                ->update(['package' => $input['package']]);
+            $user =  User::where('id', (int)  $input['user_id'])
+                ->update(['package' => (int) $input['package']]);
         }
 
         StudentInfo::updateOrCreate([
@@ -213,7 +230,7 @@ class UserController extends BaseController
 
 
 
-        return $this->sendResponse($input, 'You will recive an email within short time.');
+        return $this->sendResponse($user, 'You will recive an email within short time.');
         //
     }
 
@@ -261,7 +278,8 @@ class UserController extends BaseController
         if ($input['type'] == 'remove') {
             $user = User::find($input['user_id']);
             $user->delete();
-            return $this->sendResponse(['Success'], 'Removed successfully.');
+            $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
+            return $this->sendResponse($users, 'Removed successfully.');
         }
 
 
@@ -293,7 +311,9 @@ class UserController extends BaseController
 
 
         $user->save();
+        $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
 
-        return $this->sendResponse(['Success'], 'Saved successfully.');
+
+        return $this->sendResponse($users, 'Saved successfully.');
     }
 }

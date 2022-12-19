@@ -24,7 +24,7 @@ function Main() {
   const [formVal, setFormVal] = useState({});
 
   const [title, setTitle] = useState("");
-  //console.log("post", post);
+  //("post", post);
 
   useEffect(() => {
     if (post.state === "hasValue" && loading) {
@@ -36,7 +36,7 @@ function Main() {
       setTitle(post.contents.data.title)
       //setLoading(false);
 
-      console.log("loading", loading);
+   
       setLoading(false);
     }
   });
@@ -65,7 +65,7 @@ function Main() {
   };
 
   const handelType = (e) => {
-    console.log(e.target.value);
+
 
     setType(e.target.value);
   };

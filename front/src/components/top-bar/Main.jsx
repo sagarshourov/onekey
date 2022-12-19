@@ -19,15 +19,12 @@ import { getBaseApi } from "../../configuration";
 import { Link, useNavigate } from "react-router-dom";
 import { first } from "lodash";
 
-let image = localStorage.profile_image
-  ? localStorage.getItem("profile_image")
-  : undefined;
+import { loginState } from "../../state/login-atom";
 
-let user = localStorage.user ? JSON.parse(localStorage.getItem("user")) : "";
-
-let isAdmin = localStorage.isAdmin;
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const Logout = (props) => {
+  const [loginsta, setLoginState] = useRecoilState(loginState);
   const [searchResultModal, setSearchResultModal] = useState(false);
   const searchInput = useRef(false);
 
@@ -49,19 +46,20 @@ const Logout = (props) => {
   });
   let navigate = useNavigate();
   const handelLogout = () => {
-    console.log("logged out");
+    ("logged out");
+    //useResetRecoilState(loginState);
     localStorage.clear();
+
+    setLoginState({});
+
+    // useResetRecoilState(allUsersState);
 
     navigate("/login", { replace: true });
   };
 
   const handelProfile = () => {
-  
-
     navigate("/", { replace: true });
- 
   };
-  
 
   return (
     <>
@@ -195,18 +193,19 @@ const Logout = (props) => {
             className="h-full dropdown-toggle flex items-center"
           >
             <div className="w-10 h-10 image-fit">
-             {image && <img
-                className="rounded-full border-2 border-white border-opacity-10 shadow-lg"
-                src={getBaseApi() + "file/" + image}
-              />
-             }
+              {loginsta.profile_image && (
+                <img
+                  className="rounded-full border-2 border-white border-opacity-10 shadow-lg"
+                  src={getBaseApi() + "file/" + loginsta.profile_image}
+                />
+              )}
             </div>
             <div className="hidden md:block ml-3">
               <div className="max-w-[7rem] truncate font-medium">
-                {user?.first_name} {user?.last_name}
+                {loginsta?.first_name} {loginsta?.last_name}
               </div>
               <div className="text-xs text-slate-400">
-                {isAdmin ? "Admin" : "User"}
+                {loginsta.isAdmin ? "Admin" : "User"}
               </div>
             </div>
           </DropdownToggle>

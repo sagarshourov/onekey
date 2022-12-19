@@ -68,13 +68,22 @@ class FormController extends BaseController
             $return['con'] = json_decode($form_con->content);
         } else {
             $user_id =  Auth::user()->id;
-            $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->get(['id', 'user_id', 'form_id', 'content']);
+            $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content']);
 
-            if (isset($forms[0]))  $return['val'] = json_decode($forms[0]->content);
+            if (!empty($forms))  $return['val'] = json_decode($forms->content);
+
+
+           // return $this->sendResponse($forms, 'Formby id successfully.');
 
 
             $form_con =  Forms::find($id);
-            $return['con'] = json_decode($form_con->content);
+
+
+            if (!empty($form_con)) {
+                $return['con'] = json_decode($form_con->content);
+            } else {
+                $return['con'] = '[]';
+            }
         }
 
 

@@ -40,16 +40,8 @@ const AllForms = (props) => {
     setSearch(e.target.value);
   };
 
-  console.log(formData);
 
-  const onAction = (submission, action) => {
-    console.log(action);
-    console.log("submission", submission);
-  };
-  const getSubmissions = (page, query) => {
-    console.log(query);
-    console.log("page", page);
-  };
+
 
   return (
     <>
@@ -59,7 +51,7 @@ const AllForms = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {console.log("", formData.val)}
+       
           {formData.val && (
             <>
               {/* <FormGrid

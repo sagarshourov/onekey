@@ -30,9 +30,7 @@ const headers = {
 
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
-    return _items.title
-      ? _items.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
-      : true;
+    return _items[0] !== null  ? _items[0].user?.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 : true;
   });
 }
 
@@ -46,7 +44,7 @@ const AllDocs = (props) => {
   const [loading, setLoading] = useState(false);
   const [selectId, setSelectId] = useState(0);
   const handelPageCount = (e) => {
-    console.log(e.target.value);
+    e.target.value;
 
     setRowCount(parseInt(e.target.value));
   };
@@ -83,8 +81,6 @@ const AllDocs = (props) => {
       <h2 className="intro-y text-lg font-medium mt-10">Uploaded Docs</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        
-
           <div className="hidden md:block mx-auto text-slate-500">
             Showng {filterData.length} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}

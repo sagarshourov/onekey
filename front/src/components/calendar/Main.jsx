@@ -3,14 +3,16 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import { Lucide, FullCalendar, Modal, ModalBody } from "@/base-components";
 
+import { Lucide, FullCalendar, Modal, ModalBody } from "@/base-components";
+import { LoadingIcon } from "@/base-components";
 import { useState } from "react";
 function event_format(data) {
   let obj = [];
   data.map((dat, index) => {
     obj.push({
+      id: dat.id,
+      ev_id: dat.id,
       start: dat.note_date,
       title: dat.users ? dat.users.first_name : "",
       description: dat.notes,
@@ -21,9 +23,17 @@ function event_format(data) {
 }
 
 const Main = (props) => {
-  const { type, events } = props;
+  const {
+    type,
+    events,
+    deleteEvent,
+    setEventId,
+    deleteConfirmationModal,
+    setDeleteConfirmationModal,
+    loading
+  } = props;
 
-  //console.log(events.contents);
+  //(events.contents);
   const [modelTitle, setModelTitle] = useState("");
   const [modelDescription, setModelDescription] = useState("");
   const options = {
@@ -39,18 +49,19 @@ const Main = (props) => {
     editable: true,
     events: event_format(events),
     eventClick: function (info) {
-      console.log(info);
       // alert("Event: " + info.event._def.extendedProps.description);
 
       //setModelTitle()
       setModelDescription(info.event._def.extendedProps.description);
       setModelTitle(info.event.title);
       setDeleteConfirmationModal(true);
+
+      setEventId(info.event._def.extendedProps.ev_id);
       // change the border color just for fun
       // info.el.style.borderColor = "red";
     },
   };
-  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+
   return (
     <>
       <FullCalendar options={options} />
@@ -81,8 +92,19 @@ const Main = (props) => {
               Cancel
             </button>
             {type == 1 && (
-              <button type="button" className="btn btn-danger w-24">
+              <button
+                type="button"
+                onClick={deleteEvent}
+                className="btn btn-danger w-24"
+              >
                 Delete
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
               </button>
             )}
           </div>

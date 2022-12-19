@@ -89,20 +89,21 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::get('users', 'App\Http\Controllers\Admin\UserController@all_users');
     Route::get('admin_users', 'App\Http\Controllers\Admin\UserController@admin_users');
     Route::post('create_admin_users', 'App\Http\Controllers\Admin\UserController@create_admin_users');
+
+
+    
     Route::post('update_user_status', 'App\Http\Controllers\Admin\UserController@update_user_status');
     Route::post('assign_admin_users', 'App\Http\Controllers\Admin\UserController@assign_admin_users');
 
     Route::post('delete_admin_users', 'App\Http\Controllers\Admin\UserController@delete_admin_users');
 
+    Route::post('delete_admins', 'App\Http\Controllers\Admin\UserController@delete_admins');
+    
+
     
 
     Route::get('assign_users/{id}', 'App\Http\Controllers\Admin\UserController@assign_users');
     
-
-    
-
-
-
 
 
     Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
@@ -130,6 +131,9 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('save_notes', 'App\Http\Controllers\UserController@save_notes');
 
     Route::post('save_event', 'App\Http\Controllers\EventsController@save_event');
+    Route::post('delete_event', 'App\Http\Controllers\EventsController@delete_event');
+
+    
 
 
 
@@ -139,7 +143,7 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('delete_noti', 'App\Http\Controllers\UserController@delete_notification');
 
 
-
+    Route::get('admin_files', 'App\Http\Controllers\FileController@admin_files');
 
     
 });

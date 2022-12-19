@@ -7,7 +7,7 @@ const headers = { Authorization: `Bearer ${token}` };
 
 export async function getEvents() {
   const userApiUrl = getBaseApi() + "events";
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];

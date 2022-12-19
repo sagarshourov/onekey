@@ -32,15 +32,17 @@ import { filter } from "lodash";
 import { useParams } from "react-router-dom";
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
-    return (
-      _items.users.email.toLowerCase().indexOf(searchValue.toLowerCase()) !==
-        -1 ||
-      _items.users.first_name
-        .toLowerCase()
-        .indexOf(searchValue.toLowerCase()) !== -1
-    );
+    if (_items.users !== null) {
+      return (
+        _items.users.email.toLowerCase().indexOf(searchValue.toLowerCase()) !==
+          -1 ||
+        _items.users.first_name
+          .toLowerCase()
+          .indexOf(searchValue.toLowerCase()) !== -1
+      );
+    }
   });
-  console.log("sagar");
+
 }
 
 function getSingleUser(array, user_id) {
@@ -88,7 +90,7 @@ const UsersView = (props) => {
 
   const assignAdminUser = async () => {
     const URL = getAdmin() + "assign_admin_users";
-    console.log(selectMultiple);
+  
     const token = localStorage.getItem("token");
 
     const headers = {

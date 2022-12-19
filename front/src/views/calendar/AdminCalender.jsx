@@ -9,6 +9,8 @@ import {
   Litepicker,
   TomSelect,
   Alert,
+  Modal,
+  ModalBody,
 } from "@/base-components";
 import Calendar from "@/components/calendar/Main";
 import { LoadingIcon } from "@/base-components";
@@ -19,9 +21,34 @@ import { useState } from "react";
 
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { eventListState } from "../../state/events-atom";
+const token = localStorage.getItem("token");
+const headers = {
+  Authorization: `Bearer ${token}`,
+  ContentType: "application/json",
+};
+
+import { filter } from "lodash";
+
+function applySortFilters(array, searchValue) {
+  return filter(array, (_items) => {
+    if (_items.users !== null) {
+      return (
+        _items?.users?.email
+          .toLowerCase()
+          .indexOf(searchValue.toLowerCase()) !== -1 ||
+        _items?.users?.first_name
+          .toLowerCase()
+          .indexOf(searchValue.toLowerCase()) !== -1
+      );
+    }
+  });
+}
 
 const Events = (props) => {
   const [eventDatas, setEventState] = useRecoilStateLoadable(eventListState);
+
+  const [delConfirmationModal, setDelConfirmationModal] = useState(false);
+  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
   const [date, setDate] = useState("");
   const [select, setSelect] = useState("");
@@ -29,6 +56,35 @@ const Events = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [success, setSuccess] = useState(false);
+  const [event_id, setEventId] = useState(false);
+
+  const [search, setSearch] = useState("");
+  const deleteEvent = async () => {
+    const LOGIN_URL = getAdmin() + "delete_event";
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        { event_id: event_id },
+        {
+          headers,
+        }
+      );
+
+      if (response?.data?.success) {
+        setLoading(false);
+        setDelConfirmationModal(false);
+        setDeleteConfirmationModal(false);
+        setEventState(response?.data?.data);
+      }
+
+      console.log(response);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
 
   const handelSave = async () => {
     if (select == "") {
@@ -46,11 +102,7 @@ const Events = (props) => {
     setLoading(true);
     setSuccess(false);
     const LOGIN_URL = getAdmin() + "save_event";
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      ContentType: "application/json",
-    };
+
     try {
       const response = await axios.post(
         LOGIN_URL,
@@ -65,15 +117,22 @@ const Events = (props) => {
         setSelect("");
         setSuccess(true);
         setLoading(false);
+        setEventState(response?.data?.data);
       }
 
-      //  console.log(response.data);
-
-       window.location.reload();
+      //  (response.data);
     } catch (err) {
       setLoading(false);
     }
   };
+
+  const handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  let filterData = applySortFilters(eventDatas.contents.events, search);
+
+  console.log("filter data", filterData);
 
   return (
     <>
@@ -101,7 +160,7 @@ const Events = (props) => {
                 className="h-[820px] overflow-y-auto scrollbar-hidden"
               >
                 {eventDatas.state === "hasValue" &&
-                  eventDatas.contents.events.map((event, key) => {
+                  eventDatas?.contents?.events.map((event, key) => {
                     return (
                       <div
                         key={key}
@@ -110,7 +169,7 @@ const Events = (props) => {
                         <div className="flex items-center">
                           <div className="w-2 h-2 bg-warning rounded-full mr-3"></div>
                           <div className="event__title font-medium truncate">
-                            {event.users && event.users.first_name}
+                            {event.users && event.users?.first_name}
                           </div>
                           <Lucide
                             icon="Edit"
@@ -135,7 +194,16 @@ const Events = (props) => {
                           </div>
                         </div>
                         <div className="flex">
-                          <button className="btn btn-outline-secondary py-1 px-2 ml-auto">
+                          <button
+                            onClick={() => {
+                              setDelConfirmationModal(true);
+
+                              setEventId(event.id);
+
+                              console.log("event", event);
+                            }}
+                            className="btn btn-outline-secondary py-1 px-2 ml-auto"
+                          >
                             <Lucide icon="UserX" className="w-4 h-4 mr-2" />{" "}
                             Cancel
                           </button>
@@ -160,7 +228,7 @@ const Events = (props) => {
                       showWeekNumbers: true,
                       dropdowns: {
                         minYear: 1990,
-                        maxYear: null,
+                        maxYear: 2030,
                         months: true,
                         years: true,
                       },
@@ -224,12 +292,77 @@ const Events = (props) => {
         {/* BEGIN: Calendar Content */}
         <div className="col-span-12 xl:col-span-8 2xl:col-span-9">
           <div className="box p-5">
+            <div className="flex justify-center ...">
+              <input
+                type="text"
+                className="form-control mb-5 w-96"
+                placeholder="Search by user"
+                onChange={handelSearch.bind(this)}
+              />
+            </div>
+
             {eventDatas.state == "hasValue" && (
-              <Calendar type="1" events={eventDatas.contents.events} />
+              <Calendar
+                type="1"
+                deleteEvent={deleteEvent}
+         
+                setEventId={setEventId}
+                events={filterData}
+                loading={loading}
+
+                deleteConfirmationModal={deleteConfirmationModal}
+                setDeleteConfirmationModal={setDeleteConfirmationModal}
+              />
             )}
           </div>
         </div>
         {/* END: Calendar Content */}
+
+        <Modal
+          show={delConfirmationModal}
+          onHidden={() => {
+            setDelConfirmationModal(false);
+          }}
+        >
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="XCircle"
+                className="w-16 h-16 text-danger mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5">Are you sure?</div>
+              <div className="text-slate-500 mt-2">
+                Do you really want to delete these records? <br />
+                This process cannot be undone.
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setDelConfirmationModal(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={deleteEvent}
+                type="button"
+                className="btn btn-danger w-24"
+              >
+                Delete
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        </Modal>
       </div>
     </>
   );

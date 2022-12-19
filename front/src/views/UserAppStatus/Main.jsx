@@ -26,7 +26,7 @@ function applySortFilters(array, searchValue) {
       _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  console.log("sagar");
+  ("sagar");
 }
 
 const AdminUsers = (props) => {
@@ -38,7 +38,7 @@ const AdminUsers = (props) => {
   const [search, setSearch] = useState("");
 
   const handelPageCount = (e) => {
-    console.log(e.target.value);
+    (e.target.value);
 
     setRowCount(parseInt(e.target.value));
   };

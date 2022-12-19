@@ -21,7 +21,7 @@ const ViewAttachment = (props) => {
   const [selectId, setSelectId] = useState(0);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const usersData = useRecoilState(userFileListState);
-  console.log("testvalue", usersData[0][id]);
+  ("testvalue", usersData[0][id]);
   const [loading, setLoading] = useState(false);
 
   return (

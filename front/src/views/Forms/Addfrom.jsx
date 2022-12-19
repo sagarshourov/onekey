@@ -15,7 +15,7 @@ function Main() {
   const [type, setType] = useState("wizard");
   const [title, setTitle] = useState("");
   const handleSubmitData = async (e) => {
-    console.log(jsonSchema, "submitdata");
+    
     e.preventDefault();
     setLoading(true);
     const LOGIN_URL = getAdmin() + "save_form";
@@ -42,7 +42,7 @@ function Main() {
   };
 
   const handelType = (e) => {
-    console.log(e.target.value);
+ 
 
     setType(e.target.value);
   };

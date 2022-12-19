@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function Input(props) {
   const onInputChange = (e) => {
-    console.log(props.value);
+   
 
     const obj = { [props.name]: e.target.value };
 

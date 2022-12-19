@@ -33,12 +33,12 @@ const Forgot = (props) => {
         withCredentials: true,
       });
 
-      console.log(response);
+  
       setInfo(["E-mail Sent ! Please check your email."]);
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      console.log(err?.response?.data);
+   
       err?.response?.data?.data &&
         setErr(Object.values(err.response.data.data));
     }

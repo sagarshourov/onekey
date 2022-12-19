@@ -132,7 +132,7 @@ class AuthController extends BaseController
         $input['is_admin'] = 0;
         $input['status'] = 'pending';
 
-
+        $input['package'] = 1;
 
         $user = User::create($input);
 
@@ -150,11 +150,11 @@ class AuthController extends BaseController
 
 
         Mail::send('email.new_user', ['user' => $user], function ($message) {
-            $message->to("info@onekeyclient.com", 'Admin')->subject('New User Register Request Received!');
-            $message->from("info@onekeyclient.com", 'Admin');
+            $message->to("info@onekeyclient.us", 'Admin')->subject('New User Register Request Received!');
+            $message->from(env('MAIL_FROM_ADDRESS'), 'Admin');
         });
 
-        return $this->sendResponse(['success'], 'You will recive an email within short time.');
+        return $this->sendResponse(['success'], 'Your registration has been received. Please wait and your login details will be emailed to you within 24 hours. Please DO NOT REGISTER AGAIN!');
 
         //
     }

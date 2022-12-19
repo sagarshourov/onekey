@@ -56,6 +56,10 @@ const ViewTable = (props) => {
       <tbody>
         {users.slice(0, rowCount).map((user, key) => {
           let count = key + 1;
+          
+
+
+
           return (
             <tr key={key} className="intro-x">
               <td className="w-40">{count}</td>

@@ -21,9 +21,14 @@ import { filter } from "lodash";
 
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
-    return _items.user.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1;
+    return (
+      _items.user !== null &&
+      _items.user.first_name
+        .toLowerCase()
+        .indexOf(searchValue.toLowerCase()) !== -1
+    );
   });
-  console.log("sagar");
+
 }
 
 const AllForms = (props) => {
@@ -45,17 +50,15 @@ const AllForms = (props) => {
     setSearch(e.target.value);
   };
 
-
-
-   let filterData = applySortFilters(formData, search);
+  let filterData = applySortFilters(formData, search);
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">List of {formData[0]?.form?.title}</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">
+        List of {formData[0]?.form?.title}
+      </h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        
-
           <div className="hidden md:block mx-auto text-slate-500">
             Showng {rowCount} out of
           </div>
@@ -78,10 +81,7 @@ const AllForms = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          <UsersTable
-              rowCount={rowCount}
-              users={filterData}
-            />
+          <UsersTable rowCount={rowCount} users={filterData} />
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}

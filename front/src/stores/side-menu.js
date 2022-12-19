@@ -126,6 +126,23 @@ let UsersideMenu = atom({
         ],
       },
       {
+        icon: "Book",
+        title: "Other Forms",
+        subMenu: [
+          {
+            icon: "",
+            pathname: "/forms/21",
+            title: "Reccomonadation Letter",
+          },
+          {
+            icon: "",
+            pathname: "/forms/22",
+            title: "SOP ",
+          },
+         
+        ],
+      },
+      {
         icon: "Layout",
         title: "Resume Builder",
         pathname: "/forms/6",

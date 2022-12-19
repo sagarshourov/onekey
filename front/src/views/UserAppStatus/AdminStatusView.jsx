@@ -21,7 +21,7 @@ const checkMain = (u_status, id) => {
     }
   });
 
-  console.log('active',active);
+  ('active',active);
   return active;
 };
 

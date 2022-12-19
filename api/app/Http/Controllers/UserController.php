@@ -189,7 +189,7 @@ class UserController extends BaseController
         $return['gendar'] = $users->gendar;
         $return['package'] = Packages::where(['id' => $users->package])->pluck('title');
 
-        $return['visa_type'] = StudentInfo::where(['user_id' => $user_id])->pluck('visa_type');
+        $return['student_info'] = StudentInfo::where(['user_id' => $user_id])->first();
 
 
         return $this->sendResponse($return, 'Users retrieved successfully.');

@@ -1,0 +1,41 @@
+input[type='date']::-webkit-clear-button,
+input[type='date']::-webkit-inner-spin-button {
+    display: none;
+}
+
+/* input[type="time"] {
+  --bw: 2px;
+  --a: calc(100% - var(--bw));
+  --b: calc(var(--a) - 25px);
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    var(--b) 100%,
+    var(--b) var(--bw),
+    var(--a) var(--bw),
+    var(--a) var(--a),
+    var(--b) var(--a),
+    var(--b) 100%,
+    100% 100%,
+    100% 0%
+  );
+}
+
+input[type="date"] {
+  --bw: 2px;
+  --a: calc(100% - var(--bw));
+  --b: calc(var(--a) - 25px);
+
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    var(--b) 100%,
+    var(--b) var(--bw),
+    var(--a) var(--bw),
+    var(--a) var(--a),
+    var(--b) var(--a),
+    var(--b) 100%,
+    100% 100%,
+    100% 0%
+  );
+} */

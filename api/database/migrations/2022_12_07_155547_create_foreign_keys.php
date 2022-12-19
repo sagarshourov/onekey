@@ -8,12 +8,22 @@ class CreateForeignKeys extends Migration {
 
 	public function up()
 	{
-		Schema::table('Users', function(Blueprint $table) {
-			$table->foreign('package')->references('id')->on('packages')
+		
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->foreign('admin_id')->references('id')->on('Users')
 						->onDelete('set null')
 						->onUpdate('set null');
 		});
-		
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->foreign('doc_type')->references('id')->on('doc_types')
+						->onDelete('set null')
+						->onUpdate('set null');
+		});
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('Users')
+						->onDelete('set null')
+						->onUpdate('set null');
+		});
 	}
 
 	public function down()
@@ -98,6 +108,15 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('admin_user', function(Blueprint $table) {
 			$table->dropForeign('admin_user_admin_id_foreign');
+		});
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->dropForeign('admin_doc_admin_id_foreign');
+		});
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->dropForeign('admin_doc_doc_type_foreign');
+		});
+		Schema::table('admin_doc', function(Blueprint $table) {
+			$table->dropForeign('admin_doc_user_id_foreign');
 		});
 	}
 }

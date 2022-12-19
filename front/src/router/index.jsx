@@ -21,16 +21,16 @@ const DashboardOverview = Loadable(
   lazy(() => import("../views/dashboard/Main"))
 );
 
-const Profile = Loadable(
-  lazy(() => import("../views/dashboard/Profile"))
-);
+const Profile = Loadable(lazy(() => import("../views/dashboard/Profile")));
 
 const UserDashboardOverview = Loadable(
   lazy(() => import("../views/dashboard/UserMain"))
 );
 
 const AdminUsers = Loadable(lazy(() => import("../views/AdminUsers/Main")));
-const AdminUsersView = Loadable(lazy(() => import("../views/AdminUsers/UsersView")));
+const AdminUsersView = Loadable(
+  lazy(() => import("../views/AdminUsers/UsersView"))
+);
 
 const AllUsers = Loadable(lazy(() => import("../views/Users/Main")));
 const Users = Loadable(lazy(() => import("../views/Users/Main")));
@@ -44,12 +44,15 @@ const Forgot = Loadable(lazy(() => import("../views/Login/Forgot")));
 
 const ResetPass = Loadable(lazy(() => import("../views/Login/ResetPass")));
 
-
 const ErrorPage = Loadable(lazy(() => import("../views/ErrorPage/Main")));
 
 const Notification = Loadable(lazy(() => import("../views/Notification/Main")));
 
 const MyDocuments = Loadable(lazy(() => import("../views/MyDocuments/Main")));
+
+const UserMyDocuments = Loadable(
+  lazy(() => import("../views/MyDocuments/UserMain"))
+);
 
 const UserAppStatus = Loadable(
   lazy(() => import("../views/UserAppStatus/Main"))
@@ -60,6 +63,9 @@ const AdminUploadedDocs = Loadable(
   lazy(() => import("../views/UploadedDocs/AdminMain"))
 );
 const AddFiles = Loadable(lazy(() => import("../views/UploadedDocs/AddFiles")));
+
+const AdminAddFiles = Loadable(lazy(() => import("../views/MyDocuments/AddFiles")));
+
 
 const ViewAttachment = Loadable(
   lazy(() => import("../views/UploadedDocs/ViewAttachment"))
@@ -97,7 +103,6 @@ function Router() {
           element: <Profile />,
         },
 
-        
         {
           path: "/admin_users",
           element: <AdminUsers />,
@@ -126,6 +131,10 @@ function Router() {
         {
           path: "/files",
           element: <AdminUploadedDocs />,
+        },
+        {
+          path: "/add_files",
+          element: <AdminAddFiles />,
         },
         {
           path: "/view_attchment/:id",
@@ -231,7 +240,7 @@ function Router() {
 
         {
           path: "/my_doc",
-          element: <MyDocuments />,
+          element: <UserMyDocuments />,
         },
 
         {
@@ -257,9 +266,6 @@ function Router() {
       path: "/password/:token/:id",
       element: auth ? <Navigate to="/" /> : <ResetPass />,
     },
-
-   
-
 
     {
       path: "*",

@@ -14,7 +14,7 @@ import UsersTable from "./UsersTable";
 import { filter } from "lodash";
 
 import { getAdmin, getBaseApi } from "../../configuration";
-
+import "./styles.css";
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
     return (
@@ -22,7 +22,6 @@ function applySortFilters(array, searchValue) {
       _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  console.log("sagar");
 }
 
 const AdminUsers = (props) => {
@@ -43,19 +42,9 @@ const AdminUsers = (props) => {
 
   const [loading, setLoading] = useState(false);
 
-  const [fdata, setFdata] = useState({
-    user_id: 0,
-    code: "",
-    date: "",
-    university: "",
-    package: 0,
-    time: "",
-    type: "",
-  });
+  const [fdata, setFdata] = useState({});
 
   const handelPageCount = (e) => {
-    console.log(e.target.value);
-
     setRowCount(parseInt(e.target.value));
   };
 
@@ -83,15 +72,12 @@ const AdminUsers = (props) => {
       });
     } else {
       setFdata({});
-      console.log("sagar");
     }
 
-    console.log("user", user);
+    console.log(user);
   };
 
   const updateInformation = async (e) => {
-    console.log("update button clicked");
-
     const LOGIN_URL = getBaseApi() + "student_info";
     const token = localStorage.getItem("token");
 
@@ -102,25 +88,43 @@ const AdminUsers = (props) => {
 
     setLoading(true);
 
-    setFdata((fdata) => ({ ...fdata, user_id: userId }));
+    e.preventDefault();
+    const data = {
+      code: e.target.elements.code.value,
+      package: e.target.elements.package.value,
+      interview_date: e.target.elements.interview_date.value,
+      interview_time: e.target.elements.interview_time.value,
+      university: e.target.elements.university.value,
+      visa_type: e.target.elements.visa_type.value,
+      user_id: parseInt(e.target.elements.user_id.value),
+    };
+
+    //setFdata((fdata) => ({ ...fdata, user_id: userId }));
 
     try {
       // const response = await axios.post(LOGIN_URL, JSON.stringify(fdata), {
       //   headers,
       // });
 
-      const response = await axios.post(LOGIN_URL, fdata, {
+      const response = await axios.post(LOGIN_URL, data, {
         headers,
       });
 
       if (response?.data?.success) {
         setShowStudentInfrmation(false);
-       window.location.reload();
+        window.location.reload();
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
     }
+  };
+
+  const handelChange = (e) => {
+    let val = e.target.value !== "" ? e.target.value : "";
+    let names = e.target.name;
+
+    setFdata({ ...fdata, [names]: val });
   };
 
   let filterData = applySortFilters(students.contents, search);
@@ -203,177 +207,156 @@ const AdminUsers = (props) => {
         }}
       >
         <ModalBody className="p-0">
-          <div className="p-5 ">
-            <h3 className="text-lg text-center py-3 mb-4">
-              Student Information
-            </h3>
-            <div>
-              <label htmlFor="vertical-form-1" className="form-label">
-                SEVIS ID number
-              </label>
+          <form onSubmit={(e) => updateInformation(e)}>
+            <div className="p-5 ">
+              <h3 className="text-lg text-center py-3 mb-4">
+                Student Information
+              </h3>
+              <div>
+                <label htmlFor="vertical-form-1" className="form-label">
+                  SEVIS ID number
+                </label>
 
-              <div className="input-group w-full">
-                <div className="input-group-text">
-                  <Lucide icon="Code" className="w-4 h-4 mt-2" />
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="Code" className="w-4 h-4 mt-2" />
+                  </div>
+                  <input
+                    type="text"
+                    name="code"
+                    className=" py-4 form-control"
+                    placeholder=""
+                    defaultValue={fdata.code}
+                  />
                 </div>
-                <input
-                  type="text"
-                  className=" py-4 form-control"
-                  placeholder=""
-                  defaultValue={fdata.code}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({ ...fdata, code: e.target.value }))
-                  }
-                />
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  Case Type
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="Award" className="w-4 h-4 mt-2" />
+                  </div>
+
+                  {fdata.package && (
+                    <select
+                      name="package"
+                      defaultValue={fdata.package}
+                      className=" py-4 form-control"
+                    >
+                      <option>Select ... </option>
+                      <option value="1">Other Package </option>
+                      <option value="2">Platinum Package </option>
+                      <option value="3">Gold Package </option>
+                      <option value="4">Silver Package </option>
+            
+                    </select>
+                  )}
+                </div>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  Interview Date
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="Calendar" className="w-4 h-4 mt-2" />
+                  </div>
+                  <input
+                    type="date"
+                    name="interview_date"
+                    className=" py-4 form-control"
+                    placeholder=""
+                    defaultValue={fdata.interview_date}
+                  />
+                </div>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  Interview Time
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="Clock" className="w-4 h-4 mt-2" />
+                  </div>
+                  <input
+                    type="time"
+                    name="interview_time"
+                    className=" py-4 form-control"
+                    placeholder=""
+                    defaultValue={fdata.interview_time}
+                  />
+                </div>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  University / Institution
+                </label>
+
+                <div className="input-group w-full">
+                  <div id="input-group-email" className="input-group-text">
+                    <Lucide icon="Home" className="w-4 h-4 mt-2" />
+                  </div>
+
+                  <input
+                    type="text"
+                    name="university"
+                    className=" py-4 form-control"
+                    defaultValue={fdata.university}
+                  />
+                </div>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  Visa Type Status
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="Info" className="w-5 h-4 mt-2" />
+                  </div>
+
+                  <input
+                    type="text"
+                    name="visa_type"
+                    className=" py-4 form-control"
+                    defaultValue={fdata.visa_type}
+                  />
+                </div>
               </div>
             </div>
-            <div className="mt-5">
-              <label htmlFor="vertical-form-1" className="form-label">
-                Case Type
-              </label>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  handelModel(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary w-24">
+                Update{" "}
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
 
-              <div className="input-group w-full">
-                <div className="input-group-text">
-                  <Lucide icon="Award" className="w-4 h-4 mt-2" />
-                </div>
-                <select
-                  name="package"
-
-                  defaultValue={fdata.package}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({
-                      ...fdata,
-                      package: parseInt(e.target.value),
-                    }))
-                  }
-                  className=" py-4 form-control"
-                >
-                  <option>Select ... </option>
-                  <option value="1">Platinum Packege </option>
-                  <option value="2">Gold Packege </option>
-                  <option value="3">Silver Packege </option>
-                  <option value="0">Other Packege </option>
-                </select>
-              </div>
+              <input
+                type="hidden"
+                name="user_id"
+                defaultValue={fdata.user_id}
+              />
             </div>
-            <div className="mt-5">
-              <label htmlFor="vertical-form-1" className="form-label">
-                Interview Date
-              </label>
-
-              <div className="input-group w-full">
-                <div className="input-group-text">
-                  <Lucide icon="Calendar" className="w-4 h-4 mt-2" />
-                </div>
-                <input
-                  type="date"
-                  className=" py-4 form-control"
-                  placeholder=""
-                  defaultValue={fdata.interview_date}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({
-                      ...fdata,
-                      interview_date: e.target.value,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-            <div className="mt-5">
-              <label htmlFor="vertical-form-1" className="form-label">
-                Interview Time
-              </label>
-
-              <div className="input-group w-full">
-                <div className="input-group-text">
-                  <Lucide icon="Clock" className="w-4 h-4 mt-2" />
-                </div>
-                <input
-                  type="time"
-                  className=" py-4 form-control"
-                  placeholder=""
-                  defaultValue={fdata.interview_time}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({
-                      ...fdata,
-                      interview_time: e.target.value,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-            <div className="mt-5">
-              <label htmlFor="vertical-form-1" className="form-label">
-                University / Institution
-              </label>
-
-              <div className="input-group w-full">
-                <div id="input-group-email" className="input-group-text">
-                  <Lucide icon="Home" className="w-4 h-4 mt-2" />
-                </div>
-
-                <input
-                  type="text"
-                  className=" py-4 form-control"
-                  defaultValue={fdata.university}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({
-                      ...fdata,
-                      university: e.target.value,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-            <div className="mt-5">
-              <label htmlFor="vertical-form-1" className="form-label">
-                Visa Type Status
-              </label>
-
-              <div className="input-group w-full">
-                <div className="input-group-text">
-                  <Lucide icon="Info" className="w-5 h-4 mt-2" />
-                </div>
-
-                <input
-                  type="text"
-                  className=" py-4 form-control"
-                  defaultValue={fdata.visa_type}
-                  onChange={(e) =>
-                    setFdata((fdata) => ({
-                      ...fdata,
-                      visa_type: e.target.value,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="px-5 pb-8 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                handelModel(false);
-              }}
-              className="btn btn-outline-secondary w-24 mr-1"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={updateInformation}
-              className="btn btn-primary w-24"
-            >
-              Update{" "}
-              {loading && (
-                <LoadingIcon
-                  icon="three-dots"
-                  color="white"
-                  className="w-4 h-4 ml-2"
-                />
-              )}
-            </button>
-          </div>
+          </form>
         </ModalBody>
       </Modal>
       {/* END: Delete Confirmation Modal */}

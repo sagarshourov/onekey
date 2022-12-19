@@ -30,7 +30,7 @@ function applySortFilters(array, searchValue) {
         .indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  console.log("sagar");
+  ("sagar");
 }
 
 const Notifications = (props) => {
@@ -46,7 +46,7 @@ const Notifications = (props) => {
 
   const [loading, setLoading] = useState(false);
   const handelPageCount = (e) => {
-    console.log(e.target.value);
+    (e.target.value);
 
     setRowCount(parseInt(e.target.value));
   };
@@ -62,7 +62,7 @@ const Notifications = (props) => {
   };
 
   const handelDelete = (e) => {
-    console.log("sagar", selectId);
+    ("sagar", selectId);
 
     setLoading(true);
     const LOGIN_URL = getAdmin() + "delete_noti";

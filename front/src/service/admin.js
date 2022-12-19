@@ -7,7 +7,7 @@ const headers = { Authorization: `Bearer ${token}` };
 
 export async function getAssignUsers(id) {
   const userApiUrl = getAdmin() + "assign_users/"+id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -18,7 +18,7 @@ export async function getAssignUsers(id) {
 
 export async function getAllNotificatioin() {
   const userApiUrl = getAdmin() + "notifications";
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -29,7 +29,7 @@ export async function getAllNotificatioin() {
 
 export async function getAdminAppStatus(id) {
   const userApiUrl = getAdmin() + "app_status/" + id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -40,7 +40,7 @@ export async function getAdminAppStatus(id) {
 
 export async function getFormData(id) {
   const userApiUrl = getAdmin() + "formdata/" + id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -51,7 +51,7 @@ export async function getFormData(id) {
 
 export async function getFormById(id) {
   const userApiUrl = getAdmin() + "formbyid/" + id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -62,7 +62,7 @@ export async function getFormById(id) {
 
 export async function getForm(id) {
   const userApiUrl = getAdmin() + "forms/read/" + id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -73,7 +73,7 @@ export async function getForm(id) {
 
 export async function getEditForm(id) {
   const userApiUrl = getAdmin() + "forms/edit/" + id;
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -84,7 +84,7 @@ export async function getEditForm(id) {
 
 export async function getAllForms() {
   const userApiUrl = getBaseApi() + "forms";
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -95,7 +95,7 @@ export async function getAllForms() {
 
 export async function getAdminUsers() {
   const userApiUrl = getAdmin() + "admin_users";
-  // console.log("userApiUrl", userApiUrl);
+  // ("userApiUrl", userApiUrl);
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -106,7 +106,7 @@ export async function getAdminUsers() {
 
 export async function getAllUsers() {
   const userApiUrl = getAdmin() + "users";
-  console.log("userApiUrl", userApiUrl);
+
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -117,7 +117,7 @@ export async function getAllUsers() {
 
 export async function getAllTasks() {
   const userApiUrl = getBaseApi() + "tasks";
-  console.log("userApiUrl", userApiUrl);
+
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];
@@ -128,7 +128,7 @@ export async function getAllTasks() {
 export async function getAllUniversities() {
   const userApiUrl = getBaseApi() + "universities";
 
-  console.log("userApi", userApiUrl);
+
   try {
     const response = await axios.get(userApiUrl, { headers });
     return response.data || [];

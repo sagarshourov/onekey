@@ -13,9 +13,16 @@ const headers = {
 function FormContent(props) {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
+  const [user, setUser] = useState("");
+
   const [dismiss, setDismiss] = useState(false);
 
   const [progress, setProgress] = useState(0);
+
+  const handelUser = (e) => {
+    (e.target.value);
+    setUser(e.target.value);
+  };
 
   const handelTitle = (e) => {
     (e.target.value);
@@ -32,9 +39,14 @@ function FormContent(props) {
     );
   };
 
-  const handelFileUpload = (e) => {
+  const handelFileUpload = async (e) => {
     if (title == "") {
       alert("Title Required !");
+      return;
+    }
+
+    if (user == "") {
+      alert("User Required !");
       return;
     }
 
@@ -45,8 +57,10 @@ function FormContent(props) {
     formData.append("title", title);
     formData.append("type", props.type);
 
+    formData.append("user_id", user);
+
     // (this.state.selectedFile); // Request made to the backend api // Send formData object
-    axios.post(getBaseApi() + "file_upload", formData, {
+    const response = await axios.post(getBaseApi() + "file_upload", formData, {
       headers,
       onUploadProgress: (progressEvent) => {
         let percentComplete = progressEvent.loaded / progressEvent.total;
@@ -55,11 +69,31 @@ function FormContent(props) {
       },
     });
 
+    if (response.data.success) {
+      props.setFileState(response.data.data.original.data);
+    }
+
     // ("handelfileupload", e.target.files[0]);
   };
 
   return (
-    <div>
+    <div className="box p-5">
+      <div className="mb-3">
+        <label htmlFor="vertical-form-1" className="form-label">
+          Select User
+        </label>
+        <select onChange={(e) => handelUser(e)} className="form-control">
+          <option>Select...</option>
+          {props.usersData.length > 0 &&
+            props.usersData.map((user, index) => {
+              return (
+                <option key={index} value={user.id}>
+                  {user.first_name} ({user.email})
+                </option>
+              );
+            })}
+        </select>
+      </div>
       <div className="mb-3">
         <label htmlFor="vertical-form-1" className="form-label">
           Title

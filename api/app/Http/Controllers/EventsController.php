@@ -36,8 +36,8 @@ class EventsController extends BaseController
             // }
 
 
-            $users = array('events' => Events::select('user_id', 'notes', 'note_date')->with(['users'])->get(), 'users' => User::get(['id', 'first_name', 'last_name', 'email']));
-       
+            $users = array('events' => Events::select('id', 'user_id', 'notes', 'note_date')->with(['users'])->orderBy('id', 'desc')->get(), 'users' => User::get(['id', 'first_name', 'last_name', 'email']));
+
             //$users = Events::select('user_id', 'notes', 'note_date')->with(['users'])->get();
         } else {
             $users =   Events::select('user_id', 'notes', 'note_date')->with(['users'])->where('user_id', $user_id)->get();
@@ -50,6 +50,21 @@ class EventsController extends BaseController
         return $this->sendResponse($users, 'Events retrieved successfully.');
     }
 
+
+
+
+
+    public function delete_event(Request $req)
+    {
+
+
+        Events::find($req->event_id)->delete();
+
+
+
+
+        return $this->all_events();
+    }
 
     public function save_event(Request $users)
     {
@@ -87,6 +102,7 @@ class EventsController extends BaseController
             $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
         });
 
-        return $this->sendResponse($input, 'Event created successfully.');
+
+        return  $this->all_events();
     }
 }

@@ -17,7 +17,8 @@
 }
 
 .formio-form .pagination {
-  justify-content: center;
+  /* justify-content: center; */
+  overflow: auto;
 }
 
 .formio-wizard-nav-container {

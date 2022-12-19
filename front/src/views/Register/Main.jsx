@@ -34,13 +34,13 @@ const Register = () => {
         }
       );
 
-      console.log(response);
+      (response);
 
       if (response?.data.success) {
         setErr([]);
 
         setInfo([
-          "Regstration Success ! You will recive an short Message soon.",
+          "Your registration has been received. Please wait and your login details will be emailed to you within 24 hours. Please DO NOT REGISTER AGAIN!",
         ]);
         setFirst("");
         setLast("");
@@ -55,14 +55,14 @@ const Register = () => {
       setInfo([]);
       if (err?.response?.data.success) {
         setErr([]);
-        console.log("success");
+        ("success");
       } else {
-        console.log("error");
+        ("error");
         err?.response?.data?.data &&
           setErr(Object.values(err.response.data.data));
       }
 
-      // console.log(err?.response?.data?.data);
+      // (err?.response?.data?.data);
     }
   };
 

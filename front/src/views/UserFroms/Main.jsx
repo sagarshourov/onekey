@@ -19,7 +19,7 @@ function Main() {
   const [dismiss, setDismiss] = useState(false);
 
   const handleSubmitData = async (e) => {
-    console.log("submit form");
+    ("submit form");
     let data = {};
 
     let last_step = false;
@@ -90,7 +90,7 @@ function Main() {
           </div>
         )}
 
-        <div className="p-10">
+        <div className="p-2 lg:p-10">
           {dismiss && (
             <Alert className="alert-outline-success flex items-center mb-2">
               <Lucide icon="CheckCircle" className="w-6 h-6 mr-2" />

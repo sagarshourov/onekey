@@ -7,7 +7,7 @@ const Pagination = (props) => {
 
   let numpage = Math.ceil(total / numRows);
 
-  console.log(numpage);
+  (numpage);
 
   return (
     <nav className="w-full sm:w-auto sm:mr-auto">

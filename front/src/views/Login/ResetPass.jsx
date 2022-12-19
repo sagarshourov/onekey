@@ -12,9 +12,9 @@ import { LoadingIcon } from "@/base-components";
 const ResetPass = (props) => {
   let { token, id } = useParams();
 
-  console.log("token", token);
+  ("token", token);
 
-  console.log("mail", id);
+  ("mail", id);
 
   let navigate = useNavigate();
   const [info, setInfo] = useState([]);
@@ -52,14 +52,14 @@ const ResetPass = (props) => {
         }
       );
    
-      console.log(response);
+      (response);
       setInfo(["Password changed successfully!"]);
       setLoading(false);
 
       navigate("../", { replace: true });
     } catch (err) {
       setLoading(false);
-      console.log(err?.response?.data);
+      (err?.response?.data);
       err?.response?.data?.data &&
         setErr(Object.values(err.response.data.data));
     }
@@ -116,7 +116,7 @@ const ResetPass = (props) => {
                   onClick={handelLogin}
                   className="btn btn-primary w-full xl:mr-3"
                 >
-                  Send Password Reset Link
+                  Sumbit new password
                   {loading && (
                     <LoadingIcon
                       icon="three-dots"

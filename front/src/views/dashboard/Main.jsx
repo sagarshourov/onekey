@@ -61,7 +61,7 @@ const UserMain = () => {
           {/* BEGIN: General Report */}
           <div className="col-span-12 mt-6">
             <div className="intro-y block sm:flex items-center h-20">
-              <h2 className="text-lg font-medium truncate mr-5">Profile</h2>
+              <h2 className="text-lg font-medium truncate mr-5">Admin Profile</h2>
             </div>
             <div className="box intro-y p-5">
               <div className="flex justify-between border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">

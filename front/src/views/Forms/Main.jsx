@@ -25,7 +25,7 @@ function applySortFilters(array, searchValue) {
       _items.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 
     );
   });
-  console.log("sagar");
+  
 }
 
 const AllForms = (props) => {

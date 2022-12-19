@@ -14,9 +14,9 @@ import {
 import { useState } from "react";
 
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
-import { userFileListState } from "../../state/users-atom";
+import { adminFileListState } from "../../state/users-atom";
 import Pagination from "./Pagination";
-import UsersTable from "./UsersTable";
+import AttachmentTable from "./AttachmentTable";
 import axios from "axios";
 import { filter } from "lodash";
 import { getBaseApi } from "../../configuration";
@@ -41,7 +41,7 @@ function applySortFilters(array, searchValue) {
 const AllDocs = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
-  const [usersData, setUserState] = useRecoilStateLoadable(userFileListState);
+  const [usersData, setUserState] = useRecoilStateLoadable(adminFileListState);
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");
@@ -82,12 +82,10 @@ const AllDocs = (props) => {
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">Uploaded Docs</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">Downloadable Docs</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <Link to="/add_files" className="btn btn-primary shadow-md mr-2">
-            Add New Documents
-          </Link>
+    
 
           <div className="hidden md:block mx-auto text-slate-500">
             Showng {filterData.length} out of{" "}
@@ -122,7 +120,7 @@ const AllDocs = (props) => {
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
           {usersData.state === "hasValue" && (
-            <UsersTable
+            <AttachmentTable
               setSelectId={setSelectId}
               setDeleteConfirmationModal={setDeleteConfirmationModal}
               rowCount={rowCount}

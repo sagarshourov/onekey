@@ -3,7 +3,7 @@ import {
   colorSchemeValue,
   colorScheme as colorSchemeStore,
 } from "@/stores/color-scheme";
-import { darkMode as darkModeStore } from "@/stores/dark-mode";
+import { darkModeValue, darkMode as darkModeStore } from "@/stores/dark-mode";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import classnames from "classnames";
 
@@ -25,6 +25,20 @@ function Main(props) {
   };
 
   setColorSchemeClass();
+
+  const setDarkModeValue = useSetRecoilState(darkModeValue);
+
+  const setDarkModeClass = () => {
+    darkMode ? dom("html").addClass("dark") : dom("html").removeClass("dark");
+  };
+
+  const switchMode = () => {
+    setDarkModeValue(() => !darkMode);
+    localStorage.setItem("darkMode", !darkMode);
+    setDarkModeClass();
+  };
+
+  setDarkModeClass();
 
   return (
     <>
@@ -66,6 +80,19 @@ function Main(props) {
             "border-white dark:border-darkmode-600": colorScheme != "theme-2",
           })}
         ></a>
+        
+        <div
+          className="dark-mode-switcher cursor-pointer  w-12 h-12 flex items-center justify-center z-50  "
+          onClick={switchMode}
+        >
+          {/* <div className="mr-4 text-slate-600 dark:text-slate-200">Dark Mode</div> */}
+          <div
+            className={classnames({
+              "dark-mode-switcher__toggle border": true,
+              "dark-mode-switcher__toggle--active": darkMode,
+            })}
+          ></div>
+        </div>
       </div>
       {/* END: Main Color Switcher */}
     </>

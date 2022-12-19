@@ -50,8 +50,8 @@ const UsersTable = (props) => {
                   {user?.student_info?.interview_time}
                 </div>
               </td>
-              <td> {user?.student_info?.university?.title}</td>
-              <td> {user?.student_info?.visa_type?.title}</td>
+              <td> {user?.student_info?.university}</td>
+              <td> {user?.student_info?.visa_type}</td>
               <td className="table-report__action w-56">
                 <div className="flex justify-center items-center">
                   <a

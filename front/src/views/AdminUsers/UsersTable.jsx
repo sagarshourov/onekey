@@ -7,7 +7,7 @@ const formatDate = (dat) => {
   return dat.split("T")[0];
 };
 const UsersTable = (props) => {
-  const { users, rowCount, setDeleteConfirmationModal } = props;
+  const { users, rowCount, setUserId, setDeleteConfirmationModal } = props;
 
   return (
     <table className="table table-report -mt-2">
@@ -43,7 +43,8 @@ const UsersTable = (props) => {
                     className="flex items-center text-info mr-3"
                     to={"/admin_users/view/" + user.id}
                   >
-                    <Lucide icon="Trash2" className="w-4 h-4 mr-1 " /> View Users
+                    <Lucide icon="Trash2" className="w-4 h-4 mr-1 " /> View
+                    Users
                   </Link>
 
                   <a
@@ -51,6 +52,7 @@ const UsersTable = (props) => {
                     href="#"
                     onClick={() => {
                       setDeleteConfirmationModal(true);
+                      setUserId(user.id);
                     }}
                   >
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete

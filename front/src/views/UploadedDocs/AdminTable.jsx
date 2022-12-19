@@ -26,7 +26,7 @@ const UsersTable = (props) => {
       </thead>
       <tbody>
         {users.slice(0, rowCount).map((userobj, key) => {
-          //console.log(user[0].user);
+          //(user[0].user);
 
         
 

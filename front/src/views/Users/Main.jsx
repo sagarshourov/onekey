@@ -1,20 +1,13 @@
 import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  Modal,
-  ModalBody,
+  Lucide
+
 } from "@/base-components";
 
 import { useState } from "react";
 
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
-import Pagination from "./Pagination";
+
 import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
@@ -26,11 +19,10 @@ function applySortFilters(array, searchValue) {
       _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  console.log("sagar");
 }
 
 const AdminUsers = (props) => {
-  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+
 
   const [usersData, setUserState] = useRecoilStateLoadable(allUserListState);
   const [rowCount, setRowCount] = useState(10);
@@ -38,7 +30,7 @@ const AdminUsers = (props) => {
   const [search, setSearch] = useState("");
 
   const handelPageCount = (e) => {
-    console.log(e.target.value);
+    (e.target.value);
 
     setRowCount(parseInt(e.target.value));
   };
@@ -97,6 +89,7 @@ const AdminUsers = (props) => {
             <UsersTable
               rowCount={rowCount}
               users={filterData}
+              setUserState = {setUserState}
             />
           )}
         </div>
@@ -110,40 +103,7 @@ const AdminUsers = (props) => {
         {/* END: Pagination */}
       </div>
       {/* BEGIN: Delete Confirmation Modal */}
-      <Modal
-        show={deleteConfirmationModal}
-        onHidden={() => {
-          setDeleteConfirmationModal(false);
-        }}
-      >
-        <ModalBody className="p-0">
-          <div className="p-5 text-center">
-            <Lucide
-              icon="XCircle"
-              className="w-16 h-16 text-danger mx-auto mt-3"
-            />
-            <div className="text-3xl mt-5">Are you sure?</div>
-            <div className="text-slate-500 mt-2">
-              Do you really want to delete these records? <br />
-              This process cannot be undone.
-            </div>
-          </div>
-          <div className="px-5 pb-8 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setDeleteConfirmationModal(false);
-              }}
-              className="btn btn-outline-secondary w-24 mr-1"
-            >
-              Cancel
-            </button>
-            <button type="button" className="btn btn-danger w-24">
-              Delete
-            </button>
-          </div>
-        </ModalBody>
-      </Modal>
+      
       {/* END: Delete Confirmation Modal */}
     </>
   );

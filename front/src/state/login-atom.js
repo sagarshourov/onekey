@@ -1,22 +1,17 @@
 import { atom, selector } from "recoil";
 
-export const tempFahrenheit = atom({
-  key: "tempFahrenheit",
+export const loginState = atom({
+  key: "loginState",
   default: {
-    email: "sa",
-    pass: "1254",
-  },
-});
-
-export const tempCelsius = selector({
-  key: "tempCelsius",
-  get: async ({ get }) => {
-
-    return get(tempFahrenheit);
-  },
-  set: ({ set }, newValue) => {
-    console.log("set clicked");
-
-    set(tempFahrenheit, newValue);
+    email: "",
+    profile_image: localStorage.profile_image
+      ? localStorage.getItem("profile_image")
+      : "",
+    first_name: localStorage.first_name
+      ? localStorage.getItem("first_name")
+      : "",
+    last_name: localStorage.last_name ? localStorage.getItem("last_name") : "",
+    isAdmin: localStorage.isAdmin ? localStorage.getItem("isAdmin") : 0,
+    token : localStorage.token ? localStorage.getItem("token") : "",
   },
 });

@@ -9,8 +9,14 @@ import { getBaseApi } from "../../configuration";
 
 import { LoadingIcon } from "@/base-components";
 
+import { useRecoilState } from "recoil";
+
+import { loginState } from "../../state/login-atom";
+
 const Login = (props) => {
   let navigate = useNavigate();
+
+  const [loginstate, setLoginState] = useRecoilState(loginState);
 
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +48,6 @@ const Login = (props) => {
         const accessToken = response?.data?.data?.token;
         const roles = response?.data?.data?.user?.is_admin;
 
-        console.log(roles);
         if (roles == 1) {
           localStorage.setItem("isAdmin", true);
         }
@@ -53,16 +58,33 @@ const Login = (props) => {
           "user",
           JSON.stringify(response?.data?.data?.user)
         );
+
+        localStorage.setItem(
+          "first_name",
+          response?.data?.data?.user?.first_name
+        );
+        localStorage.setItem(
+          "last_name",
+          response?.data?.data?.user?.last_name
+        );
         localStorage.setItem(
           "profile_image",
           response?.data?.data?.profile_image?.file_path
         );
 
+        setLoginState({
+          profile_image: response?.data?.data?.profile_image?.file_path,
+          email: email,
+          first_name: response?.data?.data?.user?.first_name,
+          last_name: response?.data?.data?.user?.last_name,
+          isAdmin: roles == 1 ? roles : 0,
+          token: accessToken,
+        });
+
         navigate("../", { replace: true });
       } else {
         setLoading(false);
 
-      console.log(response);
         setErr(Object.values(response.data.data));
       }
     } catch (err) {

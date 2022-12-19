@@ -7,6 +7,7 @@ import {
   DropdownContent,
   DropdownItem,
   Modal,
+  LoadingIcon,
   ModalBody,
 } from "@/base-components";
 
@@ -20,8 +21,6 @@ import UsersTable from "./UsersTable";
 import axios from "axios";
 import { getAdmin } from "../../configuration";
 
-import { LoadingIcon } from "@/base-components";
-
 import { filter } from "lodash";
 
 function applySortFilters(array, searchValue) {
@@ -31,8 +30,13 @@ function applySortFilters(array, searchValue) {
       _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  console.log("sagar");
 }
+const token = localStorage.getItem("token");
+
+const headers = {
+  Authorization: `Bearer ${token}`,
+  ContentType: "application/json",
+};
 
 const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -41,13 +45,10 @@ const AdminUsers = (props) => {
   const [rowCount, setRowCount] = useState(10);
   const [formdata, setFormdata] = useState([]);
   const [search, setSearch] = useState("");
-
+  const [user_id, setUserId] = useState(0);
   const [loading, setLoading] = useState(false);
-  
 
   const handelPageCount = (e) => {
-    console.log(e.target.value);
-
     setRowCount(parseInt(e.target.value));
   };
 
@@ -97,13 +98,6 @@ const AdminUsers = (props) => {
       return false;
     }
 
-    const token = localStorage.getItem("token");
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      ContentType: "application/json",
-    };
-
     setLoading(true);
 
     try {
@@ -111,24 +105,45 @@ const AdminUsers = (props) => {
         headers,
       });
 
+      if (response?.data?.success) {
+        setUserState(response?.data?.data);
 
- 
+        setLoading(false);
 
-      if(response.data.success){
-        window.location.reload();
-
-      }else{
-        alert('Something is worng please try again later!')
+        setNewUserModal(false);
+      } else {
+        alert("Something is worng please try again later!");
       }
-
-
-
-
     } catch (err) {
       setLoading(false);
     }
   };
 
+  const deleteAdmin = async () => {
+    setLoading(true);
+    const URL = getAdmin() + "delete_admins";
+
+    try {
+      const response = await axios.post(
+        URL,
+        { user_id: user_id },
+        {
+          headers,
+        }
+      );
+
+      if (response?.data?.success) {
+        setUserState(response?.data?.data);
+
+        setDeleteConfirmationModal(false);
+        setLoading(false);
+      } else {
+        alert("Something is worng please try again later!");
+      }
+    } catch (err) {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <h2 className="intro-y text-lg font-medium mt-10 ">Admin Users List</h2>
@@ -178,6 +193,7 @@ const AdminUsers = (props) => {
               rowCount={rowCount}
               setDeleteConfirmationModal={setDeleteConfirmationModal}
               users={filterData}
+              setUserId={setUserId}
             />
           )}
         </div>
@@ -219,8 +235,19 @@ const AdminUsers = (props) => {
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-danger w-24">
+            <button
+              onClick={deleteAdmin}
+              type="button"
+              className="btn btn-danger w-24"
+            >
               Delete
+              {loading && (
+                <LoadingIcon
+                  icon="three-dots"
+                  color="white"
+                  className="w-4 h-4 ml-2"
+                />
+              )}
             </button>
           </div>
         </ModalBody>

@@ -5,6 +5,7 @@ import {
   getUserInfo,
   getUserFiles,
   getUserStatus,
+  getAdminFiles
 } from "../service/users";
 
 /**
@@ -70,6 +71,24 @@ export const userAppSelect = selector({
   },
 });
 
+export const adminFileSelect = selector({
+  key: "adminFileSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getAdminFiles();
+
+      return response.data || [];
+    } catch (error) {
+      console.error(`getAdminFiles -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+
+
+
 export const userAppState = atom({
   key: "userAppState",
   default: userAppSelect,
@@ -84,3 +103,10 @@ export const userFileListState = atom({
   key: "userFileListState",
   default: userFileSelect,
 });
+
+
+export const adminFileListState = atom({
+  key: "adminFileListState",
+  default: adminFileSelect,
+});
+
