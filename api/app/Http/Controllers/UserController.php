@@ -15,6 +15,9 @@ use App\Models\Packages;
 use App\Models\StatusText;
 use App\Models\SubStatusText;
 use App\Models\UserAppStatus;
+
+use App\Models\FormData;
+
 use App\Models\StudentInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -161,6 +164,9 @@ class UserController extends BaseController
 
 
 
+
+
+
     public function userinfo($id)
     {
 
@@ -191,6 +197,7 @@ class UserController extends BaseController
 
         $return['student_info'] = StudentInfo::where(['user_id' => $user_id])->first();
 
+        $return['client_form'] = $this->form_data(FormData::where(['user_id' => $user_id, 'form_id' => 1])->first('content'));
 
         return $this->sendResponse($return, 'Users retrieved successfully.');
     }

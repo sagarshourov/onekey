@@ -7,6 +7,11 @@ import { getBaseApi } from "../../configuration";
 import { userSelect } from "../../state/users-atom";
 const token = localStorage.getItem("token");
 import { useParams } from "react-router-dom";
+
+const formatDate = (dat) => {
+  //const date = dat.split(" ");
+  return dat.split("T")[0];
+};
 const UserMain = () => {
   let { id } = useParams();
   const dropzoneSingleRef = useRef();
@@ -252,7 +257,6 @@ const UserMain = () => {
                 </div>
               </div>
             </div>
-
             <div className="box intro-y p-5 mt-5 pb-5">
               <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
                 <div className="font-medium truncate ">Contact</div>
@@ -327,13 +331,10 @@ const UserMain = () => {
                 </div>
               </div>
             </div>
-
             {val.student_info && (
               <div className="box intro-y p-5 mt-5 pb-5">
                 <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-                  <div className="font-medium truncate ">
-                    Student Information
-                  </div>
+                  <div className="truncate ">Student Information</div>
                 </div>
                 <div className=" mb-5 lg:columns-4">
                   <div>
@@ -444,6 +445,99 @@ const UserMain = () => {
                 </div>
               </div>
             )}
+            {val.client_form && (
+              <div className="box intro-y p-5 mt-5 pb-5">
+                <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                  <div className="font-medium truncate ">English Test</div>
+                </div>
+                {/* <div className="flex">
+                  <label className="form-label"> Score and Information </label>
+                </div> */}
+                {!val.client_form.pleaseCheckTheEnglishTestScoresIfYouHaveAny
+                  .none ? (
+                  <div className="overflow-x-auto">
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th className="whitespace-nowrap"></th>
+
+                          <th className="whitespace-nowrap"> Test date </th>
+                          <th className="whitespace-nowrap">Reading </th>
+                          <th className="whitespace-nowrap"> Listening </th>
+                          <th className="whitespace-nowrap"> Writting </th>
+                          <th className="whitespace-nowrap">Speaking</th>
+                          <th className="whitespace-nowrap">Total Score</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {val.client_form
+                          ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny
+                          ?.ielts && (
+                          <tr>
+                            <td>IELTS</td>
+                            <td>
+                              {val?.client_form?.whenDidYouTakeTheTest &&
+                                formatDate(
+                                  val?.client_form?.whenDidYouTakeTheTest
+                                )}
+                            </td>
+                            <td>{val?.client_form?.readingScore}</td>
+                            <td>{val?.client_form?.listeningScore}</td>
+                            <td>{val?.client_form?.writtingScore}</td>
+                            <td>{val?.client_form?.speakingScore}</td>
+                            <td>{val?.client_form?.totalScore}</td>
+                          </tr>
+                        )}
+
+                        {val.client_form
+                          ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny
+                          ?.toefl && (
+                          <tr>
+                            <td>TOEFL</td>
+                            <td>
+                              {val?.client_form?.whenDidYouTakeTheTest1 &&
+                                formatDate(
+                                  val?.client_form?.whenDidYouTakeTheTest1
+                                )}
+                            </td>
+                            <td>{val?.client_form?.readingScore1}</td>
+                            <td>{val?.client_form?.listeningScore1}</td>
+                            <td>{val?.client_form?.writtingScore1}</td>
+                            <td>{val?.client_form?.speakingScore1}</td>
+                            <td>{val?.client_form?.totalScore1}</td>
+                          </tr>
+                        )}
+
+                        {val.client_form
+                          ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny
+                          ?.duolingo && (
+                          <tr>
+                            <td>Duolingo </td>
+                            <td>
+                              {val?.client_form?.whenDidYouTakeTheTest2 &&
+                                formatDate(
+                                  val?.client_form?.whenDidYouTakeTheTest2
+                                )}
+                            </td>
+                            <td>{val?.client_form?.readingScore2}</td>
+                            <td>{val?.client_form?.listeningScore2}</td>
+                            <td>{val?.client_form?.writtingScore2}</td>
+                            <td>{val?.client_form?.speakingScore2}</td>
+                            <td>{val?.client_form?.totalScore2}</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : val?.client_form
+                    ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny.iWantToTakeItInTheFuture ? (
+                  <h3 className="text-lg text-center">  I want to take it in the future</h3>
+                ) : (
+                  <h3 className="text-lg text-center"> I do not have one</h3>
+                )}
+              </div>
+            )}
+            {/* pleaseCheckTheEnglishTestScoresIfYouHaveAny */}
           </div>
           {/* END: General Report */}
         </div>

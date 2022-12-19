@@ -86,4 +86,16 @@ class BaseController extends Controller
             return env('MAIL_FROM_ADDRESS');
         }
     }
+
+
+    protected function form_data($data)
+    {
+
+        if ($data != null) {
+
+            return json_decode($data->content);
+        }
+
+        return false;
+    }
 }
