@@ -74,17 +74,17 @@ const AdminUsers = (props) => {
   const createAdmin = async () => {
     const URL = getAdmin() + "create_admin_users";
     if (formdata.password !== formdata.cpassword) {
-      alert("Password Not mathing !");
+      alert("Password Not matching !");
 
       return false;
     }
     if (formdata.first_name == "") {
-      alert("First Name Not mathing !");
+      alert("First Name Not matching !");
       return false;
     }
 
     if (formdata.last_name == "") {
-      alert("Last Name Not mathing !");
+      alert("Last Name Not matching !");
       return false;
     }
 
@@ -112,7 +112,7 @@ const AdminUsers = (props) => {
 
         setNewUserModal(false);
       } else {
-        alert("Something is worng please try again later!");
+        alert("Something is wrong please try again later!");
       }
     } catch (err) {
       setLoading(false);
@@ -138,7 +138,7 @@ const AdminUsers = (props) => {
         setDeleteConfirmationModal(false);
         setLoading(false);
       } else {
-        alert("Something is worng please try again later!");
+        alert("Something is wrong please try again later!");
       }
     } catch (err) {
       setLoading(false);
@@ -157,7 +157,7 @@ const AdminUsers = (props) => {
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {filterData.length} out of{" "}
+            Showing {filterData.length} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
@@ -314,7 +314,7 @@ const AdminUsers = (props) => {
             </div>
             <div className="form-inline mt-5">
               <label htmlFor="horizontal-form-2" className="form-label sm:w-20">
-                Confrim Password
+                Confirm Password
               </label>
               <input
                 onChange={(e) => handelChange(e)}

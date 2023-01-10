@@ -12,6 +12,8 @@ import {
 
 import { useState } from "react";
 
+
+
 import { useRecoilState, useRecoilStateLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
 import Pagination from "./Pagination";
@@ -26,7 +28,7 @@ function applySortFilters(array, searchValue) {
       _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  ("sagar");
+
 }
 
 const AdminUsers = (props) => {
@@ -62,7 +64,7 @@ const AdminUsers = (props) => {
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
         
           <div className="hidden md:block mx-auto text-slate-500">
-           Showng  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+           Showing  {filterData.length} out of {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}

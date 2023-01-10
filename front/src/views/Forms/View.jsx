@@ -60,7 +60,7 @@ const AllForms = (props) => {
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {rowCount} out of
+            Showing {rowCount} out of
           </div>
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">

@@ -13,7 +13,7 @@ function Main() {
           <div className="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
             <div className="-intro-x lg:mr-20">
               <img
-                alt="Rocketman Tailwind HTML Admin Template"
+                alt=" Template"
                 className="h-48 lg:h-auto"
                 src={errorIllustration}
               />

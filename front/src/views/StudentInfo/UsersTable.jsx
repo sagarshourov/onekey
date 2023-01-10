@@ -19,7 +19,7 @@ const UsersTable = (props) => {
           <th className="whitespace-nowrap">User</th>
           <th className="whitespace-nowrap">Code</th>
           <th className="text-center whitespace-nowrap">Interview</th>
-          <th className="text-center whitespace-nowrap">Universty</th>
+          <th className="text-center whitespace-nowrap">University</th>
           <th className="text-center whitespace-nowrap">Visa Type</th>
         </tr>
       </thead>

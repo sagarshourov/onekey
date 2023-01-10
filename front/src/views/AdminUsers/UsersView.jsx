@@ -112,7 +112,7 @@ const UsersView = (props) => {
       if (response.data.success) {
         window.location.reload();
       } else {
-        alert("Something is worng please try again later!");
+        alert("Something is wrong please try again later!");
       }
     } catch (err) {
       setLoading(false);
@@ -142,7 +142,7 @@ const UsersView = (props) => {
       if (response.data.success) {
         window.location.reload();
       } else {
-        alert("Something is worng please try again later!");
+        alert("Something is wrong please try again later!");
       }
     } catch (err) {
       setLoading(false);
@@ -175,7 +175,7 @@ const UsersView = (props) => {
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {assignData.length} out of{" "}
+            Showing {assignData.length} out of{" "}
             {assignUser.state === "hasValue" && assignUser.contents["length"]}
           </div>
           <select

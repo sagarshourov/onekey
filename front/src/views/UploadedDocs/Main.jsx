@@ -48,7 +48,7 @@ const AllDocs = (props) => {
   const [loading, setLoading] = useState(false);
   const [selectId, setSelectId] = useState(0);
   const handelPageCount = (e) => {
-    (e.target.value);
+    e.target.value;
 
     setRowCount(parseInt(e.target.value));
   };
@@ -64,14 +64,27 @@ const AllDocs = (props) => {
   };
 
   const handelDelete = async (id) => {
+    
+
     setLoading(true);
-    axios.post(
-      getBaseApi() + "delete_file",
-      { id: id },
-      {
-        headers,
-      }
-    );
+
+    try {
+      const response = await axios.post(
+        getBaseApi() + "delete_file",
+        { id: id },
+        {
+          headers,
+        }
+      );
+
+      setUserState(response?.data?.data);
+      setLoading(false);
+      console.log("response", response);
+    } catch (err) {
+      setLoading(false);
+    }
+
+    //setUserState();
 
     setDeleteConfirmationModal(false);
 
@@ -90,7 +103,7 @@ const AllDocs = (props) => {
           </Link>
 
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {filterData.length} out of{" "}
+            Showing {filterData.length} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select

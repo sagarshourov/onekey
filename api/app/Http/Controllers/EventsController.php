@@ -58,7 +58,7 @@ class EventsController extends BaseController
     {
 
 
-        Events::find($req->event_id)->delete();
+        Events::find($req->event_id)->forceDelete();
 
 
 

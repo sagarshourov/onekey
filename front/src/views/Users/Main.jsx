@@ -55,7 +55,7 @@ const AdminUsers = (props) => {
          
 
           <div className="hidden md:block mx-auto text-slate-500">
-           Showng  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+           Showing  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}

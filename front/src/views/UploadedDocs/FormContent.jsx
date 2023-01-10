@@ -3,23 +3,30 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { Lucide, Alert } from "@/base-components";
 import { getBaseApi } from "../../configuration";
+import dom from "@left4code/tw-starter/dist/js/dom";
 
 const token = localStorage.getItem("token");
-
+import { useRecoilStateLoadable } from "recoil";
+import { allUserListState } from "../../state/admin-atom";
 const headers = {
   Authorization: `Bearer ${token}`,
   ContentType: "application/json",
 };
 function FormContent(props) {
-  const [file, setFile] = useState(null);
-  const [title, setTitle] = useState("");
-  const [dismiss, setDismiss] = useState(false);
+  console.log("content", props.type);
 
+  const conRef = createRef(props.type);
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState("Title");
+  const [dismiss, setDismiss] = useState(false);
+  const [filesData, setFilesState] = useRecoilStateLoadable(allUserListState);
   const [progress, setProgress] = useState(0);
 
   const handelTitle = (e) => {
-    (e.target.value);
+    e.target.value;
     setTitle(e.target.value);
+
+    console.log("Title", e.target.value);
   };
 
   const removeFile = (id) => {
@@ -32,8 +39,14 @@ function FormContent(props) {
     );
   };
 
-  const handelFileUpload = (e) => {
-    if (title == "") {
+  const handelFileUpload = async (e) => {
+    // console.log("title___", title);
+
+
+    var titles = document.getElementById("title" + props.type + props.id).value;
+  
+
+    if (titles == "") {
       alert("Title Required !");
       return;
     }
@@ -42,32 +55,43 @@ function FormContent(props) {
 
     const formData = new FormData(); // Update the formData object
     formData.append("file", e.target.files[0], "File Name"); // Details of the uploaded file
-    formData.append("title", title);
+    formData.append("title", titles);
     formData.append("type", props.type);
 
     // (this.state.selectedFile); // Request made to the backend api // Send formData object
-    axios.post(getBaseApi() + "file_upload", formData, {
-      headers,
-      onUploadProgress: (progressEvent) => {
-        let percentComplete = progressEvent.loaded / progressEvent.total;
-        percentComplete = parseInt(percentComplete * 100);
-        setProgress(percentComplete);
-      },
-    });
+    try {
+      const response = await axios.post(
+        getBaseApi() + "file_upload",
+        formData,
+        {
+          headers,
+          onUploadProgress: (progressEvent) => {
+            let percentComplete = progressEvent.loaded / progressEvent.total;
+            percentComplete = parseInt(percentComplete * 100);
+            setProgress(percentComplete);
+          },
+        }
+      );
+      //console.log(response);
+      setFilesState(response?.data?.data);
+    } catch (err) {
+      setLoading(false);
+    }
 
-    // ("handelfileupload", e.target.files[0]);
+   
   };
 
   return (
-    <div>
+    <div ref={conRef}>
       <div className="mb-3">
         <label htmlFor="vertical-form-1" className="form-label">
           Title
         </label>
         <input
+          defaultValue=""
           type="text"
-          onChange={(e) => handelTitle(e)}
           className="form-control"
+          id={"title" + props.type + props.id}
           placeholder="Passport"
         />
       </div>
@@ -75,7 +99,7 @@ function FormContent(props) {
         <div className="flex items-center justify-center w-full">
           {progress !== 100 && (
             <label
-              htmlFor="dropzone-file"
+              htmlFor={"dropzone-file" + props.type + props.id}
               className="flex flex-col items-center justify-center w-full h-54 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
             >
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -88,7 +112,7 @@ function FormContent(props) {
                 </p>
               </div>
               <input
-                id="dropzone-file"
+                id={"dropzone-file" + props.type + props.id}
                 onChange={handelFileUpload}
                 type="file"
                 className="hidden"
@@ -128,10 +152,12 @@ function FormContent(props) {
 
 FormContent.propTypes = {
   type: PropTypes.string,
+  id: PropTypes.number,
 };
 
 FormContent.defaultProps = {
   type: "",
+  id: "",
 };
 
 export default FormContent;

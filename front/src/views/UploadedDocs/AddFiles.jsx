@@ -14,8 +14,10 @@ import {
 
 import FormContent from "./FormContent";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState,createRef, useRef } from "react";
 const AddFiles = (props) => {
+
+
   const [personal, setPersoanl] = useState([{ id: 1 }]);
   const [education, setEducation] = useState([{ id: 1 }]);
   const [document, setDocument] = useState([{ id: 1 }]);
@@ -64,7 +66,7 @@ const AddFiles = (props) => {
                 <TabPanel className="leading-relaxed p-5 ">
                   <div className="grid xs:grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-2 place-items-center ">
                     {Object.keys(personal).map((keyName, i) => (
-                      <FormContent type="3" key={i} />
+                      <FormContent type="3" id={i} key={i} />
                     ))}
 
                     <button
@@ -82,7 +84,7 @@ const AddFiles = (props) => {
                 <TabPanel className="leading-relaxed p-5">
                   <div className="grid xs:grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-2 place-items-center ">
                     {Object.keys(education).map((keyName, i) => (
-                      <FormContent type="4" key={i} />
+                      <FormContent type="4" id={i} key={i} />
                     ))}
 
                     <button
@@ -96,7 +98,7 @@ const AddFiles = (props) => {
                 <TabPanel className="leading-relaxed p-5">
                   <div className="grid xs:grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-2 place-items-center ">
                     {Object.keys(document).map((keyName, i) => (
-                      <FormContent key={i} type="5" />
+                      <FormContent key={i} id={i} type="5" />
                     ))}
 
                     <button

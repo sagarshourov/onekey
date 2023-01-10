@@ -13,6 +13,19 @@ class FileController extends BaseController
 {
     //
 
+    public function userfiles()
+    {
+        $user_id = Auth::id();
+
+        if (Auth::user()->is_admin) {
+            $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
+        } else {
+            $files =   Files::with('docTypes')->where('user_id', $user_id)->get();
+        }
+        return $files;
+    }
+
+
 
     public function getFile($folder,  $filename)
     {
@@ -41,9 +54,9 @@ class FileController extends BaseController
         $file = Files::find($in['id']);
         $path = storage_path() . '/app/public/files/' .   $file->file_path;
         Storage::delete($path);
-        $file->delete();
+        $file->forceDelete();
 
-        return $this->sendResponse(['success'], 'FIle deleted successfully.');
+        return $this->sendResponse($this->userfiles(), 'FIle deleted successfully.');
     }
 
     public function admin_files()
@@ -119,7 +132,7 @@ class FileController extends BaseController
                     $message->from("info@onekeyclient.us", 'Admin');
                 });
             }
-            return $this->sendResponse($file, 'User file uploaded successfully.');
+            return $this->sendResponse($this->userfiles(), 'User file uploaded successfully.');
         }
     }
 }

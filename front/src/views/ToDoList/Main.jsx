@@ -19,7 +19,7 @@ function applySortFilters(array, searchValue) {
       _items.notes.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 
     );
   });
-  ("sagar");
+
 }
 
 const AdminUsers = (props) => {
@@ -58,7 +58,7 @@ const AdminUsers = (props) => {
           </button>
 
           <div className="hidden md:block mx-auto text-slate-500">
-           Showng  {rowCount} out of {tasksData.state === "hasValue" && tasksData.contents["length"]}
+           Showing  {rowCount} out of {tasksData.state === "hasValue" && tasksData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}

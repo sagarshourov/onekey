@@ -90,7 +90,7 @@ const AllDocs = (props) => {
           </Link>
 
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {filterData.length} out of{" "}
+            Showing {filterData.length} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select

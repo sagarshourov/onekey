@@ -73,7 +73,7 @@ function FormContent(props) {
       props.setFileState(response.data.data.original.data);
     }
 
-    // ("handelfileupload", e.target.files[0]);
+   
   };
 
   return (

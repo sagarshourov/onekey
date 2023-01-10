@@ -102,25 +102,15 @@ class UserController extends BaseController
 
     public function create_admin_users(Request $request)
     {
-
         $input = $request->all();
-
-
-
         $validator = Validator::make($input, [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|unique:users',
         ]);
-
-
         if ($validator->fails()) {
-
             return $this->sendError('Validation Error.', $validator->errors());
         }
-
-
-
         $input['password'] = bcrypt($input['password']);
         $input['first_name'] = $input['first_name'];
         $input['last_name'] = $input['last_name'];
@@ -128,14 +118,7 @@ class UserController extends BaseController
         $input['is_admin'] = 1;
         $input['status'] = 'approved';
         $input['package'] = 1;
-
-
-
-
-
-
         User::create($input);
-
         return  $this->admin_users();
     }
 
@@ -145,7 +128,7 @@ class UserController extends BaseController
         $input = $request->all();
 
 
-        User::find($input['user_id'])->delete();
+        User::find($input['user_id'])->forceDelete();
 
         return $this->admin_users();
     }
@@ -165,7 +148,7 @@ class UserController extends BaseController
         $input = $request->all();
 
 
-        AdminUsers::where(['admin_id' => $input['admin_id'], 'user_id' => $input['user_id']])->delete();
+        AdminUsers::where(['admin_id' => $input['admin_id'], 'user_id' => $input['user_id']])->forceDelete();
 
         return $this->sendResponse(['success'], 'Users retrieved successfully.');
     }
@@ -277,7 +260,7 @@ class UserController extends BaseController
 
         if ($input['type'] == 'remove') {
             $user = User::find($input['user_id']);
-            $user->delete();
+            $user->forceDelete();
             $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
             return $this->sendResponse($users, 'Removed successfully.');
         }

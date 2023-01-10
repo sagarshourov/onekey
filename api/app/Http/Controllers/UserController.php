@@ -79,13 +79,6 @@ class UserController extends BaseController
 
 
         if (Auth::user()->is_admin) {
-            // $assign = $this->assignUsers();
-            // if ($assign) {
-            //     $files =   Files::with(['docTypes', 'user'])->whereIn('user_id', $assign)->get()->groupBy('user_id');
-            // } else {
-            //     $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
-            // }
-
             $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
         } else {
             $files =   Files::with('docTypes')->where('user_id', $user_id)->get();
@@ -101,7 +94,7 @@ class UserController extends BaseController
 
         if ($input['sub_id'] == null) {
             if ($input['active'] === true) {
-                $users = UserAppStatus::where(['user_id' => $input['user_id'], 'status_text' => $input['status_text']])->delete();
+                $users = UserAppStatus::where(['user_id' => $input['user_id'], 'status_text' => $input['status_text']])->forceDelete();
             } else {
                 $subStatus = SubStatusText::where('status_text', $input['status_text'])->get(['id']);
                 foreach ($subStatus as $value) {
@@ -253,7 +246,7 @@ class UserController extends BaseController
     public function delete_notification(Request $req)
     {
         $input = $req->all();
-        $noti = Notifications::find($input['id'])->delete();
+        $noti = Notifications::find($input['id'])->forceDelete();
 
         return $this->sendResponse($input['id'], 'Notifications retrive successfully.');
     }

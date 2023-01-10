@@ -52,7 +52,7 @@ const Forgot = (props) => {
           <div className="w-96 intro-y">
             <img
               className="mx-auto w-16"
-              alt="Rocketman - Tailwind HTML Admin Template"
+              alt=" Template"
               src={logoUrl}
             />
             <div className="text-white dark:text-slate-300 text-2xl font-medium text-center mt-14">

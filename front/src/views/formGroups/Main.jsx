@@ -46,7 +46,7 @@ function Main() {
       {/* BEGIN: Data List */}
       <div className="intro-y overflow-auto lg:overflow-visible">
 
-        <h1 className="text-center text-xl py-5">Comming Soon...</h1>
+        <h1 className="text-center text-xl py-5">Coming Soon...</h1>
         <table className="table table-report">
           <tbody>
            

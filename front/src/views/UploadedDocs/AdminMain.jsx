@@ -82,7 +82,7 @@ const AllDocs = (props) => {
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {filterData.length} out of{" "}
+            Showing {filterData.length} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select

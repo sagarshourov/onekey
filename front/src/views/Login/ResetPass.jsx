@@ -37,7 +37,7 @@ const ResetPass = (props) => {
     }
 
     if (pass !== conpass) {
-      setErr(["Password and Confrim password not matching!"]);
+      setErr(["Password and Confirm password not matching!"]);
       setLoading(false);
       return;
     }
@@ -73,7 +73,7 @@ const ResetPass = (props) => {
           <div className="w-96 intro-y">
             <img
               className="mx-auto w-16"
-              alt="Rocketman - Tailwind HTML Admin Template"
+              alt=" Template"
               src={logoUrl}
             />
             <div className="text-white dark:text-slate-300 text-2xl font-medium text-center mt-14">
@@ -107,7 +107,7 @@ const ResetPass = (props) => {
               <input
                 type="text"
                 className="form-control py-3 mt-5 px-4 block"
-                placeholder="Confrim Password"
+                placeholder="Confirm Password"
                 onChange={(e) => setConPass(e.target.value)}
               />
 
@@ -116,7 +116,7 @@ const ResetPass = (props) => {
                   onClick={handelLogin}
                   className="btn btn-primary w-full xl:mr-3"
                 >
-                  Sumbit new password
+                  Submit new password
                   {loading && (
                     <LoadingIcon
                       icon="three-dots"

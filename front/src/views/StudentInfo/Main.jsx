@@ -139,7 +139,7 @@ const AdminUsers = (props) => {
             </h2>
           </div>
           <div className="hidden md:block mx-auto text-slate-500">
-            Showng {rowCount} out of{" "}
+            Showing {rowCount} out of{" "}
             {students.state === "hasValue" && students.contents["length"]}
           </div>
           <select

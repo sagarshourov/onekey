@@ -46,7 +46,7 @@ const UsersTable = (props) => {
                     target="_blank"
                    
                   >
-                    <Lucide icon="Download" className="w-4 h-4 mr-1" /> Dwonload
+                    <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download
                   </a>
                 </div>
               </td>
