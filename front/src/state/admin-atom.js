@@ -13,29 +13,47 @@ import {
   getFormData,
   getAdminAppStatus,
   getAllNotificatioin,
-  getAssignUsers
+  getAssignUsers,
 } from "../service/admin";
 
 /**
  * Populate the default selector return value with a service call.
  */
 
- export const assignSelect = selectorFamily({
-  key: "assignSelect",
-  get:  (id) => async ({ get }) => {
-    try {
-      const response = await getAssignUsers(id);
-      return response.data || [];
-    } catch (error) {
-      console.error(`getAssignUsers -> getUsers() ERROR: \n${error}`);
-      return [];
-    }
-  },
+export const formDatas = atomFamily({
+  key: "formData",
+  default: selectorFamily({
+    key: "formData/Default",
+    get:
+      (id) =>
+      async ({ get }) => {
+        try {
+          const response = await getFormData(id);
+          return response.data || [];
+        } catch (error) {
+          console.error(`formByIdSelect -> getUsers() ERROR: \n${error}`);
+          return [];
+        }
+      },
+  }),
 });
 
- 
+export const assignSelect = selectorFamily({
+  key: "assignSelect",
+  get:
+    (id) =>
+    async ({ get }) => {
+      try {
+        const response = await getAssignUsers(id);
+        return response.data || [];
+      } catch (error) {
+        console.error(`getAssignUsers -> getUsers() ERROR: \n${error}`);
+        return [];
+      }
+    },
+});
 
- export const appStatusSlect = selectorFamily({
+export const appStatusSlect = selectorFamily({
   key: "appStatusSlect",
   get:
     (id) =>
@@ -50,8 +68,7 @@ import {
     },
 });
 
-
- export const formDataSelect = selectorFamily({
+export const formDataSelect = selectorFamily({
   key: "formDataSelect",
   get:
     (id) =>
@@ -66,9 +83,7 @@ import {
     },
 });
 
-
-
- export const formByIdSelect = selectorFamily({
+export const formByIdSelect = selectorFamily({
   key: "formByIdSelect",
   get:
     (id) =>
@@ -82,9 +97,6 @@ import {
       }
     },
 });
-
-
-
 
 export const getEditfrom = selectorFamily({
   key: "getEditfrom",
@@ -115,9 +127,6 @@ export const getFormSelect = selectorFamily({
       }
     },
 });
-
-
-
 
 export const formIdAtom = atomFamily({
   key: "formIdAtom",
@@ -237,24 +246,10 @@ export const notificationSelect = selector({
   },
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 export const notificationListState = atom({
   key: "notificationListState",
   default: notificationSelect,
 });
-
-
 
 export const allFormListState = atom({
   key: "allFormListState",

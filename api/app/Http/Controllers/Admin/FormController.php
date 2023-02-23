@@ -53,12 +53,9 @@ class FormController extends BaseController
         return $this->sendResponse($forms, 'Formby id successfully.');
     }
 
-
-    public function formdata($id)
+    private function single_form($id)
     {
-
         if (Auth::user()->is_admin) {
-
 
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
             $form_con =  Forms::find($forms[0]->form_id);
@@ -73,7 +70,7 @@ class FormController extends BaseController
             if (!empty($forms))  $return['val'] = json_decode($forms->content);
 
 
-           // return $this->sendResponse($forms, 'Formby id successfully.');
+            // return $this->sendResponse($forms, 'Formby id successfully.');
 
 
             $form_con =  Forms::find($id);
@@ -91,7 +88,20 @@ class FormController extends BaseController
 
         $return['title'] = $form_con->title;
 
-        return $this->sendResponse($return, 'Formby id successfully.');
+
+        return $return;
+    }
+
+
+
+
+
+    public function formdata($id)
+    {
+
+
+
+        return $this->sendResponse($this->single_form($id), 'Form by id successfully.');
 
 
         // $forms = Forms::all();
@@ -231,6 +241,14 @@ class FormController extends BaseController
         ]);
 
 
+        if (!isset($input['title'])) {
+            $input['title'] = "";
+        }
+
+
+
+
+
         if ($input['last_step'] == true) {
             $noti =  Notifications::create([
                 'user_id' =>   $user_id,
@@ -251,6 +269,6 @@ class FormController extends BaseController
 
 
 
-        return $this->sendResponse(['success'], 'save form data successfully.');
+        return $this->sendResponse($this->single_form($input['form_id']), 'save form data successfully.');
     }
 }

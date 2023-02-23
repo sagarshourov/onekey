@@ -28,6 +28,8 @@ Route::post('register', 'App\Http\Controllers\AuthController@register');
 Route::get('countries', 'App\Http\Controllers\UserController@countries');
 
 
+Route::post('register_api', 'App\Http\Controllers\AuthController@register_api');
+
 
 
 Route::get('universities', 'App\Http\Controllers\Admin\UserController@universities');

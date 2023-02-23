@@ -3,23 +3,58 @@ import { Lucide, Alert, LoadingIcon } from "@/base-components";
 import { useState } from "react";
 
 import { Form } from "react-formio";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
-import { formDataSelect } from "../../state/admin-atom";
+import { formDataSelect, formDatas } from "../../state/admin-atom";
+
+function clickEvent(ind) {
+  //document.getElementsByTagName('button')[].click();
+
+  setTimeout(function () {
+    // console.log('click event');
+    const ul = document.querySelector(".pagination");
+
+    const childern = ul.childNodes;
+
+    let counter = 0;
+
+    // iterate over all child nodes
+    childern.forEach((li, index) => {
+      //console.log('li',li);
+      console.log("counter", counter);
+      if (li.innerText) {
+        //li.click();
+
+        console.log("in counter", counter);
+
+        counter++;
+      }
+      if (counter == ind) {
+        li.firstElementChild.click();
+      }
+    });
+  }, 500);
+
+  // console.log('click event');
+}
 
 function Main() {
   let { id } = useParams();
-  const formData = useRecoilValue(formDataSelect(id));
+  const [formData, setFormData] = useRecoilStateLoadable(formDatas(id));
+
+  //console.log("formData", formData);
 
   const [loading, setLoading] = useState(false);
 
   const [dismiss, setDismiss] = useState(false);
 
+  const [page, setPage] = useState(1);
+
   const handleSubmitData = async (e) => {
-    ("submit form");
+    console.log("submit form", e);
     let data = {};
 
     let last_step = false;
@@ -53,6 +88,10 @@ function Main() {
       );
 
       if (response?.data?.success) {
+        setFormData(response.data.data);
+        //setTimeout(clickEvent(8), 5000);
+        clickEvent(page + 1);
+        setPage(page + 1);
         if (!e.submission) {
           setDismiss(true);
 
@@ -65,6 +104,18 @@ function Main() {
       console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
       setLoading(false);
     }
+  };
+
+  const onChange = (e) => {
+    console.log(e);
+    
+  };
+
+  const PrevPage = (e) => {
+    clickEvent(page - 1);
+    setPage(page - 1);
+
+
   };
 
   return (
@@ -106,14 +157,19 @@ function Main() {
               </button>
             </Alert>
           )}
-          {formData.con && (
+          {formData.state == "hasValue" && formData.contents.con && (
             <Form
-              form={formData.con}
+              form={{
+                display: "wizard",
+                components: formData.contents.con.components,
+              }}
               submission={{
-                data: formData.val,
+                data: formData.contents.val,
               }}
               onSubmit={(e) => handleSubmitData(e)}
               onNextPage={handleSubmitData}
+              onChange={(e) => onChange(e)}
+              onPrevPage={(e) => PrevPage(e)}
             />
           )}
         </div>

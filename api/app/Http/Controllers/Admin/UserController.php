@@ -260,7 +260,7 @@ class UserController extends BaseController
 
         if ($input['type'] == 'remove') {
             $user = User::find($input['user_id']);
-            $user->forceDelete();
+            $user->delete();
             $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
             return $this->sendResponse($users, 'Removed successfully.');
         }

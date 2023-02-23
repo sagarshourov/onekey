@@ -21,6 +21,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Log;
+
 class AuthController extends BaseController
 {
     //
@@ -137,8 +139,6 @@ class AuthController extends BaseController
         $user = User::create($input);
 
 
-
-
         $noti =  Notifications::create([
             'user_id' =>  $user->id,
             'title' => 'New Registration requested',
@@ -157,6 +157,74 @@ class AuthController extends BaseController
         return $this->sendResponse(['success'], 'Your registration has been received. Please wait and your login details will be emailed to you within 24 hours. Please DO NOT REGISTER AGAIN!');
 
         //
+    }
+
+
+
+
+    public function register_api(Request $request)
+    {
+
+
+        $all =  $request->all();
+
+      
+
+
+        if (is_array($all) && count($all) > 0) {
+          
+
+
+            
+
+            try {
+                
+                foreach ($all as $user) {
+                    try {
+
+                        $validator = Validator::make($user, [
+                            'first_name' => 'required',
+                            'last_name' => 'required',
+                            'email' => 'required|email|regex:/(.+)@(.+)\.(.+)/i|unique:users',
+                        ]);
+
+                        if ($validator->fails()) {
+                            continue;
+                        }
+                        $password = Str::random(10);
+                        $input['password'] = Hash::make($password);
+                        $input['first_name'] = $user['first_name'];
+                        $input['last_name'] = $user['last_name'];
+                        $input['phone'] = $user['phone_number'] ? $user['phone_number'] : "";
+                        $input['email'] = $user['email'];
+                        $input['is_admin'] = 0;
+                        $input['status'] = 'pending';
+                        $input['package'] = 1;
+                        $user = User::create($input);
+                        $name =  $user['first_name'];
+                        $email =  $user['email'];
+                 
+           
+                   
+                    } catch (\Exception $e) {
+
+                     
+                        Log::info($e->getMessage());
+
+                        // return $e->getMessage();
+                    }
+                }
+            } catch (\Exception $e) {
+               
+
+                return $e->getMessage();
+            }
+        }
+
+
+
+
+        return  'success' ;
     }
 
 
