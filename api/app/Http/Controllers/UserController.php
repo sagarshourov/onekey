@@ -22,7 +22,7 @@ use App\Models\StudentInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends BaseController
@@ -92,14 +92,17 @@ class UserController extends BaseController
         $input = $request->all();
 
 
+        $user_id = (int) $input['user_id'];
+
+
         if ($input['sub_id'] == null) {
             if ($input['active'] === true) {
-                $users = UserAppStatus::where(['user_id' => $input['user_id'], 'status_text' => $input['status_text']])->forceDelete();
+                $users = UserAppStatus::where(['user_id' => $user_id, 'status_text' => $input['status_text']])->forceDelete();
             } else {
                 $subStatus = SubStatusText::where('status_text', $input['status_text'])->get(['id']);
                 foreach ($subStatus as $value) {
                     $users = UserAppStatus::create([
-                        'user_id'   => (int) $input['user_id'],
+                        'user_id' => $user_id,
                         'status_text' => $input['status_text'],
                         'sub_status_text' => $value->id,
                         'sub' => 1,
@@ -114,7 +117,7 @@ class UserController extends BaseController
             } else {
 
                 $users = UserAppStatus::create([
-                    'user_id'   => (int) $input['user_id'],
+                    'user_id' => $user_id,
                     'status_text' => $input['status_text'],
                     'sub_status_text' => $input['sub_id'],
                     'sub' => 1,
@@ -122,6 +125,24 @@ class UserController extends BaseController
                 ]);
             }
         }
+
+
+        $user = User::find((int) $input['user_id']);
+
+
+        $email = $user->email;
+
+
+        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
+            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
+            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
+        });
+
+
+
+
+
+
 
 
 
@@ -145,6 +166,18 @@ class UserController extends BaseController
             'created_by' =>   $user_id,
             'is_read' => 0
         ]);
+
+
+        $user = User::find((int) $input['user_id']);
+
+
+        $email = $user->email;
+
+
+        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
+            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
+            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
+        });
 
 
         return $this->sendResponse($users, 'Saved successfully.');

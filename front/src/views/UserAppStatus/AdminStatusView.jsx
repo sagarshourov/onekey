@@ -66,7 +66,7 @@ const StatusView = (props) => {
         }
       );
 
-        window.location.reload();
+      //  window.location.reload();
     } catch (err) {
       setLoading(false);
     }
