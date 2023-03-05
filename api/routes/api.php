@@ -38,10 +38,10 @@ Route::get('visa_types', 'App\Http\Controllers\Admin\UserController@visa_types')
 Route::post('student_info', 'App\Http\Controllers\Admin\UserController@student_info');
 
 
-Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
+// Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
 
-Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');
-Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
+// Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');
+// Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
 
 
 Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_password');
@@ -53,6 +53,16 @@ Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_passw
 //Route::post('file_upload', 'App\Http\Controllers\FileController@file_upload');
 
 Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], function () {
+
+
+    Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
+
+    Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');
+    Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
+
+
+
+
     Route::post('file_upload', 'App\Http\Controllers\FileController@file_upload');
     Route::get('events/{user_id?}', 'App\Http\Controllers\EventsController@all_events');
     Route::post('delete_file', 'App\Http\Controllers\FileController@delete_file');
@@ -93,19 +103,19 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('create_admin_users', 'App\Http\Controllers\Admin\UserController@create_admin_users');
 
 
-    
+
     Route::post('update_user_status', 'App\Http\Controllers\Admin\UserController@update_user_status');
     Route::post('assign_admin_users', 'App\Http\Controllers\Admin\UserController@assign_admin_users');
 
     Route::post('delete_admin_users', 'App\Http\Controllers\Admin\UserController@delete_admin_users');
 
     Route::post('delete_admins', 'App\Http\Controllers\Admin\UserController@delete_admins');
-    
 
-    
+
+
 
     Route::get('assign_users/{id}', 'App\Http\Controllers\Admin\UserController@assign_users');
-    
+
 
 
     Route::get('forms', 'App\Http\Controllers\Admin\FormController@getallforms');
@@ -135,7 +145,7 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('save_event', 'App\Http\Controllers\EventsController@save_event');
     Route::post('delete_event', 'App\Http\Controllers\EventsController@delete_event');
 
-    
+
 
 
 
@@ -146,8 +156,6 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
 
     Route::get('admin_files', 'App\Http\Controllers\FileController@admin_files');
-
-    
 });
 
 

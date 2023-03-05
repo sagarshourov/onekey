@@ -1,11 +1,5 @@
 import {
   Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
   Modal,
   ModalBody,
 } from "@/base-components";
@@ -14,9 +8,8 @@ import { useState } from "react";
 
 
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
-import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
@@ -40,7 +33,7 @@ const AdminUsers = (props) => {
   const [search, setSearch] = useState("");
 
   const handelPageCount = (e) => {
-    (e.target.value);
+
 
     setRowCount(parseInt(e.target.value));
   };

@@ -1,4 +1,4 @@
-<h2>{{$form}} has submited</h2>
+<h2>{{$form}} has submitted</h2>
 <table class="table">
     <tr>
         <td>Name :</td>

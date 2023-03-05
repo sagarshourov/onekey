@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
-
+import { helper } from "@/utils/helper";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -95,6 +95,7 @@ const UsersTable = (props) => {
           <tr>
             <th className="whitespace-nowrap">No</th>
             <th className="whitespace-nowrap">Full Name</th>
+            <th className="whitespace-nowrap text-center">Date Of Birth</th>
             <th className="text-center whitespace-nowrap">Email</th>
             <th className="text-center whitespace-nowrap">Approval Status</th>
             <th className="text-center whitespace-nowrap">Created At</th>
@@ -114,6 +115,11 @@ const UsersTable = (props) => {
                     {user.first_name} {user.last_name}
                   </Link>
                 </td>
+                <td className="text-center">
+      
+                  {user?.birth_date &&
+                    helper.formatDate(user?.birth_date, "ddd, MMMM D, YYYY")}
+                </td>
                 <td className="text-center">{user.email}</td>
                 <td className="text-center">
                   {user.status === "approved" && (
@@ -132,7 +138,9 @@ const UsersTable = (props) => {
                     </span>
                   )}
                 </td>
-                <td className="text-center">{formatDate(user.created_at)}</td>
+                <td className="text-center">
+                  {helper.formatDate(user?.created_at, "ddd, MMMM D, YYYY")}
+                </td>
                 <td className="table-report__action w-64">
                   <div className="flex justify-center items-center">
                     {user.status == "pending" ? (

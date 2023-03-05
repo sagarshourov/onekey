@@ -55,6 +55,8 @@ const Logout = (props) => {
     // useResetRecoilState(allUsersState);
 
     navigate("/login", { replace: true });
+
+    window.location.reload();
   };
 
   const handelProfile = () => {
@@ -205,7 +207,9 @@ const Logout = (props) => {
                 {loginsta?.first_name} {loginsta?.last_name}
               </div>
               <div className="text-xs text-slate-400">
-                {loginsta.isAdmin ? "Admin" : "User"}
+                {loginsta.isAdmin === 1 && "Admin"}{" "}
+                {loginsta.isAdmin === 2 && "Jr. Admin"}{" "}
+                {loginsta.isAdmin === 0 && "Users"}
               </div>
             </div>
           </DropdownToggle>

@@ -139,7 +139,6 @@ let UsersideMenu = atom({
             pathname: "/forms/22",
             title: "SOP ",
           },
-         
         ],
       },
       {
@@ -178,7 +177,7 @@ let UsersideMenu = atom({
       {
         icon: "Files",
         pathname: "/my_doc",
-        title: "Dwonload Docs",
+        title: "Download Docs",
       },
       // {
       //   icon: "ListChecks",
@@ -189,4 +188,29 @@ let UsersideMenu = atom({
   },
 });
 
-export { sideMenu, UsersideMenu };
+let JrAdmin = atom({
+  key: "JrAdminMenu",
+  default: {
+    menu: [
+      "START MENU",
+      {
+        icon: "Home",
+        title: "Profile",
+        pathname: "/",
+      },
+
+      {
+        icon: "LayoutList",
+        title: "Resume Builder",
+        pathname: "/forms/view/6",
+      },
+      {
+        icon: "LayoutList",
+        title: "SOP",
+        pathname: "/forms/view/22",
+      },
+    ],
+  },
+});
+
+export { sideMenu, UsersideMenu, JrAdmin };

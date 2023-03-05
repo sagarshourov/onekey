@@ -3,12 +3,12 @@ import { Lucide, Alert, LoadingIcon } from "@/base-components";
 import { useState } from "react";
 
 import { Form } from "react-formio";
-import { useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
-import { formDataSelect, formDatas } from "../../state/admin-atom";
+import { formDatas } from "../../state/admin-atom";
 
 function clickEvent(ind) {
   //document.getElementsByTagName('button')[].click();
@@ -107,7 +107,7 @@ function Main() {
   };
 
   const onChange = (e) => {
-    console.log(e);
+
     
   };
 

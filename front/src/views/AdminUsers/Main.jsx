@@ -1,11 +1,5 @@
 import {
   Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
   Modal,
   LoadingIcon,
   ModalBody,
@@ -13,9 +7,8 @@ import {
 
 import { useState } from "react";
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { adminUserListState } from "../../state/admin-atom";
-import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 
 import axios from "axios";

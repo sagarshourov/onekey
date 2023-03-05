@@ -142,7 +142,7 @@ class AuthController extends BaseController
         $noti =  Notifications::create([
             'user_id' =>  $user->id,
             'title' => 'New Registration requested',
-            'notification' =>  $user->first_name . ' has submited registred form',
+            'notification' =>  $user->first_name . ' has submitted registered form',
             'is_read' => 0,
             'reciver' => 1
         ]);

@@ -139,6 +139,14 @@ class UserController extends BaseController
         });
 
 
+        // $noti =  Notifications::create([
+        //     'user_id' =>   $user_id,
+        //     'title' => 'Form Submitted',
+        //     'notification' =>  $user->first_name . ' has submitted ' . $input['title'] . ' form',
+        //     'is_read' => 0,
+        //     'reciver' => 1
+        // ]);
+
 
 
 
@@ -266,14 +274,14 @@ class UserController extends BaseController
     public function notifications()
     {
         $assign = $this->assignUsers();
-        if ($assign) {
+        if (!$assign) {
             $noti =  Notifications::with('user')->get();
         } else {
             $noti =  Notifications::with('user')->whereIn('user_id', $assign)->get();
         }
 
 
-        return $this->sendResponse($noti, 'Notifications retrive successfully.');
+        return $this->sendResponse($noti, 'Notifications retrieve successfully.');
     }
 
     public function delete_notification(Request $req)
@@ -281,6 +289,6 @@ class UserController extends BaseController
         $input = $req->all();
         $noti = Notifications::find($input['id'])->forceDelete();
 
-        return $this->sendResponse($input['id'], 'Notifications retrive successfully.');
+        return $this->sendResponse($input['id'], 'Notifications retrieve successfully.');
     }
 }

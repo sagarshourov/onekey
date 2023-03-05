@@ -19,7 +19,12 @@ class FormController extends BaseController
 
     public function getallforms()
     {
-        $forms =  Forms::all();
+
+        if (Auth::user()->is_admin == 2) {
+            $forms =  Forms::whereIn('id', [22, 6])->get();
+        } else {
+            $forms =  Forms::all();
+        }
 
         return $this->sendResponse($forms, 'Forms retrieved successfully.');
     }
@@ -50,7 +55,7 @@ class FormController extends BaseController
 
 
 
-        return $this->sendResponse($forms, 'Formby id successfully.');
+        return $this->sendResponse($forms, 'Form Retrieve id successfully.');
     }
 
     private function single_form($id)
@@ -252,15 +257,15 @@ class FormController extends BaseController
         if ($input['last_step'] == true) {
             $noti =  Notifications::create([
                 'user_id' =>   $user_id,
-                'title' => 'Form Submited',
-                'notification' =>  $user->first_name . ' has submited ' . $input['title'] . ' form',
+                'title' => 'Form Submitted',
+                'notification' =>  $user->first_name . ' has submitted ' . $input['title'] . ' form',
                 'is_read' => 0,
                 'reciver' => 1
             ]);
             $assignAmin = $this->assignAdminEmail($user_id);
 
             Mail::send('email.form_submit', ['user' => $user, 'form' => $input['title']], function ($message) use ($assignAmin) {
-                $message->to($assignAmin, 'Admin')->subject('New Form Submited');
+                $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
                 $message->from("info@onekeyclient.us", 'Admin');
             });
         }

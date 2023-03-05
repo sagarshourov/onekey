@@ -1,20 +1,4 @@
-import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  Litepicker,
-  TabGroup,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@/base-components";
 
-import * as $_ from "lodash";
 
 import { useState } from "react";
 
@@ -22,15 +6,6 @@ import { useState } from "react";
 function Main() {
   const [generalReportFilter, setGeneralReportFilter] = useState();
   const [salesReportFilter, setSalesReportFilter] = useState();
-  const salesPerformance = () => {
-    return [
-      "bg-opacity-60",
-      "bg-opacity-40",
-      "bg-opacity-30",
-      "bg-opacity-20",
-      "bg-opacity-10",
-    ][$_.random(0, 4)];
-  };
 
   return (
     <div className="grid grid-cols-12 gap-6">

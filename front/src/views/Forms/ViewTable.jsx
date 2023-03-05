@@ -1,8 +1,6 @@
 import { Lucide } from "@/base-components";
-import * as $_ from "lodash";
-import classnames from "classnames";
 import { useState } from "react";
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getAdmin } from "../../configuration";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const formatDate = (dat) => {
@@ -48,7 +46,7 @@ const ViewTable = (props) => {
         <tr>
           <th className="whitespace-nowrap">No</th>
           <th className="whitespace-nowrap">User</th>
-
+          <th className="whitespace-nowrap">Email</th>
           <th className="text-center whitespace-nowrap"></th>
           <th className="text-center whitespace-nowrap"></th>
         </tr>
@@ -68,6 +66,9 @@ const ViewTable = (props) => {
                   {user?.user?.first_name + " " + user?.user?.last_name}
                 </a>
               </td>
+
+
+              <td> {user?.user?.email}</td>
 
               <td></td>
 

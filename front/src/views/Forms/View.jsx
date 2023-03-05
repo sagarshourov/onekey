@@ -1,20 +1,13 @@
 import {
   Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
   Modal,
   ModalBody,
 } from "@/base-components";
 
 import { useState } from "react";
 
-import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { useRecoilValue } from "recoil";
 import { formByIdSelect } from "../../state/admin-atom";
-import Pagination from "./Pagination";
 import UsersTable from "./ViewTable";
 import { useParams } from "react-router-dom";
 import { filter } from "lodash";

@@ -30,6 +30,6 @@ class AppStatusNotes extends Model
     public function created_by()
     {
 
-        return $this->hasOne(User::class,  'id', 'created_by')->select('id', 'first_name', 'last_name');
+        return $this->hasOne(User::class,  'id', 'created_by')->select('id', 'first_name', 'last_name','email');
     }
 }

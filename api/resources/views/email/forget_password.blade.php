@@ -1,4 +1,4 @@
-<h1>Resest Your Passsword !</h1>
+<h1>Reset Your Password !</h1>
 
 <p>Follow the link bellow for reset password ! </p>
 <table class="table">

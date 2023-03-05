@@ -4,6 +4,9 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useCallbackState, helper as $h } from "@/utils";
 import { sideMenu as useSideMenuStore } from "@/stores/side-menu";
 import { UsersideMenu as useUserSideMenuStore } from "@/stores/side-menu";
+
+import { JrAdmin } from "@/stores/side-menu";
+
 import { useRecoilValue } from "recoil";
 import { linkTo, nestedMenu, enter, leave } from "./index";
 import { Lucide } from "@/base-components";
@@ -12,21 +15,29 @@ import SimpleBar from "simplebar";
 import logoUrl from "@/assets/images/logo.png";
 import classnames from "classnames";
 import TopBar from "@/components/top-bar/Main";
-import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
 import MainColorSwitcher from "@/components/main-color-switcher/Main";
+
+import { loginState } from "../state/login-atom";
 
 function Main() {
   const navigate = useNavigate();
   const location = useLocation();
   const [formattedMenu, setFormattedMenu] = useState([]);
-  const sideMenuStore = useRecoilValue(useSideMenuStore);
 
+  const login = useRecoilValue(loginState);
+
+  // console.log("login", login);
+  const sideMenuStore = useRecoilValue(useSideMenuStore);
   const userSideMenuStore = useRecoilValue(useUserSideMenuStore);
+  const jrSideMenuStore = useRecoilValue(JrAdmin);
 
   const sideMenu = () => {
-    if (localStorage.isAdmin) {
+    if (login.isAdmin === 1) {
       return nestedMenu($h.toRaw(sideMenuStore.menu), location);
+    } else if (login.isAdmin === 2) {
+      return nestedMenu($h.toRaw(jrSideMenuStore.menu), location);
     } else {
+  
       return nestedMenu($h.toRaw(userSideMenuStore.menu), location);
     }
 

@@ -30,7 +30,7 @@ const AdminUsers = (props) => {
   const [search, setSearch] = useState("");
 
   const handelPageCount = (e) => {
-    (e.target.value);
+   
 
     setRowCount(parseInt(e.target.value));
   };

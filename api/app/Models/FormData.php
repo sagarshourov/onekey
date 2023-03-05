@@ -31,6 +31,6 @@ class FormData extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name');;
+        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name','email');
     }
 }

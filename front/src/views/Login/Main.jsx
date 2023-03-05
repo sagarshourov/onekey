@@ -48,9 +48,7 @@ const Login = (props) => {
         const accessToken = response?.data?.data?.token;
         const roles = response?.data?.data?.user?.is_admin;
 
-        if (roles == 1) {
-          localStorage.setItem("isAdmin", true);
-        }
+        localStorage.setItem("isAdmin", roles);
 
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("token", accessToken);
@@ -77,7 +75,7 @@ const Login = (props) => {
           email: email,
           first_name: response?.data?.data?.user?.first_name,
           last_name: response?.data?.data?.user?.last_name,
-          isAdmin: roles == 1 ? roles : 0,
+          isAdmin: roles,
           token: accessToken,
         });
 
@@ -101,11 +99,7 @@ const Login = (props) => {
         <MainColorSwitcher /> */}
         <div className="w-full min-h-screen p-5 md:p-20 flex items-center justify-center">
           <div className="w-96 intro-y">
-            <img
-              className="mx-auto w-16"
-              alt=" Template"
-              src={logoUrl}
-            />
+            <img className="mx-auto w-16" alt=" Template" src={logoUrl} />
             <div className="text-white dark:text-slate-300 text-2xl font-medium text-center mt-14">
               Login to Your Account!
             </div>

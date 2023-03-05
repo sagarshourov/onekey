@@ -1,4 +1,8 @@
-<h2>Dear {{$user}}</h2>
-<p>There has been an update to your case and you may have notes to review. Please log in to the the portal and check your case status to find out about the updates</p>
-<p>Thank you</p>
-<p>One Key Visa Team</p>
+<h2>Hello {{$user}} , </h2>
+
+<p>Your case status notes have been updated and there are notes that your consultant has written. You may log in to the portal to review the notes. </p>
+
+<p>Here is the link to log in the portal and check out the notes. </p>
+
+<p>Regards </p>
+<P>One Key Admission Team.</p>
