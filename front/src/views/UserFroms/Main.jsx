@@ -3,12 +3,12 @@ import { Lucide, Alert, LoadingIcon } from "@/base-components";
 import { useState } from "react";
 
 import { Form } from "react-formio";
-import { useRecoilStateLoadable } from "recoil";
+import { useRecoilValue, useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
-import { formDatas } from "../../state/admin-atom";
+import { formDataSelect, formDatas } from "../../state/admin-atom";
 
 function clickEvent(ind) {
   //document.getElementsByTagName('button')[].click();
@@ -59,6 +59,9 @@ function Main() {
 
     let last_step = false;
 
+
+    console.log('submission',e.submission);
+
     if (e.submission) {
       data = e.submission.data;
     } else {
@@ -88,14 +91,27 @@ function Main() {
       );
 
       if (response?.data?.success) {
-        setFormData(response.data.data);
         //setTimeout(clickEvent(8), 5000);
-        clickEvent(page + 1);
+
+        console.log("page count", page);
+       
         setPage(page + 1);
-        if (!e.submission) {
+        clickEvent(page + 1);
+        if (last_step) {
           setDismiss(true);
 
-          setTimeout(setDismiss(false), 5000);
+          setTimeout(function () {
+            setDismiss(false);
+
+
+            window.location.reload();
+
+            // setFormData(response.data.data);
+            // clickEvent(1);
+            // setPage(1);
+          }, 5000);
+        } else {
+          setFormData(response.data.data);
         }
 
         setLoading(false);
@@ -107,15 +123,12 @@ function Main() {
   };
 
   const onChange = (e) => {
-
-    
+    console.log(e);
   };
 
   const PrevPage = (e) => {
     clickEvent(page - 1);
     setPage(page - 1);
-
-
   };
 
   return (

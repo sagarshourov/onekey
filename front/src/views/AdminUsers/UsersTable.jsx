@@ -5,7 +5,7 @@ const formatDate = (dat) => {
   return dat.split("T")[0];
 };
 const UsersTable = (props) => {
-  const { users, rowCount, setUserId, setDeleteConfirmationModal } = props;
+  const { users, rowCount, setUserId,setRoleConfirmationModal, setDeleteConfirmationModal } = props;
 
   return (
     <table className="table table-report -mt-2">
@@ -35,7 +35,7 @@ const UsersTable = (props) => {
               <td className="text-center">{user.email}</td>
 
               <td className="text-center">{formatDate(user.created_at)}</td>
-              <td className="table-report__action w-56">
+              <td className="table-report__action ">
                 <div className="flex justify-center items-center">
                   <Link
                     className="flex items-center text-info mr-3"
@@ -44,6 +44,33 @@ const UsersTable = (props) => {
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1 " /> View
                     Users
                   </Link>
+
+                  {parseInt(user.is_admin) == 1 ? (
+                    <a
+                      className="flex items-center text-warning mr-3"
+                      href="#"
+                      onClick={() => {
+
+                        setRoleConfirmationModal(true);
+                        setUserId(user.id);
+                      }}
+                    >
+                      <Lucide icon="UserMinus" className="w-4 h-4 mr-1" /> Make Jr
+                      Admin
+                    </a>
+                  ) : (
+                    <a
+                      className="flex items-center text-success"
+                      href="#"
+                      onClick={() => {
+                        setDeleteConfirmationModal(true);
+                        setUserId(user.id);
+                      }}
+                    >
+                      <Lucide icon="UserPlus" className="w-4 h-4 mr-1" /> Make
+                      Admin
+                    </a>
+                  )}
 
                   <a
                     className="flex items-center text-danger"

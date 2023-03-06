@@ -64,8 +64,9 @@ const AdminUploadedDocs = Loadable(
 );
 const AddFiles = Loadable(lazy(() => import("../views/UploadedDocs/AddFiles")));
 
-const AdminAddFiles = Loadable(lazy(() => import("../views/MyDocuments/AddFiles")));
-
+const AdminAddFiles = Loadable(
+  lazy(() => import("../views/MyDocuments/AddFiles"))
+);
 
 const ViewAttachment = Loadable(
   lazy(() => import("../views/UploadedDocs/ViewAttachment"))
@@ -273,7 +274,7 @@ function Router() {
     },
   ];
 
-  if (localStorage.isAdmin) {
+  if (parseInt(localStorage.isAdmin) === 1) {
     return useRoutes(adminRoutes);
   } else {
     return useRoutes(userRoutes);

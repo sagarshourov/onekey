@@ -28,8 +28,6 @@ Route::post('register', 'App\Http\Controllers\AuthController@register');
 Route::get('countries', 'App\Http\Controllers\UserController@countries');
 
 
-Route::post('register_api', 'App\Http\Controllers\AuthController@register_api');
-
 
 
 Route::get('universities', 'App\Http\Controllers\Admin\UserController@universities');
@@ -37,7 +35,7 @@ Route::get('visa_types', 'App\Http\Controllers\Admin\UserController@visa_types')
 
 Route::post('student_info', 'App\Http\Controllers\Admin\UserController@student_info');
 
-
+Route::post('register_api', 'App\Http\Controllers\AuthController@register_api');
 // Route::get('get_form', 'App\Http\Controllers\Admin\UserController@get_form');
 
 // Route::post('save_form', 'App\Http\Controllers\Admin\UserController@save_form');

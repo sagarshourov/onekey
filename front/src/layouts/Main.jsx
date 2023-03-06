@@ -26,18 +26,17 @@ function Main() {
 
   const login = useRecoilValue(loginState);
 
-  // console.log("login", login);
+  console.log("login", login);
   const sideMenuStore = useRecoilValue(useSideMenuStore);
   const userSideMenuStore = useRecoilValue(useUserSideMenuStore);
   const jrSideMenuStore = useRecoilValue(JrAdmin);
 
   const sideMenu = () => {
-    if (login.isAdmin === 1) {
+    if (parseInt(login.isAdmin) === 1) {
       return nestedMenu($h.toRaw(sideMenuStore.menu), location);
-    } else if (login.isAdmin === 2) {
+    } else if (parseInt(login.isAdmin) === 2) {
       return nestedMenu($h.toRaw(jrSideMenuStore.menu), location);
     } else {
-  
       return nestedMenu($h.toRaw(userSideMenuStore.menu), location);
     }
 

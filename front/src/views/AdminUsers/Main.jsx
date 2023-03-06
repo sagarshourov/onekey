@@ -1,9 +1,4 @@
-import {
-  Lucide,
-  Modal,
-  LoadingIcon,
-  ModalBody,
-} from "@/base-components";
+import { Lucide, Modal, LoadingIcon, ModalBody } from "@/base-components";
 
 import { useState } from "react";
 
@@ -33,6 +28,9 @@ const headers = {
 
 const AdminUsers = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+
+  const [roleConfirmationModal, setRoleConfirmationModal] = useState(false);
+
   const [newUserModal, setNewUserModal] = useState(false);
   const [usersData, setUserState] = useRecoilStateLoadable(adminUserListState);
   const [rowCount, setRowCount] = useState(10);
@@ -137,6 +135,32 @@ const AdminUsers = (props) => {
       setLoading(false);
     }
   };
+
+  const changeAdmin = async () => {
+    setLoading(true);
+    const URL = getAdmin() + "change_admins";
+
+    try {
+      const response = await axios.post(
+        URL,
+        { user_id: user_id, is_admin: 2 },
+        {
+          headers,
+        }
+      );
+
+      if (response?.data?.success) {
+        setUserState(response?.data?.data);
+
+        setRoleConfirmationModal(false);
+        setLoading(false);
+      } else {
+        alert("Something is wrong please try again later!");
+      }
+    } catch (err) {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <h2 className="intro-y text-lg font-medium mt-10 ">Admin Users List</h2>
@@ -185,6 +209,7 @@ const AdminUsers = (props) => {
             <UsersTable
               rowCount={rowCount}
               setDeleteConfirmationModal={setDeleteConfirmationModal}
+              setRoleConfirmationModal={setRoleConfirmationModal}
               users={filterData}
               setUserId={setUserId}
             />
@@ -199,6 +224,54 @@ const AdminUsers = (props) => {
         </div>
         {/* END: Pagination */}
       </div>
+
+      {/* BEGIN: Delete Confirmation Modal */}
+      <Modal
+        show={roleConfirmationModal}
+        onHidden={() => {
+          setRoleConfirmationModal(false);
+        }}
+      >
+        <ModalBody className="p-0">
+          <div className="p-5 text-center">
+            <Lucide
+              icon="UserPlus"
+              className="w-16 h-16 text-warning mx-auto mt-3"
+            />
+            <div className="text-3xl mt-5">Are you sure?</div>
+            <div className="text-slate-500 mt-2">
+              Do you really want to change admin role ? <br />
+            </div>
+          </div>
+          <div className="px-5 pb-8 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setRoleConfirmationModal(false);
+              }}
+              className="btn btn-outline-secondary w-24 mr-1"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={changeAdmin}
+              type="button"
+              className="btn btn-warning text-white w-24"
+            >
+              Change
+              {loading && (
+                <LoadingIcon
+                  icon="three-dots"
+                  color="white"
+                  className="w-4 h-4 ml-2"
+                />
+              )}
+            </button>
+          </div>
+        </ModalBody>
+      </Modal>
+      {/* END: Delete Confirmation Modal */}
+
       {/* BEGIN: Delete Confirmation Modal */}
       <Modal
         show={deleteConfirmationModal}
