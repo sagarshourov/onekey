@@ -52,7 +52,7 @@ class UserController extends BaseController
     {
         $users =  User::with(['profile' => function ($query) {
             $query->where('doc_type', 2);
-        }])->where('is_admin', 1)->orderByDesc('id')->get();
+        }])->whereIn('is_admin', [1, 2])->orderByDesc('id')->get();
 
 
 
@@ -81,6 +81,19 @@ class UserController extends BaseController
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
 
+
+    public function change_admins(Request $request)
+    {
+
+        $input = $request->all();
+
+        $user =  User::where('id', (int)  $input['user_id'])
+            ->update(['is_admin' => (int) $input['is_admin']]);
+
+
+        return  $this->admin_users();
+    }
+
     public function all_users()
     {
         // $assign = $this->assignUsers();
@@ -99,7 +112,7 @@ class UserController extends BaseController
 
 
         $users = User::with(['data' => function ($query) {
-            $query->where('form_id', 1)->get(['content']);
+            $query->where('form_id', 1);
         }])->where('is_admin', 0)->orderByDesc('id')->get();
 
 
@@ -168,7 +181,7 @@ class UserController extends BaseController
 
 
 
-  
+
 
 
 

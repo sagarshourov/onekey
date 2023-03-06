@@ -37,6 +37,7 @@ const AdminUsers = (props) => {
   const [formdata, setFormdata] = useState([]);
   const [search, setSearch] = useState("");
   const [user_id, setUserId] = useState(0);
+  const [role, setRole] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handelPageCount = (e) => {
@@ -143,7 +144,7 @@ const AdminUsers = (props) => {
     try {
       const response = await axios.post(
         URL,
-        { user_id: user_id, is_admin: 2 },
+        { user_id: user_id, is_admin: role },
         {
           headers,
         }
@@ -212,6 +213,7 @@ const AdminUsers = (props) => {
               setRoleConfirmationModal={setRoleConfirmationModal}
               users={filterData}
               setUserId={setUserId}
+              setRole={setRole}
             />
           )}
         </div>

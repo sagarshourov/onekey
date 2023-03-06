@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     public function data()
     {
-        return $this->hasMany(FormData::class, 'user_id', 'id');
+        return $this->hasOne(FormData::class, 'user_id', 'id')->select('id','user_id','content');
     }
     
 }

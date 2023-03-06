@@ -5,7 +5,14 @@ const formatDate = (dat) => {
   return dat.split("T")[0];
 };
 const UsersTable = (props) => {
-  const { users, rowCount, setUserId,setRoleConfirmationModal, setDeleteConfirmationModal } = props;
+  const {
+    users,
+    setRole,
+    rowCount,
+    setUserId,
+    setRoleConfirmationModal,
+    setDeleteConfirmationModal,
+  } = props;
 
   return (
     <table className="table table-report -mt-2">
@@ -50,21 +57,22 @@ const UsersTable = (props) => {
                       className="flex items-center text-warning mr-3"
                       href="#"
                       onClick={() => {
-
                         setRoleConfirmationModal(true);
                         setUserId(user.id);
+                        setRole(2);
                       }}
                     >
-                      <Lucide icon="UserMinus" className="w-4 h-4 mr-1" /> Make Jr
-                      Admin
+                      <Lucide icon="UserMinus" className="w-4 h-4 mr-1" /> Make
+                      Jr Admin
                     </a>
                   ) : (
                     <a
-                      className="flex items-center text-success"
+                      className="flex items-center text-success mr-3"
                       href="#"
                       onClick={() => {
-                        setDeleteConfirmationModal(true);
+                        setRoleConfirmationModal(true);
                         setUserId(user.id);
+                        setRole(1);
                       }}
                     >
                       <Lucide icon="UserPlus" className="w-4 h-4 mr-1" /> Make

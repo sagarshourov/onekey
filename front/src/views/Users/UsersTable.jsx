@@ -7,9 +7,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
 import { helper } from "@/utils/helper";
-const formatDate = (dat) => {
+const birth = (dat) => {
   //const date = dat.split(" ");
-  return dat.split("T")[0];
+
+  var data = JSON.parse(dat);
+  return data.dateOfBirth;
 };
 const UsersTable = (props) => {
   const { users, setUserState, rowCount } = props;
@@ -103,6 +105,18 @@ const UsersTable = (props) => {
         </thead>
         <tbody>
           {users.slice(0, rowCount).map((user, key) => {
+            var date = "";
+            if (user.data) {
+              date = helper.formatDate(
+                birth(user.data.content),
+                "ddd, MMMM D, YYYY"
+              );
+
+              //console.log("content",  birth(user.data.content));
+            }
+
+            //console.log(user);
+
             let count = key + 1;
             return (
               <tr key={key} className="intro-x">
@@ -115,11 +129,7 @@ const UsersTable = (props) => {
                     {user.first_name} {user.last_name}
                   </Link>
                 </td>
-                <td className="text-center">
-      
-                  {user?.birth_date &&
-                    helper.formatDate(user?.birth_date, "ddd, MMMM D, YYYY")}
-                </td>
+                <td className="text-center">{date}</td>
                 <td className="text-center">{user.email}</td>
                 <td className="text-center">
                   {user.status === "approved" && (
