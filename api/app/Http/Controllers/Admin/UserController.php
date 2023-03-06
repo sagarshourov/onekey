@@ -92,7 +92,19 @@ class UserController extends BaseController
         //     $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
         // }
 
-        $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
+        // $users =  User::with(['data'=> function($query){
+        //         //$query->where('form_id',1);
+
+        // }])->where('is_admin', 0)->orderByDesc('id')->get();
+
+
+        $users = User::with(['data' => function ($query) {
+            $query->where('form_id', 1)->get(['content']);
+        }])->where('is_admin', 0)->orderByDesc('id')->get();
+
+
+
+
 
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }

@@ -61,4 +61,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Packages::class, 'package', 'id');
     }
+
+    public function data()
+    {
+        return $this->hasMany(FormData::class, 'user_id', 'id');
+    }
+    
 }
