@@ -17,7 +17,7 @@ class FileController extends BaseController
     {
         $user_id = Auth::id();
 
-        if (Auth::user()->is_admin) {
+        if (Auth::user()->is_admin==1) {
             $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
         } else {
             $files =   Files::with('docTypes')->where('user_id', $user_id)->get();
@@ -63,7 +63,7 @@ class FileController extends BaseController
     {
         $user = Auth::user();
 
-        if($user->is_admin){
+        if($user->is_admin==1){
             $files = AdminDoc::with(['admin', 'user', 'doctype'])->where('admin_id', $user->id)->orderBy('created_at', 'desc')->get();
         }else{
             $files = AdminDoc::with(['admin', 'user', 'doctype'])->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
@@ -80,7 +80,7 @@ class FileController extends BaseController
     {
         $user = Auth::user();
         $input = $request->all();
-        if ($user->is_admin) {
+        if ($user->is_admin==1) {
             $path = $request->file('file')->store('adfiles');
             $user_id =  $user->id;
 

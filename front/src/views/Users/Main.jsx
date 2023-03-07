@@ -12,7 +12,7 @@ import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
 
-function applySortFilters(array, searchValue) {
+function applySortFilters(array, searchValue, birth) {
   return filter(array, (_items) => {
     return (
       _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
@@ -28,9 +28,9 @@ const AdminUsers = (props) => {
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");
-
+  const [birth, setBirth] = useState("");
   const handelPageCount = (e) => {
-   
+
 
     setRowCount(parseInt(e.target.value));
   };
@@ -45,17 +45,41 @@ const AdminUsers = (props) => {
     setSearch(e.target.value);
   };
 
-  let filterData = applySortFilters(usersData.contents, search);
+  const handelMonth = (e) => {
+    console.log(e.target.value);
+  };
+
+
+
+
+  let filterData = applySortFilters(usersData.contents, search, birth);
 
   return (
     <>
       <h2 className="intro-y text-lg font-medium mt-10">All Users List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-         
 
+          <select
+            onChange={(e) => handelMonth(e)}
+            className="w-56 form-select box mt-3 sm:mt-0"
+          >
+            <option value="0"> Select Month...</option>
+            <option value="1"> January </option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
           <div className="hidden md:block mx-auto text-slate-500">
-           Showing  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+            Showing  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
           <select
             onChange={handelPageCount.bind(this)}
@@ -89,7 +113,7 @@ const AdminUsers = (props) => {
             <UsersTable
               rowCount={rowCount}
               users={filterData}
-              setUserState = {setUserState}
+              setUserState={setUserState}
             />
           )}
         </div>
@@ -103,7 +127,7 @@ const AdminUsers = (props) => {
         {/* END: Pagination */}
       </div>
       {/* BEGIN: Delete Confirmation Modal */}
-      
+
       {/* END: Delete Confirmation Modal */}
     </>
   );

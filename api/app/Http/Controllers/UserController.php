@@ -78,7 +78,7 @@ class UserController extends BaseController
 
 
 
-        if (Auth::user()->is_admin) {
+        if (Auth::user()->is_admin==1) {
             $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
         } else {
             $files =   Files::with('docTypes')->where('user_id', $user_id)->get();

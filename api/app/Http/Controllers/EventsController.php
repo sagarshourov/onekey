@@ -27,7 +27,7 @@ class EventsController extends BaseController
         $user_id = Auth::user()->id;
 
 
-        if (Auth::user()->is_admin) {
+        if (Auth::user()->is_admin == 1) {
 
             // if ($assign) {
             //     $users = array('events' => Events::select('user_id', 'notes', 'note_date')->with(['users'])->whereIn('user_id', $assign)->get(), 'users' => User::whereIn('id', $assign)->get(['id', 'first_name', 'last_name', 'email']));

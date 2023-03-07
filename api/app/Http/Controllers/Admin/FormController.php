@@ -60,7 +60,7 @@ class FormController extends BaseController
 
     private function single_form($id)
     {
-        if (Auth::user()->is_admin) {
+        if (Auth::user()->is_admin==1) {
 
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
             $form_con =  Forms::find($forms[0]->form_id);

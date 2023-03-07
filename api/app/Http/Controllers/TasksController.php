@@ -21,7 +21,7 @@ class TasksController extends BaseController
         $user_id = Auth::user()->id;
     //    return $this->sendResponse($user_id, 'Tasks retrieved successfully.');
 
-        if (Auth::user()->is_admin) {
+        if (Auth::user()->is_admin==1) {
 
             $users =  Tasks::with(['users', 'stage'])->orderByDesc('id')->get();
             //$users = Events::select('user_id', 'notes', 'note_date')->with(['users'])->get();
