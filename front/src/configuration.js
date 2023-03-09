@@ -6,9 +6,7 @@
 // export const getBaseApi = () => `http://localhost:8000/api/`;
 
 // export const getAdmin = () => `http://localhost:8000/api/admin/`;
-// export const getBaseApi = () => `https://api.onekeyclient.us/api/`;
 
-// export const getAdmin = () => `https://api.onekeyclient.us/api/admin/`;
 
 export const getBaseApi = () => `https://api.onekeyclient.us/api/`;
 

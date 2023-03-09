@@ -89,11 +89,13 @@ const AdminUsers = (props) => {
       alert("Password required !");
       return false;
     }
-
+    var data = { ...formdata, ...{ is_admin: 1 } };
     setLoading(true);
 
+    //formdata.append("admin_id", 1);
+
     try {
-      const response = await axios.post(URL, formdata, {
+      const response = await axios.post(URL, data, {
         headers,
       });
 

@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'email', 'password', 'is_admin', 'user_phone', 'whatsapp', 'birth_date', 'gendar', 'package'
+        'first_name', 'middle_name', 'last_name', 'email', 'password', 'is_admin', 'user_phone', 'whatsapp', 'birth_date', 'gendar', 'package', 'status'
     ];
 
     /**
@@ -64,7 +64,6 @@ class User extends Authenticatable
 
     public function data()
     {
-        return $this->hasOne(FormData::class, 'user_id', 'id')->select('id','user_id','content');
+        return $this->hasOne(FormData::class, 'user_id', 'id')->select('id', 'user_id', 'content');
     }
-    
 }

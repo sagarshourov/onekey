@@ -95,12 +95,16 @@ class EventsController extends BaseController
         $email = $user_data->email;
 
 
-        Mail::send('email.calender_notes', $array_data, function ($message) use ($email, $name) {
+        if ($input['notification'] == 1) {
+            Mail::send('email.calender_notes', $array_data, function ($message) use ($email, $name) {
 
-            $message->to($email, $name)->subject('Calender Notes');
+                $message->to($email, $name)->subject('Calender Notes');
 
-            $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
-        });
+                $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
+            });
+        }
+
+
 
 
         return  $this->all_events();

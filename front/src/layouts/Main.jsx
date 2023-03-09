@@ -26,7 +26,7 @@ function Main() {
 
   const login = useRecoilValue(loginState);
 
-  console.log("login", login);
+  //console.log("login", login);
   const sideMenuStore = useRecoilValue(useSideMenuStore);
   const userSideMenuStore = useRecoilValue(useUserSideMenuStore);
   const jrSideMenuStore = useRecoilValue(JrAdmin);

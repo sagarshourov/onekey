@@ -38,7 +38,7 @@ class UserController extends BaseController
                 ]);
             }
         } else {
-            return $this->sendError($request->all(), 'Something worng.');
+            return $this->sendError($request->all(), 'Something wrong.');
         }
 
 
@@ -48,12 +48,20 @@ class UserController extends BaseController
         return $this->sendResponse($request->all(), 'Admin retrieved successfully.');
     }
 
-    public function admin_users()
+    public function admin_users($type = 1)
     {
-        $users =  User::with(['profile' => function ($query) {
-            $query->where('doc_type', 2);
-        }])->whereIn('is_admin', [1, 2])->orderByDesc('id')->get();
+        if ($type == 1) {
 
+
+            $users =  User::with(['profile' => function ($query) {
+                $query->where('doc_type', 2);
+            }])->whereIn('is_admin', [1, 2])->orderByDesc('id')->get();
+        } else {
+
+            $users =  User::with(['profile' => function ($query) {
+                $query->where('doc_type', 2);
+            }])->where('is_admin', 0)->orderByDesc('id')->get();
+        }
 
 
         return $this->sendResponse($users, 'Users retrieved successfully.');
@@ -91,7 +99,7 @@ class UserController extends BaseController
             ->update(['is_admin' => (int) $input['is_admin']]);
 
 
-        return  $this->admin_users();
+        return  $this->admin_users(1);
     }
 
     public function all_users()
@@ -140,11 +148,21 @@ class UserController extends BaseController
         $input['first_name'] = $input['first_name'];
         $input['last_name'] = $input['last_name'];
         $input['email'] = $input['email'];
-        $input['is_admin'] = 1;
+        $input['is_admin'] = $input['is_admin'];
         $input['status'] = 'approved';
         $input['package'] = 1;
         User::create($input);
-        return  $this->admin_users();
+        //   return $input;
+
+        if($input['is_admin']==1){
+            return  $this->admin_users($input['is_admin']);
+        }else{
+            return $this->all_users();
+        }
+
+
+
+        
     }
 
 
@@ -155,7 +173,7 @@ class UserController extends BaseController
 
         User::find($input['user_id'])->forceDelete();
 
-        return $this->admin_users();
+        return $this->admin_users(1);
     }
 
 
@@ -179,13 +197,6 @@ class UserController extends BaseController
     }
 
 
-
-
-
-
-
-
-
     public function visa_types()
     {
         $visaType = VisaType::orderByDesc('id')->get();
@@ -198,10 +209,6 @@ class UserController extends BaseController
 
         return $this->sendResponse($university, 'Users retrieved successfully.');
     }
-
-
-
-
 
 
     public function student_info(Request $request)
@@ -234,11 +241,7 @@ class UserController extends BaseController
         ],  $input);
 
 
-
-
-
-
-        return $this->sendResponse($user, 'You will recive an email within short time.');
+        return $this->sendResponse($user, 'You will receive an email within short time.');
         //
     }
 

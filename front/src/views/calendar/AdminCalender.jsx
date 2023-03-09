@@ -50,6 +50,8 @@ const Events = (props) => {
   const [delConfirmationModal, setDelConfirmationModal] = useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
+  const [notiConfrimModal, setNotiConfirmationModal] = useState(false);
+
   const [date, setDate] = useState("");
   const [select, setSelect] = useState("");
   const [notes, setNotes] = useState("");
@@ -126,13 +128,40 @@ const Events = (props) => {
     }
   };
 
+  const confirmNotification = async (val) => {
+    setLoading(true);
+    setSuccess(false);
+    const LOGIN_URL = getAdmin() + "save_event";
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        { user_id: select, date: date, notes: notes, notification: val },
+        {
+          headers,
+        }
+      );
+
+      if (response.data.success) {
+        setNotes("");
+        setSelect("");
+        setSuccess(true);
+        setLoading(false);
+        setEventState(response?.data?.data);
+        setNotiConfirmationModal(false);
+      }
+
+      //  (response.data);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
   const handelSearch = (e) => {
     setSearch(e.target.value);
   };
 
   let filterData = applySortFilters(eventDatas.contents.events, search);
-
-  console.log("filter data", filterData);
 
   return (
     <>
@@ -264,7 +293,21 @@ const Events = (props) => {
                   ></textarea>
                 </div>
                 <button
-                  onClick={handelSave}
+                  onClick={() => {
+                    if (select == "") {
+                      alert("Select user !");
+
+                      return false;
+                    }
+
+                    if (notes == "") {
+                      alert("Notes required !");
+
+                      return false;
+                    }
+
+                    setNotiConfirmationModal(true);
+                  }}
                   type="button"
                   className="btn btn-primary w-full mt-5 mb-5"
                 >
@@ -305,11 +348,9 @@ const Events = (props) => {
               <Calendar
                 type="1"
                 deleteEvent={deleteEvent}
-         
                 setEventId={setEventId}
                 events={filterData}
                 loading={loading}
-
                 deleteConfirmationModal={deleteConfirmationModal}
                 setDeleteConfirmationModal={setDeleteConfirmationModal}
               />
@@ -352,6 +393,53 @@ const Events = (props) => {
                 className="btn btn-danger w-24"
               >
                 Delete
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        </Modal>
+
+        <Modal
+          show={notiConfrimModal}
+          onHidden={() => {
+            setNotiConfirmationModal(false);
+          }}
+        >
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Bell"
+                className="w-16 h-16 text-success mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5"> </div>
+              <div className="text-xl text-slate-500 mt-2">
+                Do you want to notify the client?
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  confirmNotification(0);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                No
+              </button>
+              <button
+                onClick={() => {
+                  confirmNotification(1);
+                }}
+                type="button"
+                className="btn btn-success text-white w-24"
+              >
+                Yes
                 {loading && (
                   <LoadingIcon
                     icon="three-dots"
