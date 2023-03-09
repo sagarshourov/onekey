@@ -60,7 +60,7 @@ class FormController extends BaseController
 
     private function single_form($id)
     {
-        if (Auth::user()->is_admin==1) {
+        if (Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2) {
 
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
             $form_con =  Forms::find($forms[0]->form_id);
@@ -83,15 +83,13 @@ class FormController extends BaseController
 
             if (!empty($form_con)) {
                 $return['con'] = json_decode($form_con->content);
-            } else {
-                $return['con'] = '[]';
             }
         }
 
 
 
 
-        $return['title'] = $form_con->title;
+        $return['title'] = isset($form_con->title) ? $form_con->title : '';
 
 
         return $return;

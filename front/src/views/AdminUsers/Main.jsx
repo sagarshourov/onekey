@@ -412,6 +412,13 @@ const AdminUsers = (props) => {
               className="btn btn-primary w-24"
             >
               Save
+              {loading && (
+                <LoadingIcon
+                  icon="three-dots"
+                  color="white"
+                  className="w-4 h-4 ml-2"
+                />
+              )}
             </button>
           </div>
         </ModalBody>

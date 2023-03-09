@@ -1,5 +1,6 @@
 import {
   Lucide,
+  LoadingIcon,
   AccordionGroup,
   AccordionItem,
   Accordion,
@@ -49,11 +50,12 @@ const headers = {
 const StatusView = (props) => {
   let { id } = useParams();
   const [loading, setLoading] = useState(false);
+  const [sLoading, setSLoading] = useState(false);
   const [notes, setNotes] = useState([]);
   const status = useRecoilValue(appStatusSlect(id));
 
   const handelMain = async (main_id, sub_id, active) => {
-    setLoading(true);
+    setSLoading(true);
     const LOGIN_URL = getAdmin() + "save_app_status";
 
     try {
@@ -64,8 +66,8 @@ const StatusView = (props) => {
           headers,
         }
       );
-
-      //  window.location.reload();
+      setSLoading(false);
+        window.location.reload();
     } catch (err) {
       setLoading(false);
     }
@@ -108,10 +110,24 @@ const StatusView = (props) => {
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">User Status</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">
+        User Status{" "}
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
-        <div className="intro-y box  p-5 mt-2">
+        <div className="intro-y    relative box  p-5 mt-2">
+          {sLoading && (
+            <div className="h-full w-full bg-gray-50/75 grid  absolute z-40">
+              <div className="w-24 h-24 place-self-center">
+                <LoadingIcon
+                  icon="three-dots"
+                  color="gray"
+                  className="w-4 h-4 ml-2"
+                />
+              </div>
+            </div>
+          )}
+
           <ul className="timeline">
             <li className="timeline-line"></li>
           </ul>
@@ -137,7 +153,7 @@ const StatusView = (props) => {
                     <div className="timeline-panel">
                       <AccordionGroup selectedIndex={1} className="p-5">
                         <AccordionItem className="custom-className ">
-                          <Accordion className="">{statu.title}</Accordion>
+                          <Accordion className="">{statu.title} </Accordion>
                           <AccordionPanel className="text-slate-600 dark:text-slate-500 leading-relaxed ">
                             <div className="timeline-content">
                               <ul>
@@ -181,7 +197,7 @@ const StatusView = (props) => {
               status.notes.map((note, index) => (
                 <li key={index} className="mb-10 ml-6">
                   <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                   A
+                    A
                   </span>
                   <div className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm dark:bg-gray-700 dark:border-gray-600">
                     <div className="justify-between items-center mb-3 sm:flex">
@@ -240,6 +256,13 @@ const StatusView = (props) => {
 
           <button onClick={saveNotes} className="btn btn-primary mt-5">
             Add Notes
+            {loading && (
+              <LoadingIcon
+                icon="three-dots"
+                color="white"
+                className="w-4 h-4 ml-2"
+              />
+            )}
           </button>
         </div>
       </div>

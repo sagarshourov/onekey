@@ -197,6 +197,115 @@ function Router() {
       element: <ErrorPage />,
     },
   ];
+
+  const jrAdminRoutes = [
+    {
+      path: "/",
+      element: auth ? <MainLayout /> : <Navigate to="/login" />,
+      children: [
+        {
+          path: "/",
+          element: <DashboardOverview />,
+        },
+        {
+          path: "/profile/:id",
+          element: <Profile />,
+        },
+
+        {
+          path: "/admin_users",
+          element: <AdminUsers />,
+        },
+        {
+          path: "/admin_users/view/:id",
+          element: <AdminUsersView />,
+        },
+        {
+          path: "/user_list",
+          element: <AllUsers />,
+        },
+
+        {
+          path: "/app_status",
+          element: <UserAppStatus />,
+        },
+        {
+          path: "/app_status/:id",
+          element: <AdminStatusView />,
+        },
+        {
+          path: "/student_info",
+          element: <StudentInfo />,
+        },
+        {
+          path: "/files",
+          element: <AdminUploadedDocs />,
+        },
+        {
+          path: "/add_files",
+          element: <AdminAddFiles />,
+        },
+        {
+          path: "/view_attchment/:id",
+          element: <ViewAttachment />,
+        },
+        // {
+        //   path: "/tasks",
+        //   element: <ToDoList />,
+        // },
+
+        {
+          path: "/forms/add",
+          element: <AddForm />,
+        },
+        {
+          path: "/forms/edit/:id",
+          element: <EditForm />,
+        },
+        {
+          path: "/forms/view/:id",
+          element: <ViewForm />,
+        },
+        {
+          path: "/forms/viewdata/:id",
+          element: <ViewDataForm />,
+        },
+        {
+          path: "/forms/all",
+          element: <AllForms />,
+        },
+
+        {
+          path: "/calender",
+          element: <AdminCalender />,
+        },
+
+        {
+          path: "/my_doc",
+          element: <MyDocuments />,
+        },
+
+        {
+          path: "/notifications",
+          element: <Notification />,
+        },
+      ],
+    },
+
+    {
+      path: "/login",
+      element: auth ? <Navigate to="/" /> : <Login />,
+    },
+    {
+      path: "/register",
+      element: auth ? <Navigate to="/" /> : <Register />,
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
+    },
+  ];
+
   const userRoutes = [
     {
       path: "/",
@@ -276,6 +385,8 @@ function Router() {
 
   if (parseInt(localStorage.isAdmin) === 1) {
     return useRoutes(adminRoutes);
+  } else if (parseInt(localStorage.isAdmin) === 2) {
+    return useRoutes(jrAdminRoutes);
   } else {
     return useRoutes(userRoutes);
   }

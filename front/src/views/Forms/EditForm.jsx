@@ -28,15 +28,9 @@ function Main() {
 
   useEffect(() => {
     if (post.state === "hasValue" && loading) {
-
-
-
-
       post.contents && setFormVal(JSON.parse(post.contents.data.content));
       setTitle(post.contents.data.title)
       //setLoading(false);
-
-   
       setLoading(false);
     }
   });

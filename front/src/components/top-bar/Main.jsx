@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+
 import {
   Lucide,
   Dropdown,
@@ -12,16 +13,13 @@ import {
 } from "@/base-components";
 
 import dom from "@left4code/tw-starter/dist/js/dom";
-import * as $_ from "lodash";
-import classnames from "classnames";
 import PropTypes from "prop-types";
 import { getBaseApi } from "../../configuration";
 import { Link, useNavigate } from "react-router-dom";
-import { first } from "lodash";
 
 import { loginState } from "../../state/login-atom";
-
-import { useRecoilState, useRecoilValue } from "recoil";
+import classnames from "classnames";
+import { useRecoilState } from "recoil";
 
 const Logout = (props) => {
   const [loginsta, setLoginState] = useRecoilState(loginState);
@@ -29,9 +27,6 @@ const Logout = (props) => {
   const searchInput = useRef(false);
 
   // Show search result modal
-  const showSearchResultModal = () => {
-    setSearchResultModal(true);
-  };
 
   // Set search input focus
   const setSearchInputFocus = () => {
@@ -179,7 +174,38 @@ const Logout = (props) => {
           </div>
           <div className="notification-content pt-2 dropdown-menu">
             <div className="notification-content__box dropdown-content">
-              <div className="notification-content__title">Notifications</div>
+              <Link to="/notifications" className="notification-content__title">Notifications</Link>
+
+              <div
+             
+                  className={classnames({
+                    "cursor-pointer relative flex": true,
+                    "mt-5": 1,
+                  })}
+                >
+                  {/* <div className="w-10 h-10 flex-none image-fit mr-1">
+                    <img
+                      alt="Rocketman - HTML Admin Template"
+                      className="rounded-full"
+                      src=""
+                    />
+                    <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
+                  </div> */}
+                  <div className="ml-2">
+                    <a href="" className="font-medium mr-1">
+                      sagar
+                    </a>
+                    <span className="text-slate-500">
+                      notification content
+                    </span>
+                    <div className="text-xs text-slate-400 mt-1">
+                     20-2-2023
+                    </div>
+                  </div>
+                </div>
+
+
+
             </div>
           </div>
         </div>
