@@ -11,7 +11,7 @@ import {
   Modal,
   ModalBody,
 } from "@/base-components";
-
+import { helper } from "@/utils/helper";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import PropTypes from "prop-types";
 import { getBaseApi } from "../../configuration";
@@ -19,12 +19,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { loginState } from "../../state/login-atom";
 import classnames from "classnames";
-import { useRecoilState } from "recoil";
-
+import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { notificationListState } from "../../state/admin-atom";
 const Logout = (props) => {
   const [loginsta, setLoginState] = useRecoilState(loginState);
   const [searchResultModal, setSearchResultModal] = useState(false);
   const searchInput = useRef(false);
+
+
+  const [notiData, setNotiState] = useRecoilStateLoadable(
+    notificationListState
+  );
 
   // Show search result modal
 
@@ -160,30 +165,39 @@ const Logout = (props) => {
         </Modal>
         {/* END: Search Result */}
         {/* BEGIN: Notifications */}
-        <div className="intro-x dropdown mr-5 sm:mr-6">
-          <div
-            className="dropdown-toggle notification notification--bullet cursor-pointer"
-            role="button"
-            aria-expanded="false"
-            data-tw-toggle="dropdown"
-          >
-            <Lucide
-              icon="Bell"
-              className="notification__icon dark:text-slate-500"
-            />
-          </div>
-          <div className="notification-content pt-2 dropdown-menu">
-            <div className="notification-content__box dropdown-content">
-              <Link to="/notifications" className="notification-content__title">Notifications</Link>
-
-              <div
-             
-                  className={classnames({
-                    "cursor-pointer relative flex": true,
-                    "mt-5": 1,
-                  })}
+        {loginsta?.isAdmin !== "0" && (
+          <div className="intro-x dropdown mr-5 sm:mr-6">
+            <div
+              className="dropdown-toggle notification notification--bullet cursor-pointer"
+              role="button"
+              aria-expanded="false"
+              data-tw-toggle="dropdown"
+            >
+              <Lucide
+                icon="Bell"
+                className="notification__icon dark:text-slate-500"
+              />
+            </div>
+            <div className="notification-content pt-2 dropdown-menu">
+              <div className="notification-content__box dropdown-content">
+                <Link
+                  to="/notifications"
+                  className="notification-content__title"
                 >
-                  {/* <div className="w-10 h-10 flex-none image-fit mr-1">
+                  Notifications
+                </Link>
+
+                {notiData.state === "hasValue" &&
+                  notiData.contents.slice(0, 5).map((noti, key) => {
+                    return (
+                      <div
+                        key={key}
+                        className={classnames({
+                          "cursor-pointer relative flex": true,
+                          "mt-5": 1,
+                        })}
+                      >
+                        {/* <div className="w-10 h-10 flex-none image-fit mr-1">
                     <img
                       alt="Rocketman - HTML Admin Template"
                       className="rounded-full"
@@ -191,24 +205,25 @@ const Logout = (props) => {
                     />
                     <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                   </div> */}
-                  <div className="ml-2">
-                    <a href="" className="font-medium mr-1">
-                      sagar
-                    </a>
-                    <span className="text-slate-500">
-                      notification content
-                    </span>
-                    <div className="text-xs text-slate-400 mt-1">
-                     20-2-2023
-                    </div>
-                  </div>
-                </div>
-
-
-
+                        <div className="ml-2">
+                          <span className="text-slate-500">
+                            {noti.notification}
+                          </span>
+                          <div className="text-xs text-slate-400 mt-1">
+                            {helper.formatDate(
+                              noti.created_at,
+                              "ddd, MMMM D, YYYY"
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
         {/* END: Notifications */}
         {/* BEGIN: Notifications */}
 

@@ -1,4 +1,4 @@
-import { Lucide, Modal, ModalBody } from "@/base-components";
+import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
@@ -23,10 +23,20 @@ function applySortFilters(array, searchValue, birth) {
         var data = JSON.parse(_items.data.content);
         var dt = new Date(data.dateOfBirth);
         monNum = dt.getMonth();
-        return monNum === birth;
+
+        if (searchValue !== "") {
+          return (
+            monNum === birth &&
+            _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+          );
+        } else {
+          return monNum === birth;
+        }
       }
     } else {
       return (
+        _items.first_name.toLowerCase().indexOf(searchValue.toLowerCase()) !==
+          -1 ||
         _items.email.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
       );
     }
@@ -71,7 +81,7 @@ const Users = (props) => {
 
   const createUser = async () => {
     const URL = getAdmin() + "create_admin_users";
-   
+
     if (formdata.first_name == "") {
       alert("First Name Not matching !");
       return false;
@@ -101,7 +111,6 @@ const Users = (props) => {
 
     var data = { ...formdata, ...{ is_admin: 0 } };
 
-    
     setLoading(true);
 
     try {
@@ -119,7 +128,6 @@ const Users = (props) => {
         alert("Something is wrong please try again later!");
       }
     } catch (err) {
-
       console.log(err);
       setLoading(false);
     }

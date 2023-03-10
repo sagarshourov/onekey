@@ -1,13 +1,11 @@
 import { Lucide } from "@/base-components";
-import * as $_ from "lodash";
-import classnames from "classnames";
-
+import { helper } from "@/utils/helper";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
 };
 const UsersTable = (props) => {
-  const { users, rowCount, setDeleteConfirmationModal , setSelectId } = props;
+  const { users, rowCount, setDeleteConfirmationModal, setSelectId } = props;
 
   return (
     <table className="table table-report -mt-2">
@@ -38,7 +36,10 @@ const UsersTable = (props) => {
 
               <td className="text-center">{user.notification}</td>
 
-              <td className="text-center">{formatDate(user.created_at)}</td>
+              <td className="text-center">
+                {" "}
+                {helper.formatDate(user?.created_at, "ddd, MMMM D, YYYY")}{" "}
+              </td>
               <td className="table-report__action w-56">
                 <div className="flex justify-center items-center">
                   <a
@@ -46,7 +47,7 @@ const UsersTable = (props) => {
                     href="#"
                     onClick={() => {
                       setDeleteConfirmationModal(true);
-                      setSelectId(user.id)
+                      setSelectId(user.id);
                     }}
                   >
                     <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Delete
