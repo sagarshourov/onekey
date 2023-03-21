@@ -63,9 +63,23 @@ class FormController extends BaseController
         if (Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2) {
 
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
+
+
+            $val = [];
+
+            if ($forms[0]->content) {
+                foreach (json_decode($forms[0]->content) as $key => $v) {
+                    if (preg_match('/(date)/', $key) && !is_array($v)) {
+                        $val[$key] =  substr($v, 0, -6);
+                    } else {
+                        $val[$key] = $v;
+                    }
+                }
+            }
+
             $form_con =  Forms::find($forms[0]->form_id);
             $return['form_id'] = $forms[0]->form_id;
-            $return['val'] = json_decode($forms[0]->content);
+            $return['val'] = $val;
 
             $return['con'] = json_decode($form_con->content);
         } else {

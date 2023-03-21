@@ -22,10 +22,10 @@ import { filter } from "lodash";
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {
     return (
-      _items.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 
+      _items.title &&
+      _items.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     );
   });
-  
 }
 
 const AllForms = (props) => {
@@ -35,8 +35,6 @@ const AllForms = (props) => {
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");
-
-
 
   const handelLoad = () => {
     let count = rowCount + 20;
@@ -54,14 +52,11 @@ const AllForms = (props) => {
     <>
       <h2 className="intro-y text-lg font-medium mt-10">All Forms List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
-        
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-
-
           <div className="hidden md:block mx-auto text-slate-500">
-           Showing  {rowCount} out of {usersData.state === "hasValue" && usersData.contents["length"]}
+            Showing {rowCount} out of{" "}
+            {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
-      
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
@@ -82,10 +77,7 @@ const AllForms = (props) => {
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
           {usersData.state === "hasValue" && (
-            <UsersTable
-              rowCount={rowCount}
-              users={filterData}
-            />
+            <UsersTable rowCount={rowCount} users={filterData} />
           )}
         </div>
         {/* END: Data List */}

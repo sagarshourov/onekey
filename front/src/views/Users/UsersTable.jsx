@@ -7,12 +7,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
 import { helper } from "@/utils/helper";
+const formatDate = (dat) => {
+  //const date = dat.split(" ");
+  return helper.formatDate(dat.split("T")[0], "ddd, MMMM D, YYYY");
+};
 const birth = (dat) => {
   //const date = dat.split(" ");
 
   var data = JSON.parse(dat);
-  return data.dateOfBirth;
+  return formatDate(data.dateOfBirth);
 };
+
 const UsersTable = (props) => {
   const { users, setUserState, rowCount } = props;
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -107,11 +112,11 @@ const UsersTable = (props) => {
           {users.slice(0, rowCount).map((user, key) => {
             var date = "";
             if (user.data) {
-              date = helper.formatDate(
-                birth(user.data.content),
-                "ddd, MMMM D, YYYY"
-              );
-
+              // date = helper.formatDate(
+              //   birth(user.data.content),
+              //   "ddd, MMMM D, YYYY"
+              // );
+              date = birth(user.data.content);
               //console.log("content",  birth(user.data.content));
             }
 

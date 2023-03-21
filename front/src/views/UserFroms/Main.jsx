@@ -60,7 +60,7 @@ function Main() {
     let last_step = false;
 
 
-    console.log('submission',e.submission);
+   // console.log('submission',e.submission);
 
     if (e.submission) {
       data = e.submission.data;

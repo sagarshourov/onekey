@@ -79,7 +79,9 @@ const Login = (props) => {
           token: accessToken,
         });
 
-        navigate("../", { replace: true });
+        window.location.reload();
+
+       // navigate("../", { replace: true });
       } else {
         setLoading(false);
 
