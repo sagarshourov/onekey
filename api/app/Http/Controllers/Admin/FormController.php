@@ -69,7 +69,7 @@ class FormController extends BaseController
 
             if ($forms[0]->content) {
                 foreach (json_decode($forms[0]->content) as $key => $v) {
-                    if (preg_match('/(date)/', $key) && !is_array($v)) {
+                    if (preg_match('/(date)/', strtolower($key)) && !is_array($v)) {
                         $val[$key] =  substr($v, 0, -6);
                     } else {
                         $val[$key] = $v;
@@ -90,7 +90,6 @@ class FormController extends BaseController
 
 
             // return $this->sendResponse($forms, 'Formby id successfully.');
-
 
             $form_con =  Forms::find($id);
 

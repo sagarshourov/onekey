@@ -86,6 +86,11 @@ const AdminStatusView = Loadable(
   lazy(() => import("../views/UserAppStatus/AdminStatusView"))
 );
 
+const Board = Loadable(lazy(() => import("../views/Board/Main")));
+
+
+const SingleBoard = Loadable(lazy(() => import("../views/Board/Profile")));
+
 //import Calendar from "../views/calendar/Main";
 
 function Router() {
@@ -98,6 +103,15 @@ function Router() {
         {
           path: "/",
           element: <DashboardOverview />,
+        },
+
+        {
+          path: "/board",
+          element: <Board />,
+        },
+        {
+          path: "/board/:id",
+          element: <SingleBoard />,
         },
         {
           path: "/profile/:id",

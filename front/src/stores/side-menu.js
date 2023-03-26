@@ -10,6 +10,11 @@ let sideMenu = atom({
         title: "Dashboard",
         pathname: "/",
       },
+      {
+        icon: "Clipboard",
+        pathname: "/board",
+        title: "Task Board",
+      },
 
       {
         icon: "User",

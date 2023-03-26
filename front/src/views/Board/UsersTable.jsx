@@ -153,7 +153,7 @@ const UsersTable = (props) => {
                 <td className="text-center">
                   {helper.formatDate(user?.created_at, "ddd, MMMM D, YYYY")}
                 </td>
-                <td className="table-report__action w-96">
+                <td className="table-report__action w-64">
                   <div className="flex justify-center items-center">
                     {user.status == "pending" ? (
                       <>
@@ -179,24 +179,14 @@ const UsersTable = (props) => {
                         </a>
                       </>
                     ) : (
-                      <>
-                        <Link
-                          className="flex items-center text-success px-2"
-                          to={"/profile/" + user.id}
-                        >
-                          {" "}
-                          <Lucide icon="User" className="w-4 h-4 mr-1" /> View
-                          Profile
-                        </Link>
-                        <Link
-                          className="flex items-center text-warning   px-2"
-                          to={"/board/" + user.id}
-                        >
-                          {" "}
-                          <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
-                          Task Board
-                        </Link>
-                      </>
+                      <Link
+                        className="flex items-center text-success px-2"
+                        to={"/profile/" + user.id}
+                      >
+                        {" "}
+                        <Lucide icon="User" className="w-4 h-4 mr-1" /> View
+                        Profile
+                      </Link>
                     )}
 
                     <a

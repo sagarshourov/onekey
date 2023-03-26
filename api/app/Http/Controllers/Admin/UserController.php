@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 use App\Models\VisaType;
-use App\Models\VisaStatus;
+
 use App\Models\Universty;
 use App\Models\StudentInfo;
 use Illuminate\Support\Facades\Mail;
