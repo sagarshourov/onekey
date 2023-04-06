@@ -146,6 +146,10 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::post('save_notes', 'App\Http\Controllers\UserController@save_notes');
 
+    Route::post('delete_notes', 'App\Http\Controllers\UserController@delete_notes');
+
+    
+
     Route::post('save_event', 'App\Http\Controllers\EventsController@save_event');
     Route::post('delete_event', 'App\Http\Controllers\EventsController@delete_event');
 

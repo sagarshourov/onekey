@@ -191,6 +191,16 @@ class UserController extends BaseController
         return $this->sendResponse($users, 'Saved successfully.');
     }
 
+    public function delete_notes(Request $req){
+
+        AppStatusNotes::find($req->note_id)->forceDelete();
+
+        return $this->sendResponse([], 'Delete Notes successfully.');
+
+    }
+
+    
+
 
 
 

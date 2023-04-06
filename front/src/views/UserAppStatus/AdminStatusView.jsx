@@ -67,7 +67,7 @@ const StatusView = (props) => {
         }
       );
       setSLoading(false);
-        window.location.reload();
+      window.location.reload();
     } catch (err) {
       setLoading(false);
     }
@@ -108,11 +108,30 @@ const StatusView = (props) => {
     }
   };
 
+  const deleteNotes = async (id) => {
+    console.log("id", id);
+
+    setLoading(true);
+    const LOGIN_URL = getAdmin() + "delete_notes";
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        { note_id: id },
+        {
+          headers,
+        }
+      );
+
+      window.location.reload();
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">
-        User Status{" "}
-      </h2>
+      <h2 className="intro-y text-lg font-medium mt-10">User Status </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
         <div className="intro-y    relative box  p-5 mt-2">
@@ -201,18 +220,29 @@ const StatusView = (props) => {
                   </span>
                   <div className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm dark:bg-gray-700 dark:border-gray-600">
                     <div className="justify-between items-center mb-3 sm:flex">
-                      <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">
-                        {formatDate(note.created_at)}
-                      </time>
                       <div className="text-sm font-normal text-gray-500 lex dark:text-gray-300">
-                        {note?.created_by?.first_name}
                         <a
                           href="#"
                           className="font-semibold text-gray-900 dark:text-white hover:underline pl-3"
                         >
                           {note?.status?.title}
                         </a>
+
+                        <span className="ml-2">
+                          {note?.created_by?.first_name}
+                        </span>
+
+                        <time className="mb-1 text-xs ml-2 font-normal text-gray-400  sm:mb-0">
+                          ( {formatDate(note.created_at)} )
+                        </time>
                       </div>
+
+                      <button
+                        onClick={(e) => deleteNotes(note.id)}
+                        className="sm:order-last "
+                      >
+                        <Lucide className="w-6 h-6" icon="Trash2" />
+                      </button>
                     </div>
                     <div className="p-3 text-xs italic font-normal text-gray-500 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300">
                       {note.message}
