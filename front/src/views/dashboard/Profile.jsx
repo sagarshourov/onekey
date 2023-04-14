@@ -104,7 +104,7 @@ const UserMain = () => {
                   </div>
                 )}
 
-                {loginData.email == 'info@onekeyclient.com' && (
+                {loginData.email == "info@onekeyclient.com" && (
                   <button className="" onClick={() => handelEditClick(false)}>
                     <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
                   </button>
@@ -552,19 +552,16 @@ const UserMain = () => {
             )}
             {/* pleaseCheckTheEnglishTestScoresIfYouHaveAny */}
 
+            <h3 className="my-5">Tasks</h3>
 
             <div className="box intro-y p-5 mt-5 pb-5">
-                <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-                  <div className="font-medium truncate ">English Test</div>
-                </div>
-                {/* <div className="flex">
-                  <label className="form-label"> Score and Information </label>
-                </div> */}
-                
+              <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                <div className="font-medium truncate ">Tasks</div>
               </div>
-
-
-
+              <div className="flex">
+                <label className="form-label"> Card </label>
+              </div>
+            </div>
           </div>
           {/* END: General Report */}
         </div>
