@@ -139,6 +139,30 @@ class FormController extends BaseController
     }
 
 
+    public function formDataUser($id, $user_id)
+    {
+
+        $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content']);
+
+        if (!empty($forms))  $return['val'] = json_decode($forms->content);
+
+
+        // return $this->sendResponse($forms, 'Formby id successfully.');
+
+        $form_con =  Forms::find($id);
+
+
+        if (!empty($form_con)) {
+            $return['con'] = json_decode($form_con->content);
+        }
+
+        $return['title'] = isset($form_con->title) ? $form_con->title : '';
+
+
+        return $return;
+    }
+
+
 
 
 

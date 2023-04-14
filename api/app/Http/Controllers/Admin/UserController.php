@@ -119,7 +119,7 @@ class UserController extends BaseController
         // }])->where('is_admin', 0)->orderByDesc('id')->get();
 
 
-        $users = User::with(['data' => function ($query) {
+        $users = User::with(['student_info','data' => function ($query) {
             $query->where('form_id', 1);
         }])->where('is_admin', 0)->orderByDesc('id')->get();
 

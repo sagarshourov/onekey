@@ -336,6 +336,7 @@ const Events = (props) => {
         <div className="col-span-12 xl:col-span-8 2xl:col-span-9">
           <div className="box p-5">
             <div className="flex justify-center ...">
+            <input type="password" name="password" className="hidden" placeholder="secret" />
               <input
                 type="text"
                 className="form-control mb-5 w-96"

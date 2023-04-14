@@ -58,6 +58,11 @@ const Login = (props) => {
         );
 
         localStorage.setItem(
+          "email",
+          response?.data?.data?.user?.email
+        );
+
+        localStorage.setItem(
           "first_name",
           response?.data?.data?.user?.first_name
         );
@@ -75,7 +80,7 @@ const Login = (props) => {
           email: email,
           first_name: response?.data?.data?.user?.first_name,
           last_name: response?.data?.data?.user?.last_name,
-          isAdmin: roles,
+          isAdmin: parseInt(roles),
           token: accessToken,
         });
 

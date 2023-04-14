@@ -104,6 +104,7 @@ const Notifications = (props) => {
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
+            <input type="password" name="password" className="hidden" placeholder="secret" />
               <input
                 onChange={handelSearch.bind(this)}
                 type="text"

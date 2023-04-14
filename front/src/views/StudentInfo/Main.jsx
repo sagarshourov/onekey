@@ -155,6 +155,12 @@ const AdminUsers = (props) => {
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
               <input
+                type="password"
+                name="password"
+                className="hidden"
+                placeholder="secret"
+              />
+              <input
                 onChange={handelSearch.bind(this)}
                 type="text"
                 className="form-control w-56 box pr-10"
@@ -251,7 +257,6 @@ const AdminUsers = (props) => {
                       <option value="2">Platinum Package </option>
                       <option value="3">Gold Package </option>
                       <option value="4">Silver Package </option>
-            
                     </select>
                   )}
                 </div>

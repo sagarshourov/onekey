@@ -82,6 +82,11 @@ const UserFrom = Loadable(lazy(() => import("../views/UserFroms/Main")));
 
 const ViewDataForm = Loadable(lazy(() => import("../views/Forms/ViewData")));
 
+const ViewUserDataForm = Loadable(lazy(() => import("../views/Forms/ViewUserDataForm")));
+
+
+
+
 const AdminStatusView = Loadable(
   lazy(() => import("../views/UserAppStatus/AdminStatusView"))
 );
@@ -176,6 +181,20 @@ function Router() {
           path: "/forms/viewdata/:id",
           element: <ViewDataForm />,
         },
+
+        
+
+
+        {
+          path: "/form_view/:id/:u_id",
+          element: <ViewUserDataForm />,
+        },
+
+
+        
+
+
+
         {
           path: "/forms/all",
           element: <AllForms />,

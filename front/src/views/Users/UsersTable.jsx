@@ -1,8 +1,20 @@
-import { Lucide, Modal, ModalBody } from "@/base-components";
+import {
+  Lucide,
+  Modal,
+  Dropdown,
+  DropdownContent,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  ModalBody,
+} from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin, getBaseApi } from "../../configuration";
 import axios from "axios";
+
+import { useRecoilValueLoadable } from "recoil";
+import { allFormListSelect } from "../../state/admin-atom";
 
 import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
@@ -19,12 +31,14 @@ const birth = (dat) => {
 };
 
 const UsersTable = (props) => {
-  const { users, setUserState, rowCount } = props;
+  const { users, setUserState, handelStudentModel, rowCount } = props;
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [approveConfirmationModal, setApproveConfirmationModal] =
     useState(false);
 
   const [rejectConfirmationModal, setRejectConfirmationModal] = useState(false);
+
+  const allForm = useRecoilValueLoadable(allFormListSelect);
 
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState("");
@@ -153,8 +167,31 @@ const UsersTable = (props) => {
                 <td className="text-center">
                   {helper.formatDate(user?.created_at, "ddd, MMMM D, YYYY")}
                 </td>
-                <td className="table-report__action w-96">
+                <td className="table-report__action w-auto">
                   <div className="flex justify-center items-center">
+                    {allForm.state == "hasValue" && (
+                      <Dropdown>
+                        <DropdownToggle className="w-5 h-5 text-slate-500">
+                          <Lucide icon="MoreVertical" className="w-4 h-4" />
+                        </DropdownToggle>
+                        <DropdownMenu className="w-40">
+                          <DropdownContent>
+                            {allForm.contents.map((val, index) => {
+                              return (
+                                <DropdownItem tag="div" key={index}>
+                                  <Link
+                                    to={"/form_view/" + val.id + "/" + user.id}
+                                  >
+                                    {val.title}
+                                  </Link>
+                                </DropdownItem>
+                              );
+                            })}
+                          </DropdownContent>
+                        </DropdownMenu>
+                      </Dropdown>
+                    )}
+
                     {user.status == "pending" ? (
                       <>
                         <a
@@ -188,16 +225,35 @@ const UsersTable = (props) => {
                           <Lucide icon="User" className="w-4 h-4 mr-1" /> View
                           Profile
                         </Link>
-                        <Link
+                        {/* <Link
                           className="flex items-center text-warning   px-2"
                           to={"/board/" + user.id}
                         >
                           {" "}
                           <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
                           Task Board
+                        </Link> */}
+
+                        <Link
+                          className="flex items-center text-info   px-2"
+                          to={"/app_status/" + user.id}
+                        >
+                          {" "}
+                          <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
+                          Status
                         </Link>
                       </>
                     )}
+
+                    <a
+                      className="flex items-center text-violet-600"
+                      href="#"
+                      onClick={() => {
+                        handelStudentModel(true, user);
+                      }}
+                    >
+                      <Lucide icon="Edit" className="w-4 h-4 mr-1" /> Student Info
+                    </a>
 
                     <a
                       className="flex items-center text-danger px-2"

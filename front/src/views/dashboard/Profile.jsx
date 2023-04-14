@@ -8,6 +8,8 @@ import { userSelect } from "../../state/users-atom";
 const token = localStorage.getItem("token");
 import { useParams } from "react-router-dom";
 
+import { loginState } from "../../state/login-atom";
+
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -21,6 +23,11 @@ const UserMain = () => {
   const [edit, setEdit] = useState(true);
   const [editProfile, handelEditProfileClick] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const loginData = useRecoilValue(loginState);
+
+  //console.log("login", loginData);
+
   const handelEditClick = (val) => {
     handelEditProfileClick(false);
     setEdit(val);
@@ -97,9 +104,11 @@ const UserMain = () => {
                   </div>
                 )}
 
-                {/* <button className="" onClick={() => handelEditClick(false)}>
-                  <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
-                </button> */}
+                {loginData.email == 'info@onekeyclient.com' && (
+                  <button className="" onClick={() => handelEditClick(false)}>
+                    <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
+                  </button>
+                )}
               </div>
               <div className=" md:columns-3">
                 <div>
@@ -213,7 +222,7 @@ const UserMain = () => {
                 </div>
                 <div>
                   <label htmlFor="regular-form-1" className="form-label">
-                  Gender
+                    Gender
                   </label>
                   <div className="flex flex-col sm:flex-row mt-2">
                     <div className="form-check mr-2">
@@ -530,14 +539,32 @@ const UserMain = () => {
                     </table>
                   </div>
                 ) : val?.client_form
-                    ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny.iWantToTakeItInTheFuture ? (
-                  <h3 className="text-lg text-center">  I want to take it in the future</h3>
+                    ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny
+                    .iWantToTakeItInTheFuture ? (
+                  <h3 className="text-lg text-center">
+                    {" "}
+                    I want to take it in the future
+                  </h3>
                 ) : (
                   <h3 className="text-lg text-center"> I do not have one</h3>
                 )}
               </div>
             )}
             {/* pleaseCheckTheEnglishTestScoresIfYouHaveAny */}
+
+
+            <div className="box intro-y p-5 mt-5 pb-5">
+                <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                  <div className="font-medium truncate ">English Test</div>
+                </div>
+                {/* <div className="flex">
+                  <label className="form-label"> Score and Information </label>
+                </div> */}
+                
+              </div>
+
+
+
           </div>
           {/* END: General Report */}
         </div>

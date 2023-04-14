@@ -2,12 +2,20 @@ import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
-import { allUserListState } from "../../state/admin-atom";
+import { useRecoilValueLoadable, useRecoilStateLoadable } from "recoil";
+import {
+  allUserListState,
+  allstudentListState,
+  allFormListSelect,
+} from "../../state/admin-atom";
 import axios from "axios";
 import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
+
+import StudentModal from "./StudentInfo";
+
+
 const token = localStorage.getItem("token");
 
 const headers = {
@@ -45,6 +53,11 @@ function applySortFilters(array, searchValue, birth) {
 
 const Users = (props) => {
   const [usersData, setUserState] = useRecoilStateLoadable(allUserListState);
+
+  const [showStudentInformation, setShowStudentInformation] = useState(false);
+
+  const [fdata, setFdata] = useState({});
+
   const [rowCount, setRowCount] = useState(10);
   const [newUserModal, setNewUserModal] = useState(false);
   const [formdata, setFormdata] = useState([]);
@@ -53,6 +66,27 @@ const Users = (props) => {
   const [loading, setLoading] = useState(false);
   const handelPageCount = (e) => {
     setRowCount(parseInt(e.target.value));
+  };
+
+  //const handelStudentModel = () => {};
+
+  const handelStudentModel = (val, user = {}) => {
+
+
+    setShowStudentInformation(val);
+    if (val === true) {
+      setFdata({
+        user_id: user.id,
+        code: user.student_info?.code,
+        interview_date: user.student_info?.interview_date,
+        university: user.student_info?.university,
+        package: user.package,
+        interview_time: user.student_info?.interview_time,
+        visa_type: user.student_info?.visa_type,
+      });
+    } else {
+      setFdata({});
+    }
   };
 
   const handelLoad = () => {
@@ -179,10 +213,19 @@ const Users = (props) => {
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
               <input
-                onChange={handelSearch.bind(this)}
+                type="password"
+                name="password"
+                className="hidden"
+                placeholder="secret"
+              />
+
+              <input
+                onChange={(e) => handelSearch(e)}
+                id="search"
                 type="text"
+                name="search_new"
                 className="form-control w-56 box pr-10"
-                placeholder="Search..."
+                placeholder="Search.."
               />
               <Lucide
                 icon="Search"
@@ -199,6 +242,7 @@ const Users = (props) => {
               rowCount={rowCount}
               users={filterData}
               setUserState={setUserState}
+              handelStudentModel={handelStudentModel}
             />
           )}
         </div>
@@ -211,6 +255,14 @@ const Users = (props) => {
         </div>
         {/* END: Pagination */}
       </div>
+
+      <StudentModal
+        handelStudentModel={handelStudentModel}
+        fdata={fdata}
+        showStudentInformation={showStudentInformation}
+        setShowStudentInformation={setShowStudentInformation}
+      />
+
       {/* BEGIN: New User Modal */}
       <Modal
         show={newUserModal}
@@ -311,6 +363,7 @@ const Users = (props) => {
           </div>
         </ModalBody>
       </Modal>
+
       {/* END: New User Modal */}
     </>
   );
