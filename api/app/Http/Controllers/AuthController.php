@@ -20,28 +20,37 @@ use Illuminate\Support\Carbon;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends BaseController
 {
     //
 
-    private function sendResetEmail($email, $token)
+    private function sendResetEmail($email, $token, $url, $endpoint)
     { //Retrieve the user from the database
         $user = DB::table('users')->where('email', $email)->select('id', 'first_name', 'email')->first(); //Generate, the password reset link. The token generated is embedded in the link$link = config('base_url') . 'password/reset/' . $token . '?email=' . urlencode($user->email);
-        $link = env('APP_URL') . '/password/' . $token . '/' . $user->id;
+        $link =   $url . 'password/' . $token . '/' . $user->id;
+
+
+
+        $data['email'] = $email;
+        $data['link'] =    $link;
+
+        $response = Http::post($endpoint . '/reset_password', $data);
+
+
         try {
             //Here send the link with CURL with an external email API         return true;
 
 
-            Mail::send('email.forget_password', ['link' => $link], function ($message) use ($email) {
+            $em = Mail::send('email.forget_password', ['link' => $link], function ($message) use ($email) {
                 $message->to($email, 'Admin')->subject('Reset Password Notification');
                 $message->from("info@onekeyclient.us", 'Admin');
             });
-            return true;
+            return $em;
         } catch (\Exception $e) {
-            return false;
+            return $e;
         }
     }
 
@@ -66,13 +75,16 @@ class AuthController extends BaseController
         $tokenData = DB::table('password_resets')
             ->where('email', $request->email)->orderBy('created_at', 'desc')->first();
 
-        if ($this->sendResetEmail($request->email, $tokenData->token)) {
+        $endpoint = config('app.mail_url');
+        $email_sent = $this->sendResetEmail($request->email, $tokenData->token, config('app.url'),     $endpoint);
 
-            return $this->sendResponse('[success]', ['status' => 'A reset link has been sent to your email address.']);
+        if ($email_sent) {
+
+            return $this->sendResponse('[success]', ['status' => $endpoint]);
         } else {
 
 
-            return $this->sendError('[error]', ['status' => 'A Network Error occurred. Please try again.']);
+            return $this->sendError('[error]', ['status' =>   $endpoint]);
         }
 
 
@@ -108,7 +120,7 @@ class AuthController extends BaseController
             return $this->sendResponse($success, 'User login successfully.');
         } else {
 
-            return $this->sendError('Unauthorised.', ['error' => 'User email or passord is worng !']);
+            return $this->sendError('Unauthorized.', ['error' => 'User email or password is wrong !']);
         }
         //
     }
@@ -151,8 +163,19 @@ class AuthController extends BaseController
 
         Mail::send('email.new_user', ['user' => $user], function ($message) {
             $message->to("info@onekeyclient.us", 'Admin')->subject('New User Register Request Received!');
-            $message->from(env('MAIL_FROM_ADDRESS'), 'Admin');
+            $message->from("info@onekeyclient.us", 'Admin');
         });
+
+
+
+        $endpoint = config('app.mail_url') . '/new_user';
+
+ 
+        $response = Http::post($endpoint, $user);
+
+
+
+      //  return   $response;
 
         return $this->sendResponse(['success'], 'Your registration has been received. Please wait and your login details will be emailed to you within 24 hours. Please DO NOT REGISTER AGAIN!');
 
@@ -168,17 +191,17 @@ class AuthController extends BaseController
 
         $all =  $request->all();
 
-      
+
 
 
         if (is_array($all) && count($all) > 0) {
-          
 
 
-            
+
+
 
             try {
-                
+
                 foreach ($all as $user) {
                     try {
 
@@ -203,19 +226,16 @@ class AuthController extends BaseController
                         $user = User::create($input);
                         $name =  $user['first_name'];
                         $email =  $user['email'];
-                 
-           
-                   
                     } catch (\Exception $e) {
 
-                     
+
                         Log::info($e->getMessage());
 
                         // return $e->getMessage();
                     }
                 }
             } catch (\Exception $e) {
-               
+
 
                 return $e->getMessage();
             }
@@ -224,7 +244,7 @@ class AuthController extends BaseController
 
 
 
-        return  'success' ;
+        return  'success';
     }
 
 

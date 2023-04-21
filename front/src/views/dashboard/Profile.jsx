@@ -9,6 +9,7 @@ const token = localStorage.getItem("token");
 import { useParams } from "react-router-dom";
 
 import { loginState } from "../../state/login-atom";
+import SingleCard from "./task/SingleCard";
 
 const formatDate = (dat) => {
   //const date = dat.split(" ");
@@ -104,7 +105,7 @@ const UserMain = () => {
                   </div>
                 )}
 
-                {loginData.email == "info@onekeyclient.com" && (
+                {loginData.isAdmin === 1 && (
                   <button className="" onClick={() => handelEditClick(false)}>
                     <Lucide icon="Edit" className="w-4 h-4 text-slate-500 " />
                   </button>
@@ -554,17 +555,11 @@ const UserMain = () => {
 
             <h3 className="my-5 text-bolder">Tasks</h3>
 
-            <div className="grid">
-
-            </div>
-
-            <div className="box intro-y p-5 mt-5 pb-5">
-              <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-                <div className="font-medium truncate ">Tasks</div>
-              </div>
-              <div className="flex">
-                <label className="form-label"> Card </label>
-              </div>
+            <div className="grid grid-cols-4 gap-4">
+              <SingleCard />
+              <SingleCard />
+              <SingleCard />
+              <SingleCard />
             </div>
           </div>
           {/* END: General Report */}

@@ -90,6 +90,9 @@ Route::get('dwonload/{folder}/{path}', 'App\Http\Controllers\FileController@dwon
 
 
 
+
+
+
 Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin."], function () {
     // Route::get('users', [UserController::class, 'index']);
 
@@ -167,6 +170,26 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::get('admin_files', 'App\Http\Controllers\FileController@admin_files');
 });
+
+
+Route::group(["prefix" => "send_mail", "name" => "send_mail."], function () {
+    Route::post('reset_password', 'App\Http\Controllers\MailController@reset_password');
+    Route::post('new_user', 'App\Http\Controllers\MailController@new_user');
+
+    Route::post('user_approved', 'App\Http\Controllers\MailController@user_approved');
+    
+    Route::post('calender_notes', 'App\Http\Controllers\MailController@calender_notes');
+    Route::post('file_upload', 'App\Http\Controllers\MailController@file_upload');
+
+    Route::post('stage_notes', 'App\Http\Controllers\MailController@stage_notes');
+    Route::post('form_submit', 'App\Http\Controllers\MailController@form_submit');
+    
+    
+
+    
+
+});
+
 
 
 

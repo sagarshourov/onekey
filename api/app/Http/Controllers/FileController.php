@@ -8,6 +8,7 @@ use App\Models\Files;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 
 class FileController extends BaseController
 {
@@ -17,7 +18,7 @@ class FileController extends BaseController
     {
         $user_id = Auth::id();
 
-        if (Auth::user()->is_admin==1) {
+        if (Auth::user()->is_admin == 1) {
             $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
         } else {
             $files =   Files::with('docTypes')->where('user_id', $user_id)->get();
@@ -63,13 +64,13 @@ class FileController extends BaseController
     {
         $user = Auth::user();
 
-        if($user->is_admin==1){
+        if ($user->is_admin == 1) {
             $files = AdminDoc::with(['admin', 'user', 'doctype'])->where('admin_id', $user->id)->orderBy('created_at', 'desc')->get();
-        }else{
+        } else {
             $files = AdminDoc::with(['admin', 'user', 'doctype'])->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         }
 
-      
+
 
         return $this->sendResponse($files, 'Admin file successfully.');
     }
@@ -80,7 +81,7 @@ class FileController extends BaseController
     {
         $user = Auth::user();
         $input = $request->all();
-        if ($user->is_admin==1) {
+        if ($user->is_admin == 1) {
             $path = $request->file('file')->store('adfiles');
             $user_id =  $user->id;
 
@@ -131,6 +132,21 @@ class FileController extends BaseController
                     $message->to($assignAmin, 'Admin')->subject('New Document Uploaded');
                     $message->from("info@onekeyclient.us", 'Admin');
                 });
+
+                $data['user'] = $user;
+                $data['title'] = $input['title'];
+                $data['assignAdmin'] =  $assignAmin;
+
+
+
+
+                $endpoint = config('app.mail_url') . '/file_upload';
+
+
+                $response = Http::post($endpoint, $data);
+
+
+                return $response;
             }
             return $this->sendResponse($this->userfiles(), 'User file uploaded successfully.');
         }

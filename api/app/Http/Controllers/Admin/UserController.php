@@ -14,7 +14,7 @@ use App\Models\VisaType;
 use App\Models\Universty;
 use App\Models\StudentInfo;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -311,12 +311,24 @@ class UserController extends BaseController
         if ($input['type'] == 'approved') {
             Mail::send('email.request_approved', ['name' => $name, 'email' => $email, 'password' => $password], function ($message) use ($email, $name) {
 
-                $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
+                $message->from("info@onekeyclient.us", "OneKeyClient");
 
                 $message->to($email, $name)->subject('Approved - Your Request has been approved');
             });
 
             $user->password = Hash::make($password);
+
+
+
+            $endpoint = config('app.mail_url') . '/user_approved';
+
+            $data['name'] = $name;
+            $data['email'] = $email;
+            $data['password'] = $password;
+
+ 
+            $response = Http::post($endpoint, $data);
+    
         }
 
 

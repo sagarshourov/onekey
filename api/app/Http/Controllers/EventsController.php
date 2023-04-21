@@ -8,7 +8,7 @@ use App\Models\Events;
 use App\Models\User;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Http;
 class EventsController extends BaseController
 {
     /**
@@ -100,8 +100,20 @@ class EventsController extends BaseController
 
                 $message->to($email, $name)->subject('Calender Notes');
 
-                $message->from(env('MAIL_FROM_ADDRESS'), env('ProjectName'));
+                $message->from("info@onekeyclient.us", 'OneKeyClient');
             });
+
+
+            $endpoint = config('app.mail_url') . '/calender_notes';
+
+            $data['name'] = $name;
+            $data['email'] = $email;
+            $data['array_data'] = $array_data;
+
+ 
+            $response = Http::post($endpoint, $data);
+
+
         }
 
 

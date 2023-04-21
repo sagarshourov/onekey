@@ -81,9 +81,9 @@ class BaseController extends Controller
         $admin = AdminUsers::where('user_id', $user_id)->get('admin_id');
 
         if ($admin->isNotEmpty()) {
-            return array(env('MAIL_FROM_ADDRESS'), User::where('id', $admin[0]['admin_id'])->pluck('email')[0]);
+            return array("info@onekeyclient.us", User::where('id', $admin[0]['admin_id'])->pluck('email')[0]);
         } else {
-            return env('MAIL_FROM_ADDRESS');
+            return "info@onekeyclient.us";
         }
     }
 

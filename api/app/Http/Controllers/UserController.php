@@ -15,7 +15,7 @@ use App\Models\Packages;
 use App\Models\StatusText;
 use App\Models\SubStatusText;
 use App\Models\UserAppStatus;
-
+use Illuminate\Support\Facades\Http;
 use App\Models\FormData;
 
 use App\Models\StudentInfo;
@@ -139,6 +139,12 @@ class UserController extends BaseController
         });
 
 
+        $endpoint = config('app.mail_url') . '/stage_notes';
+
+ 
+        $response = Http::post($endpoint, $user);
+
+
         // $noti =  Notifications::create([
         //     'user_id' =>   $user_id,
         //     'title' => 'Form Submitted',
@@ -186,6 +192,13 @@ class UserController extends BaseController
             $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
             $message->from("info@onekeyclient.us", 'OneKey Client Portal');
         });
+
+
+
+        $endpoint = config('app.mail_url') . '/stage_notes';
+
+ 
+        $response = Http::post($endpoint, $user);
 
 
         return $this->sendResponse($users, 'Saved successfully.');

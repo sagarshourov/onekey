@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Notifications;
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Http;
+
 class FormController extends BaseController
 {
     //
@@ -250,7 +252,7 @@ class FormController extends BaseController
         if ($input['type'] == 'public') {
             $user->visibility = 0;
             $user->save();
-            return $this->sendResponse(['Success'], 'Priivate successfully.');
+            return $this->sendResponse(['Success'], 'Private successfully.');
         }
     }
 
@@ -303,6 +305,20 @@ class FormController extends BaseController
                 $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
                 $message->from("info@onekeyclient.us", 'Admin');
             });
+
+
+            $data['user'] = $user;
+            $data['title'] = $input['title'];
+
+            $data['assignAmin'] =   $assignAmin;
+
+
+            $endpoint = config('app.mail_url') . '/form_submit';
+
+
+            $response = Http::post($endpoint, $data);
+
+
         }
 
 
