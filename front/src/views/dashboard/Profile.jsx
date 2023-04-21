@@ -646,17 +646,35 @@ const UserMain = () => {
                     <div className="text-slate-500 text-xs mt-1"></div>
                   </div>
                   {val?.package && (
-                    <div className="col-span-12 my-5 flex items-center">
+                    <div className="col-span-12 my-3 flex items-center">
                       <h4 className=" m-auto  font-medium">
                         <small> Case Type : </small> {val?.package}
                       </h4>
                     </div>
                   )}
                   {val?.student_info?.visa_type && (
-                    <div className="col-span-12 my-5 flex items-center">
+                    <div className="col-span-12 my-3 flex items-center">
                       <h4 className=" m-auto  font-medium">
                         <small> Visa Type : </small>{" "}
                         {val?.student_info?.visa_type}
+                      </h4>
+                    </div>
+                  )}
+
+                  {val?.student_info?.ds_160_num && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> DS-160 Number : </small>{" "}
+                        {val?.student_info?.ds_160_num}
+                      </h4>
+                    </div>
+                  )}
+
+                  {val?.student_info?.us_consultant && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> U.S. Consulate : </small>{" "}
+                        {val?.student_info?.us_consultant}
                       </h4>
                     </div>
                   )}

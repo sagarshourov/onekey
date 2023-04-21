@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { Lucide, Modal,LoadingIcon , ModalBody } from "@/base-components";
+import { Lucide, Modal, LoadingIcon, ModalBody } from "@/base-components";
 import { getBaseApi } from "../../configuration";
 
 const StudentModal = (props) => {
@@ -14,7 +14,6 @@ const StudentModal = (props) => {
   const [loading, setLoading] = useState(false);
 
   const updateInformation = async (e) => {
-
     console.log(e);
 
     const LOGIN_URL = getBaseApi() + "student_info";
@@ -35,6 +34,8 @@ const StudentModal = (props) => {
       university: e.target.elements.university.value,
       visa_type: e.target.elements.visa_type.value,
       user_id: parseInt(e.target.elements.user_id.value),
+      us_consultant : e.target.elements.us_consultant.value,
+      ds_160_num : e.target.elements.ds_160_num.value,
     };
     e.preventDefault();
     //setFdata((fdata) => ({ ...fdata, user_id: userId }));
@@ -50,11 +51,11 @@ const StudentModal = (props) => {
 
       if (response?.data?.success) {
         setShowStudentInformation(false);
-          window.location.reload();
+        window.location.reload();
       }
       setLoading(false);
     } catch (err) {
-        console.log(err);
+      console.log(err);
       setLoading(false);
     }
   };
@@ -70,11 +71,11 @@ const StudentModal = (props) => {
         <form method="POST" onSubmit={(e) => updateInformation(e)}>
           <div className="p-5 ">
             <h3 className="text-lg text-center py-3 mb-4">
-              Student Information 
+              Student Information
             </h3>
             <div>
               <label htmlFor="vertical-form-1" className="form-label">
-                SEVIS ID number 
+                SEVIS ID number
               </label>
 
               <div className="input-group w-full">
@@ -153,6 +154,24 @@ const StudentModal = (props) => {
             </div>
             <div className="mt-5">
               <label htmlFor="vertical-form-1" className="form-label">
+                U.S. Consulate
+              </label>
+
+              <div className="input-group w-full">
+                <div className="input-group-text">
+                  <Lucide icon="UserCheck" className="w-5 h-4 mt-2" />
+                </div>
+
+                <input
+                  type="text"
+                  name="us_consultant"
+                  className=" py-4 form-control"
+                  defaultValue={fdata.us_consultant}
+                />
+              </div>
+            </div>
+            <div className="mt-5">
+              <label htmlFor="vertical-form-1" className="form-label">
                 University / Institution
               </label>
 
@@ -187,6 +206,25 @@ const StudentModal = (props) => {
                 />
               </div>
             </div>
+            <div className="mt-5">
+              <label htmlFor="vertical-form-1" className="form-label">
+                DS-160 Number
+              </label>
+
+              <div className="input-group w-full">
+                <div className="input-group-text">
+                  <Lucide icon="GitPullRequest" className="w-5 h-4 mt-2" />
+                </div>
+
+                <input
+                  type="text"
+                  name="ds_160_num"
+                  className=" py-4 form-control"
+                  defaultValue={fdata.ds_160_num}
+                />
+              </div>
+            </div>
+            
           </div>
           <div className="px-5 pb-8 text-center">
             <button

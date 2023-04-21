@@ -207,7 +207,7 @@ const UserMain = () => {
                 </div>
                 <div>
                   <label htmlFor="regular-form-1" className="form-label">
-                  Gender
+                    Gender
                   </label>
                   <div className="flex flex-col sm:flex-row mt-2">
                     <div className="form-check mr-2">
@@ -329,119 +329,119 @@ const UserMain = () => {
 
             {val.student_info && (
               <div className="box intro-y p-5 mt-5 pb-5">
-              <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-                <div className="font-medium truncate ">
-                  Student Information
+                <div className="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
+                  <div className="font-medium truncate ">
+                    Student Information
+                  </div>
                 </div>
-              </div>
-              <div className=" mb-5 lg:columns-4">
-                <div>
-                  {val?.student_info?.code !== null && (
-                    <>
-                      <label htmlFor="regular-form-1" className="form-label">
-                        SEVIS ID number
-                      </label>
-                      <div className="input-group">
-                        <div className="input-group-text">
-                          <Lucide
-                            icon="Code"
-                            className="w-4 h-4 text-slate-500 ml-auto"
-                          />
-                        </div>
+                <div className=" mb-5 lg:columns-4">
+                  <div>
+                    {val?.student_info?.code !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                          SEVIS ID number
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Code"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
 
-                        <Input
-                          setValue={setValue}
-                          type="text"
-                          name="code"
-                          value={val?.student_info}
-                          readOnly={true}
-                          className="form-control"
-                          placeholder=""
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div>
-                  {val?.student_info?.interview_date !== null && (
-                    <>
-                      <label htmlFor="regular-form-1" className="form-label">
-                        Interview Date
-                      </label>
-                      <div className="input-group">
-                        <div className="input-group-text">
-                          <Lucide
-                            icon="Calendar"
-                            className="w-4 h-4 text-slate-500 ml-auto"
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="code"
+                            value={val?.student_info}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder=""
                           />
                         </div>
-                        <Input
-                          setValue={setValue}
-                          type="text"
-                          name="interview_date"
-                          value={val.student_info}
-                          readOnly={true}
-                          className="form-control"
-                          placeholder="Interview Date"
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div>
-                  {val?.student_info?.interview_time !== null && (
-                    <>
-                      <label htmlFor="regular-form-1" className="form-label">
-                        Interview Time
-                      </label>
-                      <div className="input-group">
-                        <div className="input-group-text">
-                          <Lucide
-                            icon="Calendar"
-                            className="w-4 h-4 text-slate-500 ml-auto"
+                      </>
+                    )}
+                  </div>
+                  <div>
+                    {val?.student_info?.interview_date !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                          Interview Date
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Calendar"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="interview_date"
+                            value={val.student_info}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder="Interview Date"
                           />
                         </div>
-                        <Input
-                          setValue={setValue}
-                          type="text"
-                          name="interview_time"
-                          value={val.student_info}
-                          readOnly={true}
-                          className="form-control"
-                          placeholder="Interview Time"
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div>
-                  {val?.student_info?.university !== null && (
-                    <>
-                      <label htmlFor="regular-form-1" className="form-label">
-                        University / Institution
-                      </label>
-                      <div className="input-group">
-                        <div className="input-group-text">
-                          <Lucide
-                            icon="Home"
-                            className="w-4 h-4 text-slate-500 ml-auto"
+                      </>
+                    )}
+                  </div>
+                  <div>
+                    {val?.student_info?.interview_time !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                          Interview Time
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Calendar"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="interview_time"
+                            value={val.student_info}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder="Interview Time"
                           />
                         </div>
-                        <Input
-                          setValue={setValue}
-                          type="text"
-                          name="university"
-                          value={val.student_info}
-                          readOnly={true}
-                          className="form-control"
-                          placeholder="University"
-                        />
-                      </div>
-                    </>
-                  )}
+                      </>
+                    )}
+                  </div>
+                  <div>
+                    {val?.student_info?.university !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                          University / Institution
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Home"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="university"
+                            value={val.student_info}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder="University"
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
             )}
           </div>
           {/* END: General Report */}
@@ -528,20 +528,39 @@ const UserMain = () => {
                   </div>
 
                   {val?.package && (
-                    <div className="col-span-12 my-5 flex items-center">
+                    <div className="col-span-12 my-3 flex items-center">
                       <h4 className=" m-auto  font-medium">
                         <small> Case Type : </small> {val?.package}
                       </h4>
                     </div>
                   )}
                   {val?.student_info?.visa_type && (
-                    <div className="col-span-12 my-5 flex items-center">
+                    <div className="col-span-12 my-3 flex items-center">
                       <h4 className=" m-auto  font-medium">
                         <small> Visa Type : </small>{" "}
                         {val?.student_info?.visa_type}
                       </h4>
                     </div>
                   )}
+
+                  {val?.student_info?.ds_160_num && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> DS-160 Number : </small>{" "}
+                        {val?.student_info?.ds_160_num}
+                      </h4>
+                    </div>
+                  )}
+
+                  {val?.student_info?.us_consultant && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> U.S. Consulate : </small>{" "}
+                        {val?.student_info?.us_consultant}
+                      </h4>
+                    </div>
+                  )}
+
                   <div className="col-span-12 h-20"></div>
                   {val.user_phone !== null && (
                     <div className="col-span-12 pt-5  border-t flex items-center justify-center ">

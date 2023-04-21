@@ -25,7 +25,9 @@ class StudentInfo extends Model
         'interview_time',
         'university',
         'visa_status',
-        'visa_type'
+        'visa_type',
+        'ds_160_num',
+        'us_consultant'
     ];
 
     public function university()

@@ -69,6 +69,8 @@ const AdminUsers = (props) => {
         package: user.package,
         interview_time: user.student_info?.interview_time,
         visa_type: user.student_info?.visa_type,
+        us_consultant: user.student_info?.us_consultant,
+        ds_160_num: user.student_info?.ds_160_num,
       });
     } else {
       setFdata({});
@@ -97,6 +99,8 @@ const AdminUsers = (props) => {
       university: e.target.elements.university.value,
       visa_type: e.target.elements.visa_type.value,
       user_id: parseInt(e.target.elements.user_id.value),
+      us_consultant: e.target.elements.us_consultant.value,
+      ds_160_num: e.target.elements.ds_160_num.value,
     };
 
     //setFdata((fdata) => ({ ...fdata, user_id: userId }));
@@ -299,6 +303,24 @@ const AdminUsers = (props) => {
               </div>
               <div className="mt-5">
                 <label htmlFor="vertical-form-1" className="form-label">
+                  U.S. Consulate
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="UserCheck" className="w-5 h-4 mt-2" />
+                  </div>
+
+                  <input
+                    type="text"
+                    name="us_consultant"
+                    className=" py-4 form-control"
+                    defaultValue={fdata.us_consultant}
+                  />
+                </div>
+              </div>
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
                   University / Institution
                 </label>
 
@@ -330,6 +352,25 @@ const AdminUsers = (props) => {
                     name="visa_type"
                     className=" py-4 form-control"
                     defaultValue={fdata.visa_type}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label htmlFor="vertical-form-1" className="form-label">
+                  DS-160 Number
+                </label>
+
+                <div className="input-group w-full">
+                  <div className="input-group-text">
+                    <Lucide icon="GitPullRequest" className="w-5 h-4 mt-2" />
+                  </div>
+
+                  <input
+                    type="text"
+                    name="ds_160_num"
+                    className=" py-4 form-control"
+                    defaultValue={fdata.ds_160_num}
                   />
                 </div>
               </div>

@@ -15,7 +15,6 @@ import { filter } from "lodash";
 
 import StudentModal from "./StudentInfo";
 
-
 const token = localStorage.getItem("token");
 
 const headers = {
@@ -71,8 +70,6 @@ const Users = (props) => {
   //const handelStudentModel = () => {};
 
   const handelStudentModel = (val, user = {}) => {
-
-
     setShowStudentInformation(val);
     if (val === true) {
       setFdata({
@@ -83,6 +80,8 @@ const Users = (props) => {
         package: user.package,
         interview_time: user.student_info?.interview_time,
         visa_type: user.student_info?.visa_type,
+        us_consultant: user.student_info?.us_consultant,
+        ds_160_num: user.student_info?.ds_160_num
       });
     } else {
       setFdata({});

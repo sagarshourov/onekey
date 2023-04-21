@@ -8,13 +8,13 @@
 // export const getAdmin = () => `http://localhost:8000/api/admin/`;
 
 
-// export const getBaseApi = () => `https://api.onekeyclient.com/api/`;
+export const getBaseApi = () => `https://api.onekeyclient.com/api/`;
 
-// export const getAdmin = () => `https://api.onekeyclient.com/api/admin/`;
+export const getAdmin = () => `https://api.onekeyclient.com/api/admin/`;
 
-export const getBaseApi = () => `https://api.onekeyclients.info/api/`;
+// export const getBaseApi = () => `https://api.onekeyclients.info/api/`;
 
-export const getAdmin = () => `https://api.onekeyclients.info/api/admin/`;
+// export const getAdmin = () => `https://api.onekeyclients.info/api/admin/`;
 
 
 
