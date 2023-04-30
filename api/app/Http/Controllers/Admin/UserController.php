@@ -19,10 +19,16 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Str;
+use App\Models\Events;
 
 class UserController extends BaseController
 {
     //
+
+
+
+
+
 
 
     public function assign_admin_users(Request $request)
@@ -104,31 +110,31 @@ class UserController extends BaseController
 
     public function all_users()
     {
-        // $assign = $this->assignUsers();
 
-
-        // if ($assign) {
-        //     $users =  User::whereIn('id', $assign)->orderByDesc('id')->get();
-        // } else {
-        //     $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
-        // }
-
-        // $users =  User::with(['data'=> function($query){
-        //         //$query->where('form_id',1);
-
-        // }])->where('is_admin', 0)->orderByDesc('id')->get();
-
-
-        $users = User::with(['student_info','data' => function ($query) {
+        $users = User::with(['student_info', 'data' => function ($query) {
             $query->where('form_id', 1);
         }])->where('is_admin', 0)->orderByDesc('id')->get();
-
-
-
-
-
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
+
+    public function get_trash()
+    {
+
+        $users = User::onlyTrashed()->orderByDesc('id')->get();
+        return $this->sendResponse($users, 'Users retrieved successfully.');
+    }
+
+
+
+    public function restore(Request $request)
+    {
+
+        User::withTrashed()->find($request->id)->restore();
+
+        return $this->get_trash();
+    }
+
+
 
 
 
@@ -154,15 +160,11 @@ class UserController extends BaseController
         User::create($input);
         //   return $input;
 
-        if($input['is_admin']==1){
+        if ($input['is_admin'] == 1) {
             return  $this->admin_users($input['is_admin']);
-        }else{
+        } else {
             return $this->all_users();
         }
-
-
-
-        
     }
 
 
@@ -239,6 +241,49 @@ class UserController extends BaseController
         StudentInfo::updateOrCreate([
             'user_id'   => $input['user_id'],
         ],  $input);
+
+
+        if (isset($input['interview_date']) && $input['interview_date'] != '') {
+
+
+            Events::updateOrCreate(
+                [
+                    'user_id'   => $input['user_id'],
+                    'note_date' => $input['interview_date']
+                ],
+                [
+                    'user_id' => $input['user_id'],
+                    'notes' => 'Your Visa interview date has been scheduled at the ' . $input['us_consultant'] . ' on ' . $input['interview_date'] . ' at ' . $input['interview_time'],
+                    'note_date' => $input['interview_date'],
+                ]
+            );
+
+            $user_data = User::find($input['user_id']);
+
+
+
+            $array_data = array(
+
+                'user' => $user_data->first_name . ' ' . $user_data->last_name,
+
+                'notes' => 'Your Visa interview date has been scheduled at the ' . $input['us_consultant'] . ' on ' . $input['interview_date'] . ' at ' . $input['interview_time'],
+
+                'date' => $input['interview_date']
+
+            );
+
+            $name = $user_data->first_name . ' ' . $user_data->last_name;
+
+            $email = $user_data->email;
+
+            Mail::send('email.calender_notes', $array_data, function ($message) use ($email, $name) {
+                $message->to($email, $name)->subject('Calender Notes');
+                $message->from("info@onekeyclient.us", 'OneKeyClient');
+            });
+        }
+
+
+
 
 
         return $this->sendResponse($user, 'You will receive an email within short time.');
@@ -326,9 +371,9 @@ class UserController extends BaseController
             $data['email'] = $email;
             $data['password'] = $password;
 
- 
-            $response = Http::post($endpoint, $data);
-    
+
+            //$response = Http::post($endpoint, $data);
+
         }
 
 

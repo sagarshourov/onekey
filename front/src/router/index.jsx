@@ -33,6 +33,10 @@ const AdminUsersView = Loadable(
 );
 
 const AllUsers = Loadable(lazy(() => import("../views/Users/Main")));
+
+const Trash = Loadable(lazy(() => import("../views/Users/Trash")));
+
+
 const Users = Loadable(lazy(() => import("../views/Users/Main")));
 
 const ToDoList = Loadable(lazy(() => import("../views/ToDoList/Main")));
@@ -135,6 +139,11 @@ function Router() {
           path: "/user_list",
           element: <AllUsers />,
         },
+        {
+          path: "/trash",
+          element: <Trash />,
+        },
+
 
         {
           path: "/app_status",
@@ -256,6 +265,10 @@ function Router() {
         {
           path: "/user_list",
           element: <AllUsers />,
+        },
+        {
+          path: "/trash",
+          element: <Trash />,
         },
 
         {

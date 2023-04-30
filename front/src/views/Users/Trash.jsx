@@ -4,12 +4,10 @@ import { useState } from "react";
 import { getAdmin } from "../../configuration";
 import { useRecoilValueLoadable, useRecoilStateLoadable } from "recoil";
 import {
-  allUserListState,
-  allstudentListState,
-  allFormListSelect,
+  trashListState
 } from "../../state/admin-atom";
 import axios from "axios";
-import UsersTable from "./UsersTable";
+import TrashTable from "./TrashTable";
 
 import { filter } from "lodash";
 
@@ -51,7 +49,7 @@ function applySortFilters(array, searchValue, birth) {
 }
 
 const Users = (props) => {
-  const [usersData, setUserState] = useRecoilStateLoadable(allUserListState);
+  const [usersData, setUserState] = useRecoilStateLoadable(trashListState);
 
   const [showStudentInformation, setShowStudentInformation] = useState(false);
 
@@ -74,14 +72,14 @@ const Users = (props) => {
     if (val === true) {
       setFdata({
         user_id: user.id,
-        code: user?.student_info?.code,
-        interview_date: user?.student_info?.interview_date,
-        university: user?.student_info?.university,
-        package: user.package ? user.package : 0,
-        interview_time: user?.student_info?.interview_time,
-        visa_type: user?.student_info?.visa_type,
-        us_consultant: user?.student_info?.us_consultant,
-        ds_160_num: user?.student_info?.ds_160_num
+        code: user.student_info?.code,
+        interview_date: user.student_info?.interview_date,
+        university: user.student_info?.university,
+        package: user.package,
+        interview_time: user.student_info?.interview_time,
+        visa_type: user.student_info?.visa_type,
+        us_consultant: user.student_info?.us_consultant,
+        ds_160_num: user.student_info?.ds_160_num
       });
     } else {
       setFdata({});
@@ -168,46 +166,16 @@ const Users = (props) => {
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">All Users List</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">Trash List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
-        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <button
-            className="btn btn-primary shadow-md mr-2"
-            onClick={() => setNewUserModal(true)}
-          >
-            New User
-          </button>
-          <select
-            onChange={(e) => handelMonth(e)}
-            className="w-56 form-select box mt-3 sm:mt-0"
-          >
-            <option value="-1"> Select Month...</option>
-            <option value="0"> January </option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
+      <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+          <div></div>
+          
           <div className="hidden md:block mx-auto text-slate-500">
             Showing {rowCount} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
-          <select
-            onChange={handelPageCount.bind(this)}
-            className="w-20 form-select box mt-3 sm:mt-0"
-          >
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="35">35</option>
-            <option value="50">50</option>
-          </select>
+         
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
@@ -226,9 +194,6 @@ const Users = (props) => {
                 className="form-control w-56 box pr-10"
                 placeholder="Search.."
               />
- 
- 
- 
               <Lucide
                 icon="Search"
                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
@@ -236,11 +201,12 @@ const Users = (props) => {
             </div>
           </div>
         </div>
+      
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
           {usersData.state === "hasValue" && (
-            <UsersTable
+            <TrashTable
               rowCount={rowCount}
               users={filterData}
               setUserState={setUserState}

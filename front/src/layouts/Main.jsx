@@ -211,7 +211,7 @@ function Main() {
                     >
                       <ul
                         className={classnames({
-                          "side-menu__sub-open": menu.activeDropdown,
+                          "side-menu__sub-open pl-5": menu.activeDropdown,
                         })}
                       >
                         {menu.subMenu.map((subMenu, subMenuKey) => (
@@ -229,7 +229,9 @@ function Main() {
                               }}
                             >
                               <div className="side-menu__icon">
-                                <Lucide icon="Activity" />
+                                <Lucide
+                                  icon={subMenu.icon ? subMenu.icon : "Activity"}
+                                />
                               </div>
                               <div className="side-menu__title">
                                 {subMenu.title}

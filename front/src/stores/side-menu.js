@@ -30,6 +30,11 @@ let sideMenu = atom({
             pathname: "/user_list",
             title: "All",
           },
+          {
+            icon: "Trash",
+            pathname: "/trash",
+            title: "Trash",
+          },
         ],
       },
 
@@ -128,6 +133,11 @@ let UsersideMenu = atom({
             pathname: "/forms/5",
             title: "DS-160 For Child Two",
           },
+          {
+            icon: "",
+            pathname: "/forms/23",
+            title: "DS-160 For Child Three",
+          },
         ],
       },
       {
@@ -213,6 +223,11 @@ let JrAdmin = atom({
         icon: "LayoutList",
         title: "SOP",
         pathname: "/forms/view/22",
+      },
+      {
+        icon: "Trash",
+        pathname: "/trash",
+        title: "Trash",
       },
     ],
   },

@@ -37,7 +37,7 @@ class AuthController extends BaseController
         $data['email'] = $email;
         $data['link'] =    $link;
 
-        $response = Http::post($endpoint . '/reset_password', $data);
+      //  $response = Http::post($endpoint . '/reset_password', $data);
 
 
         try {
@@ -171,7 +171,7 @@ class AuthController extends BaseController
         $endpoint = config('app.mail_url') . '/new_user';
 
  
-        $response = Http::post($endpoint, $user);
+       // $response = Http::post($endpoint, $user);
 
 
 

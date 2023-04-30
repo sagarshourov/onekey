@@ -13,6 +13,8 @@ const StudentModal = (props) => {
   } = props;
   const [loading, setLoading] = useState(false);
 
+  console.log("s", fdata.package);
+
   const updateInformation = async (e) => {
     console.log(e);
 
@@ -34,8 +36,8 @@ const StudentModal = (props) => {
       university: e.target.elements.university.value,
       visa_type: e.target.elements.visa_type.value,
       user_id: parseInt(e.target.elements.user_id.value),
-      us_consultant : e.target.elements.us_consultant.value,
-      ds_160_num : e.target.elements.ds_160_num.value,
+      us_consultant: e.target.elements.us_consultant.value,
+      ds_160_num: e.target.elements.ds_160_num.value,
     };
     e.preventDefault();
     //setFdata((fdata) => ({ ...fdata, user_id: userId }));
@@ -100,7 +102,6 @@ const StudentModal = (props) => {
                 <div className="input-group-text">
                   <Lucide icon="Award" className="w-4 h-4 mt-2" />
                 </div>
-
                 {fdata.package && (
                   <select
                     name="package"
@@ -224,7 +225,6 @@ const StudentModal = (props) => {
                 />
               </div>
             </div>
-            
           </div>
           <div className="px-5 pb-8 text-center">
             <button

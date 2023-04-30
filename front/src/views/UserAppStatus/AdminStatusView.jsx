@@ -14,15 +14,18 @@ import { getAdmin, getBaseApi } from "../../configuration";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { appStatusSlect } from "../../state/admin-atom";
-const checkMain = (u_status, id) => {
-  let active = false;
+import CheckIcon from "./CheckIcon";
+const checkMain = (u_status, status, id) => {
+  var count = 0;
   u_status.map((status, index) => {
     if (parseInt(status.status_text) === id) {
-      active = true;
+      count++;
     }
   });
 
-  return active;
+  console.log("count", count);
+  console.log("status", status);
+  return status.sub_status.length <= count ? true : false;
 };
 
 const checkSub = (u_status, id) => {
@@ -155,20 +158,30 @@ const StatusView = (props) => {
 
             {status.status_text.length > 0 &&
               status.status_text.map((statu, index) => {
-                let active = checkMain(status.user_app_status, statu.id);
+                let active = checkMain(status.user_app_status, statu, statu.id);
 
                 return (
                   <li
                     key={index}
                     className={"timeline-item" + (active ? " active" : "")}
                   >
-                    <div className="timeline-badge">
-                      <a
+                    <div
+                      onClick={() => handelMain(statu.id, null, active)}
+                      className="timeline-badge cursor-pointer"
+                    >
+                      {/* <a
                         href="#"
                         className="key_sub_sec"
                         onClick={() => handelMain(statu.id, null, active)}
-                      ></a>
+                      ></a> */}
+
+                      {active ? (
+                        <CheckIcon color="#35c535" />
+                      ) : (
+                        <CheckIcon color="#bcbfbc" />
+                      )}
                     </div>
+
                     <div className="timeline-panel">
                       <AccordionGroup selectedIndex={1} className="p-5">
                         <AccordionItem className="custom-className ">
@@ -185,15 +198,27 @@ const StatusView = (props) => {
                                     <li
                                       key={ind}
                                       className={actie ? " active" : ""}
+                                      onClick={() =>
+                                        handelMain(statu.id, sub.id, actie)
+                                      }
                                     >
                                       <span>{sub.title}</span>
-                                      <a
+
+                                      <span className="absolute cursor-pointer left-3 z-50 ">
+                                        {actie ? (
+                                          <CheckIcon color="#35c535" />
+                                        ) : (
+                                          <CheckIcon color="#bcbfbc" />
+                                        )}
+                                      </span>
+
+                                      {/* <a
                                         href="#"
                                         className="key_sub_sec"
                                         onClick={() =>
                                           handelMain(statu.id, sub.id, actie)
                                         }
-                                      ></a>
+                                      ></a> */}
                                     </li>
                                   );
                                 })}

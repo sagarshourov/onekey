@@ -4,17 +4,12 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  DropdownContent,
-  DropdownItem,
-  Modal,
-  ModalBody,
   TabGroup,
-  Dropzone,
 } from "@/base-components";
 
 import FormContent from "./FormContent";
 
-import { useEffect, useState,createRef, useRef } from "react";
+import { useState } from "react";
 const AddFiles = (props) => {
 
 

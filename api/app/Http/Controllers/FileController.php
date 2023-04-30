@@ -103,11 +103,7 @@ class FileController extends BaseController
 
             $path = $request->file('file')->store('files');
             $user_id =  $user->id;
-
-
             //   return $this->sendResponse($input['type'], 'FIle uploaded successfully.');
-
-
             if ($input['type'] == 2) {
                 $file = Files::updateOrCreate([
                     'user_id'   =>  $user_id,
@@ -136,17 +132,12 @@ class FileController extends BaseController
                 $data['user'] = $user;
                 $data['title'] = $input['title'];
                 $data['assignAdmin'] =  $assignAmin;
-
-
-
-
                 $endpoint = config('app.mail_url') . '/file_upload';
 
+               // $response = Http::post($endpoint, $data);
 
-                $response = Http::post($endpoint, $data);
 
-
-                return $response;
+               // return $response;
             }
             return $this->sendResponse($this->userfiles(), 'User file uploaded successfully.');
         }

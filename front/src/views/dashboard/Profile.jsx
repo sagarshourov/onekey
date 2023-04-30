@@ -453,6 +453,62 @@ const UserMain = () => {
                     )}
                   </div>
                 </div>
+
+                <div className="mb-5 lg:columns-2">
+                  <div>
+                    {val?.student_info?.us_consultant !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                          Us Consultant
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Home"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="us_consultant"
+                            value={val.student_info}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder="  Us Consultant"
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  <div>
+                    {val?.student_info?.ds_160_num !== null && (
+                      <>
+                        <label htmlFor="regular-form-1" className="form-label">
+                        DS-160 Number 
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-text">
+                            <Lucide
+                              icon="Home"
+                              className="w-4 h-4 text-slate-500 ml-auto"
+                            />
+                          </div>
+                          <Input
+                            setValue={setValue}
+                            type="text"
+                            name="ds_160_num"
+                            value={val.ds_160_num}
+                            readOnly={true}
+                            className="form-control"
+                            placeholder=" DS-160 Number"
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
             {val.client_form && (

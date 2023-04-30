@@ -60,6 +60,19 @@ class FormController extends BaseController
         return $this->sendResponse($forms, 'Form Retrieve id successfully.');
     }
 
+    private function date_retrieve($date)
+    {
+
+
+        $d = explode('T', $date);
+
+        if (isset($d[0])) {
+            return $d[0];
+        } else {
+            return '';
+        }
+    }
+
     private function single_form($id)
     {
         if (Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2) {
@@ -72,7 +85,7 @@ class FormController extends BaseController
             if ($forms[0]->content) {
                 foreach (json_decode($forms[0]->content) as $key => $v) {
                     if (preg_match('/(date)/', strtolower($key)) && !is_array($v)) {
-                        $val[$key] =  substr($v, 0, -6);
+                        $val[$key] =  $this->date_retrieve($v);
                     } else {
                         $val[$key] = $v;
                     }
@@ -316,7 +329,7 @@ class FormController extends BaseController
             $endpoint = config('app.mail_url') . '/form_submit';
 
 
-            $response = Http::post($endpoint, $data);
+            //  $response = Http::post($endpoint, $data);
 
 
         }

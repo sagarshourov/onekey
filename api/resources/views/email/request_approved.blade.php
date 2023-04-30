@@ -15,6 +15,6 @@
     </tr>
     <tr>
         <td>Click below to login :</td>
-        <td><a href="https://onekeyclient.us/login">Login</a> Or https://onekeyclient.us/login</td>
+        <td><a href="https://onekeyclient.com/login">Login</a> Or https://onekeyclient.com/login</td>
     </tr>
 </table>

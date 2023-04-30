@@ -100,6 +100,16 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     // Route::get('users', 'App\Http\Controllers\Admin\UserController@index');
     Route::get('users', 'App\Http\Controllers\Admin\UserController@all_users');
+
+    Route::get('get_trash', 'App\Http\Controllers\Admin\UserController@get_trash');
+
+
+    Route::post('restore', 'App\Http\Controllers\Admin\UserController@restore');
+    
+    
+
+
+
     Route::get('admin_users', 'App\Http\Controllers\Admin\UserController@admin_users');
 
     Route::post('change_admins', 'App\Http\Controllers\Admin\UserController@change_admins');

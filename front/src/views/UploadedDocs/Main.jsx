@@ -1,21 +1,9 @@
-import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  LoadingIcon,
-  Modal,
-  ModalBody,
-} from "@/base-components";
+import { Lucide, LoadingIcon, Modal, ModalBody } from "@/base-components";
 
 import { useState } from "react";
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { userFileListState } from "../../state/users-atom";
-import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 import axios from "axios";
 import { filter } from "lodash";
@@ -64,8 +52,6 @@ const AllDocs = (props) => {
   };
 
   const handelDelete = async (id) => {
-    
-
     setLoading(true);
 
     try {
@@ -118,7 +104,12 @@ const AllDocs = (props) => {
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
-            <input type="password" name="password" className="hidden" placeholder="secret" />
+              <input
+                type="password"
+                name="password"
+                className="hidden"
+                placeholder="secret"
+              />
               <input
                 onChange={handelSearch.bind(this)}
                 type="text"

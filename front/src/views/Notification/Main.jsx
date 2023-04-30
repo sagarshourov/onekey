@@ -26,6 +26,8 @@ function applySortFilters(array, searchValue) {
 
 }
 
+
+
 const Notifications = (props) => {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 

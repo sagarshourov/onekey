@@ -78,7 +78,7 @@ class UserController extends BaseController
 
 
 
-        if (Auth::user()->is_admin==1) {
+        if (Auth::user()->is_admin == 1) {
             $files =   Files::with(['docTypes', 'user'])->get()->groupBy('user_id');
         } else {
             $files =   Files::with('docTypes')->where('user_id', $user_id)->get();
@@ -141,8 +141,8 @@ class UserController extends BaseController
 
         $endpoint = config('app.mail_url') . '/stage_notes';
 
- 
-        $response = Http::post($endpoint, $user);
+
+        //  $response = Http::post($endpoint, $user);
 
 
         // $noti =  Notifications::create([
@@ -152,17 +152,6 @@ class UserController extends BaseController
         //     'is_read' => 0,
         //     'reciver' => 1
         // ]);
-
-
-
-
-
-
-
-
-
-
-
 
         return $this->sendResponse($users, 'Files retrieved successfully.');
     }
@@ -197,29 +186,20 @@ class UserController extends BaseController
 
         $endpoint = config('app.mail_url') . '/stage_notes';
 
- 
-        $response = Http::post($endpoint, $user);
+
+        //  $response = Http::post($endpoint, $user);
 
 
         return $this->sendResponse($users, 'Saved successfully.');
     }
 
-    public function delete_notes(Request $req){
+    public function delete_notes(Request $req)
+    {
 
         AppStatusNotes::find($req->note_id)->forceDelete();
 
         return $this->sendResponse([], 'Delete Notes successfully.');
-
     }
-
-    
-
-
-
-
-
-
-
 
 
 
@@ -232,9 +212,6 @@ class UserController extends BaseController
         } else {
             $user_id = $id;
         }
-
-
-
 
 
 

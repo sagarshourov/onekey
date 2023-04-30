@@ -15,6 +15,7 @@ import {
   getAdminAppStatus,
   getAllNotificatioin,
   getAssignUsers,
+  getTrash
 } from "../service/admin";
 
 /**
@@ -261,6 +262,26 @@ export const notificationSelect = selector({
       return [];
     }
   },
+});
+
+export const trashSelect = selector({
+  key: "trashSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getTrash();
+      return response.data || [];
+    } catch (error) {
+      console.error(`getTrash -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+
+export const trashListState = atom({
+  key: "trashListState",
+  default: trashSelect,
 });
 
 export const notificationListState = atom({

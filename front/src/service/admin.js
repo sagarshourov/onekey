@@ -5,6 +5,20 @@ const token = localStorage.getItem("token");
 
 const headers = { Authorization: `Bearer ${token}` };
 
+
+
+
+export async function getTrash() {
+  const userApiUrl = getAdmin() + "get_trash";
+  // ("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
 export async function getAssignUsers(id) {
   const userApiUrl = getAdmin() + "assign_users/" + id;
   // ("userApiUrl", userApiUrl);
