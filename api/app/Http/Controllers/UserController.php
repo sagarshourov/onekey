@@ -133,16 +133,19 @@ class UserController extends BaseController
         $email = $user->email;
 
 
-        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
-            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
-            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
-        });
 
 
         $endpoint = config('app.mail_url') . '/stage_notes';
 
 
-        //  $response = Http::post($endpoint, $user);
+        $response = Http::post($endpoint, $user);
+
+
+        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
+            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
+            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
+        });
+
 
 
         // $noti =  Notifications::create([
@@ -177,18 +180,18 @@ class UserController extends BaseController
         $email = $user->email;
 
 
-        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
-            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
-            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
-        });
 
 
 
         $endpoint = config('app.mail_url') . '/stage_notes';
 
 
-        //  $response = Http::post($endpoint, $user);
+        $response = Http::post($endpoint, $user);
 
+        Mail::send('email.stage_notes', ['user' => $user->first_name], function ($message) use ($email) {
+            $message->to($email, 'OneKey Client Portal')->subject('Your Case Status');
+            $message->from("info@onekeyclient.us", 'OneKey Client Portal');
+        });
 
         return $this->sendResponse($users, 'Saved successfully.');
     }

@@ -372,7 +372,7 @@ class UserController extends BaseController
             $data['password'] = $password;
 
 
-            //$response = Http::post($endpoint, $data);
+            $response = Http::post($endpoint, $data);
 
         }
 

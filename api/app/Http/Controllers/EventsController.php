@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Http;
+
 class EventsController extends BaseController
 {
     /**
@@ -21,15 +22,20 @@ class EventsController extends BaseController
 
     public function all_events()
     {
+
         $assign = $this->assignUsers();
+
         $user_id = Auth::user()->id;
 
+
         if (Auth::user()->is_admin == 1) {
+
             // if ($assign) {
             //     $users = array('events' => Events::select('user_id', 'notes', 'note_date')->with(['users'])->whereIn('user_id', $assign)->get(), 'users' => User::whereIn('id', $assign)->get(['id', 'first_name', 'last_name', 'email']));
             // } else {
             //     $users = array('events' => Events::select('user_id', 'notes', 'note_date')->with(['users'])->get(), 'users' => User::get(['id', 'first_name', 'last_name', 'email']));
             // }
+
 
             $users = array('events' => Events::select('id', 'user_id', 'notes', 'note_date')->with(['users'])->orderBy('id', 'desc')->get(), 'users' => User::get(['id', 'first_name', 'last_name', 'email']));
 
@@ -37,6 +43,10 @@ class EventsController extends BaseController
         } else {
             $users =   Events::select('user_id', 'notes', 'note_date')->with(['users'])->where('user_id', $user_id)->get();
         }
+
+
+
+
 
         return $this->sendResponse($users, 'Events retrieved successfully.');
     }
@@ -87,10 +97,6 @@ class EventsController extends BaseController
 
 
         if ($input['notification'] == 1) {
-            Mail::send('email.calender_notes', $array_data, function ($message) use ($email, $name) {
-                $message->to($email, $name)->subject('Calender Notes');
-                $message->from("info@onekeyclient.us", 'OneKeyClient');
-            });
 
 
             $endpoint = config('app.mail_url') . '/calender_notes';
@@ -99,10 +105,13 @@ class EventsController extends BaseController
             $data['email'] = $email;
             $data['array_data'] = $array_data;
 
- 
-         //   $response = Http::post($endpoint, $data);
 
+            $response = Http::post($endpoint, $data);
 
+            Mail::send('email.calender_notes', $array_data, function ($message) use ($email, $name) {
+                $message->to($email, $name)->subject('Calender Notes');
+                $message->from("info@onekeyclient.us", 'OneKeyClient');
+            });
         }
 
 

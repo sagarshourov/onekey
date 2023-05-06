@@ -37,7 +37,7 @@ class AuthController extends BaseController
         $data['email'] = $email;
         $data['link'] =    $link;
 
-      //  $response = Http::post($endpoint . '/reset_password', $data);
+        $response = Http::post($endpoint . '/reset_password', $data);
 
 
         try {
@@ -161,6 +161,16 @@ class AuthController extends BaseController
 
 
 
+
+
+
+
+        $endpoint = config('app.mail_url') . '/new_user';
+
+
+        $response = Http::post($endpoint, $user);
+
+
         Mail::send('email.new_user', ['user' => $user], function ($message) {
             $message->to("info@onekeyclient.us", 'Admin')->subject('New User Register Request Received!');
             $message->from("info@onekeyclient.us", 'Admin');
@@ -168,14 +178,7 @@ class AuthController extends BaseController
 
 
 
-        $endpoint = config('app.mail_url') . '/new_user';
-
- 
-       // $response = Http::post($endpoint, $user);
-
-
-
-      //  return   $response;
+        //  return   $response;
 
         return $this->sendResponse(['success'], 'Your registration has been received. Please wait and your login details will be emailed to you within 24 hours. Please DO NOT REGISTER AGAIN!');
 

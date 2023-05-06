@@ -329,7 +329,7 @@ class FormController extends BaseController
             $endpoint = config('app.mail_url') . '/form_submit';
 
 
-            //  $response = Http::post($endpoint, $data);
+              $response = Http::post($endpoint, $data);
 
 
         }
