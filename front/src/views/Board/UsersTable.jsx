@@ -1,7 +1,7 @@
 import { Lucide, Modal, ModalBody } from "@/base-components";
 
 import { useState } from "react";
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getAdmin } from "../../configuration";
 import axios from "axios";
 
 import { Link } from "react-router-dom";

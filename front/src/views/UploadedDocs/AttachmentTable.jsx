@@ -1,6 +1,4 @@
 import { Lucide } from "@/base-components";
-import * as $_ from "lodash";
-import classnames from "classnames";
 import { getBaseApi } from "../../configuration";
 
 const formatDate = (dat) => {

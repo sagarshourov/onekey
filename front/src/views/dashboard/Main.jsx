@@ -2,7 +2,7 @@ import { Lucide, LoadingIcon, Dropzone, Input } from "@/base-components";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { getBaseApi } from "../../configuration";
 import { userSelect } from "../../state/users-atom";
 const token = localStorage.getItem("token");

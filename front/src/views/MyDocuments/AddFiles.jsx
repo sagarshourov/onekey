@@ -1,15 +1,5 @@
 import {
-  Lucide,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  DropdownContent,
-  DropdownItem,
-  Modal,
-  ModalBody,
-  TabGroup,
-  Dropzone,
+  Lucide
 } from "@/base-components";
 import { useRecoilStateLoadable, useRecoilState } from "recoil";
 import FormContent from "./FormContent";
@@ -17,7 +7,7 @@ import FormContent from "./FormContent";
 import { allUserListState } from "../../state/admin-atom";
 import { adminFileListState } from "../../state/users-atom";
 
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 const AddFiles = (props) => {
   const [usersData, setUserData] = useRecoilStateLoadable(allUserListState);
 

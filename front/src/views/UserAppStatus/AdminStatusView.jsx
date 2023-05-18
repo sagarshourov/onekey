@@ -10,7 +10,7 @@ import axios from "axios";
 import "./styles.css";
 import { useRecoilValue } from "recoil";
 
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getAdmin } from "../../configuration";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { appStatusSlect } from "../../state/admin-atom";

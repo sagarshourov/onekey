@@ -1,13 +1,12 @@
-import { createElement, useRef, useState, createRef, useEffect } from "react";
+import { useState, createRef } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Lucide, Alert } from "@/base-components";
 import { getBaseApi } from "../../configuration";
-import dom from "@left4code/tw-starter/dist/js/dom";
-
-const token = localStorage.getItem("token");
 import { useRecoilStateLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
+
+const token = localStorage.getItem("token");
 const headers = {
   Authorization: `Bearer ${token}`,
   ContentType: "application/json",

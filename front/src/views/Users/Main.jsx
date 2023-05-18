@@ -2,11 +2,9 @@ import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilValueLoadable, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import {
-  allUserListState,
-  allstudentListState,
-  allFormListSelect,
+  allUserListState
 } from "../../state/admin-atom";
 import axios from "axios";
 import UsersTable from "./UsersTable";

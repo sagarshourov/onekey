@@ -4,11 +4,10 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { userFileListState } from "../../state/users-atom";
 
-import { getBaseApi } from "../../configuration";
-
-const token = localStorage.getItem("token");
 import AttachmentTable from "./AttachmentTable";
 import { useParams } from "react-router-dom";
+
+const token = localStorage.getItem("token");
 
 const headers = {
   Authorization: `Bearer ${token}`,

@@ -6,9 +6,8 @@ import {
 
 import { useState } from "react";
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { taskListState } from "../../state/admin-atom";
-import Pagination from "./Pagination";
 import ListTable from "./ListTable";
 
 import { filter } from "lodash";

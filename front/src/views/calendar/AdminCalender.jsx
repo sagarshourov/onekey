@@ -6,20 +6,17 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Litepicker,
-  TomSelect,
-  Alert,
+  Litepicker, Alert,
   Modal,
-  ModalBody,
+  ModalBody
 } from "@/base-components";
 import Calendar from "@/components/calendar/Main";
 import { LoadingIcon } from "@/base-components";
-import dom from "@left4code/tw-starter/dist/js/dom";
 import axios from "axios";
 import { getAdmin } from "../../configuration";
 import { useState } from "react";
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { eventListState } from "../../state/events-atom";
 const token = localStorage.getItem("token");
 const headers = {

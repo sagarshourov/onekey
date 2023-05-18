@@ -2,7 +2,7 @@ import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilValueLoadable, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import {
   trashListState
 } from "../../state/admin-atom";

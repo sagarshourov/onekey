@@ -1,6 +1,5 @@
-import { Lucide, TomSelect, Tippy } from "@/base-components";
+import { Lucide } from "@/base-components";
 
-import * as $_ from "lodash";
 import { useState } from "react";
 
 function Main() {

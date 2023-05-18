@@ -1,11 +1,10 @@
-import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
+import { Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
 import axios from "axios";
-import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
 const token = localStorage.getItem("token");

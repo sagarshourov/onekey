@@ -2,18 +2,15 @@ import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 import axios from "axios";
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import {
-  allstudentListState,
-  allUniverstyState,
-  visaTypeState,
+  allstudentListState
 } from "../../state/admin-atom";
-import Pagination from "./Pagination";
 import UsersTable from "./UsersTable";
 
 import { filter } from "lodash";
 
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getBaseApi } from "../../configuration";
 import "./styles.css";
 function applySortFilters(array, searchValue) {
   return filter(array, (_items) => {

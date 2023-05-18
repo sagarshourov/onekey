@@ -1,27 +1,18 @@
 import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  LoadingIcon,
+  Lucide, LoadingIcon,
   Modal,
-  ModalBody,
+  ModalBody
 } from "@/base-components";
 
 import { useState } from "react";
 
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { adminFileListState } from "../../state/users-atom";
-import Pagination from "./Pagination";
 import AttachmentTable from "./AttachmentTable";
 import axios from "axios";
 import { filter } from "lodash";
 import { getBaseApi } from "../../configuration";
 
-import { Link } from "react-router-dom";
 
 const token = localStorage.getItem("token");
 

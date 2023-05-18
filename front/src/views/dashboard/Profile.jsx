@@ -520,7 +520,7 @@ const UserMain = () => {
                   <label className="form-label"> Score and Information </label>
                 </div> */}
                 {!val.client_form.pleaseCheckTheEnglishTestScoresIfYouHaveAny
-                  .none ? (
+                  ?.none ? (
                   <div className="overflow-x-auto">
                     <table className="table table-striped">
                       <thead>
@@ -595,9 +595,7 @@ const UserMain = () => {
                       </tbody>
                     </table>
                   </div>
-                ) : val?.client_form
-                    ?.pleaseCheckTheEnglishTestScoresIfYouHaveAny
-                    .iWantToTakeItInTheFuture ? (
+                ) : val?.client_form?.pleaseCheckTheEnglishTestScoresIfYouHaveAny?.iWantToTakeItInTheFuture ? (
                   <h3 className="text-lg text-center">
                     {" "}
                     I want to take it in the future
