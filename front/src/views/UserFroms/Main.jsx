@@ -43,7 +43,7 @@ function Main() {
   let { id } = useParams();
   const [formData, setFormData] = useRecoilStateLoadable(formDatas(id));
 
-  //console.log("formData", formData);
+  console.log("formData", formData);
 
   const [loading, setLoading] = useState(false);
 
@@ -132,7 +132,7 @@ function Main() {
       <div className="col-span-12 mt-6">
         <div className="intro-y block sm:flex items-center h-10">
           <h2 className="text-lg font-medium truncate mr-5">
-            {formData?.title}
+          {formData.state == "hasValue" ? formData?.contents?.title : ""}
           </h2>
         </div>
       </div>

@@ -192,17 +192,10 @@ function Router() {
         },
 
         
-
-
         {
           path: "/form_view/:id/:u_id",
           element: <ViewUserDataForm />,
         },
-
-
-        
-
-
 
         {
           path: "/forms/all",

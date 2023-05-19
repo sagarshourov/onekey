@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Form } from "react-formio";
 import { useRecoilValue } from "recoil";
@@ -7,13 +6,30 @@ import { useParams } from "react-router-dom";
 
 import "./view_style.css";
 
-const AllForms = (props) => {
+const ViewUserDataForm = (props) => {
   let { id, u_id } = useParams();
-
 
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
-  const formData = useRecoilValue(formDataUserSelect({id, u_id}));
+  const formData = useRecoilValue(formDataUserSelect({ id, u_id }));
+  let clientData = [];
+
+  let clientCon = [];
+  if (parseInt(id) === 6) {
+    clientData = useRecoilValue(formDataUserSelect({ id: 1, u_id }));
+
+    if (clientData.con) {
+      clientCon = {
+        display: "wizard",
+        components: [
+          clientData.con.components[1],
+          clientData.con.components[2],
+        ],
+      };
+      console.log("client data", clientCon);
+    }
+  }
+
   const [rowCount, setRowCount] = useState(10);
 
   const [search, setSearch] = useState("");
@@ -28,17 +44,18 @@ const AllForms = (props) => {
     setSearch(e.target.value);
   };
 
- // console.log('formdata',formData);
+  //  console.log("formdata", formData);
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">Form View</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">{formData?.title}</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"></div>
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {formData.val && (
+          {
+            //formData.val && (
             <>
               {/* <FormGrid
                 forms={{
@@ -57,7 +74,8 @@ const AllForms = (props) => {
                   getSubmissions={getSubmissions}
                 /> */}
             </>
-          )}
+            // )
+          }
 
           {/* {formData && (
               <FormGrid
@@ -84,6 +102,20 @@ const AllForms = (props) => {
               form={formData.con}
             />
           )}
+
+          {Object.keys(clientCon).length > 0 && (
+            <Form
+              options={{
+                readOnly: false,
+                renderMode: "flat",
+                buttonSettings: {
+                  showSubmit: false,
+                },
+              }}
+              submission={{ data: clientData.val }}
+              form={clientCon}
+            />
+          )}
         </div>
         {/* END: Data List */}
       </div>
@@ -91,4 +123,4 @@ const AllForms = (props) => {
   );
 };
 
-export default AllForms;
+export default ViewUserDataForm;
