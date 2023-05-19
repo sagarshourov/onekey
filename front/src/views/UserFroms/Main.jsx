@@ -3,12 +3,12 @@ import { Lucide, Alert, LoadingIcon } from "@/base-components";
 import { useState } from "react";
 
 import { Form } from "react-formio";
-import { useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
-import { formDataSelect, formDatas } from "../../state/admin-atom";
+import { formDatas } from "../../state/admin-atom";
 
 function clickEvent(ind) {
   //document.getElementsByTagName('button')[].click();
@@ -24,11 +24,9 @@ function clickEvent(ind) {
     // iterate over all child nodes
     childern.forEach((li, index) => {
       //console.log('li',li);
-      console.log("counter", counter);
+
       if (li.innerText) {
         //li.click();
-
-        console.log("in counter", counter);
 
         counter++;
       }
@@ -59,8 +57,7 @@ function Main() {
 
     let last_step = false;
 
-
-   // console.log('submission',e.submission);
+    // console.log('submission',e.submission);
 
     if (e.submission) {
       data = e.submission.data;
@@ -94,7 +91,7 @@ function Main() {
         //setTimeout(clickEvent(8), 5000);
 
         console.log("page count", page);
-       
+
         setPage(page + 1);
         clickEvent(page + 1);
         if (last_step) {
@@ -102,7 +99,6 @@ function Main() {
 
           setTimeout(function () {
             setDismiss(false);
-
 
             window.location.reload();
 

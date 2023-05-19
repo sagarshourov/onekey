@@ -4,7 +4,6 @@ import { useState } from "react";
 import { getAdmin } from "../../configuration";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
 import { helper } from "@/utils/helper";
 const formatDate = (dat) => {

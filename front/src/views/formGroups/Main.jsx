@@ -1,15 +1,7 @@
 import { Lucide } from "@/base-components";
 
-import { useState } from "react";
 
 function Main() {
-  const [categories, setCategories] = useState([
-    "Photography",
-    "christianbale@left4code.com",
-    "angelinajolie@left4code.com",
-    "brucewillis@left4code.com",
-    "nicolascage@left4code.com",
-  ]);
 
   return (
     <>

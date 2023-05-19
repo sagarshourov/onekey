@@ -1,10 +1,8 @@
-import { Lucide, TomSelect, Tippy } from "@/base-components";
 
-import * as $_ from "lodash";
 import { useState, useEffect } from "react";
 
-import { Form, FormBuilder } from "react-formio";
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { FormBuilder } from "react-formio";
+import { useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 
 import "./styles.css";
@@ -63,7 +61,7 @@ function Main() {
 
     setType(e.target.value);
   };
-  const handeltitle = (e) => {
+  const handelTitle = (e) => {
     setTitle(e.target.value);
   };
 
@@ -85,7 +83,7 @@ function Main() {
               {post.state === "hasValue" && (
                 <input
                   type="text"
-                  onChange={(e) => handeltitle(e)}
+                  onChange={(e) => handelTitle(e)}
                   className="form-control form-control-rounded py-3"
                   placeholder="Form Title"
                   defaultValue={title}

@@ -10,7 +10,7 @@ import {
 } from "@/base-components";
 
 import { useState } from "react";
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getAdmin } from "../../configuration";
 import axios from "axios";
 
 import { useRecoilValueLoadable } from "recoil";

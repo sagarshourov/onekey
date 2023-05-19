@@ -1,23 +1,9 @@
-import {
-  Lucide,
-  Tippy,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownContent,
-  DropdownItem,
-  Modal,
-  ModalBody,
-} from "@/base-components";
 
 import { useState } from "react";
-import { Form, FormGrid, SubmissionGrid } from "react-formio";
-import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { Form } from "react-formio";
+import { useRecoilValue } from "recoil";
 import { formDataSelect } from "../../state/admin-atom";
-import Pagination from "./Pagination";
-import UsersTable from "./ViewTable";
 import { useParams } from "react-router-dom";
-import { filter } from "lodash";
 
 import "./view_style.css";
 

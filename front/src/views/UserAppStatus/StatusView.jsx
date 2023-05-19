@@ -1,9 +1,8 @@
 import {
-  Lucide,
   AccordionGroup,
   AccordionItem,
   Accordion,
-  AccordionPanel,
+  AccordionPanel
 } from "@/base-components";
 import "./styles.css";
 import { useRecoilStateLoadable } from "recoil";

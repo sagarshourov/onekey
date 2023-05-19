@@ -23,8 +23,8 @@ const checkMain = (u_status, status, id) => {
     }
   });
 
-  console.log("count", count);
-  console.log("status", status);
+  // console.log("count", count);
+  // console.log("status", status);
   return status.sub_status.length <= count ? true : false;
 };
 

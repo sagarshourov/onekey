@@ -7,7 +7,7 @@ const formatDate = (dat) => {
 };
 
 const UsersTable = (props) => {
-  const { users, rowCount , setDeleteConfirmationModal , setSelectId} = props;
+  const { users, rowCount, setDeleteConfirmationModal, setSelectId } = props;
 
   return (
     <table className="table table-report -mt-2">
@@ -17,7 +17,6 @@ const UsersTable = (props) => {
           <th className="whitespace-nowrap">Document Title</th>
           <th className=" whitespace-nowrap">Document Type</th>
           <th className="text-center whitespace-nowrap">Created At</th>
-       
         </tr>
       </thead>
       <tbody>
@@ -39,16 +38,13 @@ const UsersTable = (props) => {
                 <div className="flex justify-center items-center">
                   <a
                     className="flex items-center text-primary"
-                    href={getBaseApi()+'dwonload/'+user.file_path}
-
+                    href={getBaseApi() + "dwonload/" + user.file_path}
                     target="_blank"
-                   
                   >
                     <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download
                   </a>
                 </div>
               </td>
-            
             </tr>
           );
         })}

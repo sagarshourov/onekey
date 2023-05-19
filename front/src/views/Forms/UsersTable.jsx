@@ -1,8 +1,6 @@
 import { Lucide } from "@/base-components";
-import * as $_ from "lodash";
-import classnames from "classnames";
 import { useState } from "react";
-import { getAdmin, getBaseApi } from "../../configuration";
+import { getAdmin } from "../../configuration";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const formatDate = (dat) => {

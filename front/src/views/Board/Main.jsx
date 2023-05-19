@@ -102,9 +102,6 @@ const Users = (props) => {
     }
 
 
-  
-
-  
     if (formdata.password !== formdata.cpassword) {
       alert("Password Not matching !");
 
