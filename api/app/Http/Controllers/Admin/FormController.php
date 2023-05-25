@@ -314,10 +314,10 @@ class FormController extends BaseController
             ]);
             $assignAmin = $this->assignAdminEmail($user_id);
 
-            Mail::send('email.form_submit', ['user' => $user, 'form' => $input['title']], function ($message) use ($assignAmin) {
-                $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
-                $message->from("info@onekeyclient.us", 'Admin');
-            });
+            // Mail::send('email.form_submit', ['user' => $user, 'form' => $input['title']], function ($message) use ($assignAmin) {
+            //     $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
+            //     $message->from("info@onekeyclient.us", 'Admin');
+            // });
 
 
             $data['user'] = $user;
@@ -326,10 +326,10 @@ class FormController extends BaseController
             $data['assignAmin'] =   $assignAmin;
 
 
-            $endpoint = config('app.mail_url') . '/form_submit';
+            // $endpoint = config('app.mail_url') . '/form_submit';
 
 
-              $response = Http::post($endpoint, $data);
+            //   $response = Http::post($endpoint, $data);
 
 
         }

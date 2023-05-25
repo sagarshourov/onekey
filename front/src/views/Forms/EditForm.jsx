@@ -1,7 +1,13 @@
 
 import { useState, useEffect } from "react";
 
-import { FormBuilder } from "react-formio";
+//import { FormBuilder } from "react-formio";
+
+import {FormBuilder} from '@formio/react';
+
+//Formio.setBaseUrl('/');
+
+
 import { useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 
@@ -10,7 +16,11 @@ import axios from "axios";
 import { getAdmin } from "../../configuration";
 
 import { editFormState } from "../../state/admin-atom";
+
+
 import "formiojs/dist/formio.full.min.css";
+
+
 function Main() {
   let { id } = useParams();
 

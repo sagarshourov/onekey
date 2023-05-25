@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
+use App\Http\Controllers\ResumeController;
 
 
 
@@ -49,6 +49,18 @@ Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_passw
 //Route::get('has/{pass}', 'App\Http\Controllers\UserController@has_pass');
 
 //Route::post('file_upload', 'App\Http\Controllers\FileController@file_upload');
+
+
+
+
+
+//Route::resource('resume_upload', ResumeController::class);
+
+
+Route::get('resume_upload','App\Http\Controllers\ResumeController@index');
+
+Route::post('resume_upload','App\Http\Controllers\ResumeController@store');
+Route::delete('resume_upload','App\Http\Controllers\ResumeController@destroy');
 
 Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], function () {
 

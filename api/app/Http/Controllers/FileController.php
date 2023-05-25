@@ -76,6 +76,16 @@ class FileController extends BaseController
     }
 
 
+    public function resume_upload(Request $request)
+    {
+        $path = $request->file('file')->store('resume');
+
+
+        $arr['baseUrl'] = 'http://127.0.0.1:8000/api/file/' . $path;
+
+        return $this->sendResponse($arr, 'Resume file successfully.');
+    }
+
 
     public function file_upload(Request $request)
     {
@@ -128,7 +138,7 @@ class FileController extends BaseController
                 $file->save();
                 $assignAmin = $this->assignAdminEmail($user_id);
 
-              
+
 
                 $data['user'] = $user;
                 $data['title'] = $input['title'];
@@ -148,7 +158,7 @@ class FileController extends BaseController
                 });
 
 
-               // return $response;
+                // return $response;
             }
             return $this->sendResponse($this->userfiles(), 'User file uploaded successfully.');
         }

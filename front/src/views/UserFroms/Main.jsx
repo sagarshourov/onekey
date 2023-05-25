@@ -2,13 +2,18 @@ import { Lucide, Alert, LoadingIcon } from "@/base-components";
 
 import { useState } from "react";
 
-import { Form } from "react-formio";
+//import { Form } from "react-formio";
+import { Form } from "@formio/react";
+
 import { useRecoilStateLoadable } from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
+import "formiojs/dist/formio.full.min.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
 import { formDatas } from "../../state/admin-atom";
+
+//Formio.setBaseUrl('/');
 
 function clickEvent(ind) {
   //document.getElementsByTagName('button')[].click();
@@ -31,7 +36,7 @@ function clickEvent(ind) {
         counter++;
       }
       if (counter == ind) {
-        li.firstElementChild.click();
+        li.firstElementChild && li.firstElementChild.click();
       }
     });
   }, 500);
@@ -43,13 +48,17 @@ function Main() {
   let { id } = useParams();
   const [formData, setFormData] = useRecoilStateLoadable(formDatas(id));
 
-  console.log("formData", formData);
+  //console.log("formData", formData);
 
   const [loading, setLoading] = useState(false);
 
   const [dismiss, setDismiss] = useState(false);
 
+  const [file, setFile] = useState([]);
+
   const [page, setPage] = useState(1);
+
+  const [data, setData] = useState([]);
 
   const handleSubmitData = async (e) => {
     console.log("submit form", e);
@@ -61,9 +70,16 @@ function Main() {
 
     if (e.submission) {
       data = e.submission.data;
+
+      data.file && setFile(data.file);
+
+      //console.log('data',data);
     } else {
       data = e.data;
       last_step = true;
+      // data.file = file;
+
+      // console.log('not data',data);
     }
 
     setLoading(true);
@@ -90,7 +106,7 @@ function Main() {
       if (response?.data?.success) {
         //setTimeout(clickEvent(8), 5000);
 
-        console.log("page count", page);
+        //  console.log("page count", page);
 
         setPage(page + 1);
         clickEvent(page + 1);
@@ -100,7 +116,7 @@ function Main() {
           setTimeout(function () {
             setDismiss(false);
 
-            window.location.reload();
+            //window.location.reload();
 
             // setFormData(response.data.data);
             // clickEvent(1);
@@ -118,8 +134,57 @@ function Main() {
     }
   };
 
-  const onChange = (e) => {
-    console.log(e);
+  const onChange = async (e) => {
+    // console.log("on change", e);
+//return;
+    // if (
+    //   e.changed &&
+    //   e.changed.value !== "no" &&
+    //   e.changed.component.key === "file"
+    // ) {
+    //   console.log("onchange", e);
+
+    //   setLoading(true);
+    //   const LOGIN_URL = getBaseApi() + "submit_form";
+    //   const token = localStorage.getItem("token");
+    //   const headers = {
+    //     Authorization: `Bearer ${token}`,
+    //     ContentType: "application/json",
+    //   };
+    //   try {
+    //     if (e.data.file.length === 0) {
+    //       return;
+    //     }
+
+    //     const response = await axios.post(
+    //       LOGIN_URL,
+    //       {
+    //         form_id: id,
+    //         data: e.data,
+    //         title: formData.title,
+    //         last_step: false,
+    //       },
+    //       {
+    //         headers,
+    //       }
+    //     );
+
+    //     if (response?.data?.success) {
+    //       setPage(page);
+    //       clickEvent(page);
+
+    //       setLoading(false);
+    //     }
+    //   } catch (error) {
+    //     console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+    //     setLoading(false);
+    //   }
+    // }
+
+    //e.data &&  setData(e.data);
+
+    // e.data.file && setFile(e.data.file);
+    //console.log(e);
   };
 
   const PrevPage = (e) => {
@@ -132,14 +197,14 @@ function Main() {
       <div className="col-span-12 mt-6">
         <div className="intro-y block sm:flex items-center h-10">
           <h2 className="text-lg font-medium truncate mr-5">
-          {formData.state == "hasValue" ? formData?.contents?.title : ""}
+            {formData.state == "hasValue" ? formData?.contents?.title : ""}
           </h2>
         </div>
       </div>
 
       <div className="relative box  border-t border-slate-200/60 dark:border-darkmode-400">
         {loading && (
-          <div className="h-full w-full bg-gray-50/75 grid  absolute z-40">
+          <div className="h-full w-full bg-gray-50 grid  absolute z-40">
             <div className="w-24 h-24 place-self-center">
               <LoadingIcon
                 icon="three-dots"
@@ -175,9 +240,9 @@ function Main() {
               submission={{
                 data: formData.contents.val,
               }}
-              onSubmit={(e) => handleSubmitData(e)}
+              onSubmit={handleSubmitData}
               onNextPage={handleSubmitData}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
               onPrevPage={(e) => PrevPage(e)}
             />
           )}

@@ -695,6 +695,17 @@
     fuse.js "^3.4.5"
     redux "^4.0.4"
 
+"@formio/react@^5.2.4-rc.1":
+  version "5.2.4-rc.1"
+  resolved "https://registry.yarnpkg.com/@formio/react/-/react-5.2.4-rc.1.tgz#252c89a3176213cd4cc3771f5ca9845de1c22cb6"
+  integrity sha512-I/dvmRuQr0/I0MEZlU/5zDp1jNhFkOcwv3Ai5fxyfmjyJDzC+3J/OyPwQL92Njbl5ogTlfo4/frtSHMXcrJtow==
+  dependencies:
+    babel-polyfill "^6.26.0"
+    core-js "^3.21.1"
+    eventemitter2 "^6.4.5"
+    lodash "^4.17.21"
+    prop-types "^15.8.1"
+
 "@formio/semantic@^2.6.0":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@formio/semantic/-/semantic-2.6.0.tgz#b506de32b6d8ec3fecb3ce6c59eca846c99ea858"
@@ -1625,7 +1636,7 @@ eventemitter2@^5.0.1:
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-5.0.1.tgz#6197a095d5fb6b57e8942f6fd7eaad63a09c9452"
   integrity sha512-5EM1GHXycJBS6mauYAbVKT1cVs7POKWb2NXD4Vyt8dDqeZa7LaDK1/sjtL+Zb0lzTpSNil4596Dyu97hz37QLg==
 
-eventemitter2@^6.4.3:
+eventemitter2@^6.4.3, eventemitter2@^6.4.5:
   version "6.4.9"
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.9.tgz#41f2750781b4230ed58827bc119d293471ecb125"
   integrity sha512-JEPTiaOt9f04oa6NOkc4aH+nVp5I3wEjpHbIPqfgCdD5v5bUzy7xQqwcVO2aDQgOWhI28da57HksMrzK9HlRxg==
