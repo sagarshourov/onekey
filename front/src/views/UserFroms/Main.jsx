@@ -61,7 +61,7 @@ function Main() {
   const [data, setData] = useState([]);
 
   const handleSubmitData = async (e) => {
-    console.log("submit form", e);
+   // console.log("submit form", e);
     let data = {};
 
     let last_step = false;
@@ -116,7 +116,7 @@ function Main() {
           setTimeout(function () {
             setDismiss(false);
 
-            //window.location.reload();
+            window.location.reload();
 
             // setFormData(response.data.data);
             // clickEvent(1);
