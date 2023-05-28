@@ -277,6 +277,10 @@ function Router() {
           element: <StudentInfo />,
         },
         {
+          path: "/form_view/:id/:u_id",
+          element: <ViewUserDataForm />,
+        },
+        {
           path: "/files",
           element: <AdminUploadedDocs />,
         },

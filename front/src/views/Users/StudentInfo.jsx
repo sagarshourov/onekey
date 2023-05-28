@@ -13,7 +13,7 @@ const StudentModal = (props) => {
   } = props;
   const [loading, setLoading] = useState(false);
 
-  console.log("s", fdata.package);
+  console.log("d", fdata);
 
   const updateInformation = async (e) => {
     console.log(e);
@@ -38,6 +38,8 @@ const StudentModal = (props) => {
       user_id: parseInt(e.target.elements.user_id.value),
       us_consultant: e.target.elements.us_consultant.value,
       ds_160_num: e.target.elements.ds_160_num.value,
+      applying_for: e.target.elements.applying_for.value,
+      intended: e.target.elements.intended.value,
     };
     e.preventDefault();
     //setFdata((fdata) => ({ ...fdata, user_id: userId }));
@@ -102,12 +104,20 @@ const StudentModal = (props) => {
                 <div className="input-group-text">
                   <Lucide icon="Award" className="w-4 h-4 mt-2" />
                 </div>
-                {fdata.package && (
+                {fdata.package !== 0 ? (
                   <select
                     name="package"
                     defaultValue={fdata.package}
                     className=" py-4 form-control"
                   >
+                    <option>Select ... </option>
+                    <option value="1">Other Package </option>
+                    <option value="2">Platinum Package </option>
+                    <option value="3">Gold Package </option>
+                    <option value="4">Silver Package </option>
+                  </select>
+                ) : (
+                  <select name="package" className=" py-4 form-control">
                     <option>Select ... </option>
                     <option value="1">Other Package </option>
                     <option value="2">Platinum Package </option>
@@ -221,8 +231,60 @@ const StudentModal = (props) => {
                   type="text"
                   name="ds_160_num"
                   className=" py-4 form-control"
-                  defaultValue={fdata.ds_160_num}
+                  defaultValue={fdata.ds_160_num ? fdata.ds_160_num : ""}
                 />
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <label htmlFor="vertical-form-1" className="form-label">
+                Applying for
+              </label>
+
+              <div className="input-group w-full">
+                <div className="input-group-text">
+                  <Lucide icon="GitPullRequest" className="w-5 h-4 mt-2" />
+                </div>
+
+                <input
+                  type="text"
+                  name="applying_for"
+                  className=" py-4 form-control"
+                  defaultValue={fdata.applying_for ? fdata.applying_for : ""}
+                />
+              </div>
+            </div>
+            <div className="mt-5">
+              <label htmlFor="vertical-form-1" className="form-label">
+                Intended Level
+              </label>
+
+              <div className="input-group w-full">
+                <div className="input-group-text">
+                  <Lucide icon="GitPullRequest" className="w-5 h-4 mt-2" />
+                </div>
+
+                {fdata.intended ? (
+                  <select
+                    name="intended"
+                    defaultValue={fdata.intended ? fdata.intended : 0}
+                    className=" py-4 form-control"
+                  >
+                    <option>Select ... </option>
+                    <option value="1"> Associate Degree </option>
+                    <option value="2">Bachelor Degree </option>
+                    <option value="3">Master Degree </option>
+                    <option value="4">Ph.D. Certificate </option>
+                  </select>
+                ) : (
+                  <select name="intended" className=" py-4 form-control">
+                    <option>Select ... </option>
+                    <option value="1"> Associate Degree </option>
+                    <option value="2">Bachelor Degree </option>
+                    <option value="3">Master Degree </option>
+                    <option value="4">Ph.D. Certificate </option>
+                  </select>
+                )}
               </div>
             </div>
           </div>

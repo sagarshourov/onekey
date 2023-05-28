@@ -1,6 +1,6 @@
 import { Lucide, Alert, LoadingIcon } from "@/base-components";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //import { Form } from "react-formio";
 import { Form } from "@formio/react";
@@ -14,35 +14,6 @@ import axios from "axios";
 import { formDatas } from "../../state/admin-atom";
 
 //Formio.setBaseUrl('/');
-
-function clickEvent(ind) {
-  //document.getElementsByTagName('button')[].click();
-
-  setTimeout(function () {
-    // console.log('click event');
-    const ul = document.querySelector(".pagination");
-
-    const childern = ul.childNodes;
-
-    let counter = 0;
-
-    // iterate over all child nodes
-    childern.forEach((li, index) => {
-      //console.log('li',li);
-
-      if (li.innerText) {
-        //li.click();
-
-        counter++;
-      }
-      if (counter == ind) {
-        li.firstElementChild && li.firstElementChild.click();
-      }
-    });
-  }, 500);
-
-  // console.log('click event');
-}
 
 function Main() {
   let { id } = useParams();
@@ -60,8 +31,55 @@ function Main() {
 
   const [data, setData] = useState([]);
 
+  const onFocus = (e) => {
+    console.log("on focus", e);
+  };
+
+  useEffect(() => {
+    window.addEventListener("focus", onFocus);
+
+    onFocus();
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener("focus", onFocus);
+    };
+  }, []);
+
+  const clickEvent = (ind) => {
+    //document.getElementsByTagName('button')[].click();
+
+    setTimeout(function () {
+      console.log("click event", ind);
+      const ul = document.querySelector(".pagination");
+
+      const childern = ul.childNodes;
+
+      let counter = 0;
+
+      // iterate over all child nodes
+      childern.forEach((li, index) => {
+        //console.log('li',li);
+
+        if (li.innerText) {
+          //li.click();
+
+          counter++;
+        }
+        if (counter === ind) {
+          li.firstElementChild && li.firstElementChild.click();
+
+          setLoading(false);
+
+          return;
+        }
+      });
+    }, 500);
+
+    // console.log('click event');
+  };
+
   const handleSubmitData = async (e) => {
-   // console.log("submit form", e);
+    // console.log("submit form", e);
     let data = {};
 
     let last_step = false;
@@ -81,7 +99,7 @@ function Main() {
 
       // console.log('not data',data);
     }
-
+    setPage(page + 1);
     setLoading(true);
     const LOGIN_URL = getBaseApi() + "submit_form";
     const token = localStorage.getItem("token");
@@ -108,11 +126,9 @@ function Main() {
 
         //  console.log("page count", page);
 
-        setPage(page + 1);
-        clickEvent(page + 1);
         if (last_step) {
           setDismiss(true);
-
+          setLoading(false);
           setTimeout(function () {
             setDismiss(false);
 
@@ -124,9 +140,8 @@ function Main() {
           }, 5000);
         } else {
           setFormData(response.data.data);
+          // setLoading(false);
         }
-
-        setLoading(false);
       }
     } catch (error) {
       console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
@@ -134,62 +149,61 @@ function Main() {
     }
   };
 
-  const onChange = async (e) => {
-    // console.log("on change", e);
-//return;
-    // if (
-    //   e.changed &&
-    //   e.changed.value !== "no" &&
-    //   e.changed.component.key === "file"
-    // ) {
-    //   console.log("onchange", e);
-
-    //   setLoading(true);
-    //   const LOGIN_URL = getBaseApi() + "submit_form";
-    //   const token = localStorage.getItem("token");
-    //   const headers = {
-    //     Authorization: `Bearer ${token}`,
-    //     ContentType: "application/json",
-    //   };
-    //   try {
-    //     if (e.data.file.length === 0) {
-    //       return;
-    //     }
-
-    //     const response = await axios.post(
-    //       LOGIN_URL,
-    //       {
-    //         form_id: id,
-    //         data: e.data,
-    //         title: formData.title,
-    //         last_step: false,
-    //       },
-    //       {
-    //         headers,
-    //       }
-    //     );
-
-    //     if (response?.data?.success) {
-    //       setPage(page);
-    //       clickEvent(page);
-
-    //       setLoading(false);
-    //     }
-    //   } catch (error) {
-    //     console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
-    //     setLoading(false);
-    //   }
-    // }
-
-    //e.data &&  setData(e.data);
-
-    // e.data.file && setFile(e.data.file);
-    //console.log(e);
-  };
+  // const onChange = async (e) => {
+  //   console.log("on change", e);
+  //   //return;
+  //   // if (
+  //   //   e.changed &&
+  //   //   e.changed.value !== "no" &&
+  //   //   e.changed.component.key === "file"
+  //   // ) {
+  //   //   console.log("onchange", e);
+  //   //   setLoading(true);
+  //   //   const LOGIN_URL = getBaseApi() + "submit_form";
+  //   //   const token = localStorage.getItem("token");
+  //   //   const headers = {
+  //   //     Authorization: `Bearer ${token}`,
+  //   //     ContentType: "application/json",
+  //   //   };
+  //   //   try {
+  //   //     if (e.data.file.length === 0) {
+  //   //       return;
+  //   //     }
+  //   //     const response = await axios.post(
+  //   //       LOGIN_URL,
+  //   //       {
+  //   //         form_id: id,
+  //   //         data: e.data,
+  //   //         title: formData.title,
+  //   //         last_step: false,
+  //   //       },
+  //   //       {
+  //   //         headers,
+  //   //       }
+  //   //     );
+  //   //     if (response?.data?.success) {
+  //   //       setPage(page);
+  //   //       clickEvent(page);
+  //   //       setLoading(false);
+  //   //     }
+  //   //   } catch (error) {
+  //   //     console.error(`getEditfrom -> getUsers() ERROR: \n${error}`);
+  //   //     setLoading(false);
+  //   //   }
+  //   // }
+  //   //e.data &&  setData(e.data);
+  //   // e.data.file && setFile(e.data.file);
+  //   //console.log(e);
+  // };
 
   const PrevPage = (e) => {
     clickEvent(page - 1);
     setPage(page - 1);
+  };
+  const FormReady = () => {
+    console.log("form ready");
+
+    clickEvent(page);
   };
 
   return (
@@ -242,8 +256,9 @@ function Main() {
               }}
               onSubmit={handleSubmitData}
               onNextPage={handleSubmitData}
-              onChange={onChange}
+              // onChange={onChange}
               onPrevPage={(e) => PrevPage(e)}
+              formReady={FormReady}
             />
           )}
         </div>

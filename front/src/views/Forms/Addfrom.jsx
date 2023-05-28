@@ -3,7 +3,9 @@ import { Lucide, TomSelect, Tippy } from "@/base-components";
 import * as $_ from "lodash";
 import { useState } from "react";
 import axios from "axios";
-import { Form, FormBuilder } from "react-formio";
+//import { Form, FormBuilder } from "react-formio";
+
+import {FormBuilder} from '@formio/react';
 
 import "./styles.css";
 import "formiojs/dist/formio.full.min.css";

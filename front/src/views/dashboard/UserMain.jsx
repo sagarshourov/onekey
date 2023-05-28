@@ -561,6 +561,23 @@ const UserMain = () => {
                     </div>
                   )}
 
+                  {val?.student_info?.applying_for && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> Applying for : </small>{" "}
+                        {val?.student_info?.applying_for}
+                      </h4>
+                    </div>
+                  )}
+                  {val?.student_info?.intended && (
+                    <div className="col-span-12 my-3 flex items-center">
+                      <h4 className=" m-auto  font-medium">
+                        <small> Intended Level : </small>{" "}
+                        {val?.student_info?.intended}
+                      </h4>
+                    </div>
+                  )}
+
                   <div className="col-span-12 h-20"></div>
                   {val.user_phone !== null && (
                     <div className="col-span-12 pt-5  border-t flex items-center justify-center ">

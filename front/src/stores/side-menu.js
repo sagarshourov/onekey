@@ -215,6 +215,12 @@ let JrAdmin = atom({
       },
 
       {
+        icon: "Users",
+        title: "Users",
+        pathname: "/user_list",
+      },
+
+      {
         icon: "LayoutList",
         title: "Resume Builder",
         pathname: "/forms/view/6",

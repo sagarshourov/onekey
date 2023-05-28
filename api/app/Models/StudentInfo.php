@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 use App\Models\Universty;
+use App\Models\Intended;
+
+
 
 class StudentInfo extends Model
 {
@@ -27,7 +30,9 @@ class StudentInfo extends Model
         'visa_status',
         'visa_type',
         'ds_160_num',
-        'us_consultant'
+        'us_consultant',
+        'applying_for',
+        'intended'
     ];
 
     public function university()
@@ -38,5 +43,10 @@ class StudentInfo extends Model
     public function visa_type()
     {
         return $this->hasOne(VisaType::class, 'id','visa_type')->select('id', 'title');
+    }
+
+    public function intend()
+    {
+        return $this->hasOne(Intended::class, 'id','intended')->select('id', 'title');
     }
 }

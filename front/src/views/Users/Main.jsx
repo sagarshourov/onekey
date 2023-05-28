@@ -3,9 +3,7 @@ import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 import { useState } from "react";
 import { getAdmin } from "../../configuration";
 import { useRecoilStateLoadable } from "recoil";
-import {
-  allUserListState
-} from "../../state/admin-atom";
+import { allUserListState } from "../../state/admin-atom";
 import axios from "axios";
 import UsersTable from "./UsersTable";
 
@@ -79,7 +77,9 @@ const Users = (props) => {
         interview_time: user?.student_info?.interview_time,
         visa_type: user?.student_info?.visa_type,
         us_consultant: user?.student_info?.us_consultant,
-        ds_160_num: user?.student_info?.ds_160_num
+        ds_160_num: user?.student_info?.ds_160_num,
+        applying_for: user?.student_info?.applying_for,
+        intended: user?.student_info?.intended,
       });
     } else {
       setFdata({});
@@ -224,9 +224,7 @@ const Users = (props) => {
                 className="form-control w-56 box pr-10"
                 placeholder="Search.."
               />
- 
- 
- 
+
               <Lucide
                 icon="Search"
                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
@@ -255,14 +253,14 @@ const Users = (props) => {
         </div>
         {/* END: Pagination */}
       </div>
-
-      <StudentModal
-        handelStudentModel={handelStudentModel}
-        fdata={fdata}
-        showStudentInformation={showStudentInformation}
-        setShowStudentInformation={setShowStudentInformation}
-      />
-
+      {fdata.user_id && (
+        <StudentModal
+          handelStudentModel={handelStudentModel}
+          fdata={fdata}
+          showStudentInformation={showStudentInformation}
+          setShowStudentInformation={setShowStudentInformation}
+        />
+      )}
       {/* BEGIN: New User Modal */}
       <Modal
         show={newUserModal}

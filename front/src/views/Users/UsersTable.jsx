@@ -30,6 +30,10 @@ const birth = (dat) => {
   return formatDate(data.dateOfBirth);
 };
 
+const isAdmin = localStorage.isAdmin
+  ? parseInt(localStorage.getItem("isAdmin"))
+  : 1;
+
 const UsersTable = (props) => {
   const { users, setUserState, handelStudentModel, rowCount } = props;
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -121,6 +125,8 @@ const UsersTable = (props) => {
         </thead>
         <tbody>
           {users.slice(0, rowCount).map((user, key) => {
+            //console.log("user", user);
+
             var date = "";
             if (user.data) {
               // date = helper.formatDate(
@@ -233,15 +239,16 @@ const UsersTable = (props) => {
                           <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
                           Task Board
                         </Link> */}
-
-                        <Link
-                          className="flex items-center text-info   px-2"
-                          to={"/app_status/" + user.id}
-                        >
-                          {" "}
-                          <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
-                          Status
-                        </Link>
+                        {isAdmin === 1 && (
+                          <Link
+                            className="flex items-center text-info   px-2"
+                            to={"/app_status/" + user.id}
+                          >
+                            {" "}
+                            <Lucide icon="Clipboard" className="w-4 h-4 mr-1" />
+                            Status
+                          </Link>
+                        )}
                       </>
                     )}
 
@@ -252,7 +259,8 @@ const UsersTable = (props) => {
                         handelStudentModel(true, user);
                       }}
                     >
-                      <Lucide icon="Edit" className="w-4 h-4 mr-1" /> Student Info
+                      <Lucide icon="Edit" className="w-4 h-4 mr-1" /> Student
+                      Info
                     </a>
 
                     <a

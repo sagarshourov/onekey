@@ -232,7 +232,7 @@ class UserController extends BaseController
         $return['gendar'] = $users->gendar;
         $return['package'] = Packages::where(['id' => $users->package])->pluck('title');
 
-        $return['student_info'] = StudentInfo::where(['user_id' => $user_id])->first();
+        $return['student_info'] = StudentInfo::with('intend')->where(['user_id' => $user_id])->first();
 
         $return['client_form'] = $this->form_data(FormData::where(['user_id' => $user_id, 'form_id' => 1])->first('content'));
 
