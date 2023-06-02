@@ -5,19 +5,39 @@ import { useState, useEffect } from "react";
 //import { Form } from "react-formio";
 import { Form } from "@formio/react";
 
-import { useRecoilStateLoadable } from "recoil";
+import {
+  useRecoilStateLoadable,
+  useSetRecoilState,
+  useRecoilRefresher_UNSTABLE,
+} from "recoil";
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import "formiojs/dist/formio.full.min.css";
 import { getBaseApi } from "../../configuration";
 import axios from "axios";
-import { formDatas } from "../../state/admin-atom";
+import { singleDataState, userIdState } from "../../state/admin-atom";
 
 //Formio.setBaseUrl('/');
 
 function Main() {
   let { id } = useParams();
-  const [formData, setFormData] = useRecoilStateLoadable(formDatas(id));
+  const [formData, setFormData] = useRecoilStateLoadable(singleDataState);
+
+  //  const [singleCall, setSingleCallState] =
+  //  useRecoilStateLoadable(singleCallState);
+  const setUserId = useSetRecoilState(userIdState);
+
+  const resetSingleCall = useRecoilRefresher_UNSTABLE(singleDataState);
+  //const resetcallIdState = useResetRecoilState(callIdState);
+  useEffect(() => {
+    //console.log("set state");
+    setUserId(id);
+    return () => {
+      resetSingleCall();
+      //resetcallIdState();
+      //console.log("cleaned up");
+    };
+  }, [id]);
 
   //console.log("formData", formData);
 
@@ -245,7 +265,7 @@ function Main() {
               </button>
             </Alert>
           )}
-          {formData.state == "hasValue" && formData.contents.con && (
+          {formData.state == "hasValue" && formData.contents.con ? (
             <Form
               form={{
                 display: "wizard",
@@ -260,7 +280,7 @@ function Main() {
               onPrevPage={(e) => PrevPage(e)}
               formReady={FormReady}
             />
-          )}
+          ): <h3> Loading.... </h3>}
         </div>
       </div>
 

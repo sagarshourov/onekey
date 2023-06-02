@@ -22,22 +22,50 @@ import {
  * Populate the default selector return value with a service call.
  */
 
-export const formDatas = atomFamily({
-  key: "formData",
-  default: selectorFamily({
-    key: "formData/Default",
-    get:
-      (id) =>
-      async ({ get }) => {
-        try {
-          const response = await getFormData(id);
-          return response.data || [];
-        } catch (error) {
-          console.error(`formByIdSelect -> getUsers() ERROR: \n${error}`);
-          return [];
-        }
-      },
-  }),
+// export const formDatas = atomFamily({
+//   key: "formData",
+//   default: selectorFamily({
+//     key: "formData/Default",
+//     get:
+//       (id) =>
+//       async ({ get }) => {
+//         try {
+//           const response = await getFormData(id);
+//           return response.data || [];
+//         } catch (error) {
+//           console.error(`formByIdSelect -> getUsers() ERROR: \n${error}`);
+//           return [];
+//         }
+//       },
+//   }),
+// });
+
+export const userIdState = atom({
+  key: "userIdState",
+  default: 0,
+});
+
+
+
+
+  export const singleDataSelect = selector({
+    key: "singleDataSelect",
+    get: async ({ get }) => {
+      try {
+        const response = await getFormData(get(userIdState));
+        return response.data || [];
+      } catch (error) {
+        console.error(`singleDataSelect -> singleDataSelect() ERROR: \n${error}`);
+        return [];
+      }
+    },
+  });
+
+
+
+export const singleDataState = atom({
+  key: "singleDataState",
+  default: singleDataSelect,
 });
 
 export const assignSelect = selectorFamily({
