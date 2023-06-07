@@ -76,12 +76,14 @@ const AllForms = (props) => {
 
           {formData.con && (
             <Form
+            
               options={{
                 readOnly: false,
                 renderMode: "flat",
                 buttonSettings: {
                   showSubmit: false,
                 },
+                
               }}
               submission={{ data: formData.val }}
               form={formData.con}

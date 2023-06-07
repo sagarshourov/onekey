@@ -34,6 +34,7 @@ function Main() {
     setUserId(id);
     return () => {
       resetSingleCall();
+      localStorage.removeItem("success");
       //resetcallIdState();
       //console.log("cleaned up");
     };
@@ -51,19 +52,19 @@ function Main() {
 
   const [data, setData] = useState([]);
 
-  const onFocus = (e) => {
-    console.log("on focus", e);
-  };
+  // const onFocus = (e) => {
+  //   console.log("on focus", e);
+  // };
 
-  useEffect(() => {
-    window.addEventListener("focus", onFocus);
+  // useEffect(() => {
+  //   window.addEventListener("focus", onFocus);
 
-    onFocus();
-    // Specify how to clean up after this effect:
-    return () => {
-      window.removeEventListener("focus", onFocus);
-    };
-  }, []);
+  //   onFocus();
+  //   // Specify how to clean up after this effect:
+  //   return () => {
+  //     window.removeEventListener("focus", onFocus);
+  //   };
+  // }, []);
 
   const clickEvent = (ind) => {
     //document.getElementsByTagName('button')[].click();
@@ -115,12 +116,13 @@ function Main() {
     } else {
       data = e.data;
       last_step = true;
+      setLoading(true);
       // data.file = file;
 
       // console.log('not data',data);
     }
-    setPage(page + 1);
-    setLoading(true);
+    //  setPage(page + 1);
+    //  setLoading(true);
     const LOGIN_URL = getBaseApi() + "submit_form";
     const token = localStorage.getItem("token");
     const headers = {
@@ -143,24 +145,26 @@ function Main() {
 
       if (response?.data?.success) {
         //setTimeout(clickEvent(8), 5000);
-
+        //setLoading(false);
         //  console.log("page count", page);
 
         if (last_step) {
-          setDismiss(true);
-          setLoading(false);
-          setTimeout(function () {
-            setDismiss(false);
-
-            window.location.reload();
-
-            // setFormData(response.data.data);
-            // clickEvent(1);
-            // setPage(1);
-          }, 5000);
-        } else {
-          setFormData(response.data.data);
+          localStorage.setItem("success", true);
+          // clickEvent(page);
+          // setDismiss(true);
           // setLoading(false);
+          //  setTimeout(function () {
+          // setDismiss(false);
+
+          window.location.reload();
+          // setLoading(false);
+          // setFormData(response.data.data);
+          // clickEvent(1);
+          // setPage(1);
+          //  }, 1000);
+        } else {
+          //  setFormData(response.data.data);
+          setLoading(false);
         }
       }
     } catch (error) {
@@ -217,13 +221,13 @@ function Main() {
   // };
 
   const PrevPage = (e) => {
-    clickEvent(page - 1);
-    setPage(page - 1);
+    // clickEvent(page - 1);
+    // setPage(page - 1);
   };
   const FormReady = () => {
     console.log("form ready");
 
-    clickEvent(page);
+    //clickEvent(page);
   };
 
   return (
@@ -238,7 +242,7 @@ function Main() {
 
       <div className="relative box  border-t border-slate-200/60 dark:border-darkmode-400">
         {loading && (
-          <div className="h-full w-full bg-gray-50 grid  absolute z-40">
+          <div className="h-full w-full bg-gray-50  grid  absolute z-40">
             <div className="w-24 h-24 place-self-center">
               <LoadingIcon
                 icon="three-dots"
@@ -250,19 +254,11 @@ function Main() {
         )}
 
         <div className="p-2 lg:p-10">
-          {dismiss && (
+          {localStorage.success && (
             <Alert className="alert-outline-success flex items-center mb-2">
               <Lucide icon="CheckCircle" className="w-6 h-6 mr-2" />
               Thank You! Your form has been submitted and will be reviewed by
               your consultants
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => setDismiss(false)}
-                aria-label="Close"
-              >
-                <Lucide icon="X" className="w-4 h-4" />
-              </button>
             </Alert>
           )}
           {formData.state == "hasValue" && formData.contents.con ? (
@@ -280,7 +276,9 @@ function Main() {
               onPrevPage={(e) => PrevPage(e)}
               formReady={FormReady}
             />
-          ): <h3> Loading.... </h3>}
+          ) : (
+            <h3> Loading.... </h3>
+          )}
         </div>
       </div>
 
