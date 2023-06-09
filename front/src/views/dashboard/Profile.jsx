@@ -45,7 +45,7 @@ const UserMain = () => {
     setLoading(true);
     const LOGIN_URL = getBaseApi() + "save_user";
 
-    const token = localStorage.getItem("token");
+   // const token = localStorage.getItem("token");
 
     const headers = {
       Authorization: `Bearer ${token}`,

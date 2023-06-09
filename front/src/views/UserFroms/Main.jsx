@@ -135,7 +135,7 @@ function Main() {
         {
           form_id: id,
           data: data,
-          title: formData.title,
+          title: formData?.contents?.title,
           last_step: last_step,
         },
         {

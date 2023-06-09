@@ -326,12 +326,10 @@ class FormController extends BaseController
             $data['assignAmin'] =   $assignAmin;
 
 
-            // $endpoint = config('app.mail_url') . '/form_submit';
+            $endpoint = config('app.mail_url') . '/form_submit';
 
 
-            //   $response = Http::post($endpoint, $data);
-
-
+            Http::post($endpoint, $data);
         }
 
 
