@@ -125,13 +125,13 @@ class MailController extends Controller
 
         $user = (object) $request->user;
 
-        $title = $request->title;
+        $title =  $user->first_name.' '.$request->title;
 
         $assignAmin = $request->assignAmin;
 
         $em = Mail::send('email.form_submit', ['user' => $user, 'form' => $title], function ($message) use ($title, $assignAmin) {
 
-            $subject = $title . ' Form Submitted';
+            $subject = $title . ' has  Submitted';
 
             $message->to($assignAmin, 'Admin')->subject($subject);
             $message->from("info@onekeyclient.us", 'Admin');
