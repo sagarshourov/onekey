@@ -314,22 +314,30 @@ class FormController extends BaseController
             ]);
             $assignAmin = $this->assignAdminEmail($user_id);
 
-            // Mail::send('email.form_submit', ['user' => $user, 'form' => $input['title']], function ($message) use ($assignAmin) {
-            //     $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
-            //     $message->from("info@onekeyclient.us", 'Admin');
-            // });
+            //    $data =  Mail::send('email.data_form_submit', $data, function ($message) use ($assignAmin) {
+        //         $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
+        //         $message->from("info@onekeyclient.us", 'Admin');
+        //     });
 
-
+            $forms =  Forms::find($input['form_id']);
             $data['user'] = $user;
             $data['title'] = $input['title'];
+            $data['data'] = $input['data'];
+            $data['con'] = json_decode($forms->content);
+
+        
+
 
             $data['assignAmin'] =   $assignAmin;
+
+
+          //  return view('email.data_form_submit', $data);
 
 
             $endpoint = config('app.mail_url') . '/form_submit';
 
 
-            Http::post($endpoint, $data);
+            Http::timeout(30)->post($endpoint, $data);
         }
 
 

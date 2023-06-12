@@ -123,13 +123,20 @@ class MailController extends Controller
     public function form_submit(Request $request)
     {
 
-        $user = (object) $request->user;
+        $user =  $request->user;
 
-        $title =  $user->first_name.' '.$request->title;
+        $data =  $request->data;
+        $con =   $request->con;
+        
+
+       // return $request;
+        
+
+        $title =   $request->title;
 
         $assignAmin = $request->assignAmin;
 
-        $em = Mail::send('email.form_submit', ['user' => $user, 'form' => $title], function ($message) use ($title, $assignAmin) {
+        $em = Mail::send('email.data_form_submit', ['user' => $user, 'title' => $title, 'data' => $data , 'con'=> $con], function ($message) use ($title, $assignAmin) {
 
             $subject = $title . ' has  Submitted';
 

@@ -142,7 +142,7 @@ function Main() {
           headers,
         }
       );
-
+      setLoading(false);
       if (response?.data?.success) {
         //setTimeout(clickEvent(8), 5000);
         //setLoading(false);
@@ -156,7 +156,7 @@ function Main() {
           //  setTimeout(function () {
           // setDismiss(false);
 
-          window.location.reload();
+         window.location.reload();
           // setLoading(false);
           // setFormData(response.data.data);
           // clickEvent(1);
