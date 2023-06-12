@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ResumeController;
-
+use App\Http\Controllers\Admin\FormController;
 
 
 /*
@@ -44,7 +44,7 @@ Route::post('register_api', 'App\Http\Controllers\AuthController@register_api');
 
 Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_password');
 
-
+Route::get('/pdf/{formId}', [FormController::class, 'createPDF']);
 
 //Route::get('has/{pass}', 'App\Http\Controllers\UserController@has_pass');
 

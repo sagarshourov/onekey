@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Notifications;
+use App\Models\User;
+
+use PDF;
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Http;
@@ -131,7 +134,6 @@ class FormController extends BaseController
     {
 
 
-
         return $this->sendResponse($this->single_form($id), 'Form by id successfully.');
 
 
@@ -152,6 +154,35 @@ class FormController extends BaseController
 
         // return $this->sendResponse($return, 'Forms retrieved successfully.');
     }
+
+    public function createPdf($formId)
+    {
+
+        $forms =  FormData::where('id', $formId)->get(['id', 'user_id', 'form_id', 'content']);
+
+        $form_con =  Forms::find($forms[0]->form_id);
+
+        $return['data'] = json_decode($forms[0]->content , true);
+
+        $return['con'] = json_decode($form_con->content,true);
+
+        $return['title'] = $form_con->title;
+
+        $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
+
+        $pdf = PDF::loadView('data_pdf_submit', $return);
+
+    
+
+        return $pdf->download($form_con->title."-".$return['user']->first_name.'.pdf');
+
+        //return view('data_pdf_submit', $return);
+       // return $this->sendResponse($return, 'Form by id successfully.');
+    }
+
+
+
+
 
 
     public function formDataUser($id, $user_id)
@@ -315,9 +346,9 @@ class FormController extends BaseController
             $assignAmin = $this->assignAdminEmail($user_id);
 
             //    $data =  Mail::send('email.data_form_submit', $data, function ($message) use ($assignAmin) {
-        //         $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
-        //         $message->from("info@onekeyclient.us", 'Admin');
-        //     });
+            //         $message->to($assignAmin, 'Admin')->subject('New Form Submitted');
+            //         $message->from("info@onekeyclient.us", 'Admin');
+            //     });
 
             $forms =  Forms::find($input['form_id']);
             $data['user'] = $user;
@@ -325,13 +356,13 @@ class FormController extends BaseController
             $data['data'] = $input['data'];
             $data['con'] = json_decode($forms->content);
 
-        
+
 
 
             $data['assignAmin'] =   $assignAmin;
 
 
-          //  return view('email.data_form_submit', $data);
+            //  return view('email.data_form_submit', $data);
 
 
             $endpoint = config('app.mail_url') . '/form_submit';

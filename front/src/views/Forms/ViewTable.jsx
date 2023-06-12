@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getAdmin } from "../../configuration";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getBaseApi } from "../../configuration";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return dat.split("T")[0];
@@ -72,8 +73,15 @@ const ViewTable = (props) => {
 
               <td></td>
 
-              <td className="table-report__action w-64">
+              <td className="table-report__action w-auto">
                 <div className="flex justify-center items-center">
+                <a
+                    className="flex items-center text-primary"
+                    href={getBaseApi() + "pdf/" + user.id}
+                    target="_blank"
+                  >
+                    <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download
+                  </a>
                   <Link
                     className="flex items-center text-info  px-2"
                     to={"/forms/viewdata/" + user?.id}
