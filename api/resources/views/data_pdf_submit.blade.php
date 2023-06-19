@@ -155,7 +155,7 @@ function recursive($nodes , $data){
  
     <div style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #eee; box-shadow: 0 1px 1px rgba(0,0,0,.05);  width : 100%; clear : both; ">
         <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 10px 15px; border-bottom: 1px solid transparent;">{{$parent['title']}}</div>
-        <div style="overflow : auto;  ">{!!recursive($parent, $data) !!}</div>
+        <div style="overflow : auto; padding : 10px ">{!!recursive($parent, $data) !!}</div>
     </div>
 
 
