@@ -110,7 +110,7 @@ const StudentModal = (props) => {
                     defaultValue={fdata.package}
                     className=" py-4 form-control"
                   >
-                    <option>Select ... </option>
+                    <option value="0">Select ... </option>
                     <option value="1">Other Package </option>
                     <option value="2">Platinum Package </option>
                     <option value="3">Gold Package </option>
@@ -118,7 +118,7 @@ const StudentModal = (props) => {
                   </select>
                 ) : (
                   <select name="package" className=" py-4 form-control">
-                    <option>Select ... </option>
+                    <option value="0">Select ... </option>
                     <option value="1">Other Package </option>
                     <option value="2">Platinum Package </option>
                     <option value="3">Gold Package </option>
@@ -270,7 +270,7 @@ const StudentModal = (props) => {
                     defaultValue={fdata.intended ? fdata.intended : 0}
                     className=" py-4 form-control"
                   >
-                    <option>Select ... </option>
+                    <option value="0">Select ... </option>
                     <option value="1"> Associate Degree </option>
                     <option value="2">Bachelor Degree </option>
                     <option value="3">Master Degree </option>
@@ -278,7 +278,7 @@ const StudentModal = (props) => {
                   </select>
                 ) : (
                   <select name="intended" className=" py-4 form-control">
-                    <option>Select ... </option>
+                    <option value="0">Select ... </option>
                     <option value="1"> Associate Degree </option>
                     <option value="2">Bachelor Degree </option>
                     <option value="3">Master Degree </option>
