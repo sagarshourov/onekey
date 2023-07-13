@@ -235,14 +235,14 @@ const Users = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {usersData.state === "hasValue" && (
+          {usersData.state === "hasValue" ? (
             <UsersTable
               rowCount={rowCount}
               users={filterData}
               setUserState={setUserState}
               handelStudentModel={handelStudentModel}
             />
-          )}
+          ):(<h3 className="p-5">Loading...</h3>)}
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}

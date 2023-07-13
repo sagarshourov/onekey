@@ -13,12 +13,13 @@ import { useState } from "react";
 import { getAdmin } from "../../configuration";
 import axios from "axios";
 
-import { useRecoilValueLoadable } from "recoil";
+import { useRecoilValueLoadable, useRecoilValue } from "recoil";
 import { allFormListSelect } from "../../state/admin-atom";
 
 import { Link } from "react-router-dom";
 import { LoadingIcon } from "@/base-components";
 import { helper } from "@/utils/helper";
+import { loginState } from "../../state/login-atom";
 const formatDate = (dat) => {
   //const date = dat.split(" ");
   return helper.formatDate(dat.split("T")[0], "ddd, MMMM D, YYYY");
@@ -41,6 +42,8 @@ const UsersTable = (props) => {
     useState(false);
 
   const [rejectConfirmationModal, setRejectConfirmationModal] = useState(false);
+
+  const loginData = useRecoilValue(loginState);
 
   const allForm = useRecoilValueLoadable(allFormListSelect);
 
@@ -263,15 +266,17 @@ const UsersTable = (props) => {
                       Info
                     </a>
 
-                    <a
-                      className="flex items-center text-danger px-2"
-                      href="#"
-                      onClick={(e) => {
-                        handelDeleteConfrim(e, "remove", user.id);
-                      }}
-                    >
-                      <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Remove
-                    </a>
+                    {loginData.isAdmin !== 2 && (
+                      <a
+                        className="flex items-center text-danger px-2"
+                        href="#"
+                        onClick={(e) => {
+                          handelDeleteConfrim(e, "remove", user.id);
+                        }}
+                      >
+                        <Lucide icon="Trash2" className="w-4 h-4 mr-1" /> Remove
+                      </a>
+                    )}
                   </div>
                 </td>
               </tr>
