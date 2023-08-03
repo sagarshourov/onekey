@@ -274,7 +274,8 @@ const StudentModal = (props) => {
                     <option value="1"> Associate Degree </option>
                     <option value="2">Bachelor Degree </option>
                     <option value="3">Master Degree </option>
-                    <option value="4">Ph.D. Degree </option>
+                    <option value="4">Ph.D.  </option>
+                    <option value="5">Certificate</option>
                   </select>
                 ) : (
                   <select name="intended" className=" py-4 form-control">
@@ -282,7 +283,8 @@ const StudentModal = (props) => {
                     <option value="1"> Associate Degree </option>
                     <option value="2">Bachelor Degree </option>
                     <option value="3">Master Degree </option>
-                    <option value="4">Ph.D. Degree </option>
+                    <option value="4">Ph.D.  </option>
+                    <option value="5">Certificate</option>
                   </select>
                 )}
               </div>
