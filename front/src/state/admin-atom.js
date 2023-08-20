@@ -15,7 +15,8 @@ import {
   getAdminAppStatus,
   getAllNotificatioin,
   getAssignUsers,
-  getTrash
+  getTrash,
+  getArchived
 } from "../service/admin";
 
 /**
@@ -311,6 +312,29 @@ export const trashListState = atom({
   key: "trashListState",
   default: trashSelect,
 });
+
+
+export const archivedSelect = selector({
+  key: "archivedSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getArchived();
+      return response.data || [];
+    } catch (error) {
+      console.error(`getTrash -> getUsers() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
+
+
+export const archivedListState = atom({
+  key: "archivedListState",
+  default: archivedSelect,
+});
+
+
+
 
 export const notificationListState = atom({
   key: "notificationListState",

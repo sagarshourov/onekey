@@ -1,7 +1,7 @@
 import { Lucide, Modal, ModalBody } from "@/base-components";
 
 import { useState } from "react";
-import { getAdmin } from "../../configuration";
+import { getAdmin } from "../../../configuration";
 import axios from "axios";
 
 import { LoadingIcon } from "@/base-components";
@@ -21,7 +21,9 @@ const TrashTable = (props) => {
   const { users, setUserState, rowCount } = props;
   const [restoreConfirmationModal, setRestoreConfirmationModal] =
     useState(false);
+
   const [messageShow, setMessageShow] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState("");
   const [user_id, setUserId] = useState(0);
@@ -37,24 +39,23 @@ const TrashTable = (props) => {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        { id: user_id, status: "trash" },
+        { id: user_id, status: "archive" },
         {
           headers,
         }
       );
       if (response?.data?.success) {
-        
+       
         setType("");
         setUserId(0);
         setLoading(false);
-
         setMessageShow(true);
         setTimeout(function () {
           setRestoreConfirmationModal(false);
           setUserState();
         }, 1000);
 
-        //  window.location.reload();
+        //window.location.reload();
       } else {
         alert("Error ! Please try again later.");
         setLoading(false);
@@ -102,8 +103,8 @@ const TrashTable = (props) => {
 
                 <td className="text-center">{user.email}</td>
                 <td className="text-center">
-                  <span className="text-xs whitespace-nowrap text-white bg-danger border border-warning/20 rounded-full px-2 py-1">
-                    Deleted
+                  <span className="text-xs whitespace-nowrap text-white bg-warning border border-warning/20 rounded-full px-2 py-1">
+                    Archived
                   </span>
                 </td>
                 <td className="text-center">
@@ -117,7 +118,7 @@ const TrashTable = (props) => {
                       setUserId(user.id);
                       setMessageShow(false);
                     }}
-                    className="btn text-white bg-danger w-24 mr-1"
+                    className="btn btn-warning text-white w-24 mr-1"
                   >
                     Restore
                   </button>

@@ -115,6 +115,9 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::get('get_trash', 'App\Http\Controllers\Admin\UserController@get_trash');
 
+    Route::get('get_archived', 'App\Http\Controllers\Admin\UserController@get_archived');
+    
+
 
     Route::post('restore', 'App\Http\Controllers\Admin\UserController@restore');
     

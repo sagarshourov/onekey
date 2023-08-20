@@ -1,8 +1,8 @@
 import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilStateLoadable } from "recoil";
+import { useRecoilStateLoadable, useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from "recoil";
 import { allUserListState } from "../../state/admin-atom";
 import axios from "axios";
 import UsersTable from "./UsersTable";
@@ -47,7 +47,7 @@ function applySortFilters(array, searchValue, birth) {
 }
 
 const Users = (props) => {
-  const [usersData, setUserState] = useRecoilStateLoadable(allUserListState);
+  const usersData= useRecoilValueLoadable(allUserListState);
 
   const [showStudentInformation, setShowStudentInformation] = useState(false);
 
@@ -62,6 +62,15 @@ const Users = (props) => {
   const handelPageCount = (e) => {
     setRowCount(parseInt(e.target.value));
   };
+
+
+  const resetList = useRecoilRefresher_UNSTABLE(allUserListState);
+
+  useEffect(() => {
+    return () => {
+      resetList();
+    };
+  }, []);
 
   //const handelStudentModel = () => {};
 
@@ -239,7 +248,7 @@ const Users = (props) => {
             <UsersTable
               rowCount={rowCount}
               users={filterData}
-              setUserState={setUserState}
+              setUserState={resetList}
               handelStudentModel={handelStudentModel}
             />
           ):(<h3 className="p-5">Loading...</h3>)}

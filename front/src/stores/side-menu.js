@@ -35,6 +35,11 @@ let sideMenu = atom({
             pathname: "/trash",
             title: "Trash",
           },
+          {
+            icon: "Archive",
+            pathname: "/archive",
+            title: "Archived",
+          },
         ],
       },
 

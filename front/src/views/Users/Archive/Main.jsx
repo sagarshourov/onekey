@@ -1,24 +1,19 @@
 import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
-import { useState , useEffect } from "react";
-import { getAdmin } from "../../configuration";
-import { useRecoilStateLoadable , useRecoilRefresher_UNSTABLE, useRecoilValueLoadable} from "recoil";
+import { useState, useEffect } from "react";
 import {
-  trashListState
-} from "../../state/admin-atom";
-import axios from "axios";
-import TrashTable from "./TrashTable";
+  useRecoilStateLoadable,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilValueLoadable,
+} from "recoil";
+import { archivedListState, archivedSelect } from "../../../state/admin-atom";
+
+import ArchiveTable from "./Table";
 
 import { filter } from "lodash";
 
-import StudentModal from "./StudentInfo";
+import StudentModal from "../StudentInfo";
 
-const token = localStorage.getItem("token");
-
-const headers = {
-  Authorization: `Bearer ${token}`,
-  ContentType: "application/json",
-};
 function applySortFilters(array, searchValue, birth) {
   return filter(array, (_items) => {
     var monNum = -1;
@@ -49,27 +44,26 @@ function applySortFilters(array, searchValue, birth) {
 }
 
 const Users = (props) => {
-  const usersData = useRecoilValueLoadable(trashListState);
+  const usersData = useRecoilValueLoadable(archivedSelect);
 
   const [showStudentInformation, setShowStudentInformation] = useState(false);
 
   const [fdata, setFdata] = useState({});
 
   const [rowCount, setRowCount] = useState(10);
-  const [newUserModal, setNewUserModal] = useState(false);
-  const [formdata, setFormdata] = useState([]);
+
   const [search, setSearch] = useState("");
   const [birth, setBirth] = useState(-1);
-  const [loading, setLoading] = useState(false);
-  const resetList = useRecoilRefresher_UNSTABLE(trashListState);
+
+   const resetList = useRecoilRefresher_UNSTABLE(archivedSelect);
 
   useEffect(() => {
     return () => {
       resetList();
-      console.log('reset.... trash');
-      //setUserState([]);
+      console.log("reset.... archive");
     };
   }, []);
+
   //const handelStudentModel = () => {};
 
   const handelStudentModel = (val, user = {}) => {
@@ -84,7 +78,7 @@ const Users = (props) => {
         interview_time: user.student_info?.interview_time,
         visa_type: user.student_info?.visa_type,
         us_consultant: user.student_info?.us_consultant,
-        ds_160_num: user.student_info?.ds_160_num
+        ds_160_num: user.student_info?.ds_160_num,
       });
     } else {
       setFdata({});
@@ -101,34 +95,23 @@ const Users = (props) => {
     setSearch(e.target.value);
   };
 
-  const handelMonth = (e) => {
-    console.log(e.target.value);
-
-    setBirth(parseInt(e.target.value));
-  };
-
   let filterData = applySortFilters(usersData.contents, search, birth);
-  const handelChange = (e) => {
-    var value = e.target.value;
 
-    let val = { [e.target.name]: value };
-    setFormdata({ ...formdata, ...val });
+  const setUserState = (e) => {
+    console.log("test");
   };
-
-
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">Trash List</h2>
+      <h2 className="intro-y text-lg font-medium mt-10">Archived User List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
-      <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
           <div></div>
-          
+
           <div className="hidden md:block mx-auto text-slate-500">
             Showing {rowCount} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
-         
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
@@ -154,18 +137,18 @@ const Users = (props) => {
             </div>
           </div>
         </div>
-      
+
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {usersData.state === "hasValue" && (
-            <TrashTable
+          {usersData.state === "hasValue" ? (
+            <ArchiveTable
               rowCount={rowCount}
               users={filterData}
               setUserState={resetList}
               handelStudentModel={handelStudentModel}
             />
-          )}
+          ):<h1 className="m-5">Loading....</h1>}
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}
@@ -183,8 +166,6 @@ const Users = (props) => {
         showStudentInformation={showStudentInformation}
         setShowStudentInformation={setShowStudentInformation}
       />
-
-    
     </>
   );
 };

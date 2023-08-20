@@ -120,9 +120,19 @@ class UserController extends BaseController
     public function get_trash()
     {
 
-        $users = User::onlyTrashed()->orderByDesc('id')->get();
+        $users = User::onlyTrashed()->where('status', '!=', 'archive')->orderByDesc('id')->get();
         return $this->sendResponse($users, 'Users retrieved successfully.');
     }
+
+    public function get_archived()
+    {
+
+        $users = User::onlyTrashed()->where('status', '=', 'archive')->orderByDesc('id')->get();
+        return $this->sendResponse($users, 'Users retrieved successfully.');
+    }
+
+
+
 
 
 
@@ -131,7 +141,15 @@ class UserController extends BaseController
 
         User::withTrashed()->find($request->id)->restore();
 
-        return $this->get_trash();
+        User::find($request->id)
+            ->update(['status' => 'approved']);
+
+
+        if ($request->status == 'archive') {
+            return $this->get_archived();
+        } else {
+            return $this->get_trash();
+        }
     }
 
 
@@ -339,6 +357,16 @@ class UserController extends BaseController
         }
 
 
+        if ($input['type'] == 'archive') {
+            $user = User::find($input['user_id']);
+            $user->status = 'archive';
+            $user->deleted_at = date("Y-m-d H:i:s");
+            $user->save();
+            $users =  User::where('is_admin', 0)->orderByDesc('id')->get();
+            return $this->sendResponse($users, 'Archived successfully.');
+        }
+
+
         $user = User::find($input['user_id']);
         $user->status = $input['type'];
 
@@ -373,7 +401,6 @@ class UserController extends BaseController
 
 
             $response = Http::post($endpoint, $data);
-
         }
 
 

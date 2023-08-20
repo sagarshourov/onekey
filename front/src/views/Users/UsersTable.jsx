@@ -43,6 +43,9 @@ const UsersTable = (props) => {
 
   const [rejectConfirmationModal, setRejectConfirmationModal] = useState(false);
 
+  const [archiveConfirmationModal, setArchiveConfirmationModal] =
+    useState(false);
+  const [messageShow, setMessageShow] = useState(false);
   const loginData = useRecoilValue(loginState);
 
   const allForm = useRecoilValueLoadable(allFormListSelect);
@@ -56,12 +59,12 @@ const UsersTable = (props) => {
     const LOGIN_URL = getAdmin() + "update_user_status";
 
     const token = localStorage.getItem("token");
-
+  
     const headers = {
       Authorization: `Bearer ${token}`,
       ContentType: "application/json",
     };
-
+    // { id: user_id, status: "archive" },
     try {
       const response = await axios.post(
         LOGIN_URL,
@@ -72,16 +75,27 @@ const UsersTable = (props) => {
       );
 
       if (response?.data?.success) {
-        setUserState(response?.data?.data);
-        if (type == "approved") {
-          setApproveConfirmationModal(false);
-        }
-        if (type == "remove") {
-          setDeleteConfirmationModal(false);
-        }
-        if (type == "rejected") {
-          setRejectConfirmationModal(false);
-        }
+        setMessageShow(true);
+        setTimeout(function () {
+          
+          setUserState(response?.data?.data);
+          if (type == "approved") {
+            setApproveConfirmationModal(false);
+          }
+          if (type == "remove") {
+            setDeleteConfirmationModal(false);
+          }
+          if (type == "rejected") {
+            setRejectConfirmationModal(false);
+          }
+          if (type == "archive") {
+            setArchiveConfirmationModal(false);
+          }
+        }, 1000);
+
+        setTimeout(function () {
+          setMessageShow(false);
+        }, 2000);
 
         setType("");
         setUserId(0);
@@ -107,6 +121,9 @@ const UsersTable = (props) => {
     }
     if (type == "rejected") {
       setRejectConfirmationModal(true);
+    }
+    if (type == "archive") {
+      setArchiveConfirmationModal(true);
     }
 
     setUserId(user_id);
@@ -145,7 +162,7 @@ const UsersTable = (props) => {
             let count = key + 1;
             return (
               <tr key={key} className="intro-x">
-                <td className="w-40">{count}</td>
+                <td>{count}</td>
                 <td>
                   <Link
                     to={"/profile/" + user.id}
@@ -168,7 +185,7 @@ const UsersTable = (props) => {
                     </span>
                   )}
                   {user.status === "rejected" && (
-                    <span className="text-xs whitespace-nowrap text-white bg-warning border border-warning/20 rounded-full px-2 py-1">
+                    <span className="text-xs whitespace-nowrap text-white bg-danger border border-danger/20 rounded-full px-2 py-1">
                       Rejected
                     </span>
                   )}
@@ -181,7 +198,7 @@ const UsersTable = (props) => {
                     {allForm.state == "hasValue" && (
                       <Dropdown>
                         <DropdownToggle className="w-5 h-5 text-slate-500">
-                          <Lucide icon="MoreVertical" className="w-4 h-4" />
+                          <Lucide icon="ChevronDown" className="w-4 h-4" />
                         </DropdownToggle>
                         <DropdownMenu className="w-40">
                           <DropdownContent>
@@ -234,6 +251,16 @@ const UsersTable = (props) => {
                           <Lucide icon="User" className="w-4 h-4 mr-1" /> View
                           Profile
                         </Link>
+                        <a
+                          className="flex items-center text-warning   px-2"
+                          href="#"
+                          onClick={(e) => {
+                            handelDeleteConfrim(e, "archive", user.id);
+                          }}
+                        >
+                          <Lucide icon="Archive" className="w-4 h-4 mr-1" />{" "}
+                          Archive
+                        </a>
                         {/* <Link
                           className="flex items-center text-warning   px-2"
                           to={"/board/" + user.id}
@@ -286,49 +313,118 @@ const UsersTable = (props) => {
       </table>
 
       <Modal
+        show={archiveConfirmationModal}
+        onHidden={() => {
+          setArchiveConfirmationModal(false);
+        }}
+      >
+        {messageShow ? (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Check"
+                className="w-16 h-16 text-success mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5 mb-5">Success !</div>
+            </div>
+          </ModalBody>
+        ) : (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Archive"
+                className="w-16 h-16 text-warning mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5">Are you sure?</div>
+              <div className="text-slate-500 mt-2">
+                Do you really want to archive these records? <br />
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setArchiveConfirmationModal(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handelStatus}
+                type="button"
+                className="btn btn-warning w-24"
+              >
+                Archive
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        )}
+      </Modal>
+
+      <Modal
         show={rejectConfirmationModal}
         onHidden={() => {
           setRejectConfirmationModal(false);
         }}
       >
-        <ModalBody className="p-0">
-          <div className="p-5 text-center">
-            <Lucide
-              icon="XCircle"
-              className="w-16 h-16 text-warning mx-auto mt-3"
-            />
-            <div className="text-3xl mt-5">Are you sure?</div>
-            <div className="text-slate-500 mt-2">
-              Do you really want to reject these records? <br />
-              This process cannot be undone.
+        {messageShow ? (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Check"
+                className="w-16 h-16 text-success mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5 mb-5">Success !</div>
             </div>
-          </div>
-          <div className="px-5 pb-8 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setRejectConfirmationModal(false);
-              }}
-              className="btn btn-outline-secondary w-24 mr-1"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handelStatus}
-              type="button"
-              className="btn btn-warning w-24"
-            >
-              Reject
-              {loading && (
-                <LoadingIcon
-                  icon="three-dots"
-                  color="white"
-                  className="w-4 h-4 ml-2"
-                />
-              )}
-            </button>
-          </div>
-        </ModalBody>
+          </ModalBody>
+        ) : (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="XCircle"
+                className="w-16 h-16 text-warning mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5">Are you sure?</div>
+              <div className="text-slate-500 mt-2">
+                Do you really want to reject these records? <br />
+                This process cannot be undone.
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setRejectConfirmationModal(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handelStatus}
+                type="button"
+                className="btn btn-warning w-24"
+              >
+                Reject
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        )}
       </Modal>
 
       <Modal
@@ -337,44 +433,55 @@ const UsersTable = (props) => {
           setApproveConfirmationModal(false);
         }}
       >
-        <ModalBody className="p-0">
-          <div className="p-5 text-center">
-            <Lucide
-              icon="CheckCircle"
-              className="w-16 h-16 text-info mx-auto mt-3"
-            />
-            <div className="text-3xl mt-5">Are you sure?</div>
-            <div className="text-slate-500 mt-2">
-              Do you really want to approve these records? <br />
-              This process cannot be undone.
+        {messageShow ? (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Check"
+                className="w-16 h-16 text-success mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5 mb-5">Success !</div>
             </div>
-          </div>
-          <div className="px-5 pb-8 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setApproveConfirmationModal(false);
-              }}
-              className="btn btn-outline-secondary w-24 mr-1"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handelStatus}
-              type="button"
-              className="btn btn-twitter w-24"
-            >
-              Approve
-              {loading && (
-                <LoadingIcon
-                  icon="three-dots"
-                  color="white"
-                  className="w-4 h-4 ml-2"
-                />
-              )}
-            </button>
-          </div>
-        </ModalBody>
+          </ModalBody>
+        ) : (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="CheckCircle"
+                className="w-16 h-16 text-info mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5">Are you sure?</div>
+              <div className="text-slate-500 mt-2">
+                Do you really want to approve these records? <br />
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setApproveConfirmationModal(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handelStatus}
+                type="button"
+                className="btn btn-twitter w-24"
+              >
+                Approve
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        )}
       </Modal>
 
       <Modal
@@ -383,44 +490,55 @@ const UsersTable = (props) => {
           setDeleteConfirmationModal(false);
         }}
       >
-        <ModalBody className="p-0">
-          <div className="p-5 text-center">
-            <Lucide
-              icon="Trash2"
-              className="w-16 h-16 text-danger mx-auto mt-3"
-            />
-            <div className="text-3xl mt-5">Are you sure?</div>
-            <div className="text-slate-500 mt-2">
-              Do you really want to delete these records? <br />
-              This process cannot be undone.
+        {messageShow ? (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Check"
+                className="w-16 h-16 text-success mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5 mb-5">Success !</div>
             </div>
-          </div>
-          <div className="px-5 pb-8 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setDeleteConfirmationModal(false);
-              }}
-              className="btn btn-outline-secondary w-24 mr-1"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handelStatus}
-              type="button"
-              className="btn btn-danger w-24"
-            >
-              Delete
-              {loading && (
-                <LoadingIcon
-                  icon="three-dots"
-                  color="white"
-                  className="w-4 h-4 ml-2"
-                />
-              )}
-            </button>
-          </div>
-        </ModalBody>
+          </ModalBody>
+        ) : (
+          <ModalBody className="p-0">
+            <div className="p-5 text-center">
+              <Lucide
+                icon="Trash2"
+                className="w-16 h-16 text-danger mx-auto mt-3"
+              />
+              <div className="text-3xl mt-5">Are you sure?</div>
+              <div className="text-slate-500 mt-2">
+                Do you really want to delete these records? <br />
+              </div>
+            </div>
+            <div className="px-5 pb-8 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setDeleteConfirmationModal(false);
+                }}
+                className="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handelStatus}
+                type="button"
+                className="btn btn-danger w-24"
+              >
+                Delete
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            </div>
+          </ModalBody>
+        )}
       </Modal>
     </>
   );
