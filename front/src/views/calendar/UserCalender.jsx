@@ -9,7 +9,6 @@ import {
 } from "@/base-components";
 import Calendar from "@/components/calendar/Main";
 
-
 import { useRecoilStateLoadable } from "recoil";
 import { eventListState } from "../../state/events-atom";
 
@@ -30,7 +29,6 @@ const Events = (props) => {
               <Tab className="w-full py-2" tag="button">
                 Event List
               </Tab>
-             
             </TabList>
           </div>
           <TabPanels className="mt-5 intro-y">
@@ -39,7 +37,7 @@ const Events = (props) => {
                 id="calendar-events"
                 className="h-[820px] overflow-y-auto scrollbar-hidden"
               >
-                {eventDatas.state === "hasValue" &&
+                {eventDatas.state === "hasValue" ? (
                   eventDatas.contents.map((event, key) => {
                     return (
                       <div
@@ -51,7 +49,6 @@ const Events = (props) => {
                           <div className="event__title font-medium truncate">
                             {event.users && event.users.first_name}
                           </div>
-                        
                         </div>
                         <div className="border-b border-t border-slate-200/60 dark:border-darkmode-400 py-5 my-5">
                           <div className="flex items-center">
@@ -70,22 +67,23 @@ const Events = (props) => {
                             {event.notes && event.notes}
                           </div>
                         </div>
-                       
                       </div>
                     );
-                  })}
+                  })
+                ) : (
+                  <h1 className="m-5">Loading...</h1>
+                )}
               </FullCalendarDraggable>
             </TabPanel>
-          
           </TabPanels>
         </TabGroup>
         {/* END: Calendar Side Menu */}
         {/* BEGIN: Calendar Content */}
         <div className="col-span-12 xl:col-span-8 2xl:col-span-9">
           <div className="box p-5">
-            {eventDatas.state === "hasValue" && (
+            {eventDatas.state === "hasValue" ? (
               <Calendar type="2" events={eventDatas.contents} />
-            )}
+            ):(<h1 className="m-5">Loading...</h1>)}
           </div>
         </div>
         {/* END: Calendar Content */}

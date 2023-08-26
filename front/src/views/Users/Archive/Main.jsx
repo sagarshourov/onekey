@@ -60,7 +60,7 @@ const Users = (props) => {
   useEffect(() => {
     return () => {
       resetList();
-      console.log("reset.... archive");
+      //console.log("reset.... archive");
     };
   }, []);
 
@@ -98,7 +98,7 @@ const Users = (props) => {
   let filterData = applySortFilters(usersData.contents, search, birth);
 
   const setUserState = (e) => {
-    console.log("test");
+    //console.log("test");
   };
 
   return (

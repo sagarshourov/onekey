@@ -65,7 +65,7 @@ const AllDocs = (props) => {
 
       setUserState(response?.data?.data);
       setLoading(false);
-      console.log("response", response);
+      //console.log("response", response);
     } catch (err) {
       setLoading(false);
     }
@@ -126,14 +126,14 @@ const AllDocs = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {usersData.state === "hasValue" && (
+          {usersData.state === "hasValue" ? (
             <UsersTable
               setSelectId={setSelectId}
               setDeleteConfirmationModal={setDeleteConfirmationModal}
               rowCount={rowCount}
               users={filterData}
             />
-          )}
+          ):(<h1 className="m-5">Loading...</h1>)}
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}

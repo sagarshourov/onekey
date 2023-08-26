@@ -67,8 +67,6 @@ const ViewTable = (props) => {
 
              
 
-             
-
               <td className="table-report__action w-64">
                 <div className="flex justify-center items-center">
                   <Link

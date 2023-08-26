@@ -282,14 +282,14 @@ const UsersView = (props) => {
               <option>Select...</option>
               {
                 usersData.state === "hasValue" &&
-                  usersData.contents.length > 0 &&
+                  usersData.contents.length > 0 ?
                   usersData.contents.map((user, index) => {
                     return (
                       <option key={index} value={user.id}>
                         {user.first_name} ({user.email})
                       </option>
                     );
-                  })
+                  }):(<h1 className="m-5">Loading...</h1>)
 
                 // <TomSelect
                 //   value={selectMultiple}

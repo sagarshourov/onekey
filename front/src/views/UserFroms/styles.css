@@ -130,6 +130,9 @@
 .col-md-8 {
   width: 66.66666667%;
 }
+.col-md-6 {
+  width: 50%;
+}
 
 .list-group-item {
   position: relative;

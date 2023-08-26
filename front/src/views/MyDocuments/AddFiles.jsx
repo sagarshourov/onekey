@@ -42,7 +42,7 @@ const AddFiles = (props) => {
         <div className=" py-0 xl:py-5 grid grid-cols-12 gap-0 divide-y xl:divide-y-0 divide-x divide-dashed ">
           <div className="report-box__item p-5  col-span-12 ">
             <div className="grid xs:grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-2 place-items-center ">
-              {usersData.state === "hasValue" &&
+              {usersData.state === "hasValue" ?
                 Object.keys(document).map((keyName, i) => (
                   <FormContent
                     setFileState={setFileState}
@@ -50,7 +50,7 @@ const AddFiles = (props) => {
                     usersData={usersData.contents}
                     type="5"
                   />
-                ))}
+                )):(<h1 className="m-5">Loading...</h1>)}
 
               <button
                 onClick={() => handelAddForm("document")}

@@ -70,7 +70,7 @@ function Main() {
     //document.getElementsByTagName('button')[].click();
 
     setTimeout(function () {
-      console.log("click event", ind);
+     // console.log("click event", ind);
       const ul = document.querySelector(".pagination");
 
       const childern = ul.childNodes;
@@ -156,7 +156,7 @@ function Main() {
           //  setTimeout(function () {
           // setDismiss(false);
 
-         window.location.reload();
+          window.location.reload();
           // setLoading(false);
           // setFormData(response.data.data);
           // clickEvent(1);
@@ -225,7 +225,7 @@ function Main() {
     // setPage(page - 1);
   };
   const FormReady = () => {
-    console.log("form ready");
+   // console.log("form ready");
 
     //clickEvent(page);
   };
@@ -242,7 +242,7 @@ function Main() {
 
       <div className="relative box  border-t border-slate-200/60 dark:border-darkmode-400">
         {loading && (
-          <div className="h-full w-full bg-gray-50  grid  absolute z-40">
+          <div className="h-screen w-full bg-gray-50  grid  absolute z-40">
             <div className="w-24 h-24 place-self-center">
               <LoadingIcon
                 icon="three-dots"
@@ -253,7 +253,7 @@ function Main() {
           </div>
         )}
 
-        <div className="p-2 lg:p-10">
+        <div className="p-2">
           {localStorage.success && (
             <Alert className="alert-outline-success flex items-center mb-2">
               <Lucide icon="CheckCircle" className="w-6 h-6 mr-2" />
@@ -262,20 +262,36 @@ function Main() {
             </Alert>
           )}
           {formData.state == "hasValue" && formData.contents.con ? (
-            <Form
-              form={{
-                display: "wizard",
-                components: formData.contents.con.components,
-              }}
-              submission={{
-                data: formData.contents.val,
-              }}
-              onSubmit={handleSubmitData}
-              onNextPage={handleSubmitData}
-              // onChange={onChange}
-              onPrevPage={(e) => PrevPage(e)}
-              formReady={FormReady}
-            />
+            formData.contents.complete == 0 ? (
+              <div className="lg:p-10">
+                <Form
+                  form={{
+                    display: "wizard",
+                    components: formData.contents.con.components,
+                  }}
+                  submission={{
+                    data: formData.contents.val,
+                  }}
+                  onSubmit={handleSubmitData}
+                  onNextPage={handleSubmitData}
+                  // onChange={onChange}
+                  onPrevPage={(e) => PrevPage(e)}
+                  formReady={FormReady}
+                />
+              </div>
+            ) : (
+              <Form
+                options={{
+                  readOnly: false,
+                  renderMode: "flat",
+                  buttonSettings: {
+                    showSubmit: false,
+                  },
+                }}
+                submission={{ data: formData.contents.val }}
+                form={formData.contents.con}
+              />
+            )
           ) : (
             <h3> Loading.... </h3>
           )}

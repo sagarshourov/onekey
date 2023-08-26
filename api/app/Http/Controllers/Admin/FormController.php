@@ -80,11 +80,11 @@ class FormController extends BaseController
     {
         if (Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2) {
 
-            $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content']);
+            $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content', 'complete']);
 
 
             $val = [];
-
+            $return['complete'] = 0;
             if ($forms[0]->content) {
                 foreach (json_decode($forms[0]->content) as $key => $v) {
                     if (preg_match('/(date)/', strtolower($key)) && !is_array($v)) {
@@ -93,6 +93,8 @@ class FormController extends BaseController
                         $val[$key] = $v;
                     }
                 }
+
+                $return['complete'] = $forms[0]->complete;
             }
 
             $form_con =  Forms::find($forms[0]->form_id);
@@ -102,9 +104,12 @@ class FormController extends BaseController
             $return['con'] = json_decode($form_con->content);
         } else {
             $user_id =  Auth::user()->id;
-            $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content']);
-
-            if (!empty($forms))  $return['val'] = json_decode($forms->content);
+            $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content', 'complete']);
+            $return['complete'] = 0;
+            if (!empty($forms)) {
+                $return['val'] = json_decode($forms->content);
+                $return['complete'] = $forms->complete;
+            }
 
 
             // return $this->sendResponse($forms, 'Formby id successfully.');
@@ -162,9 +167,9 @@ class FormController extends BaseController
 
         $form_con =  Forms::find($forms[0]->form_id);
 
-        $return['data'] = json_decode($forms[0]->content , true);
+        $return['data'] = json_decode($forms[0]->content, true);
 
-        $return['con'] = json_decode($form_con->content,true);
+        $return['con'] = json_decode($form_con->content, true);
 
         $return['title'] = $form_con->title;
 
@@ -172,12 +177,12 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('data_pdf_submit', $return);
 
-    
 
-        return $pdf->download($form_con->title."-".$return['user']->first_name.'.pdf');
+
+        return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
         //return view('data_pdf_submit', $return);
-       // return $this->sendResponse($return, 'Form by id successfully.');
+        // return $this->sendResponse($return, 'Form by id successfully.');
     }
 
 
@@ -188,9 +193,14 @@ class FormController extends BaseController
     public function formDataUser($id, $user_id)
     {
 
-        $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content']);
-
-        if (!empty($forms))  $return['val'] = json_decode($forms->content);
+        $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content', 'complete']);
+        $return['complete'] = 0;
+        $return['id'] = 0;
+        if (!empty($forms)) {
+            $return['val'] = json_decode($forms->content);
+            $return['complete'] = $forms->complete;
+            $return['id'] = $forms->id;
+        }
 
 
         // return $this->sendResponse($forms, 'Formby id successfully.');
@@ -206,6 +216,16 @@ class FormController extends BaseController
 
 
         return $return;
+    }
+
+    public function completed(Request $request)
+    {
+
+
+        FormData::find($request->id)
+            ->update(['complete' => $request->complete]);
+
+        return $this->sendResponse([], 'Form Mark Complete successfully.');
     }
 
 
@@ -313,6 +333,17 @@ class FormController extends BaseController
 
         $user_id = Auth::id();
 
+        $old_form = FormData::where(['form_id' => (int) $input['form_id'], 'user_id' => $user_id])->first();
+
+        //return $this->sendResponse($old_form, 'save form data successfully.');
+
+        if (isset($old_form->complete) && $old_form->complete == 1) {
+
+            return ['Not allowed'];
+        }
+
+
+
 
         //  return $this->sendResponse($this->assignAdminEmail($user_id), 'save form data successfully.');
 
@@ -320,10 +351,10 @@ class FormController extends BaseController
             'user_id'   =>   $user_id,
             'form_id' => $input['form_id']
         ], [
-            'user_id'   =>    $user_id,
+            'user_id'   => $user_id,
             'content' => json_encode($input['data']),
-            'form_id' => $input['form_id']
-
+            'form_id' => $input['form_id'],
+            'complete' => 0
         ]);
 
 

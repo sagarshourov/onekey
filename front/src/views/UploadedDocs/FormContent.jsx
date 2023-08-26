@@ -12,7 +12,7 @@ const headers = {
   ContentType: "application/json",
 };
 function FormContent(props) {
-  console.log("content", props.type);
+  //console.log("content", props.type);
 
   const conRef = createRef(props.type);
   const [file, setFile] = useState(null);
@@ -25,7 +25,7 @@ function FormContent(props) {
     e.target.value;
     setTitle(e.target.value);
 
-    console.log("Title", e.target.value);
+   // console.log("Title", e.target.value);
   };
 
   const removeFile = (id) => {

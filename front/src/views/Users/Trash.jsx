@@ -1,11 +1,13 @@
 import { Lucide, Modal, ModalBody, LoadingIcon } from "@/base-components";
 
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAdmin } from "../../configuration";
-import { useRecoilStateLoadable , useRecoilRefresher_UNSTABLE, useRecoilValueLoadable} from "recoil";
 import {
-  trashListState
-} from "../../state/admin-atom";
+  useRecoilStateLoadable,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilValueLoadable,
+} from "recoil";
+import { trashListState } from "../../state/admin-atom";
 import axios from "axios";
 import TrashTable from "./TrashTable";
 
@@ -66,7 +68,7 @@ const Users = (props) => {
   useEffect(() => {
     return () => {
       resetList();
-      console.log('reset.... trash');
+     // console.log("reset.... trash");
       //setUserState([]);
     };
   }, []);
@@ -84,7 +86,7 @@ const Users = (props) => {
         interview_time: user.student_info?.interview_time,
         visa_type: user.student_info?.visa_type,
         us_consultant: user.student_info?.us_consultant,
-        ds_160_num: user.student_info?.ds_160_num
+        ds_160_num: user.student_info?.ds_160_num,
       });
     } else {
       setFdata({});
@@ -102,7 +104,7 @@ const Users = (props) => {
   };
 
   const handelMonth = (e) => {
-    console.log(e.target.value);
+   /// console.log(e.target.value);
 
     setBirth(parseInt(e.target.value));
   };
@@ -115,20 +117,17 @@ const Users = (props) => {
     setFormdata({ ...formdata, ...val });
   };
 
-
-
   return (
     <>
       <h2 className="intro-y text-lg font-medium mt-10">Trash List</h2>
       <div className="grid grid-cols-12 gap-6 mt-5">
-      <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
           <div></div>
-          
+
           <div className="hidden md:block mx-auto text-slate-500">
             Showing {rowCount} out of{" "}
             {usersData.state === "hasValue" && usersData.contents["length"]}
           </div>
-         
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
@@ -154,17 +153,19 @@ const Users = (props) => {
             </div>
           </div>
         </div>
-      
+
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {usersData.state === "hasValue" && (
+          {usersData.state === "hasValue" ? (
             <TrashTable
               rowCount={rowCount}
               users={filterData}
               setUserState={resetList}
               handelStudentModel={handelStudentModel}
             />
+          ) : (
+            <h1 className="m-5">Loading...</h1>
           )}
         </div>
         {/* END: Data List */}
@@ -183,8 +184,6 @@ const Users = (props) => {
         showStudentInformation={showStudentInformation}
         setShowStudentInformation={setShowStudentInformation}
       />
-
-    
     </>
   );
 };

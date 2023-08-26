@@ -13,10 +13,10 @@ const StudentModal = (props) => {
   } = props;
   const [loading, setLoading] = useState(false);
 
-  console.log("d", fdata);
+  //console.log("d", fdata);
 
   const updateInformation = async (e) => {
-    console.log(e);
+    //console.log(e);
 
     const LOGIN_URL = getBaseApi() + "student_info";
     const token = localStorage.getItem("token");
@@ -59,7 +59,7 @@ const StudentModal = (props) => {
       }
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       setLoading(false);
     }
   };

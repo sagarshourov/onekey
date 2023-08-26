@@ -64,7 +64,7 @@ function recursive($nodes , $data){
                 $dat = data_find($data, $node['key']);
                 if($dat != ""){
                     $html .= '<tr>';
-                    $html .= '<td >' .$node['label'].'</td>';
+                    $html .= '<td >' .$node['label'].$node['type'].'</td>';
                     $html .= '<td >' .$dat .'</td>';
                     $html .= '</tr>';
                 }

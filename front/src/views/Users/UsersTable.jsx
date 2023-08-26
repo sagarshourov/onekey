@@ -195,7 +195,7 @@ const UsersTable = (props) => {
                 </td>
                 <td className="table-report__action w-auto">
                   <div className="flex justify-center items-center">
-                    {allForm.state == "hasValue" && (
+                    {allForm.state == "hasValue" ? (
                       <Dropdown>
                         <DropdownToggle className="w-5 h-5 text-slate-500">
                           <Lucide icon="ChevronDown" className="w-4 h-4" />
@@ -204,19 +204,19 @@ const UsersTable = (props) => {
                           <DropdownContent>
                             {allForm.contents.map((val, index) => {
                               return (
-                                <DropdownItem tag="div" key={index}>
-                                  <Link
+                              
+                                  <Link className="dropdown-item cursor-pointer " key={index}
                                     to={"/form_view/" + val.id + "/" + user.id}
                                   >
                                     {val.title}
                                   </Link>
-                                </DropdownItem>
+                           
                               );
                             })}
                           </DropdownContent>
                         </DropdownMenu>
                       </Dropdown>
-                    )}
+                    ):<h1 className="m-3">Loading...</h1>}
 
                     {user.status == "pending" ? (
                       <>

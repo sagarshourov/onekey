@@ -17,7 +17,7 @@ class FormData extends Model
 
 
     protected $fillable = [
-        'id', 'form_id', 'content', 'user_id'
+        'id', 'form_id', 'content', 'user_id', 'complete'
     ];
 
 
@@ -31,6 +31,6 @@ class FormData extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name','email');
+        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name', 'email');
     }
 }

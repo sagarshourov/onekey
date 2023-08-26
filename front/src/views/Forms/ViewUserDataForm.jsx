@@ -1,60 +1,135 @@
 import { useState } from "react";
 //import { Form } from "react-formio";
 
-import {Form} from '@formio/react';
+import { Form } from "@formio/react";
 
-
-import { useRecoilValue } from "recoil";
+import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from "recoil";
 import { formDataUserSelect } from "../../state/admin-atom";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
 import "./view_style.css";
 
+import { Lucide, LoadingIcon } from "@/base-components";
+import { getAdmin , getBaseApi } from "../../configuration";
 const ViewUserDataForm = (props) => {
+  const [loading, setLoading] = useState(false);
+
+  const [complete, setComplete] = useState(true);
+
   let { id, u_id } = useParams();
 
-  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+  const formData = useRecoilValueLoadable(formDataUserSelect({ id, u_id }));
 
-  const formData = useRecoilValue(formDataUserSelect({ id, u_id }));
+
+  //console.log('formData',formData);
+
   let clientData = [];
 
   let clientCon = [];
   if (parseInt(id) === 6) {
-    clientData = useRecoilValue(formDataUserSelect({ id: 1, u_id }));
+    clientData = useRecoilValueLoadable(formDataUserSelect({ id: 1, u_id }));
 
-    if (clientData.con) {
+    if (clientData.state == "hasValue") {
       clientCon = {
         display: "wizard",
         components: [
-          clientData.con.components[1],
-          clientData.con.components[2],
+          clientData.contents.con.components[1],
+          clientData.contents.con.components[2],
         ],
       };
-      console.log("client data", clientCon);
+      //  console.log("client data", clientCon);
     }
   }
 
-  const [rowCount, setRowCount] = useState(10);
+  const resetList = useRecoilRefresher_UNSTABLE(
+    formDataUserSelect({ id, u_id })
+  );
 
-  const [search, setSearch] = useState("");
+  const markCompleted = async (complete) => {
+    setLoading(true);
+    const LOGIN_URL = getAdmin() + "completed";
 
-  const handelLoad = () => {
-    let count = rowCount + 20;
+    const token = localStorage.getItem("token");
 
-    setRowCount(count);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      ContentType: "application/json",
+    };
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        { id: formData?.contents?.id, complete: complete },
+        {
+          headers,
+        }
+      );
+
+      //console.log(response);
+      resetList();
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
   };
-
-  const handelSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
-  //  console.log("formdata", formData);
 
   return (
     <>
-      <h2 className="intro-y text-lg font-medium mt-10">{formData?.title}</h2>
+      {/* <h2 className="intro-y text-lg font-medium mt-10">{formData?.title}</h2> */}
       <div className="grid grid-cols-12 gap-6 mt-5">
-        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"></div>
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+          <div>
+            <h2 className="intro-y text-lg font-medium mt-0">
+              {formData?.contents?.title}
+            </h2>
+          </div>
+          <div className="hidden md:block mx-auto text-slate-500">
+            {formData?.contents?.id !==0 && 
+            <a
+              className="flex items-center btn btn-success-soft"
+              href={getBaseApi() + "pdf/"+formData?.contents?.id }
+              target="_blank"
+            >
+              <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download As
+              PDF
+            </a>
+            }
+          </div>
+
+          <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+            {formData?.contents?.complete === 0 ? (
+              <button
+                onClick={() => markCompleted(1)}
+                className="btn btn-success text-white mr-2 mb-2"
+              >
+                <Lucide icon="CheckCircle" className="w-4 h-4 mr-2" /> Mark as
+                Completed
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => markCompleted(0)}
+                className="btn btn-warning text-white mr-2 mb-2"
+              >
+                <Lucide icon="ShieldOff" className="w-4 h-4 mr-2" />
+                Mark as Not Completed
+                {loading && (
+                  <LoadingIcon
+                    icon="three-dots"
+                    color="white"
+                    className="w-4 h-4 ml-2"
+                  />
+                )}
+              </button>
+            )}
+          </div>
+        </div>
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
@@ -93,7 +168,7 @@ const ViewUserDataForm = (props) => {
               />
             )} */}
 
-          {formData.con && (
+          {formData.state == "hasValue" ? (
             <Form
               options={{
                 readOnly: false,
@@ -102,9 +177,11 @@ const ViewUserDataForm = (props) => {
                   showSubmit: false,
                 },
               }}
-              submission={{ data: formData.val }}
-              form={formData.con}
+              submission={{ data: formData.contents.val }}
+              form={formData.contents.con}
             />
+          ) : (
+            <h1 className="m-5">Loading...</h1>
           )}
 
           {Object.keys(clientCon).length > 0 && (
@@ -121,6 +198,25 @@ const ViewUserDataForm = (props) => {
             />
           )}
         </div>
+        {/* {formData?.contents?.complete === 0 && (
+          <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+            <div>
+              <h2 className="intro-y text-lg font-medium mt-0"></h2>
+            </div>
+            <div className="hidden md:block mx-auto text-slate-500"></div>
+
+            <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+              <button
+                onClick={markCompleted}
+                className="btn btn-success text-white mr-2 mb-2"
+              >
+                <Lucide icon="Check" className="w-4 h-4 mr-2" /> Mark as
+                Completed
+              </button>
+            </div>
+          </div>
+        )} */}
+
         {/* END: Data List */}
       </div>
     </>

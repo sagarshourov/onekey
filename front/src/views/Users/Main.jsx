@@ -106,7 +106,7 @@ const Users = (props) => {
   };
 
   const handelMonth = (e) => {
-    console.log(e.target.value);
+   // console.log(e.target.value);
 
     setBirth(parseInt(e.target.value));
   };
@@ -168,7 +168,7 @@ const Users = (props) => {
         alert("Something is wrong please try again later!");
       }
     } catch (err) {
-      console.log(err);
+     // console.log(err);
       setLoading(false);
     }
   };

@@ -112,7 +112,7 @@ const StatusView = (props) => {
   };
 
   const deleteNotes = async (id) => {
-    console.log("id", id);
+    //console.log("id", id);
 
     setLoading(true);
     const LOGIN_URL = getAdmin() + "delete_notes";

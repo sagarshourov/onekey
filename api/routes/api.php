@@ -160,6 +160,9 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
 
     Route::get('formdata/{id}/{user_id}', 'App\Http\Controllers\Admin\FormController@formDataUser');
 
+    Route::post('completed', 'App\Http\Controllers\Admin\FormController@completed');
+    
+
 
 
 

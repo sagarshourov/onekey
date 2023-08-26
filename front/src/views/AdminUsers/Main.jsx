@@ -209,7 +209,7 @@ const AdminUsers = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          {usersData.state === "hasValue" && (
+          {usersData.state === "hasValue" ? (
             <UsersTable
               rowCount={rowCount}
               setDeleteConfirmationModal={setDeleteConfirmationModal}
@@ -218,7 +218,11 @@ const AdminUsers = (props) => {
               setUserId={setUserId}
               setRole={setRole}
             />
-          )}
+          ):
+          
+          (<h1 className="m-5"> Loading ...</h1>)
+          
+          }
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}

@@ -79,7 +79,7 @@ const Events = (props) => {
         setEventState(response?.data?.data);
       }
 
-      console.log(response);
+      //console.log(response);
     } catch (err) {
       setLoading(false);
     }
@@ -185,7 +185,7 @@ const Events = (props) => {
                 id="calendar-events"
                 className="h-[820px] overflow-y-auto scrollbar-hidden"
               >
-                {eventDatas.state === "hasValue" &&
+                {eventDatas.state === "hasValue" ?
                   eventDatas?.contents?.events.map((event, key) => {
                     return (
                       <div
@@ -226,7 +226,7 @@ const Events = (props) => {
 
                               setEventId(event.id);
 
-                              console.log("event", event);
+                             // console.log("event", event);
                             }}
                             className="btn btn-outline-secondary py-1 px-2 ml-auto"
                           >
@@ -236,7 +236,9 @@ const Events = (props) => {
                         </div>
                       </div>
                     );
-                  })}
+                  }):(<h1 className="m-5">Loading...</h1>)
+                
+                }
               </FullCalendarDraggable>
             </TabPanel>
             <TabPanel>
@@ -266,7 +268,7 @@ const Events = (props) => {
                   <label htmlFor="time" className="form-label">
                     Users
                   </label>
-                  {eventDatas.state == "hasValue" && (
+                  {eventDatas.state == "hasValue" ? (
                     <select
                       onChange={(e) => setSelect(e.target.value)}
                       className="form-control"
@@ -278,7 +280,7 @@ const Events = (props) => {
                         </option>
                       ))}
                     </select>
-                  )}
+                  ):(<h1 className="m-5">Loading...</h1>)}
                 </div>
                 <div className="mt-3">
                   <label htmlFor="notes" className="form-label">
@@ -342,7 +344,7 @@ const Events = (props) => {
               />
             </div>
 
-            {eventDatas.state == "hasValue" && (
+            {eventDatas.state == "hasValue" ? (
               <Calendar
                 type="1"
                 deleteEvent={deleteEvent}
@@ -352,7 +354,7 @@ const Events = (props) => {
                 deleteConfirmationModal={deleteConfirmationModal}
                 setDeleteConfirmationModal={setDeleteConfirmationModal}
               />
-            )}
+            ):(<h1 className="m-5">Loading...</h1>)}
           </div>
         </div>
         {/* END: Calendar Content */}

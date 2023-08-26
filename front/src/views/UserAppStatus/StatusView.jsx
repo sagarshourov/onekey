@@ -48,7 +48,7 @@ const StatusView = (props) => {
           <ul className="timeline">
             <li className="timeline-line"></li>
 
-            {status.state == "hasValue" &&
+            {status.state == "hasValue" ?
               status.contents.status_text.map((statu, index) => {
                 return (
                   <li
@@ -99,7 +99,7 @@ const StatusView = (props) => {
                     </div>
                   </li>
                 );
-              })}
+              }):(<h1 className="m-5">Loading...</h1>)}
           </ul>
         </div>
         <div className="intro-y box  p-5 mt-2">
@@ -107,7 +107,7 @@ const StatusView = (props) => {
 
           <ol className="relative border-l border-gray-200 m-5  dark:border-gray-700">
             {status.state == "hasValue" &&
-              status.contents.notes.length > 0 &&
+              status.contents.notes.length > 0 ?
               status.contents.notes.map((note, index) => (
                 <li key={index} className="mb-10 ml-6">
                   <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -133,7 +133,7 @@ const StatusView = (props) => {
                     </div>
                   </div>
                 </li>
-              ))}
+              )):(<h1 className="m-5">Loading...</h1>)}
           </ol>
         </div>
       </div>

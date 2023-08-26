@@ -14,40 +14,116 @@ if(!function_exists('convert_camel')){
     
     } 
 }
-if(!function_exists('data_finds')){
-function data_finds($data,$key){ 
 
 
-    if(isset($data[$key]) && !is_array($data[$key])){
 
-        return $data[$key];
+if(!function_exists('data_validation')){ 
 
-    }else if(isset($data[$key]) && is_array($data[$key])){
+    function data_validation($data,$type){ 
 
+        if($type == 'datetime'){
+            return date("jS F Y", strtotime($data)) ;
 
-        $re = false;
-        foreach($data[$key] as $ke => $dat){
-                if($dat){
-                    $re = $ke.", ".$re;
-
-                }
-
-        }
-
-        if($re==false){
-            return json_encode($data[$key]);
         }else{
-            return $re;
+            return $data;
         }
-        
-    
-    }else{
-        return '';
+
+
     }
 
 
 }
+
+
+
+
+if(!function_exists('data_finds')){
+  function data_finds($data,$key,$type){ 
+
+
+    if(isset($data[$key]) && !is_array($data[$key])){ // normal data
+
+        return data_validation($data[$key],$type);
+
+    }else if(isset($data[$key]) && is_array($data[$key])){
+
+        if($type=='selectboxes'){
+            $html = '';
+            foreach($data[$key] as $ke => $dat){
+
+                $check = '';
+
+                if($dat==true){
+                    $check ='checked';
+                }
+
+                $html .='
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox"  '.$check .'>
+                        <label class="form-check-label" > '.$ke.'</label>
+                    </div>
+                    ';
+
+
+            }
+
+            return $html;
+
+        }else if($type=="textfield" || $type=="phoneNumber" || $type=="datetime" || $type=="textarea" ){
+            $html = '';
+            foreach($data[$key] as $ke => $dat){
+                $html .=' <div class="alert alert-secondary" role="alert">
+                    '.data_validation($dat,$type).'
+                    </div> ';
+            }
+
+            return $html;     
+        }else{
+            return json_encode($data[$key]);
+        }
+    }else{
+        return (isset($data[$key]) ? json_encode($data[$key]) : '');
+    }
+ }
 }
+
+if(!function_exists('data_grid')){ 
+    function data_grid($data, $th, $key,$type){
+
+            $html = '';
+      
+            $html .= '<table class="table mb-0">';
+            $html .= '<tr>';
+            foreach($th as $tr){  
+                $html .= '<td> '. $tr['label'] .' </td>';
+            }
+            $html .= '</tr>';
+
+
+       
+            foreach($data[$key] as $ke => $dat){  
+                $html .= '<tr>';
+                if(is_array($dat) && count($dat) > 0){
+                  
+                        foreach($dat as $key => $val){
+                            $html .= '<td> '. ( is_array($val) ? '' : $val ).' </td>';
+                        }
+                   
+                }
+                $html .= '</tr>';
+            }
+            $html .= '</table>'; 
+        return $html;
+
+
+
+    }
+
+    
+}
+
+
+
 if(!function_exists('recursive')){
 function recursive($nodes , $data){
 
@@ -76,15 +152,22 @@ function recursive($nodes , $data){
 
             }else if(isset($parent['title'])){
             
+                    $html .= $node['label'];   
               
+            }else if($node['type']=='datagrid'){
+
+                $html = '<b>'.$node['label'].'</b>';
+
+                $dat = data_grid($data,$node['components'], $node['key'], $node['type']);
+                  if($dat != ""){
+                    $html .= $dat;
+
+                }
+
+
+            }else{  
                 
-                    $html .= $node['label'];
-                  
-              
-            
-            
-            }else{
-                $dat = data_finds($data, $node['key']);
+                $dat = data_finds($data, $node['key'], $node['type']);
                   if($dat != ""){
                     $html .= '<table class="table mb-0">';
                     $html .= '<tr>';
@@ -92,12 +175,9 @@ function recursive($nodes , $data){
                     $html .= '<td class="text-right">' .$dat .'</td>';
                     $html .= '</tr>';
                     $html .= '</table>';
-            
 
                 }
 
-              
-         
            }
             
         }
