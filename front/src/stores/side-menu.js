@@ -159,6 +159,14 @@ let UsersideMenu = atom({
             pathname: "/forms/22",
             title: "SOP ",
           },
+          {
+            icon: "",
+            pathname: "/forms/24",
+            title: "Sponsor Information ",
+          },
+
+
+ 
         ],
       },
       {

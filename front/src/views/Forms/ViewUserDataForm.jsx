@@ -37,7 +37,7 @@ const ViewUserDataForm = (props) => {
           clientData.contents.con.components[2],
         ],
       };
-      //  console.log("client data", clientCon);
+        console.log("client data", clientData);
     }
   }
 
@@ -193,7 +193,7 @@ const ViewUserDataForm = (props) => {
                   showSubmit: false,
                 },
               }}
-              submission={{ data: clientData.val }}
+              submission={{ data: clientData.contents.val }}
               form={clientCon}
             />
           )}

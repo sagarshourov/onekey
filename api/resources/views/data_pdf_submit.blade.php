@@ -70,12 +70,14 @@ if(!function_exists('data_finds')){
             return $html;
 
         }else if($type=="textfield" || $type=="phoneNumber" || $type=="datetime" || $type=="textarea" ){
-            $html = '';
+            $html = '<ul class="list-group list-group-flush">';
             foreach($data[$key] as $ke => $dat){
-                $html .=' <div class="alert alert-secondary" role="alert">
-                    '.data_validation($dat,$type).'
-                    </div> ';
+                 
+                    $html .='<li class="list-group-item p-1">'.data_validation($dat,$type).'</li>';
+ 
+
             }
+            $html .=' </ul>';
 
             return $html;     
         }else{
@@ -95,22 +97,24 @@ if(!function_exists('data_grid')){
             $html .= '<table class="table mb-0">';
             $html .= '<tr>';
             foreach($th as $tr){  
-                $html .= '<td> '. $tr['label'] .' </td>';
+                $html .= '<th style="font-size: 11px;"> '. $tr['label'] .' </th>';
             }
             $html .= '</tr>';
 
 
-       
-            foreach($data[$key] as $ke => $dat){  
-                $html .= '<tr>';
-                if(is_array($dat) && count($dat) > 0){
-                  
-                        foreach($dat as $key => $val){
-                            $html .= '<td> '. ( is_array($val) ? '' : $val ).' </td>';
-                        }
-                   
+            if(isset($data[$key]) && is_array($data[$key])){
+
+                foreach($data[$key] as $ke => $dat){  
+                    $html .= '<tr>';
+                    if(is_array($dat) && count($dat) > 0){
+                    
+                            foreach($dat as $key => $val){
+                                $html .= '<td> '. ( is_array($val) ? '' : $val ).' </td>';
+                            }
+                    
+                    }
+                    $html .= '</tr>';
                 }
-                $html .= '</tr>';
             }
             $html .= '</table>'; 
         return $html;
@@ -146,7 +150,7 @@ function recursive($nodes , $data){
            if($node['type']=='panel'){
 
                      $html .= '<div style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #eee; box-shadow: 0 1px 1px rgba(0,0,0,.05);  width : 100%; clear : both; ">
-                            <div style="color: #333; background-color: #ececec; border-color: #ddd; padding: 10px 15px; border-bottom: 1px solid transparent;">'.$node['title'].'</div>
+                            <div style="color: #333; background-color: #ececec; border-color: #ddd; padding: 5px; font-size : 12px; border-bottom: 1px solid transparent;">'.$node['title'].'</div>
                             <div style="padding: 15px; overflow : auto; background-color: #f9f9f9; ">'.recursive($node,$data).'</div>
                           </div>';
 
@@ -156,7 +160,7 @@ function recursive($nodes , $data){
               
             }else if($node['type']=='datagrid'){
 
-                $html = '<b>'.$node['label'].'</b>';
+               // $html = '<b>'.$node['label'].'</b>';
 
                 $dat = data_grid($data,$node['components'], $node['key'], $node['type']);
                   if($dat != ""){
@@ -202,6 +206,28 @@ function recursive($nodes , $data){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+ 
+
+    <style>
+        @font-face {
+            font-family: 'sagar_font';
+            src: url('{{ public_path('fonts/DejaVuSans.ttf') }}');
+        }
+
+        * { font-family: sagar_font, sans-serif; }
+        td{
+            font-size: 12px;;
+            padding: 5px;
+        }
+        tr{
+            padding: 5px;
+        }
+        th{
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
  
 </head>
 <body>
@@ -234,8 +260,8 @@ function recursive($nodes , $data){
 
  
     <div style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #eee; box-shadow: 0 1px 1px rgba(0,0,0,.05);  width : 100%; clear : both; ">
-        <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 10px 15px; border-bottom: 1px solid transparent;">{{$parent['title']}}</div>
-        <div style="overflow : auto; padding : 10px ">{!!recursive($parent, $data) !!}</div>
+        <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; font-size:12px;  font-weight: bold;  padding: 5px; border-bottom: 1px solid transparent;">{{$parent['title']}}</div>
+        <div style="overflow : auto; padding : 10px;  ">{!!recursive($parent, $data) !!}</div>
     </div>
 
 
