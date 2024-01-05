@@ -156,7 +156,7 @@ function Main() {
           //  setTimeout(function () {
           // setDismiss(false);
 
-          window.location.reload();
+       //   window.location.reload();
           // setLoading(false);
           // setFormData(response.data.data);
           // clickEvent(1);
