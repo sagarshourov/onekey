@@ -175,14 +175,14 @@ class FormController extends BaseController
 
         $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
 
-        $pdf = PDF::loadView('data_pdf_submit', $return);
+       // $pdf = PDF::loadView('data_pdf_submit', $return);
         
 
 
 
         return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
-        //return view('data_pdf_submit', $return);
+       // return view('data_pdf_submit', $return);
         // return $this->sendResponse($return, 'Form by id successfully.');
     }
 

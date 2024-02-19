@@ -212,7 +212,7 @@ function recursive($nodes , $data){
     <style>
         @font-face {
             font-family: 'sagar_font';
-            src: url('{{ public_path('fonts/DejaVuSans.ttf') }}');
+            src: url('{{ public_path("fonts/DejaVuSans.ttf") }}');
         }
 
         * { font-family: sagar_font, sans-serif; }

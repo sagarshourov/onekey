@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 
+Route::get('form/{id}', 'App\Http\Controllers\Admin\FormController@createPdf');

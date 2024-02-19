@@ -2,20 +2,20 @@ import {
   AccordionGroup,
   AccordionItem,
   Accordion,
-  AccordionPanel
+  AccordionPanel,
 } from "@/base-components";
 import "./styles.css";
 import { useRecoilStateLoadable } from "recoil";
 import { userAppState } from "../../state/users-atom";
 
-const checkMain = (u_status, id) => {
-  let active = " ";
+const checkMain = (u_status, statu, id) => {
+  var count = -1;
   u_status.map((status, index) => {
     if (parseInt(status.status_text) === id) {
-      active = " active";
+      count++;
     }
   });
-  return active;
+  return statu.sub_status.length === count ? " active" : "";
 };
 
 const checkSub = (u_status, id) => {
@@ -48,22 +48,22 @@ const StatusView = (props) => {
           <ul className="timeline">
             <li className="timeline-line"></li>
 
-            {status.state == "hasValue" ?
+            {status.state == "hasValue" ? (
               status.contents.status_text.map((statu, index) => {
                 return (
                   <li
                     key={index}
                     className={
                       "timeline-item" +
-                      checkMain(status.contents.user_app_status, statu.id)
+                      checkMain(
+                        status.contents.user_app_status,
+                        statu,
+                        statu.id
+                      )
                     }
                   >
                     <div className="timeline-badge">
-                      <a
-                        href="#"
-                        className="key_sub_sec"
-                       
-                      ></a>
+                      <a href="#" className="key_sub_sec"></a>
                     </div>
                     <div className="timeline-panel">
                       <AccordionGroup selectedIndex={1} className="p-5">
@@ -99,15 +99,17 @@ const StatusView = (props) => {
                     </div>
                   </li>
                 );
-              }):(<h1 className="m-5">Loading...</h1>)}
+              })
+            ) : (
+              <h1 className="m-5">Loading...</h1>
+            )}
           </ul>
         </div>
         <div className="intro-y box  p-5 mt-2">
           <h3 className="text-2xl">Notes</h3>
 
           <ol className="relative border-l border-gray-200 m-5  dark:border-gray-700">
-            {status.state == "hasValue" &&
-              status.contents.notes.length > 0 ?
+            {status.state == "hasValue" && status.contents.notes.length > 0 ? (
               status.contents.notes.map((note, index) => (
                 <li key={index} className="mb-10 ml-6">
                   <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -133,7 +135,10 @@ const StatusView = (props) => {
                     </div>
                   </div>
                 </li>
-              )):(<h1 className="m-5">Loading...</h1>)}
+              ))
+            ) : (
+              <h1 className="m-5">Loading...</h1>
+            )}
           </ol>
         </div>
       </div>

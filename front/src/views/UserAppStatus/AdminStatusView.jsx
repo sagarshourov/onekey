@@ -18,14 +18,14 @@ import CheckIcon from "./CheckIcon";
 const checkMain = (u_status, status, id) => {
   var count = 0;
   u_status.map((status, index) => {
-    if (parseInt(status.status_text) === id) {
+    if (parseInt(status.status_text) == id) {
       count++;
     }
   });
 
   // console.log("count", count);
   // console.log("status", status);
-  return status.sub_status.length <= count ? true : false;
+  return status.sub_status.length == count ? true : false;
 };
 
 const checkSub = (u_status, id) => {
