@@ -15,28 +15,6 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { appStatusSlect } from "../../state/admin-atom";
 import CheckIcon from "./CheckIcon";
-const checkMain = (u_status, status, id) => {
-  var count = 0;
-  u_status.map((status, index) => {
-    if (parseInt(status.status_text) == id) {
-      count++;
-    }
-  });
-
-  // console.log("count", count);
-  // console.log("status", status);
-  return status.sub_status.length == count ? true : false;
-};
-
-const checkSub = (u_status, id) => {
-  let active = false;
-  u_status.map((status, index) => {
-    if (parseInt(status.sub_status_text) === id) {
-      active = true;
-    }
-  });
-  return active;
-};
 
 const formatDate = (dat) => {
   //const date = dat.split(" ");
@@ -56,7 +34,9 @@ const StatusView = (props) => {
   const [sLoading, setSLoading] = useState(false);
   const [notes, setNotes] = useState([]);
   const status = useRecoilValue(appStatusSlect(id));
+  const [checkCount, setcheckCount] = useState(0);
 
+  console.log("status", status);
   const handelMain = async (main_id, sub_id, active) => {
     setSLoading(true);
     const LOGIN_URL = getAdmin() + "save_app_status";
@@ -132,6 +112,32 @@ const StatusView = (props) => {
     }
   };
 
+  const checkSub = (u_status, id) => {
+    let active = false;
+    u_status.map((status, index) => {
+      if (parseInt(status.sub_status_text) === id) {
+        active = true;
+      }
+    });
+    return active;
+  };
+  const checkMain = (r_status, sub_status) => {
+    // r_status stands for result of status
+
+    //  console.log("sub status ", sub_status); // sub_status stands for all sub status
+
+    // console.log("r_status ", r_status);
+
+    var count = 0;
+    sub_status.map((status, index) => {
+      checkSub(r_status, status.id) ? count++ : 0;
+    });
+
+    console.log("count", count);
+
+    return sub_status.length === count ? true : false;
+  };
+
   return (
     <>
       <h2 className="intro-y text-lg font-medium mt-10">User Status </h2>
@@ -158,7 +164,10 @@ const StatusView = (props) => {
 
             {status.status_text.length > 0 &&
               status.status_text.map((statu, index) => {
-                let active = checkMain(status.user_app_status, statu, statu.id);
+                let active = checkMain(
+                  status.user_app_status,
+                  statu.sub_status
+                );
 
                 return (
                   <li
@@ -194,6 +203,7 @@ const StatusView = (props) => {
                                     status.user_app_status,
                                     sub.id
                                   );
+
                                   return (
                                     <li
                                       key={ind}

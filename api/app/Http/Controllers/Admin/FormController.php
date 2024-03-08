@@ -175,7 +175,7 @@ class FormController extends BaseController
 
         $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
 
-       // $pdf = PDF::loadView('data_pdf_submit', $return);
+        $pdf = PDF::loadView('data_pdf_submit', $return);
         
 
 
