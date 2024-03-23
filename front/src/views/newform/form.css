@@ -1,0 +1,182 @@
+.sa-stepper-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 0;
+  width: calc(100% - 25px);
+  margin: 0;
+}
+
+.sa-form-container .form-control,
+.form-select {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Lato, sans-serif;
+  border-radius: 12px;
+  font-size: 16px;
+  padding: 0.67857143em 1em;
+}
+.sa-step {
+  height: 65px;
+  background-color: #e0e4e9;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #464c4e;
+  position: relative;
+  padding: 8px 8px 8px 40px;
+  text-align: left;
+  cursor: pointer;
+}
+.sa-step-finished {
+  color: #fff !important;
+  background-color: #497696 !important;
+}
+.sa-step::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  border-left: 29px solid #f9f9f9;
+  border-top: 36px solid transparent;
+  border-bottom: 36px solid transparent;
+  right: -29px;
+  top: -4px;
+}
+.sa-step::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  border-left: 25px solid #e0e4e9;
+  border-left-color: rgb(224, 228, 233);
+  border-top: 32px solid transparent;
+  border-bottom: 32px solid transparent;
+  top: 0;
+  right: -25px;
+}
+.sa-step-finished::after {
+  border-left-color: #497696 !important;
+}
+.sa-step.sa-active-step {
+  color: #fff !important;
+  background-color: #02213b !important;
+}
+.sa-step.sa-step.sa-active-step::after {
+  border-left-color: #02213b !important;
+}
+
+.sa-label {
+  position: relative;
+  color: #00579b;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+  /* display: flex; */
+  align-items: center;
+}
+
+.bg-custom {
+  background-color: #f2f2f2;
+}
+.sa-border-primary {
+  border: 0.5px solid rgba(0, 87, 155, 0.313725);
+}
+
+@media screen and (min-width: 920px) {
+  .sa-stepper-container .sa-step:first-child {
+    border-radius: 10px 0 0 10px;
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  .sa-step {
+    font-size: 14px;
+    padding: 8px;
+    justify-content: center;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+  }
+  .sa-step::before {
+    display: none;
+  }
+  .sa-step::after {
+    display: none;
+  }
+}
+
+
+/* State Toggle */
+
+.sa-toggle {
+  /* justify-content: space-evenly; */
+  width: 100px;
+  background-color: #fff;
+  display: flex;
+  border-radius: 12px;
+  height: 36px;
+  font-size: 13px;
+  text-align: center;
+  position: relative;
+}
+
+.sa-toggle.sa-toggle-true .bubble {
+  left: 50%;
+}
+.sa-toggle.sa-toggle-false .bubble {
+  left: 0;
+}
+.sa-toggle.sa-toggle-false .bubble,
+.sa-toggle.sa-toggle-true .bubble {
+  background-color: #02213b ;
+}
+.sa-toggle .bubble {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  border-radius: 12px;
+  transition: all 0.35s;
+}
+.sa-toggle.sa-toggle-false .yes,
+.sa-toggle.sa-toggle-true .no {
+  cursor: pointer;
+}
+.sa-toggle .no,
+.sa-toggle .yes {
+  color: hsla(0, 0%, 74.9%, 0.87);
+}
+.sa-toggle .no,
+.sa-toggle .yes {
+  padding: 10px;
+  flex: 0 0 50%;
+  align-self: center;
+  z-index: 1;
+}
+
+.sa-toggle.sa-toggle-false .no,
+.sa-toggle.sa-toggle-true .yes {
+  color: #fff;
+  cursor: not-allowed;
+}
+.sa-toggle.sa-toggle-false .no,
+.sa-toggle.sa-toggle-true .yes {
+  color: #fff !important;
+}
+.sa-toggle .yes {
+  font-weight: 500;
+}
+.sa-toggle .no,
+.sa-toggle .yes {
+  color: hsla(0, 0%, 74.9%, 0.87);
+}
+.sa-toggle .no,
+.sa-toggle .yes {
+  padding: 10px;
+  flex: 0 0 50%;
+  align-self: center;
+  z-index: 1;
+}
+.sa-toggle .yes {
+  color: gray !important;
+}
+
+/* End State Toggle */

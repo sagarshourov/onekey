@@ -1,0 +1,84 @@
+{
+  "reasons_for_travel": [
+    { "value": "vacation", "label": "Vacation or tourism" },
+    {
+      "value": "business_meeting",
+      "label": "Attending a business meeting or conference"
+    },
+    { "value": "studying_abroad", "label": "Studying abroad" },
+    {
+      "value": "visiting_family_friends",
+      "label": "Visiting family or friends"
+    },
+    {
+      "value": "cultural_exchange",
+      "label": "Participating in a cultural exchange program"
+    },
+    {
+      "value": "special_event",
+      "label": "Attending a wedding or other special event"
+    },
+    { "value": "medical_treatment", "label": "Medical treatment or surgery" },
+    { "value": "religious_pilgrimage", "label": "Religious pilgrimage" },
+    {
+      "value": "research_collaboration",
+      "label": "Research or collaboration with colleagues"
+    },
+    {
+      "value": "sports_entertainment",
+      "label": "Sports or entertainment events"
+    },
+    { "value": "transit_layover", "label": "Transit or layover" },
+    {
+      "value": "volunteer_work",
+      "label": "Volunteer work or community service"
+    },
+    {
+      "value": "diplomatic_official",
+      "label": "Diplomatic or official business"
+    },
+    {
+      "value": "adoption_child_custody",
+      "label": "Adoption or child custody arrangements"
+    },
+    { "value": "crew_member", "label": "Crew member" },
+    { "value": "other", "label": "Other personal or professional reasons" }
+  ],
+
+  "mainPurpose": [
+    { "label": "TEMP. BUSINESS PLEASURE VISITOR (B)", "value": "B" },
+    { "label": "ALIEN IN TRANSIT (C)", "value": "C" },
+    { "label": "CREWMEMBER (D)", "value": "D" },
+    { "label": "ACADEMIC OR LANGUAGE STUDENT (F)", "value": "F" },
+    { "label": "VOCATIONAL / NON-ACADEMIC VISA (M)", "value": "M" },
+    { "label": "EXCHANGE VISITOR (J)", "value": "J" },
+    { "label": "FOREIGN MEDIA REPRESENTATIVE (I)", "value": "I" }
+  ],
+  "specify": [
+    {
+      "label": "BUSINESS & TOURISM (TEMPORARY VISITOR) (B1/B2)",
+      "value": "B1_B2"
+    },
+    { "label": "BUSINESS/CONFERENCE (B1)", "value": "B1" },
+    {
+      "label": "TOURISM/MEDICAL TREATMENT (B2)",
+      "value": "B2"
+    }
+  ],
+  
+    "hasTravelPlansInput": [
+      {"label": "Yes, I have made specific travel plans", "value": "specific_plans"},
+      {"label": "No, I have an idea of what I'd like to do", "value": "idea_of_plans"},
+      {"label": "No, I haven't made any plans at all", "value": "no_plans"},
+      {"label": "Skip/Answer Later", "value": "skip_or_answer_later"}
+    ],
+    "personPayingForTrip": [
+      {"label": "Other Company/Organization", "value": "other_company_organization"},
+      {"label": "Other Person", "value": "other_person"},
+      {"label": "Present Employer", "value": "present_employer"},
+      {"label": "Self", "value": "self"},
+      {"label": "Employer in the U.S.", "value": "employer_in_us"}
+    ]
+  
+  
+}

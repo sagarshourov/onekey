@@ -1,0 +1,26 @@
+{
+  "job_types": [
+    { "label": "AGRICULTURE", "value": "AGRICULTURE" },
+    { "label": "ARTIST/PERFORMER", "value": "ARTIST_PERFORMER" },
+    { "label": "BUSINESS", "value": "BUSINESS" },
+    { "label": "COMMUNICATIONS", "value": "COMMUNICATIONS" },
+    { "label": "COMPUTER SCIENCE", "value": "COMPUTER_SCIENCE" },
+    { "label": "CULINARY/FOOD SERVICES", "value": "CULINARY_FOOD_SERVICES" },
+    { "label": "EDUCATION", "value": "EDUCATION" },
+    { "label": "ENGINEERING", "value": "ENGINEERING" },
+    { "label": "GOVERNMENT", "value": "GOVERNMENT" },
+    { "label": "HOMEMAKER", "value": "HOMEMAKER" },
+    { "label": "LEGAL PROFESSION", "value": "LEGAL_PROFESSION" },
+    { "label": "MEDICAL/HEALTH", "value": "MEDICAL_HEALTH" },
+    { "label": "MILITARY", "value": "MILITARY" },
+    { "label": "NATURAL SCIENCE", "value": "NATURAL_SCIENCE" },
+    { "label": "NOT EMPLOYED", "value": "NOT_EMPLOYED" },
+    { "label": "PHYSICAL SCIENCES", "value": "PHYSICAL_SCIENCES" },
+    { "label": "RELIGIOUS VOCATION", "value": "RELIGIOUS_VOCATION" },
+    { "label": "RESEARCH", "value": "RESEARCH" },
+    { "label": "RETIRED", "value": "RETIRED" },
+    { "label": "SOCIAL SCIENCE", "value": "SOCIAL_SCIENCE" },
+    { "label": "STUDENT", "value": "STUDENT" },
+    { "label": "OTHER", "value": "OTHER" }
+  ]
+}

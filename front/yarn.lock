@@ -824,7 +824,7 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@left4code/tw-starter@^3.1.35", "@left4code/tw-starter@^3.2.9":
+"@left4code/tw-starter@3.2.9", "@left4code/tw-starter@^3.1.35":
   version "3.2.9"
   resolved "https://registry.yarnpkg.com/@left4code/tw-starter/-/tw-starter-3.2.9.tgz#744b5c9b91fd56de1829c233891c6bd3897728f7"
   integrity sha512-/GplyspCazevgf09fcGcv01HK32tgpeEoUKYI+r4DG9X/RwNeRDL2YeWJRNcWH1eEKrCg6DG/wBu7PjRQs0bKA==

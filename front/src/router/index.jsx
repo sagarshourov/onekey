@@ -91,7 +91,7 @@ const ViewDataForm = Loadable(lazy(() => import("../views/Forms/ViewData")));
 
 const ViewUserDataForm = Loadable(lazy(() => import("../views/Forms/ViewUserDataForm")));
 
-
+const NewForm = Loadable(lazy(() => import("../views/newform/Main")));
 
 
 const AdminStatusView = Loadable(
@@ -223,6 +223,13 @@ function Router() {
           path: "/notifications",
           element: <Notification />,
         },
+
+        {
+          path: "/newform",
+          element: <NewForm />,
+        },
+
+        
       ],
     },
 
@@ -233,6 +240,10 @@ function Router() {
     {
       path: "/register",
       element: auth ? <Navigate to="/" /> : <Register />,
+    },
+    {
+      path: "/newform",
+      element: <NewForm />,
     },
     {
       path: "*",
