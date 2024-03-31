@@ -17,7 +17,7 @@ const Contact = (props) => {
       <hr className="my-5 sa-border-primary" />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"homeAddress.streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"

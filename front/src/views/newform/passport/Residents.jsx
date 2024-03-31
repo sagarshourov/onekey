@@ -14,7 +14,7 @@ function removeArr(array, index) {
   });
 }
 
-const Nationalities = (props) => {
+const Residents = (props) => {
   const { formData, setFormData } = props;
 
   console.log("formdata", formData);
@@ -48,8 +48,8 @@ const Nationalities = (props) => {
 
     setFormData((formData) => ({
       ...formData,
-      nationalities: [
-        ...(formData.nationalities || []), // Ensure previous nationalities are included if they exist
+      residents: [
+        ...(formData.residents || []), // Ensure previous nationalities are included if they exist
         { id: Date.now(), value: "" }, // New data entry
         // Add more data entries as needed
       ],
@@ -57,10 +57,10 @@ const Nationalities = (props) => {
   };
 
   const deleteNationalities = (e) => {
-    if (formData.nationalities && formData.nationalities.length > 1) {
+    if (formData.residents && formData.residents.length > 1) {
       setFormData((prevData) => ({
         ...prevData,
-        nationalities: prevData.nationalities.filter((nationality) => {
+        residents: prevData.residents.filter((nationality) => {
           // Condition to filter out values
           return nationality.id !== e; // Replace idToDelete with the ID you want to delete
         }),
@@ -72,74 +72,27 @@ const Nationalities = (props) => {
     <>
       {props.isVisible && (
         <>
-          {formData.nationalities &&
-            formData.nationalities.map((data, index) => (
+          {formData.residents &&
+            formData.residents.map((data, index) => (
               <div key={index} className="border   border-blue-200  p-5 my-5">
                 <h3 className="text-xl font-blod">
                   {" "}
-                  Other Nationality # {index + 1}
+                  Other Permanent Resident # {index + 1}
                 </h3>
                 <InlineDrop
-                  title={"nationalities[" + index + "].country"}
+                  title={"residents[" + index + "].country"}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
-                  label="Other Country/Region of Origin (Nationality)"
+                  label="Other Permanent Resident Country/Region"
                   isVisible={true}
                   disabled={false}
                   data={dat.countries}
                   inline={true}
                 />
-                <div className="mt-5 ">
-                  {/* <div className="form-check form-switch mt-5">
-                    <label
-                      className=" sa-label mr-2"
-                      htmlFor="checkbox-switch-7"
-                    >
-                      Do you hold a passport for the other country/region of
-                      origin (nationality) above?
-                    </label>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      onChange={() =>
-                        props.handleCheckboxChange("hasPassportNumber" + index)
-                      }
-                      checked={
-                        props.fieldVisibility["hasPassportNumber" + index]
-                          ? true
-                          : false
-                      }
-                    />
-                  </div> */}
+              
 
-                  <InlineSwitch
-                    isVisible={true}
-                    title={"hasPassportNumber"}
-                    label=" Do you hold a passport for the other country/region of
-            origin (nationality) above?"
-                    handleCheckboxChange={props.handleCheckboxChange}
-                    formData={formData.nationalities[index]}
-                    fullWidth={false}
-                    helpText=" "
-                    inline={true}
-                  />
-                </div>
-
-                <InlineInputText
-                  title={"nationalities[" + index + "].passportNumber"}
-                  helpText=""
-                  register={props.register}
-                  type="text"
-                  errors={props.errors}
-                  label=" Passport/Travel Document Number"
-                  isVisible={
-                    props.formData?.nationalities[index]?.passportNumber
-                  }
-                  disabled={false}
-                  handleCheckboxChange={props.handleCheckboxChange}
-                />
-
+              
                 <div className="flex justify-end mt-5">
                   <button
                     type="button"
@@ -167,4 +120,4 @@ const Nationalities = (props) => {
   );
 };
 
-export default Nationalities;
+export default Residents;

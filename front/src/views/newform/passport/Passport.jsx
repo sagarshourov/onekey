@@ -13,6 +13,7 @@ import Nationalities from "./Nationalities";
 import InlineSwitch from "../elements/InlineSwitch";
 
 import data from "../elements/data.json";
+import Residents from "./Residents";
 const Passport = (props) => {
   const [date, setDate] = useState("");
   const { fieldVisibility, handleCheckboxChange, formData, setFormData } =
@@ -45,6 +46,7 @@ const Passport = (props) => {
           isVisible={true}
           disabled={false}
           condition={false}
+          formData={formData}
         />
         <InlineInputText
           title={"passportBookNumber"}
@@ -54,10 +56,11 @@ const Passport = (props) => {
           errors={props.errors}
           label=" Passport Book Number"
           isVisible={true}
-          disabled={fieldVisibility["hasPassportBookNumber"]}
+          formData={formData}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="hasPassportBookNumber"
+          disabled={formData.hasPassportBookNumber}
         />
         <InlineDrop
           title={"passportIssueCountry"}
@@ -70,6 +73,7 @@ const Passport = (props) => {
           disabled={false}
           data={data.countries}
           inline={true}
+          formData={formData}
         />
 
         <InlineInputText
@@ -82,6 +86,7 @@ const Passport = (props) => {
           isVisible={true}
           disabled={false}
           condition={false}
+          formData={formData}
         />
         <InlineInputText
           title={"lastName"}
@@ -93,6 +98,7 @@ const Passport = (props) => {
           isVisible={true}
           disabled={false}
           condition={false}
+          formData={formData}
         />
         <InlineDrop
           title={"passportIssueCountryInput"}
@@ -104,6 +110,7 @@ const Passport = (props) => {
           disabled={false}
           data={data.countries}
           inline={true}
+          formData={formData}
         />
 
         <InlineInputDate
@@ -115,6 +122,7 @@ const Passport = (props) => {
           isVisible={true}
           disabled={false}
           inline={true}
+          formData={formData}
         />
         <InlineInputDate
           title={"passportIssueCountryInput"}
@@ -128,6 +136,7 @@ const Passport = (props) => {
           handleCheckboxChange={handleCheckboxChange}
           check="hasPassportExpiryDate"
           inline={true}
+          formData={formData}
         />
 
         <div className="mt-5 ">
@@ -212,11 +221,31 @@ const Passport = (props) => {
           errors={props.errors}
           isVisible={formData.hasMultipleNationalities}
           handleCheckboxChange={handleCheckboxChange}
-          fieldVisibility={formData}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <InlineSwitch
+          isVisible={true}
+          title="hasMultiplePermanentResidents"
+          label="Are you a permanent resident of a country/region other than your country/region of origin (nationality) as indicated above?"
+          handleCheckboxChange={handleCheckboxChange}
+          formData={formData}
+          fullWidth={false}
+          helpText=" "
+
+        />
+        
+        <Residents
+          register={props.register}
+          errors={props.errors}
+          isVisible={formData.hasMultiplePermanentResidents}
+          handleCheckboxChange={handleCheckboxChange}
           formData={formData}
           setFormData={setFormData}
         />
 
+
+        
         <InlineInputText
           title={"nationalId"}
           helpText=""
@@ -225,10 +254,11 @@ const Passport = (props) => {
           errors={props.errors}
           label=" National Identification Number"
           isVisible={true}
-          disabled={fieldVisibility["nationalId"]}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="nationalId"
+          disabled={formData.nationalId}
+          formData={formData}
         />
         <InlineInputText
           title={"USSocialSecurityAreaNumber"}
@@ -238,12 +268,12 @@ const Passport = (props) => {
           errors={props.errors}
           label=" U.S. Social Security area number"
           isVisible={true}
-          disabled={fieldVisibility["USSocialSecurityAreaNumber"]}
+          disabled={formData.USSocialSecurityAreaNumber}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecurityAreaNumber"
         />
-        <InlineInputText
+        {/* <InlineInputText
           title={"USSocialSecurityGroupNumber"}
           helpText=""
           register={props.register}
@@ -255,8 +285,8 @@ const Passport = (props) => {
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecurityGroupNumber"
-        />
-        <InlineInputText
+        /> */}
+        {/* <InlineInputText
           title={"USSocialSecuritySerialNumber"}
           helpText=""
           register={props.register}
@@ -268,7 +298,7 @@ const Passport = (props) => {
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecuritySerialNumber"
-        />
+        /> */}
         <InlineInputText
           title={"USTaxpayerIdNumber"}
           helpText=""
@@ -277,10 +307,11 @@ const Passport = (props) => {
           errors={props.errors}
           label="U.S. Taxpayer ID Number"
           isVisible={true}
-          disabled={fieldVisibility["USTaxpayerIdNumber"]}
+          disabled={formData.USTaxpayerIdNumber}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
           check="USTaxpayerIdNumber"
+          formData={formData}
         />
       </div>
     </div>

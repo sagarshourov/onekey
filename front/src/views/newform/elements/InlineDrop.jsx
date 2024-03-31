@@ -19,7 +19,7 @@ const InlineDrop = (props) => {
           <div className="basis-4/6">
             <select
               {...props.register(props.title)}
-              className="form-select   w-full sm:mt-2 sm:mr-2"
+              className="form-select   w-full "
               aria-label=".form-select example"
               name={props.title}
             >

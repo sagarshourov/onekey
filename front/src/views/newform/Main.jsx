@@ -28,6 +28,7 @@ const Main = (props) => {
     additionalFirstName: "",
     hasEverLostPassport: false,
     hasMultipleNationalities: false,
+    hasMultiplePermanentResidents : false,
     lostpassports: [
       {
         passportNumber: "",
@@ -35,6 +36,20 @@ const Main = (props) => {
         Explain: "",
       },
     ],
+    nationalities: [
+      {
+        country: "",
+        hasPassportNumber: "",
+        passportNumber: "",
+      },
+    ],
+    residents: [
+      {
+        permanentResidents: "",
+      },
+    ],
+
+    
   });
 
   const [fieldVisibility, setFieldVisibility] = useState({
