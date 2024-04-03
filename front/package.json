@@ -28,6 +28,7 @@
     "classnames": "^2.3.2",
     "dayjs": "^1.11.6",
     "dropzone": "^5.9.3",
+    "formik": "^2.4.5",
     "formiojs": "^4.14.13",
     "highlight.js": "^11.6.0",
     "jquery": "^3.6.1",

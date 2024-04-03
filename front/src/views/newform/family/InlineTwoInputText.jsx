@@ -25,7 +25,7 @@ const InlineTwoInputText = (props) => {
                 register={props.register}
                 type="text"
                 errors={props.errors}
-                label="Father's First (Given) Name(s)"
+                label={props.firstFieldLbl}
                 isVisible={true}
                 disabled={false}
                 checkLabel="Does not apply"
@@ -41,7 +41,7 @@ const InlineTwoInputText = (props) => {
                 register={props.register}
                 type="text"
                 errors={props.errors}
-                label="Father's Family Name(s)"
+                label={props.secFieldLbl}
                 isVisible={true}
                 disabled={false}
                 checkLabel="Does not apply"

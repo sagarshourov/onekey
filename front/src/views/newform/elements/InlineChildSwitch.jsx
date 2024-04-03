@@ -1,7 +1,8 @@
 import classnames from "classnames";
 
-const InlineSwitch = (props) => {
-  const { formData } = props;
+const InlineChildSwitch = (props) => {
+  const { formData, setFormData, onChange, parent, index } = props;
+
   return (
     <>
       {props.isVisible && (
@@ -32,20 +33,33 @@ const InlineSwitch = (props) => {
 
             <div
               className={`sa-toggle-${
-                formData && formData[props.title] ? true : false
+                formData &&
+                formData[parent][index][props.title] &&
+                formData[parent][index][props.title]
               } sa-toggle`}
               tabIndex="0"
             >
               <div className="bubble"></div>
               <div
-                onClick={() => props.handleCheckboxChange(props.title)}
+                onClick={(e) =>
+                  onChange(
+                    formData[parent][index].id,
+                    { [props.title]: false },
+                    parent
+                  )
+                }
                 className="no"
-              
               >
                 No
               </div>
               <div
-                onClick={() => props.handleCheckboxChange(props.title)}
+                onClick={(e) =>
+                  onChange(
+                    formData[parent][index].id,
+                    { [props.title]: true },
+                    parent
+                  )
+                }
                 className="yes no-toggle"
               >
                 Yes
@@ -58,4 +72,4 @@ const InlineSwitch = (props) => {
   );
 };
 
-export default InlineSwitch;
+export default InlineChildSwitch;

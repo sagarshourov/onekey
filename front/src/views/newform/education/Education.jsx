@@ -14,7 +14,14 @@ import Institution from "./Institution";
 
 const Education = (props) => {
   const [date, setDate] = useState("");
-  const { errors, register, fieldVisibility, handleCheckboxChange } = props;
+  const {
+    errors,
+    register,
+    formData,
+    setFormData,
+    fieldVisibility,
+    handleCheckboxChange,
+  } = props;
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Employment / Education </h2>
@@ -28,6 +35,7 @@ const Education = (props) => {
         title={"jobTypeInput"}
         data={data.job_types}
         label="Primary Occupation"
+        inline={true}
       />
       <InlineInputText
         title={"jobEmployer"}
@@ -38,6 +46,7 @@ const Education = (props) => {
         label=" Present Employer or School Name"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -49,6 +58,7 @@ const Education = (props) => {
         label=" Street address (Line 1)"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"jobAddress.streetAddress2"}
@@ -59,6 +69,7 @@ const Education = (props) => {
         label=" Street address (Line 2)"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -70,6 +81,7 @@ const Education = (props) => {
         label=" City"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -80,11 +92,12 @@ const Education = (props) => {
         errors={props.errors}
         label=" State/Province"
         isVisible={true}
-        disabled={fieldVisibility["jobAddress.state_checkbox"]}
+        disabled={formData["jobAddress.state_checkbox"]}
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
         check="jobAddress.state_checkbox"
         checkLabel="Does not apply"
+        formData={formData}
       />
       <InlineInputText
         title={"jobAddress.zipCode"}
@@ -94,11 +107,12 @@ const Education = (props) => {
         errors={props.errors}
         label=" Postal Zone/Zip Code"
         isVisible={true}
-        disabled={fieldVisibility["jobAddress.zipCode_checkbox"]}
+        disabled={formData["jobAddress.zipCode_checkbox"]}
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
         check="jobAddress.zipCode_checkbox"
         checkLabel="Does not apply"
+        formData={formData}
       />
       <InlineInputText
         title={"jobPhoneNumber"}
@@ -109,6 +123,7 @@ const Education = (props) => {
         label=" Telephone number"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineDrop
@@ -118,6 +133,7 @@ const Education = (props) => {
         title={"jobAddress.country"}
         data={data.job_types}
         label="Country/Region"
+        inline={true}
       />
 
       <InlineInputDate
@@ -139,11 +155,12 @@ const Education = (props) => {
         errors={props.errors}
         label=" Postal Zone/Zip Code"
         isVisible={true}
-        disabled={fieldVisibility["hasJobMonthlyIncome-checkbox"]}
+        disabled={formData["hasJobMonthlyIncome-checkbox"]}
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
         check="hasJobMonthlyIncome-checkbox"
         checkLabel="Monthly Income In Local Currency"
+        formData={formData}
       />
 
       <InputTextArea
@@ -154,6 +171,7 @@ const Education = (props) => {
         label="Briefly describe your duties"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineSwitch
@@ -161,28 +179,33 @@ const Education = (props) => {
         title="hasBeenPreviouslyEmployed"
         label=" Were you previously employed?"
         handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
       />
 
       <PreviousJob
         register={props.register}
         errors={props.errors}
-        fieldVisibility={fieldVisibility}
-        isVisible={fieldVisibility["hasBeenPreviouslyEmployed"]}
+        fieldVisibility={formData}
+        isVisible={formData["hasBeenPreviouslyEmployed"]}
+        formData={formData}
       />
       <InlineSwitch
         isVisible={true}
         title="hasAttendedEducationalInstitutions"
         label=" Have you attended any educational institutions at a secondary level or above?"
         handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
+        
       />
       <Institution
         register={props.register}
         errors={props.errors}
-        fieldVisibility={fieldVisibility}
-        isVisible={fieldVisibility["hasAttendedEducationalInstitutions"]}
+        fieldVisibility={formData}
+        isVisible={formData["hasAttendedEducationalInstitutions"]}
         title="hasAttendedEducationalInstitutions"
         label=" Have you attended any educational institutions at a secondary level or above?"
         handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
       />
     </>
   );

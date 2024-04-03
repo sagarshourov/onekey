@@ -52,12 +52,14 @@ const ImmediateRelative = (props) => {
                 { label: "SIBLING", value: "SIBLING" },
               ]}
               label="Relationship to You"
+              inline={true}
             />
             <InlineDrop
               isVisible={true}
               register={props.register}
               errors={props.errors}
               title={"motherInfo.statusInput"}
+              inline={true}
               data={[
                 { label: "U.S. CITIZEN", value: "US_CITIZEN" },
                 {

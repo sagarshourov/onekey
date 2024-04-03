@@ -50,45 +50,6 @@ const Main = (props) => {
         permanentResidents: "",
       },
     ],
-    hasSameMailingAddressAsHome: false,
-    hasAdditionalPhoneNumbers: false,
-    hasAdditionalEmails: false,
-    hasAdditionalSocialMedia: false,
-    hasOtherTravelers: false,
-    travelingWithOrganization: false,
-    haveYouEverBeenToUS: false,
-    hasIssuedVisa: false,
-    hasBeenRefusedForVisa: false,
-
-    hasAnyoneEverFilledOnBehalf: false,
-
-    hasWorkedToOrganization: false,
-    hasOtherSpeakingLanguages: false,
-    belongsToTribe: false,
-    hasImmediateRelativesInUS: false,
-
-    fatherInfo: [
-      {
-        hasBirthDate: false,
-        isInUS: false,
-      },
-    ],
-    motherInfo: [
-      {
-        hasBirthDate: false,
-        isInUS: false,
-      },
-    ],
-    relatives: [
-      {
-        hasImmediateRelativesInUS: false,
-      },
-    ],
-    hasImmediateRelativesInUS: false,
-    hasWorkedToOrganization: false,
-    //hasOtherSpeakingLanguages: false, // duplicate
-    hasBeenPreviouslyEmployed: false,
-    hasAttendedEducationalInstitutions: false,
   });
 
   const [fieldVisibility, setFieldVisibility] = useState({
@@ -97,82 +58,59 @@ const Main = (props) => {
   });
 
   //additionalFirstName, additionalLastName , telecodeFirstName ,telecodeLastName ,gender, maritalStatus , birthDate, birthCity , birthStateProvince , birthCountryInput
-  let schema = {};
-  if (currentStep == 0) {
-    schema = yup
-      .object({
-        firstName: yup.string().required("First Name Required!").min(2),
-        lastName: yup.string().required().min(2),
-        userEmail: yup.string().required().email(),
+  const schema = yup
+    .object({
+      firstName: yup.string().required("First Name Required!").min(2),
+      lastName: yup.string().required().min(2),
+      userEmail: yup.string().required().email(),
 
-        // additionalFirstName: yup.string().required().min(2),
-        additionalFirstName: yup.string().when("hasAdditionalNames", {
-          is: true,
-          then: yup.string().required("Must enter"),
-          otherwise: yup.string(), // or any other validation rules for when it's false
-        }),
-        additionalLastName: yup.string().when("hasAdditionalNames", {
-          is: true,
-          then: yup.string().required("Must enter").min(2),
-          otherwise: yup.string(), // or any other validation rules for when it's false
-        }),
-        telecodeFirstName: yup.string().when("hasTelecode", {
-          is: true,
-          then: yup.string().required("Must enter"),
-          otherwise: yup.string(), // or any other validation rules for when it's false
-        }),
-        telecodeLastName: yup.string().when("hasTelecode", {
-          is: true,
-          then: yup.string().required("Must enter"),
-          otherwise: yup.string(), // or any other validation rules for when it's false
-        }),
-        birthCity: yup.string().required().min(2),
+      // additionalFirstName: yup.string().required().min(2),
+      additionalFirstName: yup.string().when("hasAdditionalNames", {
+        is: true,
+        then: yup.string().required("Must enter"),
+        otherwise: yup.string(), // or any other validation rules for when it's false
+      }),
+      additionalLastName: yup.string().when("hasAdditionalNames", {
+        is: true,
+        then: yup.string().required("Must enter").min(2),
+        otherwise: yup.string(), // or any other validation rules for when it's false
+      }),
+      telecodeFirstName: yup.string().when("hasTelecode", {
+        is: true,
+        then: yup.string().required("Must enter"),
+        otherwise: yup.string(), // or any other validation rules for when it's false
+      }),
+      telecodeLastName: yup.string().when("hasTelecode", {
+        is: true,
+        then: yup.string().required("Must enter"),
+        otherwise: yup.string(), // or any other validation rules for when it's false
+      }),
+      birthCity: yup.string().required().min(2),
 
-        birthStateProvince: yup.string().when("hasBirthStateProvince", {
-          is: false,
-          then: yup.string().required("Birth State/Province Required!").min(2),
-        }),
-        fullName: yup.string().when("hasFullName", {
-          is: false,
-          then: yup.string().required("Full Name is  Required!").min(2),
-        }),
-      })
-      .required();
-  } else if (currentStep == 1) {
-    schema = yup
-      .object({
-        passportNumber: yup.string().required().min(2),
-        passportBookNumber: yup.string().required().min(2),
-        passportCity: yup.string().required().min(2),
-        nationalities: yup.array().of(
-          yup.object().shape({
-            country: yup.string().required("Country is required"),
-            passportNumber: yup
-              .string()
-              .required("Passport number is required"),
-          })
-        ),
-      })
-      .required();
-  } else if (currentStep == 2) {
-    schema = yup
-      .object({
-        streetAddress: yup.string().required().min(2),
-      })
-      .required();
-  } else if (currentStep == 3) {
-    schema = yup.object({}).required();
-  } else if (currentStep == 4) {
-    schema = yup.object({}).required();
-  } else if (currentStep == 5) {
-    schema = yup.object({}).required();
-  } else if (currentStep == 6) {
-    schema = yup.object({}).required();
-  }
+      birthStateProvince: yup.string().when("hasBirthStateProvince", {
+        is: false,
+        then: yup.string().required("Birth State/Province Required!").min(2),
+      }),
+      fullName: yup.string().when("hasFullName", {
+        is: false,
+        then: yup.string().required("Full Name is  Required!").min(2),
+      }),
+      passportNumber: yup.string().required().min(2),
+      passportBookNumber: yup.string().required().min(2),
+      passportCity: yup.string().required().min(2),
+      nationalities: yup.array().of(
+        yup.object().shape({
+          country: yup.string().required("Country is required"),
+          passportNumber: yup.string().required("Passport number is required"),
+        })
+      ),
+    })
+    .required();
 
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -189,6 +127,34 @@ const Main = (props) => {
 
     // fieldName && register(fieldName);
   };
+
+  // const onSubmit = async (data) => {
+  //   setFormData((formData) => ({ ...formData, ...data }));
+
+  //   setCurrentStep(currentStep + 1);
+
+  //   if (currentStep < 3) {
+  //     setCurrentStep(currentStep + 1);
+  //   } else {
+  //     // Final step, handle form submission
+  //     console.log("Form data:", { ...formData, ...data });
+  //   }
+
+  //   console.log("Form data:", formData);
+  //   // console.log("currentStep:", currentStep);
+
+  //   setCurrentStep(currentStep + 1);
+  //   // console.log("onSubmit");
+  //   // //event.preventDefault();
+  //   // console.log("onSubmit");
+  //   // const result = await trigger();
+  //   // //var data = new FormData(event.target);
+  //   // console.log("data", event);
+  //   // console.log("result", result);
+  //   // if (!result) {
+  //   // } else {
+  //   // }
+  // };
 
   const nextStep = () => {
     console.log("next atep", currentStep);
@@ -227,7 +193,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 1:
@@ -249,7 +214,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 3:
@@ -271,7 +235,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 5:
@@ -282,7 +245,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 6:
@@ -293,7 +255,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 7:
@@ -304,7 +265,6 @@ const Main = (props) => {
             register={register}
             errors={errors}
             formData={formData}
-            setFormData={setFormData}
           />
         );
       case 8:

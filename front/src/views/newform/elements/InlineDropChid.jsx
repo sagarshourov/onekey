@@ -1,6 +1,7 @@
 import classnames from "classnames";
 
-const InlineDrop = (props) => {
+const InlineDropChid = (props) => {
+  const { formData, parent, index, updateNationality } = props;
   return (
     <>
       {props.isVisible && (
@@ -18,10 +19,10 @@ const InlineDrop = (props) => {
           </label>
           <div className="basis-4/6">
             <select
-              {...props.register(props.title)}
+              {...props.register(`${parent}.${index}.${props.title}`)}
               className="form-select w-full "
               aria-label=".form-select example"
-              name={props.title}
+              name={`${parent}.${index}.${props.title}`}
             >
               {props.data &&
                 props.data.map((data, index) => (
@@ -30,11 +31,13 @@ const InlineDrop = (props) => {
                   </option>
                 ))}
             </select>
-            {props.errors[props.title] && (
-              <div className="text-danger mt-2">
-                {props.errors[props.title].message}
-              </div>
-            )}
+            {props.errors[parent] &&
+              props.errors[parent][index] &&
+              props.errors[parent][index][props.title] && (
+                <div className="text-danger mt-2">
+                  {props.errors[parent][index][props.title].message}
+                </div>
+              )}
             <div className="form-help">{props.helpText}</div>
           </div>
         </div>
@@ -43,4 +46,4 @@ const InlineDrop = (props) => {
   );
 };
 
-export default InlineDrop;
+export default InlineDropChid;

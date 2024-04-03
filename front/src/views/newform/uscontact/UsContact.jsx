@@ -11,19 +11,14 @@ const UsContact = (props) => {
     hasBirthStateProvince: false,
     // Add more fields if needed
   });
-  const handleCheckboxChange = (fieldName) => {
-    setFieldVisibility({
-      ...fieldVisibility,
-      [fieldName]: !fieldVisibility[fieldName],
-    });
-  };
+  
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Us Contact </h2>
 
       <hr className="my-5 sa-border-primary" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
           title={"firstName"}
           helpText=""
@@ -115,7 +110,7 @@ const UsContact = (props) => {
           isVisible={true}
           disabled={false}
         />
-      </div>
+      </div> */}
     </>
   );
 };

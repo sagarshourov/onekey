@@ -3,11 +3,16 @@ import { useState, useEffect } from "react";
 import classnames from "classnames";
 import InlineInputText from "../elements/InlineInputText";
 
+import InputTextArea from "../elements/InputTextArea";
+
 import InlineDrop from "../elements/InlineDrop";
 import InlineInputDate from "../elements/InlineInputDate";
 import data from "../elements/data.json";
+
+import InlineSwitch  from "../elements/InlineSwitch";
 const PreviousJob = (props) => {
   // console.log("key", props?.check);
+  const { formData } = props;
   return (
     <>
       {props.isVisible && (
@@ -24,8 +29,9 @@ const PreviousJob = (props) => {
               label=" Employer name"
               isVisible={true}
               disabled={false}
-              fieldVisibility={props.fieldVisibility}
+              fieldVisibility={formData}
               handleCheckboxChange={props.handleCheckboxChange}
+              formData={formData}
             />
 
             <InlineInputText
@@ -37,6 +43,7 @@ const PreviousJob = (props) => {
               label=" Street address (Line 1)"
               isVisible={true}
               disabled={false}
+              formData={formData}
             />
             <InlineInputText
               title={"jobAddress.streetAddress2"}
@@ -47,6 +54,7 @@ const PreviousJob = (props) => {
               label=" Street address (Line 2)"
               isVisible={true}
               disabled={false}
+              formData={formData}
             />
 
             <InlineInputText
@@ -58,6 +66,7 @@ const PreviousJob = (props) => {
               label=" City"
               isVisible={true}
               disabled={false}
+              formData={formData}
             />
 
             <InlineInputText
@@ -68,11 +77,12 @@ const PreviousJob = (props) => {
               errors={props.errors}
               label=" State/Province"
               isVisible={true}
-              disabled={fieldVisibility["jobAddress.state_checkbox"]}
+              disabled={formData["jobAddress.state_checkbox"]}
               condition={true}
               handleCheckboxChange={props.handleCheckboxChange}
               check="jobAddress.state_checkbox"
               checkLabel="Does not apply"
+              formData={formData}
             />
             <InlineInputText
               title={"jobAddress.zipCode"}
@@ -82,11 +92,13 @@ const PreviousJob = (props) => {
               errors={props.errors}
               label=" Postal Zone/Zip Code"
               isVisible={true}
-              disabled={fieldVisibility["jobAddress.zipCode_checkbox"]}
+              disabled={formData["jobAddress.zipCode_checkbox"]}
               condition={true}
               handleCheckboxChange={props.handleCheckboxChange}
               check="jobAddress.zipCode_checkbox"
               checkLabel="Does not apply"
+              formData={formData}
+              fieldVisibility={formData}
             />
             <InlineDrop
               isVisible={true}
@@ -95,6 +107,7 @@ const PreviousJob = (props) => {
               title={"jobAddress.country"}
               data={data.countries}
               label="Country/Region"
+              inline={true}
             />
             <InlineInputText
               title={"jobPhoneNumber"}
@@ -105,6 +118,8 @@ const PreviousJob = (props) => {
               label=" Telephone number"
               isVisible={true}
               disabled={false}
+              formData={formData}
+              fieldVisibility={formData}
             />
 
             <InlineInputText
@@ -115,7 +130,8 @@ const PreviousJob = (props) => {
               errors={props.errors}
               label=" Job title"
               isVisible={true}
-              disabled={fieldVisibility["jobAddress.state_checkbox"]}
+              disabled={formData["jobAddress.state_checkbox"]}
+              formData={formData}
             />
             <InlineInputText
               title={"jobAddress.state"}
@@ -125,7 +141,8 @@ const PreviousJob = (props) => {
               errors={props.errors}
               label="Supervisor's Family Name(s)"
               isVisible={true}
-              disabled={fieldVisibility["jobAddress.state_checkbox"]}
+              disabled={formData["jobAddress.state_checkbox"]}
+              formData={formData}
             />
             <InlineInputText
               title={"jobAddress.state"}
@@ -135,7 +152,8 @@ const PreviousJob = (props) => {
               errors={props.errors}
               label="Supervisor's First (Given) Name(s)"
               isVisible={true}
-              disabled={fieldVisibility["jobAddress.state_checkbox"]}
+              disabled={formData["jobAddress.state_checkbox"]}
+              formData={formData}
             />
 
             <InlineInputDate

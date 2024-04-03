@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
 import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
+import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
-import InlineDrop from "../elements/InlineDrop";
+import InlineDropChid from "../elements/InlineDropChid";
 import InputTextArea from "../elements/InputTextArea";
 import { filter } from "lodash";
 import dat from "../elements/data.json";
-import InlineSwitch from "../elements/InlineSwitch";
+import InlineChildSwitch from "../elements/InlineChildSwitch";
 function removeArr(array, index) {
   return filter(array, (_items, key) => {
     return _items.id !== index;
@@ -19,40 +19,28 @@ const Nationalities = (props) => {
 
   console.log("formdata", formData);
 
-  // console.log("key", props?.check);
-  // const [nationalities, setNationalities] = useState([
-  //   {
-  //     id: 0,
-  //     values: [
-  //       {
-  //         value: "",
-  //       },
-  //       {
-  //         value: "",
-  //       },
-  //     ],
-  //   },
-  // ]);
   const addNationalities = (e) => {
-    // let newObj = {
-    //   id: nationalities[nationalities.length - 1].id + 1,
-    //   values: [
-    //     {
-    //       value: "",
-    //     },
-    //     {
-    //       value: "",
-    //     },
-    //   ],
-    // };
-
     setFormData((formData) => ({
       ...formData,
       nationalities: [
         ...(formData.nationalities || []), // Ensure previous nationalities are included if they exist
-        { id: Date.now(), value: "" }, // New data entry
+        {
+          id: Date.now(),
+          country: "",
+          passportNumber: "",
+          hasPassportNumber: false,
+        }, // New data entry
         // Add more data entries as needed
       ],
+    }));
+  };
+
+  const updateNationality = (id, newData) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      nationalities: prevFormData.nationalities.map((nationality) =>
+        nationality.id === id ? { ...nationality, ...newData } : nationality
+      ),
     }));
   };
 
@@ -79,8 +67,8 @@ const Nationalities = (props) => {
                   {" "}
                   Other Nationality # {index + 1}
                 </h3>
-                <InlineDrop
-                  title={"nationalities[" + index + "].country"}
+                <InlineDropChid
+                  title={`nationalities.${index}.country`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
@@ -89,55 +77,44 @@ const Nationalities = (props) => {
                   disabled={false}
                   data={dat.countries}
                   inline={true}
+                  updateNationality={updateNationality}
+                  formData={formData}
+                  parent={"nationalities"}
+                  index={index}
                 />
                 <div className="mt-5 ">
-                  {/* <div className="form-check form-switch mt-5">
-                    <label
-                      className=" sa-label mr-2"
-                      htmlFor="checkbox-switch-7"
-                    >
-                      Do you hold a passport for the other country/region of
-                      origin (nationality) above?
-                    </label>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      onChange={() =>
-                        props.handleCheckboxChange("hasPassportNumber" + index)
-                      }
-                      checked={
-                        props.fieldVisibility["hasPassportNumber" + index]
-                          ? true
-                          : false
-                      }
-                    />
-                  </div> */}
-
-                  <InlineSwitch
+                  <InlineChildSwitch
                     isVisible={true}
                     title={"hasPassportNumber"}
                     label=" Do you hold a passport for the other country/region of
             origin (nationality) above?"
-                    handleCheckboxChange={props.handleCheckboxChange}
-                    formData={formData.nationalities[index]}
+                    formData={formData}
                     fullWidth={false}
                     helpText=" "
                     inline={true}
+                    parent="nationalities"
+                    index={index}
+                    setFormData={setFormData}
+                    onChange={updateNationality}
                   />
                 </div>
 
-                <InlineInputText
-                  title={"nationalities[" + index + "].passportNumber"}
+                <InlineInputChildText
+                  title={`passportNumber`}
                   helpText=""
                   register={props.register}
                   type="text"
                   errors={props.errors}
                   label=" Passport/Travel Document Number"
                   isVisible={
-                    props.formData?.nationalities[index]?.passportNumber
+                    props.formData?.nationalities[index]?.hasPassportNumber
                   }
                   disabled={false}
-                  handleCheckboxChange={props.handleCheckboxChange}
+                  updateNationality ={updateNationality}
+                  parent="nationalities"
+                  index={index}
+                  formData={formData}
+                  setFormData={setFormData}
                 />
 
                 <div className="flex justify-end mt-5">

@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 
 import classnames from "classnames";
 
-const InlineInputText = (props) => {
+const InlineInputChildText = (props) => {
   // console.log("key", props?.check);
+  const { formData, parent, index, updateNationality } = props;
+
+  console.log("errors", props.errors);
   return (
     <>
       {props.isVisible && (
@@ -23,21 +26,27 @@ const InlineInputText = (props) => {
             }
           >
             <input
-              {...props.register(props.title)}
+              {...props.register(`${parent}.${index}.${props.title}`)}
               type={props.type}
               placeholder={props.label}
-              name={props.title}
+              name={`${parent}.${index}.${props.title}`}
+              defaultValue={formData[parent][index][props.title]}
               className={classnames({
                 "form-control": true,
-                "border-danger": props.errors[props.title],
+                "border-danger":
+                  props.errors[parent] &&
+                  props.errors[parent][index] &&
+                  props.errors[parent][index][props.title],
               })}
               disabled={props.disabled}
             />
-            {props.errors[props.title] && (
-              <div className="text-danger mt-2">
-                {props.errors[props.title].message}
-              </div>
-            )}
+            {props.errors[parent] &&
+              props.errors[parent][index] &&
+              props.errors[parent][index][props.title] && (
+                <div className="text-danger mt-2">
+                  {props.errors[parent][index][props.title].message}
+                </div>
+              )}
             <div className="form-help">{props.helpText}</div>
           </div>
 
@@ -48,13 +57,12 @@ const InlineInputText = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 value=""
-                onChange={() => props.handleCheckboxChange(props.check)}
-                name={props.check}
-                checked={
-                  props.formData[props.check] && props.formData[props.check]
-                    ? true
-                    : false
+                onChange={(e) =>
+                  updateNationality(formData[parent][index].id, {
+                    [props.title]: e.target.value,
+                  })
                 }
+                name={props.check}
               />
               <label className="form-check-label" htmlFor="checkbox-switch-3">
                 {props.checkLabel ? props.checkLabel : "Does not apply"}
@@ -67,4 +75,4 @@ const InlineInputText = (props) => {
   );
 };
 
-export default InlineInputText;
+export default InlineInputChildText;

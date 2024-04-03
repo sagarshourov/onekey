@@ -27,7 +27,7 @@ const Trip = (props) => {
 
       <hr className="my-5 sa-border-primary" />
 
-      <InlineInputText
+      {/* <InlineInputText
         title={"applicationCountryInput"}
         helpText="Renewal with Interview Waiver: You can use this form to renew your valid U.S. visa without attending an embassy interview. In addition, if your visa has expired within the last 12 to 48 months (depending on your citizenship), you may be eligible for an interview waiver. "
         register={register}
@@ -35,13 +35,16 @@ const Trip = (props) => {
         errors={errors}
         label="Choose an embassy location for your visa application interview"
         isVisible={true}
-        disabled={fieldVisibility["applicationCountryInput"]}
+       
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
-        check="applicationCountryInput"
+      
         checkLabel="Need help choosing a location? Choose a location later"
+        formData={formData}
+        check="applicationCountryInput_check"
+        disabled={formData.applicationCountryInput_check}
       />
-      <hr className="my-5 sa-border-primary" />
+      <hr className="my-5 sa-border-primary" /> */}
 
       <div className="mt-5">
         <InlineDrop
@@ -62,6 +65,7 @@ const Trip = (props) => {
           label="Are you applying for yourself or someone else?"
           isVisible={true}
           register={register}
+          inline={true}
         />
         <InputTextArea
           title="reasonForTripToUSSelect.explain"

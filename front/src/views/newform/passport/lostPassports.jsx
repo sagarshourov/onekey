@@ -41,7 +41,7 @@ const LostPassports = (props) => {
             formData.lostpassports.map((data, index) => (
               <div key={index}>
                 <InlineInputText
-                  title={"passportNumber"}
+                  title={`lostpassports.${index}.passportNumber`}
                   helpText=""
                   register={props.register}
                   type="text"
@@ -51,11 +51,12 @@ const LostPassports = (props) => {
                   disabled={props.fieldVisibility["passportNumber"]}
                   condition={true}
                   handleCheckboxChange={props.handleCheckboxChange}
-                  check="passportNumber"
+                  check={`lostpassports.${index}.passportNumber_check`}
+                  formData={formData}
                 />
 
                 <InlineDrop
-                  title={"passportIssueCountryInput"}
+                  title={`lostpassports.${index}.passportIssueCountryInput`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
@@ -64,17 +65,19 @@ const LostPassports = (props) => {
                   disabled={false}
                   data={dat.countries}
                   inline={true}
+                  formData={formData}
                   
                 />
 
                 <InputTextArea
-                  title={"Explain"}
+                  title={`lostpassports.${index}.Explain`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
                   label="Explain"
                   isVisible={true}
                   disabled={false}
+                  formData={formData}
                 />
                 <div className="flex justify-end mt-5">
                   <button

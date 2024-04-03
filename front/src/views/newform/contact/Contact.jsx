@@ -17,7 +17,7 @@ const Contact = (props) => {
       <hr className="my-5 sa-border-primary" />
 
       <InlineInputText
-        title={"homeAddress.streetAddress"}
+        title={"streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"
@@ -25,6 +25,7 @@ const Contact = (props) => {
         label=" Street address (Line 1)"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -35,6 +36,7 @@ const Contact = (props) => {
         label=" Street address (Line 2)"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -45,6 +47,7 @@ const Contact = (props) => {
         label=" City"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -55,6 +58,7 @@ const Contact = (props) => {
         label=" State/Province"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -66,6 +70,7 @@ const Contact = (props) => {
         label=" Postal Zone/Zip Code"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineDrop
@@ -100,6 +105,7 @@ const Contact = (props) => {
         label="Street address (Line 1)"
         isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -108,8 +114,9 @@ const Contact = (props) => {
         type="text"
         errors={props.errors}
         label="Street address (Line 2)"
-        isVisible={fieldVisibility.hasSameMailingAddressAsHome}
+        isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -119,8 +126,9 @@ const Contact = (props) => {
         type="text"
         errors={props.errors}
         label="City"
-        isVisible={fieldVisibility.hasSameMailingAddressAsHome}
+        isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -129,8 +137,9 @@ const Contact = (props) => {
         type="text"
         errors={props.errors}
         label="State/Province"
-        isVisible={fieldVisibility.hasSameMailingAddressAsHome}
+        isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -139,8 +148,9 @@ const Contact = (props) => {
         type="text"
         errors={props.errors}
         label="Postal Zone/Zip Code"
-        isVisible={fieldVisibility.hasSameMailingAddressAsHome}
+        isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
+        formData={formData}
       />
       <InlineDrop
         title={"passportType"}
@@ -148,7 +158,7 @@ const Contact = (props) => {
         register={props.register}
         errors={props.errors}
         label=" Country/Region"
-        isVisible={fieldVisibility.hasSameMailingAddressAsHome}
+        isVisible={props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         data={dat.countries}
         inline={true}
@@ -163,6 +173,7 @@ const Contact = (props) => {
         label=" Primary Phone Number"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineInputText
@@ -174,6 +185,7 @@ const Contact = (props) => {
         label=" Secondary Phone Number"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -184,6 +196,7 @@ const Contact = (props) => {
         label="Work Phone Number"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineSwitch
@@ -204,8 +217,9 @@ const Contact = (props) => {
         type="text"
         errors={props.errors}
         label="Work Phone Number"
-        isVisible={formData.hasAdditionalPhoneNumbers}
+        isVisible={props.formData?.hasAdditionalPhoneNumbers}
         disabled={false}
+        formData={formData}
       />
 
       <InlineSwitch
@@ -219,14 +233,15 @@ const Contact = (props) => {
         inline={true}
       />
       <InlineInputText
-        title={"hasAdditionalEmails"}
+        title={"additionalEmails"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="Additional email address"
-        isVisible={props.formData?.hasAdditionalEmails}
+        isVisible={props.formData?.additionalEmails}
         disabled={false}
+        formData={formData}
       />
 
       <InlineDrop
@@ -239,6 +254,7 @@ const Contact = (props) => {
         disabled={false}
         data={dat.countries}
         inline={true}
+        formData={formData}
       />
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}
@@ -249,6 +265,7 @@ const Contact = (props) => {
         label="Social Media Identifier"
         isVisible={true}
         disabled={false}
+        formData={formData}
       />
 
       <InlineSwitch
@@ -273,6 +290,7 @@ const Contact = (props) => {
         label="Additional Social Media Platform"
         isVisible={formData.hasAdditionalSocialMedia}
         disabled={false}
+        formData={formData}
       />
       
 
@@ -285,6 +303,7 @@ const Contact = (props) => {
         label="Additional Social Media Handle"
         isVisible={formData.hasAdditionalSocialMedia}
         disabled={false}
+        formData={formData}
       />
     </>
   );

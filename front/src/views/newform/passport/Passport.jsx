@@ -256,8 +256,8 @@ const Passport = (props) => {
           isVisible={true}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
-          check="nationalId"
-          disabled={formData.nationalId}
+          check="nationalId_check"
+          disabled={formData.nationalId_check}
           formData={formData}
         />
         <InlineInputText
@@ -268,10 +268,11 @@ const Passport = (props) => {
           errors={props.errors}
           label=" U.S. Social Security area number"
           isVisible={true}
-          disabled={formData.USSocialSecurityAreaNumber}
+          disabled={formData.USSocialSecurityAreaNumber_check}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
-          check="USSocialSecurityAreaNumber"
+          check="USSocialSecurityAreaNumber_check"
+          formData={formData}
         />
         {/* <InlineInputText
           title={"USSocialSecurityGroupNumber"}
@@ -307,10 +308,10 @@ const Passport = (props) => {
           errors={props.errors}
           label="U.S. Taxpayer ID Number"
           isVisible={true}
-          disabled={formData.USTaxpayerIdNumber}
+          disabled={formData.USTaxpayerIdNumber_check}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
-          check="USTaxpayerIdNumber"
+          check="USTaxpayerIdNumber_check"
           formData={formData}
         />
       </div>
