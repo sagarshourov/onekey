@@ -7,9 +7,19 @@ import InlineInputText from "../elements/InlineInputText";
 
 import InlineSwitch from "../elements/InlineSwitch";
 import dat from "../elements/data.json";
+import AddPhone from "./AddPhone";
+import AddEmail from "./AddEmail";
+import AdditionalSocialMedia from "./additionalSocialMedia";
 const Contact = (props) => {
   const [date, setDate] = useState("");
-  const { errors, register, fieldVisibility, formData, handleCheckboxChange } = props;
+  const {
+    errors,
+    register,
+    fieldVisibility,
+    setFormData,
+    formData,
+    handleCheckboxChange,
+  } = props;
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Contact Information </h2>
@@ -17,7 +27,7 @@ const Contact = (props) => {
       <hr className="my-5 sa-border-primary" />
 
       <InlineInputText
-        title={"streetAddress"}
+        title={"homeAddress.streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"
@@ -28,7 +38,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"homeAddress.streetAddress2"}
         helpText="   "
         register={props.register}
         type="text"
@@ -39,7 +49,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"homeAddress.city"}
         helpText="   "
         register={props.register}
         type="text"
@@ -50,31 +60,37 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"homeAddress.state"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label=" State/Province"
         isVisible={true}
-        disabled={false}
         formData={formData}
+        condition={true}
+        handleCheckboxChange={handleCheckboxChange}
+        check="homeAddressState_checkbox"
+        disabled={formData.homeAddressState_checkbox}
       />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"homeAddress.zipCode"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label=" Postal Zone/Zip Code"
         isVisible={true}
-        disabled={false}
         formData={formData}
+        condition={true}
+        handleCheckboxChange={handleCheckboxChange}
+        check="homeAddress_ZipCode_checkbox"
+        disabled={formData.homeAddress_ZipCode_checkbox}
       />
 
       <InlineDrop
-        title={"passportType"}
+        title={"homeAddress.country"}
         helpText=""
         register={props.register}
         errors={props.errors}
@@ -97,75 +113,81 @@ const Contact = (props) => {
       />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"mailingAddress.streetAddress"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="Street address (Line 1)"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"mailingAddress.streetAddress2"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="Street address (Line 2)"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
       />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"mailingAddress.city"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="City"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"mailingAddress.state"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="State/Province"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
-        disabled={false}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         formData={formData}
+        condition={true}
+        handleCheckboxChange={handleCheckboxChange}
+        check="mailingAddressState_checkbox"
+        disabled={formData.mailingAddressState_checkbox}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"mailingAddress.zipCode"}
         helpText="   "
         register={props.register}
         type="text"
         errors={props.errors}
         label="Postal Zone/Zip Code"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
-        disabled={false}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         formData={formData}
+        condition={true}
+        handleCheckboxChange={handleCheckboxChange}
+        check="mailingAddressZipCode_checkbox"
+        disabled={formData.mailingAddressZipCode_checkbox}
       />
       <InlineDrop
-        title={"passportType"}
+        title={"mailingAddress.country"}
         helpText=""
         register={props.register}
         errors={props.errors}
         label=" Country/Region"
-        isVisible={props.formData?.hasSameMailingAddressAsHome}
+        isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         data={dat.countries}
         inline={true}
       />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"phonePrimary"}
         helpText="   "
         register={props.register}
         type="text"
@@ -177,7 +199,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"phoneSecondary"}
         helpText="   "
         register={props.register}
         type="text"
@@ -188,7 +210,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
+        title={"phoneWork"}
         helpText="   "
         register={props.register}
         type="text"
@@ -208,6 +230,14 @@ const Contact = (props) => {
         fullWidth={false}
         helpText=" "
         inline={true}
+      />
+
+      <AddPhone
+        formData={formData}
+        isVisible={formData.hasAdditionalPhoneNumbers}
+        setFormData={setFormData}
+        register={register}
+        errors={errors}
       />
 
       <InlineInputText
@@ -232,40 +262,21 @@ const Contact = (props) => {
         helpText=" "
         inline={true}
       />
-      <InlineInputText
-        title={"additionalEmails"}
-        helpText="   "
-        register={props.register}
-        type="text"
-        errors={props.errors}
-        label="Additional email address"
-        isVisible={props.formData?.additionalEmails}
-        disabled={false}
+
+      <AddEmail
         formData={formData}
+        isVisible={formData.hasAdditionalEmails}
+        setFormData={setFormData}
+        register={register}
+        errors={errors}
       />
 
-      <InlineDrop
-        title={"passportType"}
-        helpText=""
-        register={props.register}
-        errors={props.errors}
-        label="Social media provider/Platform"
-        isVisible={true}
-        disabled={false}
-        data={dat.countries}
-        inline={true}
+      <AdditionalSocialMedia
         formData={formData}
-      />
-      <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
-        helpText="   "
-        register={props.register}
-        type="text"
-        errors={props.errors}
-        label="Social Media Identifier"
         isVisible={true}
-        disabled={false}
-        formData={formData}
+        setFormData={setFormData}
+        register={register}
+        errors={errors}
       />
 
       <InlineSwitch
@@ -292,7 +303,6 @@ const Contact = (props) => {
         disabled={false}
         formData={formData}
       />
-      
 
       <InlineInputText
         title={"USSocialSecurityAreaNumber"}

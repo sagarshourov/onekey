@@ -59,8 +59,8 @@ const Passport = (props) => {
           formData={formData}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
-          check="hasPassportBookNumber"
-          disabled={formData.hasPassportBookNumber}
+          check="passportBookNumber_checkbox"
+          disabled={formData.passportBookNumber_checkbox}
         />
         <InlineDrop
           title={"passportIssueCountry"}

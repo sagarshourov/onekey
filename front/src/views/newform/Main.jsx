@@ -50,7 +50,7 @@ const Main = (props) => {
         permanentResidents: "",
       },
     ],
-    hasSameMailingAddressAsHome: false,
+    hasSameMailingAddressAsHome: true,
     hasAdditionalPhoneNumbers: false,
     hasAdditionalEmails: false,
     hasAdditionalSocialMedia: false,
@@ -84,11 +84,30 @@ const Main = (props) => {
         hasImmediateRelativesInUS: false,
       },
     ],
-    hasImmediateRelativesInUS: false,
-    hasWorkedToOrganization: false,
+    //hasImmediateRelativesInUS: false,
+    // hasWorkedToOrganization: false,
     //hasOtherSpeakingLanguages: false, // duplicate
     hasBeenPreviouslyEmployed: false,
     hasAttendedEducationalInstitutions: false,
+    additionalPhones: [
+      {
+        id: Date.now(),
+        number: "",
+      },
+    ],
+    additionalEmails: [
+      {
+        id: Date.now(),
+        email: "",
+      },
+    ],
+    additionalSocials: [
+      {
+        id: Date.now(),
+        platform: "",
+        username: "",
+      },
+    ],
   });
 
   const [fieldVisibility, setFieldVisibility] = useState({
