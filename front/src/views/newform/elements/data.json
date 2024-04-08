@@ -311,5 +311,40 @@
     { "label": "DIVORCED", "value": "DIVORCED" },
     { "label": "LEGALLY SEPARATED", "value": "LEGALLY SEPARATED" },
     { "label": "OTHER", "value": "OTHER" }
+  ],
+  "socialMediaOptions": [
+    { "label": "NONE", "value": "1", "selected": true },
+    { "label": "ASK.FM", "value": "2", "selected": false },
+    { "label": "DOUBAN", "value": "3", "selected": false },
+    { "label": "FACEBOOK", "value": "4", "selected": false },
+    { "label": "FLICKR", "value": "5", "selected": false },
+    { "label": "INSTAGRAM", "value": "6", "selected": false },
+    { "label": "LINKEDIN", "value": "7", "selected": false },
+    { "label": "MYSPACE", "value": "8", "selected": false },
+    { "label": "PINTEREST", "value": "9", "selected": false },
+    { "label": "QZONE (QQ)", "value": "10", "selected": false },
+    { "label": "REDDIT", "value": "11", "selected": false },
+    { "label": "SINA WEIBO", "value": "12", "selected": false },
+    { "label": "TENCENT WEIBO", "value": "13", "selected": false },
+    { "label": "TUMBLR", "value": "14", "selected": false },
+    { "label": "TWITTER", "value": "15", "selected": false },
+    { "label": "TWOO", "value": "16", "selected": false },
+    { "label": "VINE", "value": "17", "selected": false },
+    { "label": "VKONTAKTE (VK)", "value": "18", "selected": false },
+    { "label": "YOUKU", "value": "19", "selected": false },
+    { "label": "YOUTUBE", "value": "20", "selected": false }
+  ],
+  "relation": [
+    { "label": "PARENT", "value": "1" },
+    { "label": "SPOUSE", "value": "2" },
+    { "label": "CHILD", "value": "3" },
+    { "label": "OTHER RELATIVE", "value": "3" },
+    { "label": "FRIEND", "value": "4" }
+  ],
+  "statesOptions": [
+    { "label": "ALABAMA", "value": "1", "selected": true },
+    { "label": "ALASKA", "value": "2", "selected": false },
+    { "label": "AMERICAN SAMOA", "value": "3", "selected": false },
+    { "label": "ARIZONA", "value": "4", "selected": false }
   ]
 }

@@ -6,15 +6,25 @@ import InputText from "../elements/InputText";
 
 const InlineTwoInputText = (props) => {
   // console.log("key", props?.check);
+  const {
+    label,
+    isVisible,
+    handleCheckboxChange,
+    errors,
+    firstFieldLbl,
+    secFieldLbl,
+    register,
+    formData
+  } = props;
   return (
     <>
-      {props.isVisible && (
+      {isVisible && (
         <div className="mt-5 gap-5 flex-none lg:flex lg:flex-row">
           <label
             htmlFor="regular-form-3"
             className="form-label  basis-4/12 sa-label"
           >
-            {props.label}
+            {label}
             <span className="text-danger pl-1">*</span>
           </label>
           <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
@@ -22,32 +32,34 @@ const InlineTwoInputText = (props) => {
               <InputText
                 title={"fatherInfo.firstName"}
                 helpText="  "
-                register={props.register}
+                register={register}
                 type="text"
-                errors={props.errors}
-                label={props.firstFieldLbl}
+                errors={errors}
+                label={firstFieldLbl}
                 isVisible={true}
                 disabled={false}
                 checkLabel="Does not apply"
                 condition={true}
-                fieldVisibility={props.fieldVisibility}
-                handleCheckboxChange={props.handleCheckboxChange}
+                handleCheckboxChange={handleCheckboxChange}
+                formData={formData}
+                check="firstname_checkbox"
               />
             </div>
             <div className="basis-6/12">
               <InputText
                 title={"fatherInfo.lastName"}
                 helpText="  "
-                register={props.register}
+                register={register}
                 type="text"
-                errors={props.errors}
-                label={props.secFieldLbl}
+                errors={errors}
+                label={secFieldLbl}
                 isVisible={true}
                 disabled={false}
                 checkLabel="Does not apply"
                 condition={true}
-                fieldVisibility={props.fieldVisibility}
-                handleCheckboxChange={props.handleCheckboxChange}
+                handleCheckboxChange={handleCheckboxChange}
+                formData={formData}
+                check="lastname_checkbox"
               />
             </div>
           </div>

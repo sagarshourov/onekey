@@ -8,7 +8,7 @@ import InlineInputText from "../elements/InlineInputText";
 import data from "./data.json";
 import InlineInputDate from "../elements/InlineInputDate";
 import InputTextArea from "../elements/InputTextArea";
-import PreviousJob from "./previousJob";
+import PreviousJob from "./PreviousJob";
 import InlineSwitch from "../elements/InlineSwitch";
 import Institution from "./Institution";
 
@@ -37,7 +37,8 @@ const Education = (props) => {
         label="Primary Occupation"
         inline={true}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobEmployer"}
         helpText="   "
         register={props.register}
@@ -49,7 +50,8 @@ const Education = (props) => {
         formData={formData}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobAddress.streetAddress"}
         helpText="   "
         register={props.register}
@@ -60,7 +62,8 @@ const Education = (props) => {
         disabled={false}
         formData={formData}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobAddress.streetAddress2"}
         helpText="   "
         register={props.register}
@@ -72,7 +75,8 @@ const Education = (props) => {
         formData={formData}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobAddress.city"}
         helpText="   "
         register={props.register}
@@ -84,7 +88,8 @@ const Education = (props) => {
         formData={formData}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobAddress.state"}
         helpText=""
         register={props.register}
@@ -99,7 +104,8 @@ const Education = (props) => {
         checkLabel="Does not apply"
         formData={formData}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobAddress.zipCode"}
         helpText=""
         register={props.register}
@@ -114,7 +120,8 @@ const Education = (props) => {
         checkLabel="Does not apply"
         formData={formData}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobPhoneNumber"}
         helpText="   "
         register={props.register}
@@ -147,7 +154,8 @@ const Education = (props) => {
         inline={true}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"jobMonthlyIncome"}
         helpText=""
         register={props.register}
@@ -186,8 +194,9 @@ const Education = (props) => {
         register={props.register}
         errors={props.errors}
         fieldVisibility={formData}
-        isVisible={formData["hasBeenPreviouslyEmployed"]}
+        isVisible={formData.hasBeenPreviouslyEmployed}
         formData={formData}
+        setFormData={setFormData}
       />
       <InlineSwitch
         isVisible={true}
@@ -195,7 +204,6 @@ const Education = (props) => {
         label=" Have you attended any educational institutions at a secondary level or above?"
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
-        
       />
       <Institution
         register={props.register}

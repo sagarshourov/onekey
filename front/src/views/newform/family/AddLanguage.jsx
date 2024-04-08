@@ -7,15 +7,15 @@ import { Lucide } from "@/base-components";
 import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
 import InputTextArea from "../elements/InputTextArea";
-const AddEmail = (props) => {
+const AddLanguage = (props) => {
   const { formData, isVisible, register, errors, setFormData } = props;
   // console.log("key", props?.check);
 
-  const addEmail = (e) => {
+  const addLang = (e) => {
     setFormData((formData) => ({
       ...formData,
-      additionalEmails: [
-        ...(formData.additionalEmails || []), // Ensure previous nationalities are included if they exist
+      additionalLanguage: [
+        ...(formData.additionalLanguage || []), // Ensure previous nationalities are included if they exist
         {
           id: Date.now(),
           number: "",
@@ -25,14 +25,14 @@ const AddEmail = (props) => {
     }));
   };
 
-  const deleteEmail = (e) => {
-    if (formData.additionalEmails && formData.additionalEmails.length > 1) {
+  const deleteLang = (e) => {
+    if (formData.additionalLanguage && formData.additionalLanguage.length > 1) {
       setFormData((formData) => ({
         ...formData,
-        additionalEmails: formData.additionalEmails.filter(
-          (additionalEmail) => {
+        additionalLanguage: formData.additionalLanguage.filter(
+          (additionalLanguage) => {
             // Condition to filter out values
-            return additionalEmail.id !== e; // Replace idToDelete with the ID you want to delete
+            return additionalLanguage.id !== e; // Replace idToDelete with the ID you want to delete
           }
         ),
       }));
@@ -43,27 +43,27 @@ const AddEmail = (props) => {
     <>
       {isVisible && (
         <>
-          {formData.additionalEmails &&
-            formData.additionalEmails.map((data, index) => (
+          {formData.additionalLanguage &&
+            formData.additionalLanguage.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                  <InlineInputText
-                    required={true}
-                    title={`additionalEmails.${index}`}
+                   <InlineInputText
+    required={true}
+                    title={`additionalLanguage.${index}`}
                     helpText=""
                     register={register}
                     type="text"
                     errors={errors}
-                    label={index + 1 + ". Additional Email "}
+                    label={index + 1 + ". Additional Languages"}
                     isVisible={true}
                     disabled={false}
                   />
                 </div>
-                {formData.additionalEmails.length === index + 1 ? (
+                {formData.additionalLanguage.length === index + 1 ? (
                   <div className="basis-1/12  grid  place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={addEmail}
+                      onClick={addLang}
                       className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
                     >
                       <Lucide icon="Plus" className="w-7 h-7" />
@@ -73,7 +73,7 @@ const AddEmail = (props) => {
                   <div className="basis-1/12  grid   place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={() => deleteEmail(data.id)}
+                      onClick={() => deleteLang(data.id)}
                       className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
                     >
                       <Lucide icon="X" className="w-7 h-7" />
@@ -88,4 +88,4 @@ const AddEmail = (props) => {
   );
 };
 
-export default AddEmail;
+export default AddLanguage;

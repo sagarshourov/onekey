@@ -15,7 +15,8 @@ const Institution = (props) => {
       {props.isVisible && (
         <div className="mt-5">
           <div className="mt-5">
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"previousJobs[0].employer"}
               helpText=""
               register={props.register}
@@ -29,7 +30,8 @@ const Institution = (props) => {
               formData={formData}
             />
 
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobAddress.streetAddress"}
               helpText="   "
               register={props.register}
@@ -40,7 +42,8 @@ const Institution = (props) => {
               disabled={false}
               formData={formData}
             />
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobAddress.streetAddress2"}
               helpText="   "
               register={props.register}
@@ -52,7 +55,8 @@ const Institution = (props) => {
               formData={formData}
             />
 
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobAddress.city"}
               helpText="   "
               register={props.register}
@@ -64,7 +68,8 @@ const Institution = (props) => {
               formData={formData}
             />
 
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobAddress.state"}
               helpText=""
               register={props.register}
@@ -79,7 +84,8 @@ const Institution = (props) => {
               checkLabel="Does not apply"
               formData={formData}
             />
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobAddress.zipCode"}
               helpText=""
               register={props.register}
@@ -103,7 +109,8 @@ const Institution = (props) => {
               label="Country/Region"
               inline={true}
             />
-            <InlineInputText
+             <InlineInputText
+    required={true}
               title={"jobPhoneNumber"}
               helpText="   "
               register={props.register}

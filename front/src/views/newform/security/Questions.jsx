@@ -1,0 +1,34 @@
+import { useState, useEffect } from "react";
+
+import classnames from "classnames";
+import InlineSwitch from "../elements/InlineSwitch";
+import InputTextArea from "../elements/InputTextArea";
+const Questions = (props) => {
+  // console.log("key", props?.check);
+  const { formData, title, label, register, errors, handleCheckboxChange } =
+    props;
+  return (
+    <>
+      <div className="">
+        <InlineSwitch
+          isVisible={true}
+          fullWidth={true}
+          formData={formData}
+          title={title}
+          handleCheckboxChange={handleCheckboxChange}
+          label={label}
+        />
+        <InputTextArea
+          isVisible={formData[title]}
+          errors={errors}
+          register={register}
+          helpText=""
+          label="Explain"
+          title={title + "Explain"}
+        />
+      </div>
+    </>
+  );
+};
+
+export default Questions;

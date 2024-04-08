@@ -4,9 +4,21 @@ import InlineDrop from "../elements/InlineDrop";
 import classnames from "classnames";
 import { Litepicker, Tippy, Lucide } from "@/base-components";
 import InlineInputText from "../elements/InlineInputText";
+import InlineInputDate from "../elements/InlineInputDate";
+
+import data from "../elements/data.json";
+import AddCountry from "./AddCountry";
+import Questions from "./Questions";
 const Security = (props) => {
   const [date, setDate] = useState("");
-  const { errors, register, fieldVisibility, formData, handleCheckboxChange } = props;
+  const {
+    errors,
+    register,
+    fieldVisibility,
+    setFormData,
+    formData,
+    handleCheckboxChange,
+  } = props;
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Security Question</h2>
@@ -18,209 +30,333 @@ const Security = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         label="Have you ever served in the military?"
         formData={formData}
-
+      />
+      <InlineDrop
+        isVisible={formData.hasServedMilitary}
+        register={props.register}
+        errors={props.errors}
+        title={"militaryExperiences[0].country"}
+        data={data.countries}
+        label="Country/Region"
+        inline={true}
+      />
+       <InlineInputText
+    required={true}
+        formData={formData}
+        title={"militaryExperiences[0].service"}
+        check=""
+        label="Branch of Service"
+        condition={false}
+        disabled={false}
+        helpText=""
+        checkLabel=""
+        isVisible={formData.hasServedMilitary}
+        register={register}
+        errors={errors}
+      />
+       <InlineInputText
+    required={true}
+        formData={formData}
+        title={"militaryExperiences[0].rank"}
+        check=""
+        label="Rank/Position"
+        condition={false}
+        disabled={false}
+        helpText=""
+        checkLabel=""
+        isVisible={formData.hasServedMilitary}
+        register={register}
+        errors={errors}
+      />
+       <InlineInputText
+    required={true}
+        formData={formData}
+        title={"militaryExperiences[0].speciality"}
+        check=""
+        label="Military Specialty"
+        condition={false}
+        disabled={false}
+        helpText=""
+        checkLabel=""
+        isVisible={formData.hasServedMilitary}
+        register={register}
+        errors={errors}
+      />
+      <InlineInputDate
+        title={"militaryExperiences[0].dateStart"}
+        helpText=""
+        register={register}
+        errors={errors}
+        label="Date of Service From"
+        isVisible={formData.hasServedMilitary}
+        disabled={false}
+        inline={true}
+      />
+      <InlineInputDate
+        title={"militaryExperiences[0].dateEnd"}
+        helpText=""
+        register={register}
+        errors={errors}
+        label="Date of Service To"
+        isVisible={formData.hasServedMilitary}
+        disabled={false}
+        inline={true}
       />
       <InlineSwitch
         isVisible={true}
         fullWidth={true}
         formData={formData}
-        title="hasServedMilitary2"
+        title="hasTraveledWithinFiveYear"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you traveled outside your country (not including the United States) in the last 5 years?"
-      />{" "}
-      <InlineSwitch
+      />
+      <AddCountry
+        formData={formData}
+        isVisible={formData.hasTraveledWithinFiveYear}
+        register={register}
+        errors={errors}
+        setFormData={setFormData}
+      />
+      {/* <InlineSwitch
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary3"
+        title="hasExplosiveExperience"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Do you have any specialized skills or training, such as firearms, explosives, nuclear, biological, or chemical experience?"
-      />{" "}
-      <InlineSwitch
+      /> */}
+      <Questions
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary4"
+        title="hasExplosiveExperience"
+        register={register}
+        errors={errors}
         handleCheckboxChange={handleCheckboxChange}
-        label="
-Have you ever served in, been a member of, or been involved with a paramilitary unit, vigilante unit, rebel group, guerrilla group, or insurgent organization?"
-      />{" "}
-      <InlineSwitch
-        isVisible={true}
-        formData={formData}
-        fullWidth={true}
-        title="hasServedMilitary5"
-        handleCheckboxChange={handleCheckboxChange}
-        label="
-Do you have a communicable disease of public health significance? (Communicable diseases of public significance include chancroid, gonorrhea, granuloma inguinale, infectious leprosy, lymphogranuloma venereum, infectious stage syphilis, active tuberculosis, and other diseases as determined by the Department of Health and Human Services.?"
+        label="Do you have any specialized skills or training, such as firearms, explosives, nuclear, biological, or chemical experience?"
       />
-      "{" "}
-      <InlineSwitch
+      <Questions
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary6"
+        title="insurgentOrganizationMember"
+        register={register}
+        errors={errors}
+        handleCheckboxChange={handleCheckboxChange}
+        label="Have you ever served in, been a member of, or been involved with a paramilitary unit, vigilante unit, rebel group, guerrilla group, or insurgent organization?"
+      />
+      <Questions
+        register={register}
+        errors={errors}
+        isVisible={true}
+        formData={formData}
+        title="communicableDisease"
+        handleCheckboxChange={handleCheckboxChange}
+        label="Do you have a communicable disease of public health significance? (Communicable diseases of public significance include chancroid, gonorrhea, granuloma inguinale, infectious leprosy, lymphogranuloma venereum, infectious stage syphilis, active tuberculosis, and other diseases as determined by the Department of Health and Human Services.?"
+      />
+      <Questions
+        register={register}
+        errors={errors}
+        isVisible={true}
+        formData={formData}
+        fullWidth={true}
+        title="disorder"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Do you have a mental or physical disorder that poses or is likely to pose a threat to the safety or welfare of yourself or others?"
-      />{" "}
-      <InlineSwitch
+      />
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary7"
+        title="drugAddict"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Are you or have you ever been a drug abuser or addict?"
-      />{" "}
-      <InlineSwitch
+      />
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary8"
+        title="arrested"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever been arrested or convicted for any offense or crime, even though subject of a pardon, amnesty, or other similar action?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary9"
+        title="controlledSubstances"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever violated, or engaged in a conspiracy to violate, any law relating to controlled substances?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary10"
+        title="prostitution"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Are you coming to the United States to engage in prostitution or unlawful commercialized vice or have you been engaged in prostitution or procuring prostitutes within the past 10 years?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary11"
+        title="moneyLaundering"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever been involved in, or do you seek to engage in, money laundering?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary"
+        title="trafficking"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever committed or conspired to commit a human trafficking offense in the United States or outside the United States?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary12"
+        title="assistedTrafficking"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever knowingly aided, abetted, assisted or colluded with an individual who has committed, or conspired to commit a severe human trafficking offense in the United States or outside the United States?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary13"
+        title="relativeTrafficking"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Are you the spouse, son, or daughter of an individual who has committed or conspired to commit a human trafficking offense in the United States or outside the United States and have you within the last five years, knowingly benefited from the trafficking activities?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary14"
+        title="illegalActivity"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Do you seek to engage in espionage, sabotage, export control violations, or any other illegal activity while in the United States?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary15"
+        title="terroristActivity"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Do you seek to engage in terrorist activities while in the United States or have you ever engaged in terrorist activities?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary16"
+        title="financingTerrorists"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever or do you intend to provide financial assistance or other support to terrorists or terrorist organizations?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary17"
+        title="terroristMember"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Are you a member or representative of a terrorist organization?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
-
         formData={formData}
         fullWidth={true}
-        title="hasServedMilitary18"
+        title="genocide"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever ordered, incited, committed, assisted, or otherwise participated in genocide?"
       />{" "}
-      <InlineSwitch
-         formData={formData}
+      <Questions
+        register={register}
+        errors={errors}
+        formData={formData}
         isVisible={true}
         fullWidth={true}
-        title="hasServedMilitary19"
+        title="torture"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever committed, ordered, incited, assisted, or otherwise participated in torture?"
       />{" "}
-      <InlineSwitch
-         formData={formData}
+      <Questions
+        register={register}
+        errors={errors}
+        formData={formData}
         isVisible={true}
         fullWidth={true}
-        title="hasServedMilitary20"
+        title="killings"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you committed, ordered, incited, assisted, or otherwise participated in extrajudicial killings, political killings, or other acts of violence?"
       />{" "}
-      <InlineSwitch
-         formData={formData}
+      <Questions
+        register={register}
+        errors={errors}
+        formData={formData}
         isVisible={true}
         fullWidth={true}
-        title="hasServedMilitary21"
+        title="childSoldier"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you ever engaged in the recruitment or the use of child soldiers?"
       />{" "}
-      <InlineSwitch
-         formData={formData}
+      <Questions
+        register={register}
+        errors={errors}
+        formData={formData}
         isVisible={true}
         fullWidth={true}
-        title="hasServedMilitary22"
+        title="religiousFreedom"
         handleCheckboxChange={handleCheckboxChange}
         label="
 Have you, while serving as a government official, been responsible for or directly carried out, at any time, particularly severe violations of religious freedom?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -229,7 +365,9 @@ Have you, while serving as a government official, been responsible for or direct
         label="
 Have you ever been directly involved in the establishment or enforcement of population controls forcing a woman to undergo an abortion against her free choice or a man or a woman to undergo sterilization against his or her free will?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -238,7 +376,9 @@ Have you ever been directly involved in the establishment or enforcement of popu
         label="
 Have you ever been directly involved in the coercive transplantation of human organs or bodily tissue?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -247,7 +387,9 @@ Have you ever been directly involved in the coercive transplantation of human or
         label="
 Have you ever sought to obtain or assist others to obtain a visa, entry into the United States, or any other United States immigration benefit by fraud or willful misrepresentation or other unlawful means?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -256,7 +398,9 @@ Have you ever sought to obtain or assist others to obtain a visa, entry into the
         label="
 Have you ever withheld custody of a U.S. citizen child outside the United States from a person granted legal custody by a U.S. court?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         fullWidth={true}
         formData={formData}
@@ -265,7 +409,9 @@ Have you ever withheld custody of a U.S. citizen child outside the United States
         label="
 Have you voted in the United States in violation of any law or regulation?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -274,7 +420,9 @@ Have you voted in the United States in violation of any law or regulation?"
         label="
 Have you ever renounced United States citizenship for the purposes of avoiding taxation?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -283,7 +431,9 @@ Have you ever renounced United States citizenship for the purposes of avoiding t
         label="
 Are you the spouse, son, or daughter of an individual who has engaged in terrorist activity, including providing financial assistance or other support to terrorists or terrorist organizations, in the last five years?"
       />{" "}
-      <InlineSwitch
+      <Questions
+        register={register}
+        errors={errors}
         isVisible={true}
         formData={formData}
         fullWidth={true}

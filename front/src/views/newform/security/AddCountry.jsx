@@ -7,15 +7,23 @@ import { Lucide } from "@/base-components";
 import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
 import InputTextArea from "../elements/InputTextArea";
-const AddEmail = (props) => {
+const AddCountry = (props) => {
   const { formData, isVisible, register, errors, setFormData } = props;
   // console.log("key", props?.check);
+  const updateNationality = (id, newData) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      travelCountries: prevFormData.travelCountries.map((travelCountry) =>
+      travelCountry.id === id ? { ...travelCountry, ...newData } : travelCountry
+      ),
+    }));
+  };
 
-  const addEmail = (e) => {
+  const addLang = (e) => {
     setFormData((formData) => ({
       ...formData,
-      additionalEmails: [
-        ...(formData.additionalEmails || []), // Ensure previous nationalities are included if they exist
+      travelCountries: [
+        ...(formData.travelCountries || []), // Ensure previous nationalities are included if they exist
         {
           id: Date.now(),
           number: "",
@@ -25,14 +33,14 @@ const AddEmail = (props) => {
     }));
   };
 
-  const deleteEmail = (e) => {
-    if (formData.additionalEmails && formData.additionalEmails.length > 1) {
+  const deleteLang = (e) => {
+    if (formData.travelCountries && formData.travelCountries.length > 1) {
       setFormData((formData) => ({
         ...formData,
-        additionalEmails: formData.additionalEmails.filter(
-          (additionalEmail) => {
+        travelCountries: formData.travelCountries.filter(
+          (travelCountries) => {
             // Condition to filter out values
-            return additionalEmail.id !== e; // Replace idToDelete with the ID you want to delete
+            return travelCountries.id !== e; // Replace idToDelete with the ID you want to delete
           }
         ),
       }));
@@ -43,27 +51,31 @@ const AddEmail = (props) => {
     <>
       {isVisible && (
         <>
-          {formData.additionalEmails &&
-            formData.additionalEmails.map((data, index) => (
+          {formData.travelCountries &&
+            formData.travelCountries.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                  <InlineInputText
-                    required={true}
-                    title={`additionalEmails.${index}`}
+                   <InlineInputText
+    required={true}
+                    title={`travelCountries.${index}.country`}
                     helpText=""
                     register={register}
-                    type="text"
                     errors={errors}
-                    label={index + 1 + ". Additional Email "}
+                    label="Country/Region"
                     isVisible={true}
                     disabled={false}
-                  />
+                    data={dat.countries}
+                    inline={true}
+                    updateNationality={updateNationality}
+                    formData={formData}
+                    parent={"travelCountries"}
+                    index={index} />
                 </div>
-                {formData.additionalEmails.length === index + 1 ? (
+                {formData.travelCountries.length === index + 1 ? (
                   <div className="basis-1/12  grid  place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={addEmail}
+                      onClick={addLang}
                       className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
                     >
                       <Lucide icon="Plus" className="w-7 h-7" />
@@ -73,7 +85,7 @@ const AddEmail = (props) => {
                   <div className="basis-1/12  grid   place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={() => deleteEmail(data.id)}
+                      onClick={() => deleteLang(data.id)}
                       className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
                     >
                       <Lucide icon="X" className="w-7 h-7" />
@@ -88,4 +100,4 @@ const AddEmail = (props) => {
   );
 };
 
-export default AddEmail;
+export default AddCountry;

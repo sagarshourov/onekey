@@ -45,38 +45,43 @@ const AddPhone = (props) => {
         <>
           {formData.additionalPhones &&
             formData.additionalPhones.map((data, index) => (
-              <div key={index}>
-                <InlineInputText
-                  title={`additionalPhones.${index}`}
-                  helpText=""
-                  register={register}
-                  type="text"
-                  errors={errors}
-                  label={index + 1 + ". Additional Phone Number"}
-                  isVisible={true}
-                  disabled={false}
-                />
-
-                <div className="flex justify-end mt-5">
-                  <button
-                    type="button"
-                    onClick={() => deletePhone(data.id)}
-                    className="btn bg-gray-300 btn-rounded p-1"
-                  >
-                    <Lucide icon="Minus" className="w-7 h-7" />
-                  </button>
+              <div className="flex flex-row gap-5" key={index}>
+                <div className="basis-11/12 gap-5">
+                   <InlineInputText
+    required={true}
+                    title={`additionalPhones.${index}`}
+                    helpText=""
+                    register={register}
+                    type="text"
+                    errors={errors}
+                    label={index + 1 + ". Additional Phone Number"}
+                    isVisible={true}
+                    disabled={false}
+                  />
                 </div>
+                {formData.additionalPhones.length === index + 1 ? (
+                  <div className="basis-1/12  grid  place-items-center  mt-5">
+                    <button
+                      type="button"
+                      onClick={addPhone}
+                      className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
+                    >
+                      <Lucide icon="Plus" className="w-7 h-7" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="basis-1/12  grid   place-items-center  mt-5">
+                    <button
+                      type="button"
+                      onClick={() => deletePhone(data.id)}
+                      className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
+                    >
+                      <Lucide icon="X" className="w-7 h-7" />
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
-          <div className="flex justify-end mt-5">
-            <button
-              type="button"
-              onClick={addPhone}
-              className="btn bg-gray-300 btn-rounded p-2"
-            >
-              <Lucide icon="Plus" className="w-10 h-10" />
-            </button>
-          </div>
         </>
       )}
     </>

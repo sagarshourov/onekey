@@ -11,6 +11,8 @@ import InputTextArea from "../elements/InputTextArea";
 import reasonsForTravelData from "./reasonsForTravel.json";
 const Purposes = (props) => {
   const { formData, setFormData } = props;
+
+  const [option, setOption] = useState(0);
   // console.log("key", props?.check);
   const addPurposes = (e) => {
     setFormData((formData) => ({
@@ -35,6 +37,10 @@ const Purposes = (props) => {
     }
   };
 
+  const handelSelect = (e) => {
+    setOption(e.target.value);
+  };
+
   return (
     <>
       {props.isVisible && (
@@ -43,7 +49,7 @@ const Purposes = (props) => {
             formData.purposes.map((data, index) => (
               <div className="mt-5 border p-5  border-blue-200 " key={index}>
                 <h3 className="text-xl font-bold">
-                  Purpose of the trip to the US #1
+                  Purpose of the trip to the US #{index + 1}
                 </h3>
                 <InlineDrop
                   title={"purposes[" + index + "].mainPurpose"}
@@ -55,6 +61,7 @@ const Purposes = (props) => {
                   disabled={false}
                   data={reasonsForTravelData.mainPurpose}
                   inline={true}
+                  handelSelect={handelSelect}
                 />
 
                 <InlineDrop
@@ -65,30 +72,33 @@ const Purposes = (props) => {
                   label="Specify"
                   isVisible={true}
                   disabled={false}
-                  data={reasonsForTravelData.specify}
+                  data={reasonsForTravelData.specify.filter(
+                    (specify) => specify.parent === option
+                  )}
                   inline={true}
                 />
-
-                <div className="flex justify-end mt-5">
-                  <button
-                    type="button"
-                    onClick={() => deletePurposes(data.id)}
-                    className="btn bg-gray-300 btn-rounded p-1"
-                  >
-                    <Lucide icon="Minus" className="w-7 h-7" />
-                  </button>
+                <div className="flex gap-5">
+                  {formData.purposes.length == index + 1 && (
+                    <button
+                      type="button"
+                      onClick={addPurposes}
+                      className="btn bg-gray-300 btn-rounded p-2 px-5"
+                    >
+                      Add trip purpose
+                    </button>
+                  )}
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => deletePurposes(data.id)}
+                      className="btn bg-gray-300 btn-rounded px-5 text-white"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
-          <div className="flex justify-end mt-5">
-            <button
-              type="button"
-              onClick={addPurposes}
-              className="btn bg-gray-300 btn-rounded p-2"
-            >
-              <Lucide icon="Plus" className="w-10 h-10" />
-            </button>
-          </div>
         </>
       )}
     </>

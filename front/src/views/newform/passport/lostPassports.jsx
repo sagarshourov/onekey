@@ -40,7 +40,8 @@ const LostPassports = (props) => {
           {formData.lostpassports &&
             formData.lostpassports.map((data, index) => (
               <div key={index}>
-                <InlineInputText
+                 <InlineInputText
+    required={true}
                   title={`lostpassports.${index}.passportNumber`}
                   helpText=""
                   register={props.register}

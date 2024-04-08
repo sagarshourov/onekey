@@ -1,6 +1,7 @@
 import classnames from "classnames";
 
 const InlineDrop = (props) => {
+  const { handelSelect } = props;
   return (
     <>
       {props.isVisible && (
@@ -22,6 +23,7 @@ const InlineDrop = (props) => {
               className="form-select w-full "
               aria-label=".form-select example"
               name={props.title}
+              onChange={(e) => handelSelect(e)}
             >
               {props.data &&
                 props.data.map((data, index) => (

@@ -9,7 +9,8 @@ import InlineSwitch from "../elements/InlineSwitch";
 import dat from "../elements/data.json";
 import AddPhone from "./AddPhone";
 import AddEmail from "./AddEmail";
-import AdditionalSocialMedia from "./additionalSocialMedia";
+import AdditionalSocial from "./AdditionalSocial";
+import SocialMedia from "./SocialMedia";
 const Contact = (props) => {
   const [date, setDate] = useState("");
   const {
@@ -27,7 +28,8 @@ const Contact = (props) => {
       <hr className="my-5 sa-border-primary" />
 
       <InlineInputText
-        title={"homeAddress.streetAddress"}
+        required={true}
+        title={"streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"
@@ -38,6 +40,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"homeAddress.streetAddress2"}
         helpText="   "
         register={props.register}
@@ -49,6 +52,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"homeAddress.city"}
         helpText="   "
         register={props.register}
@@ -60,6 +64,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"homeAddress.state"}
         helpText="   "
         register={props.register}
@@ -75,6 +80,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        required={true}
         title={"homeAddress.zipCode"}
         helpText="   "
         register={props.register}
@@ -113,6 +119,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        required={true}
         title={"mailingAddress.streetAddress"}
         helpText="   "
         register={props.register}
@@ -124,6 +131,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"mailingAddress.streetAddress2"}
         helpText="   "
         register={props.register}
@@ -136,6 +144,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        required={true}
         title={"mailingAddress.city"}
         helpText="   "
         register={props.register}
@@ -147,6 +156,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"mailingAddress.state"}
         helpText="   "
         register={props.register}
@@ -161,6 +171,7 @@ const Contact = (props) => {
         disabled={formData.mailingAddressState_checkbox}
       />
       <InlineInputText
+        required={true}
         title={"mailingAddress.zipCode"}
         helpText="   "
         register={props.register}
@@ -187,6 +198,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        required={true}
         title={"phonePrimary"}
         helpText="   "
         register={props.register}
@@ -199,6 +211,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        required={true}
         title={"phoneSecondary"}
         helpText="   "
         register={props.register}
@@ -210,6 +223,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        required={true}
         title={"phoneWork"}
         helpText="   "
         register={props.register}
@@ -240,18 +254,6 @@ const Contact = (props) => {
         errors={errors}
       />
 
-      <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
-        helpText="   "
-        register={props.register}
-        type="text"
-        errors={props.errors}
-        label="Work Phone Number"
-        isVisible={props.formData?.hasAdditionalPhoneNumbers}
-        disabled={false}
-        formData={formData}
-      />
-
       <InlineSwitch
         isVisible={true}
         title={"hasAdditionalEmails"}
@@ -271,12 +273,13 @@ const Contact = (props) => {
         errors={errors}
       />
 
-      <AdditionalSocialMedia
+      <SocialMedia
         formData={formData}
         isVisible={true}
         setFormData={setFormData}
         register={register}
         errors={errors}
+        SocialMedia={dat.socialMediaOptions}
       />
 
       <InlineSwitch
@@ -291,29 +294,12 @@ const Contact = (props) => {
         helpText=" "
         inline={true}
       />
-
-      <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
-        helpText="   "
-        register={props.register}
-        type="text"
-        errors={props.errors}
-        label="Additional Social Media Platform"
-        isVisible={formData.hasAdditionalSocialMedia}
-        disabled={false}
+      <AdditionalSocial
         formData={formData}
-      />
-
-      <InlineInputText
-        title={"USSocialSecurityAreaNumber"}
-        helpText="   "
-        register={props.register}
-        type="text"
-        errors={props.errors}
-        label="Additional Social Media Handle"
         isVisible={formData.hasAdditionalSocialMedia}
-        disabled={false}
-        formData={formData}
+        setFormData={setFormData}
+        register={register}
+        errors={errors}
       />
     </>
   );

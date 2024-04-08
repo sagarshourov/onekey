@@ -2,6 +2,7 @@ import classnames from "classnames";
 
 const InputRadio = (props) => {
   //  console.log("visible", props.isVisible);
+  const { handleRadio } = props;
   return (
     <>
       {props.isVisible && (
@@ -20,7 +21,8 @@ const InputRadio = (props) => {
                 className="form-check-input"
                 type="radio"
                 name={props.title}
-                value="1"
+                value="0"
+                onChange={() => handleRadio(false)}
               />
               <label className="form-check-label" htmlFor="radio-switch-4">
                 {props.titleNo}
@@ -33,6 +35,7 @@ const InputRadio = (props) => {
                 type="radio"
                 name={props.title}
                 value="1"
+                onChange={() => handleRadio(true)}
               />
               <label className="form-check-label" htmlFor="radio-switch-5">
                 {props.titleYes}

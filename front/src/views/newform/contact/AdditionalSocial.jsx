@@ -7,7 +7,7 @@ import { Lucide } from "@/base-components";
 import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
 import InputTextArea from "../elements/InputTextArea";
-const AdditionalSocialMedia = (props) => {
+const AdditionalSocial = (props) => {
   const { formData, isVisible, register, errors, setFormData } = props;
   // console.log("key", props?.check);
 
@@ -45,57 +45,62 @@ const AdditionalSocialMedia = (props) => {
         <>
           {formData.additionalSocials &&
             formData.additionalSocials.map((data, index) => (
-              <div className="flex flex-row" key={index}>
-                <div className="basis-10/12">
-                  <InlineDrop
+              <div className="flex flex-row gap-5" key={index}>
+                <div className="basis-11/12 ">
+                   <InlineInputText
+    required={true}
                     title={"platform"}
-                    helpText=""
+                    helpText="   "
                     register={props.register}
+                    type="text"
                     errors={props.errors}
-                    label="Social media provider/Platform"
+                    label="Additional Social Media Platform"
                     isVisible={true}
                     disabled={false}
-                    data={dat.countries}
-                    inline={true}
                     formData={formData}
                   />
-                  <InlineInputText
+
+                   <InlineInputText
+    required={true}
                     title={"username"}
                     helpText="   "
                     register={props.register}
                     type="text"
                     errors={props.errors}
-                    label="Social Media Identifier"
+                    label="Additional Social Media Handle"
                     isVisible={true}
                     disabled={false}
                     formData={formData}
                   />
                 </div>
-
-                <div className="basis-2/12  mt-5">
-                  <button
-                    type="button"
-                    onClick={() => deleteSocial(data.id)}
-                    className="btn bg-gray-300 btn-rounded p-1"
-                  >
-                    <Lucide icon="X" className="w-7 h-7" />
-                  </button>
-                </div>
+                {formData.additionalSocials.length === index + 1 ? (
+                  <div className="basis-1/12  grid   place-items-center  mt-5">
+                    <button
+                      type="button"
+                      onClick={addSocial}
+                      className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
+                    >
+                      <Lucide icon="Plus" className="w-7 h-7" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="basis-1/12  grid   place-items-center  mt-5">
+                    <button
+                      type="button"
+                      onClick={() => deleteSocial(data.id)}
+                      className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
+                    >
+                      <Lucide icon="X" className="w-7 h-7" />
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
-          <div className="flex justify-end mt-5">
-            <button
-              type="button"
-              onClick={addSocial}
-              className="btn bg-gray-300 btn-rounded p-2"
-            >
-              <Lucide icon="Plus" className="w-10 h-10" />
-            </button>
-          </div>
+         
         </>
       )}
     </>
   );
 };
 
-export default AdditionalSocialMedia;
+export default AdditionalSocial;

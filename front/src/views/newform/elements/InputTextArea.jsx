@@ -1,15 +1,16 @@
 import classnames from "classnames";
 
 const InputTextArea = (props) => {
+  const { label, isVisible, title, errors, register, helpText } = props;
   return (
     <>
-      {props.isVisible && (
+      {isVisible && (
         <div className="mt-5 flex-none gap-5 lg:flex lg:flex-row">
           <label
             htmlFor="regular-form-3"
             className="form-label basis-4/12  sa-label "
           >
-            {props.label}
+            {label}
             <span className="text-danger pl-1">*</span>
             {/* <Tippy
     tag="a"
@@ -25,22 +26,20 @@ const InputTextArea = (props) => {
           </label>
 
           <textarea
-            {...props.register(props.title)}
-            name={props.title}
+            {...register(title)}
+            name={title}
             className={classnames({
               "form-control": true,
               "basis-8/12": true,
-              "border-danger": props.errors[props.title],
+              "border-danger": errors[title],
             })}
-            placeholder={props.label}
+            placeholder={label}
           ></textarea>
 
-          {props.errors[props.title] && (
-            <div className="text-danger mt-2">
-              {props.errors[props.title].message}
-            </div>
+          {errors[title] && (
+            <div className="text-danger mt-2">{errors[title].message}</div>
           )}
-          <div className="form-help">{props.helpText}</div>
+          <div className="form-help">{helpText}</div>
         </div>
       )}
     </>

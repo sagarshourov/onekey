@@ -69,21 +69,45 @@ const Main = (props) => {
 
     fatherInfo: [
       {
+        id: Date.now(),
         hasBirthDate: false,
         isInUS: false,
       },
     ],
     motherInfo: [
       {
+        id: Date.now(),
         hasBirthDate: false,
         isInUS: false,
       },
     ],
-    relatives: [
+
+    // trip details
+
+    travelers: [
       {
-        hasImmediateRelativesInUS: false,
+        id: Date.now(),
+        firstName: "",
+        lastName: "",
+        relation: "",
       },
     ],
+    previousVisit: [
+      {
+        id: Date.now(),
+        arrivalDate: "",
+        stayLengthValue: "",
+        stayLengthType: "",
+      },
+    ],
+    USDriverLicenses: [
+      {
+        id: Date.now(),
+        licenseId: "",
+        state: "",
+      },
+    ],
+
     //hasImmediateRelativesInUS: false,
     // hasWorkedToOrganization: false,
     //hasOtherSpeakingLanguages: false, // duplicate
@@ -106,6 +130,43 @@ const Main = (props) => {
         id: Date.now(),
         platform: "",
         username: "",
+      },
+    ],
+    purposes: [
+      {
+        id: Date.now(),
+        mainPurpose: "",
+        specify: "",
+      },
+    ],
+
+    immediateRelatives: [
+      {
+        id: Date.now(),
+        firstName: "",
+        lastName: "",
+        relation: "",
+        status: "",
+        hasImmediateRelativesInUS: false,
+      },
+    ],
+    additionalLanguage: [
+      {
+        id: Date.now(),
+        otherSpeakingLanguages: "",
+      },
+    ],
+    previousJobs: [
+      {
+        id: Date.now(),
+        employer: "",
+      },
+    ],
+    hasTraveledWithinFiveYear: false,
+    travelCountries: [
+      {
+        id: Date.now(),
+        country: "",
       },
     ],
   });
@@ -174,6 +235,7 @@ const Main = (props) => {
       })
       .required();
   } else if (currentStep == 2) {
+   // homeAddress.streetAddress
     schema = yup
       .object({
         streetAddress: yup.string().required().min(2),
@@ -187,7 +249,12 @@ const Main = (props) => {
     schema = yup.object({}).required();
   } else if (currentStep == 6) {
     schema = yup.object({}).required();
+  } else if (currentStep == 7) {
+    schema = yup.object({}).required();
+  } else if (currentStep == 8) {
+    schema = yup.object({}).required();
   }
+
 
   const {
     register,

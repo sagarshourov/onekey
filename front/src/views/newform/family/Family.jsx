@@ -13,6 +13,7 @@ import InlineTwoInputText from "./InlineTwoInputText";
 import InlineInputDate from "../elements/InlineInputDate";
 import ImmediateRelative from "./ImmediateRelative";
 import data from "../elements/data.json";
+import AddLanguage from "./AddLanguage";
 const Family = (props) => {
   const [date, setDate] = useState("");
   const {
@@ -37,22 +38,25 @@ const Family = (props) => {
       <h2 className="mb-5 text-xl font-bold"> Family Background </h2>
       <hr className="my-5 sa-border-primary" />
       <InlineTwoInputText
-        title={"USSocialSecurityAreaNumber"}
         helpText=""
-        register={props.register}
+        formData={formData}
+        register={register}
         type="text"
-        errors={props.errors}
+        errors={errors}
         label=" What is your father's name"
         isVisible={true}
         disabled={false}
-        fieldVisibility={fieldVisibility}
         handleCheckboxChange={handleCheckboxChange}
         firstFieldLbl="Father's First (Given) Name(s)"
         secFieldLbl="Father's Family Name(s)"
       />
 
       <InlineChildSwitch
-        isVisible={true}
+        isVisible={
+          formData.firstname_checkbox && formData.lastname_checkbox
+            ? false
+            : true
+        }
         title={"hasBirthDate"}
         label=" 
         Do you know your Father's date of birth?"
@@ -78,7 +82,11 @@ const Family = (props) => {
       />
 
       <InlineChildSwitch
-        isVisible={true}
+        isVisible={
+          formData.firstname_checkbox && formData.lastname_checkbox
+            ? false
+            : true
+        }
         title={"isInUS"}
         label=" 
         Is your father in the U.S.?"
@@ -150,7 +158,6 @@ const Family = (props) => {
       />
 
       <InlineChildSwitch
-        isVisible={true}
         title={"isInUS"}
         label=" 
         Is your mother in the U.S.?"
@@ -191,7 +198,7 @@ const Family = (props) => {
         fullWidth={false}
         helpText=" "
         inline={true}
-        parent="relatives"
+        parent="immediateRelatives"
         index={0}
         setFormData={setFormData}
         onChange={updateCheckBox}
@@ -200,12 +207,14 @@ const Family = (props) => {
       <ImmediateRelative
         register={props.register}
         errors={props.errors}
-        fieldVisibility={formData}
-        isVisible={props.formData?.relatives[0]?.hasImmediateRelativesInUS}
+        formData={formData}
+        setFormData={setFormData}
+        isVisible={formData?.immediateRelatives[0]?.hasImmediateRelativesInUS}
       />
       <hr className="my-9 sa-border-primary" />
       <h2 className="mb-5 text-xl font-bold"> Spouse Information </h2>
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"partnerInfo.firstName"}
         helpText=""
         register={props.register}
@@ -216,7 +225,8 @@ const Family = (props) => {
         disabled={false}
         formData={formData}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"partnerInfo.firstName"}
         helpText=""
         register={props.register}
@@ -247,7 +257,8 @@ const Family = (props) => {
         inline={true}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"partnerInfo.birthCity"}
         helpText=""
         register={props.register}
@@ -291,7 +302,8 @@ const Family = (props) => {
         formData={formData}
       />
 
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"tribeName"}
         helpText=""
         register={props.register}
@@ -319,16 +331,16 @@ const Family = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
       />
-      <InlineInputText
-        title={"otherSpeakingLanguages"}
-        helpText=""
-        register={props.register}
+     
+      <AddLanguage
+        register={register}
         type="text"
-        errors={props.errors}
+        errors={errors}
         label=" Enter Additional Languages"
         isVisible={formData.hasOtherSpeakingLanguages}
         disabled={false}
         formData={formData}
+        setFormData={setFormData}
       />
 
       <InlineSwitch
@@ -338,7 +350,8 @@ const Family = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
       />
-      <InlineInputText
+       <InlineInputText
+    required={true}
         title={"organizations"}
         helpText=""
         register={props.register}

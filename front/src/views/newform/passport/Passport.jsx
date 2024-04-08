@@ -36,7 +36,8 @@ const Passport = (props) => {
           inline={true}
           data={data.countries}
         />
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"passportNumber"}
           helpText="Enter the passport number exactly as it appears on the passport information page "
           register={props.register}
@@ -48,7 +49,8 @@ const Passport = (props) => {
           condition={false}
           formData={formData}
         />
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"passportBookNumber"}
           helpText=""
           register={props.register}
@@ -76,7 +78,8 @@ const Passport = (props) => {
           formData={formData}
         />
 
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"passportCity"}
           helpText=""
           register={props.register}
@@ -88,7 +91,8 @@ const Passport = (props) => {
           condition={false}
           formData={formData}
         />
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"lastName"}
           helpText=""
           register={props.register}
@@ -246,7 +250,8 @@ const Passport = (props) => {
 
 
         
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"nationalId"}
           helpText=""
           register={props.register}
@@ -260,7 +265,8 @@ const Passport = (props) => {
           disabled={formData.nationalId_check}
           formData={formData}
         />
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"USSocialSecurityAreaNumber"}
           helpText=""
           register={props.register}
@@ -274,7 +280,8 @@ const Passport = (props) => {
           check="USSocialSecurityAreaNumber_check"
           formData={formData}
         />
-        {/* <InlineInputText
+        {/*  <InlineInputText
+    required={true}
           title={"USSocialSecurityGroupNumber"}
           helpText=""
           register={props.register}
@@ -287,7 +294,8 @@ const Passport = (props) => {
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecurityGroupNumber"
         /> */}
-        {/* <InlineInputText
+        {/*  <InlineInputText
+    required={true}
           title={"USSocialSecuritySerialNumber"}
           helpText=""
           register={props.register}
@@ -300,7 +308,8 @@ const Passport = (props) => {
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecuritySerialNumber"
         /> */}
-        <InlineInputText
+         <InlineInputText
+    required={true}
           title={"USTaxpayerIdNumber"}
           helpText=""
           register={props.register}
