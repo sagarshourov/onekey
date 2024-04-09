@@ -47,8 +47,8 @@ const AdditionalSocial = (props) => {
             formData.additionalSocials.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 ">
-                   <InlineInputText
-    required={true}
+                  <InlineInputText
+                    required={true}
                     title={"platform"}
                     helpText="   "
                     register={props.register}
@@ -60,8 +60,8 @@ const AdditionalSocial = (props) => {
                     formData={formData}
                   />
 
-                   <InlineInputText
-    required={true}
+                  <InlineInputText
+                    required={true}
                     title={"username"}
                     helpText="   "
                     register={props.register}
@@ -96,7 +96,6 @@ const AdditionalSocial = (props) => {
                 )}
               </div>
             ))}
-         
         </>
       )}
     </>

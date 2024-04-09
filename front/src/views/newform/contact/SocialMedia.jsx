@@ -8,13 +8,14 @@ import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
 import InputTextArea from "../elements/InputTextArea";
 const SocialMedia = (props) => {
-  const { formData, isVisible,SocialMedia, register, errors, setFormData } = props;
+  const { formData, isVisible, SocialMedia, register, errors, setFormData } =
+    props;
   // console.log("key", props?.check);
 
   const addSocial = (e) => {
     setFormData((formData) => ({
       ...formData,
-     socialsMedia: [
+      socialsMedia: [
         ...(formData.socialsMedia || []), // Ensure previous nationalities are included if they exist
         {
           id: Date.now(),
@@ -29,12 +30,10 @@ const SocialMedia = (props) => {
     if (formData.socialsMedia && formData.socialsMedia.length > 1) {
       setFormData((formData) => ({
         ...formData,
-        socialsMedia: formData.socialsMedia.filter(
-          (socialsMedia) => {
-            // Condition to filter out values
-            return socialsMedia.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
+        socialsMedia: formData.socialsMedia.filter((socialsMedia) => {
+          // Condition to filter out values
+          return socialsMedia.id !== e; // Replace idToDelete with the ID you want to delete
+        }),
       }));
     }
   };
@@ -59,8 +58,8 @@ const SocialMedia = (props) => {
                     inline={true}
                     formData={formData}
                   />
-                   <InlineInputText
-    required={true}
+                  <InlineInputText
+                    required={true}
                     title={"username"}
                     helpText="   "
                     register={props.register}
@@ -72,14 +71,13 @@ const SocialMedia = (props) => {
                     formData={formData}
                   />
                 </div>
-                {formData.socialsMedia.length === (index+1) ? (
+                {formData.socialsMedia.length === index + 1 ? (
                   <div className="basis-1/12  grid   place-items-center  mt-5">
                     <button
                       type="button"
                       onClick={addSocial}
                       className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
                     >
-             
                       <Lucide icon="Plus" className="w-7 h-7" />
                     </button>
                   </div>
@@ -90,16 +88,12 @@ const SocialMedia = (props) => {
                       onClick={() => deleteSocial(data.id)}
                       className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
                     >
-                     
                       <Lucide icon="X" className="w-7 h-7" />
                     </button>
                   </div>
                 )}
-
-               
               </div>
             ))}
-         
         </>
       )}
     </>

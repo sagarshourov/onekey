@@ -346,5 +346,12 @@
     { "label": "ALASKA", "value": "2", "selected": false },
     { "label": "AMERICAN SAMOA", "value": "3", "selected": false },
     { "label": "ARIZONA", "value": "4", "selected": false }
+  ],
+  "passportType": [
+    { "label": "REGULAR", "value": 3 },
+    { "label": "OFFICIAL", "value": 0 },
+    { "label": "DIPLOMATIC", "value": 1 },
+    { "label": "LAISSEZ-PASSER", "value": 2 },
+    { "label": "OTHER", "value": 0 }
   ]
 }

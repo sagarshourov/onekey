@@ -215,6 +215,7 @@ const Main = (props) => {
         fullName: yup.string().when("hasFullName", {
           is: false,
           then: yup.string().required("Full Name is  Required!").min(2),
+          otherwise: yup.string(),
         }),
       })
       .required();
@@ -224,6 +225,8 @@ const Main = (props) => {
         passportNumber: yup.string().required().min(2),
         passportBookNumber: yup.string().required().min(2),
         passportCity: yup.string().required().min(2),
+  
+
         nationalities: yup.array().of(
           yup.object().shape({
             country: yup.string().required("Country is required"),
@@ -232,6 +235,17 @@ const Main = (props) => {
               .required("Passport number is required"),
           })
         ),
+        lostpassports: yup.array().of(
+          yup.object().shape({
+            country: yup.string().required("Country is required"),
+            passportNumber: yup
+              .string()
+              .required("Passport number is required"),
+          })
+        ),
+        
+
+
       })
       .required();
   } else if (currentStep == 2) {
@@ -260,6 +274,7 @@ const Main = (props) => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -267,17 +282,34 @@ const Main = (props) => {
 
   const handleCheckboxChange = (fieldName) => {
     console.log("File name", fieldName);
-    console.log("formData", formData);
+    console.log("formData", formData[fieldName]);
     setFormData({
       ...formData,
       [fieldName]: !formData[fieldName],
     });
 
+    console.log('getValues',getValues());
+
+
+
+    // setFormData({
+    //   ...errors,
+    //   [fieldName]: !errors[fieldName],
+    // });
+    
+    // setFormData((prevData) => ({
+    //   ...prevData,
+    //   nationalities: prevData.nationalities.filter((nationality) => {
+    //     // Condition to filter out values
+    //     return nationality.id !== e; // Replace idToDelete with the ID you want to delete
+    //   }),
+    // }));
+
     // fieldName && register(fieldName);
   };
 
   const nextStep = () => {
-    console.log("next atep", currentStep);
+    console.log("next step", currentStep);
     handleSubmit((data) => {
       setFormData((formData) => {
         const updatedFormData = { ...formData, ...data };

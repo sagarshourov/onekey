@@ -8,13 +8,14 @@ const InlineTwoInputText = (props) => {
   // console.log("key", props?.check);
   const {
     label,
+    title,
     isVisible,
     handleCheckboxChange,
     errors,
     firstFieldLbl,
     secFieldLbl,
     register,
-    formData
+    formData,
   } = props;
   return (
     <>
@@ -30,7 +31,9 @@ const InlineTwoInputText = (props) => {
           <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
             <div className="basis-6/12 ">
               <InputText
-                title={"fatherInfo.firstName"}
+                refs={title+".firstName"}
+                name={title+".firstName"}
+                required={true}
                 helpText="  "
                 register={register}
                 type="text"
@@ -42,12 +45,14 @@ const InlineTwoInputText = (props) => {
                 condition={true}
                 handleCheckboxChange={handleCheckboxChange}
                 formData={formData}
-                check="firstname_checkbox"
+                check={title+"_firstname_checkbox"}
               />
             </div>
             <div className="basis-6/12">
               <InputText
-                title={"fatherInfo.lastName"}
+                refs={title+".lastName"}
+                name={title+".firstName"}
+                required={true}
                 helpText="  "
                 register={register}
                 type="text"
@@ -59,7 +64,7 @@ const InlineTwoInputText = (props) => {
                 condition={true}
                 handleCheckboxChange={handleCheckboxChange}
                 formData={formData}
-                check="lastname_checkbox"
+                check={title+"_lastname_checkbox"}
               />
             </div>
           </div>

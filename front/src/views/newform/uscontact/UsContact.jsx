@@ -59,7 +59,9 @@ const UsContact = (props) => {
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"firstName"}
+              refs={"uscontact.person.firstName"}
+              name={"uscontact.person.firstName"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -70,7 +72,9 @@ const UsContact = (props) => {
             />
 
             <InputText
-              title={"lastName"}
+              refs={"uscontact.person.lastName"}
+              name={"uscontact.person.lastName"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -83,7 +87,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"fullName"}
+              refs={"uscontact.person.phoneNumber"}
+              name={"uscontact.person.phoneNumber"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -94,7 +100,9 @@ const UsContact = (props) => {
             />
 
             <InputText
-              title={"fullName"}
+              refs={"uscontact.person.email"}
+              name={"uscontact.person.email"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -107,7 +115,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"additionalFirstName"}
+              refs={"uscontact.person.streetAddress"}
+              name={"uscontact.person.streetAddress"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -117,7 +127,9 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
-              title={"additionalLastName"}
+              refs={"uscontact.person.streetAddress2"}
+              name={"uscontact.person.streetAddress2"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -130,7 +142,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.person.city"}
+              name={"uscontact.person.city"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -141,7 +155,9 @@ const UsContact = (props) => {
             />
 
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.person.state"}
+              name={"uscontact.person.state"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -153,17 +169,9 @@ const UsContact = (props) => {
           </div>
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"telecodeFirstName"}
-              helpText=" "
-              register={props.register}
-              type="text"
-              errors={props.errors}
-              label=" State/Province"
-              isVisible={true}
-              disabled={false}
-            />
-            <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.person.zipcode"}
+              name={"uscontact.person.zipcode"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -172,10 +180,10 @@ const UsContact = (props) => {
               isVisible={true}
               disabled={false}
             />
-          </div>
-          <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.person.country"}
+              name={"uscontact.person.country"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -192,7 +200,9 @@ const UsContact = (props) => {
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"firstName"}
+              refs={"uscontact.organization.name"}
+              name={"uscontact.organization.name"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -203,7 +213,9 @@ const UsContact = (props) => {
             />
 
             <InputText
-              title={"lastName"}
+              refs={"uscontact.organization.phone"}
+              name={"uscontact.organization.phone"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -216,7 +228,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"fullName"}
+              refs={"uscontact.organization.email"}
+              name={"uscontact.organization.email"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -227,7 +241,9 @@ const UsContact = (props) => {
             />
 
             <InputText
-              title={"fullName"}
+              refs={"uscontact.organization.streetAddress"}
+              name={"uscontact.organization.streetAddress"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -240,7 +256,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"additionalFirstName"}
+              refs={"uscontact.organization.streetAddress2"}
+              name={"uscontact.organization.streetAddress2"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -250,7 +268,9 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
-              title={"additionalLastName"}
+              refs={"uscontact.organization.city"}
+              name={"uscontact.organization.city"}
+              required={true}
               helpText=""
               register={props.register}
               type="text"
@@ -263,7 +283,9 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.organization.state"}
+              name={"uscontact.organization.state"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -273,7 +295,9 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.organization.zipcode"}
+              name={"uscontact.organization.zipcode"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"
@@ -285,7 +309,9 @@ const UsContact = (props) => {
           </div>
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
-              title={"telecodeFirstName"}
+              refs={"uscontact.organization.country"}
+              name={"uscontact.organization.country"}
+              required={true}
               helpText=" "
               register={props.register}
               type="text"

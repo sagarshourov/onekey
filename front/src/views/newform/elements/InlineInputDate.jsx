@@ -4,6 +4,8 @@ import classnames from "classnames";
 import data from "./data.json";
 const InlineInputDate = (props) => {
   // console.log("key", props?.check);
+
+  const {chkLbl}=props;
   return (
     <>
       {props.isVisible && (
@@ -70,7 +72,7 @@ const InlineInputDate = (props) => {
                 name={props.check}
               />
               <label className="form-check-label" htmlFor="checkbox-switch-3">
-                Does not apply
+             {chkLbl}
               </label>
             </div>
           )}

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 
 const InputText = (props) => {
+  const { required, refs, name } = props;
   return (
     <>
       {props.isVisible && (
@@ -12,23 +13,24 @@ const InputText = (props) => {
                 className="form-label sa-label w-full "
               >
                 {props.label}
-                <span className="text-danger pl-1">*</span>
+                {required && <span className="text-danger pl-1">*</span>}
               </label>
             )}
             <input
-              {...props.register(props.title)}
+              {...props.register(refs)}
               type="text"
+              required={required}
               placeholder={props.label}
-              name={props.title}
+              name={name}
               className={classnames({
                 "form-control": true,
-                "border-danger": props.errors[props.title],
+                "border-danger": props.errors[refs],
               })}
               disabled={props.formData ? props.formData[props.check] : false}
             />
-            {props.errors[props.title] && (
+            {props.errors[refs] && (
               <div className="text-danger mt-2">
-                {props.errors[props.title].message}
+                {props.errors[refs].message}
               </div>
             )}
             <div className="form-help">{props.helpText}</div>

@@ -34,23 +34,23 @@ const Passport = (props) => {
           isVisible={true}
           disabled={false}
           inline={true}
-          data={data.countries}
+          data={data.passportType}
         />
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"passportNumber"}
           helpText="Enter the passport number exactly as it appears on the passport information page "
           register={props.register}
           type="text"
           errors={props.errors}
-          label=" Passport/Travel Document Number"
+          label="Passport/Travel Document Number"
           isVisible={true}
           disabled={false}
           condition={false}
           formData={formData}
         />
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"passportBookNumber"}
           helpText=""
           register={props.register}
@@ -78,8 +78,8 @@ const Passport = (props) => {
           formData={formData}
         />
 
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"passportCity"}
           helpText=""
           register={props.register}
@@ -91,9 +91,9 @@ const Passport = (props) => {
           condition={false}
           formData={formData}
         />
-         <InlineInputText
-    required={true}
-          title={"lastName"}
+        <InlineInputText
+          required={false}
+          title={"passportState"}
           helpText=""
           register={props.register}
           type="text"
@@ -105,7 +105,7 @@ const Passport = (props) => {
           formData={formData}
         />
         <InlineDrop
-          title={"passportIssueCountryInput"}
+          title={"passportCountry"}
           helpText=""
           register={props.register}
           errors={props.errors}
@@ -118,7 +118,7 @@ const Passport = (props) => {
         />
 
         <InlineInputDate
-          title={"passportExpiryDate"}
+          title={"passportIssueDate"}
           helpText=""
           register={props.register}
           errors={props.errors}
@@ -129,18 +129,19 @@ const Passport = (props) => {
           formData={formData}
         />
         <InlineInputDate
-          title={"passportIssueCountryInput"}
+          title={"passportExpiryDate"}
           helpText=""
           register={props.register}
           errors={props.errors}
           label="Passport Expiration Date"
           isVisible={true}
-          disabled={fieldVisibility["hasPassportExpiryDate"]}
+          disabled={fieldVisibility["hasPassportExpiryDate_checkbox"]}
           condition={true}
           handleCheckboxChange={handleCheckboxChange}
-          check="hasPassportExpiryDate"
+          check="hasPassportExpiryDate_checkbox"
           inline={true}
           formData={formData}
+          chkLbl="No Expiration"
         />
 
         <div className="mt-5 ">
@@ -236,9 +237,8 @@ const Passport = (props) => {
           formData={formData}
           fullWidth={false}
           helpText=" "
-
         />
-        
+
         <Residents
           register={props.register}
           errors={props.errors}
@@ -248,10 +248,8 @@ const Passport = (props) => {
           setFormData={setFormData}
         />
 
-
-        
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"nationalId"}
           helpText=""
           register={props.register}
@@ -265,8 +263,8 @@ const Passport = (props) => {
           disabled={formData.nationalId_check}
           formData={formData}
         />
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"USSocialSecurityAreaNumber"}
           helpText=""
           register={props.register}
@@ -308,8 +306,8 @@ const Passport = (props) => {
           handleCheckboxChange={handleCheckboxChange}
           check="USSocialSecuritySerialNumber"
         /> */}
-         <InlineInputText
-    required={true}
+        <InlineInputText
+          required={true}
           title={"USTaxpayerIdNumber"}
           helpText=""
           register={props.register}

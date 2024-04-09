@@ -79,6 +79,9 @@ const PreviousVisit = (props) => {
                   <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
                     <div className="basis-6/12 ">
                       <InputText
+                        refs={"fatherInfo_firstName"}
+                        name={"fatherInfo.firstName"}
+                        required={true}
                         title={"fatherInfo.firstName"}
                         helpText="  "
                         register={register}
@@ -110,7 +113,7 @@ const PreviousVisit = (props) => {
                       onClick={addPreviousVisit}
                       className="btn bg-gray-300 btn-rounded p-2 px-5"
                     >
-                     + Add previous visit
+                      + Add previous visit
                     </button>
                   )}
                   {index > 0 && (

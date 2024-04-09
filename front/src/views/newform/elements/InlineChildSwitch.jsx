@@ -34,6 +34,7 @@ const InlineChildSwitch = (props) => {
             <div
               className={`sa-toggle-${
                 formData &&
+                formData[parent][index] &&
                 formData[parent][index][props.title] &&
                 formData[parent][index][props.title]
               } sa-toggle`}

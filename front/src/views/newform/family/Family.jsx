@@ -25,10 +25,10 @@ const Family = (props) => {
     handleCheckboxChange,
   } = props;
 
-  const updateCheckBox = (id, newData, field) => {
+  const updateCheckBox = (id, newData, fields) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [field]: prevFormData[field].map((data) =>
+      [fields]: prevFormData[fields].map((data) =>
         data.id === id ? { ...data, ...newData } : data
       ),
     }));
@@ -38,6 +38,7 @@ const Family = (props) => {
       <h2 className="mb-5 text-xl font-bold"> Family Background </h2>
       <hr className="my-5 sa-border-primary" />
       <InlineTwoInputText
+        title="fatherInfo"
         helpText=""
         formData={formData}
         register={register}
@@ -158,7 +159,7 @@ const Family = (props) => {
       />
 
       <InlineChildSwitch
-        title={"isInUS"}
+        title={"motherInfo.isInUS"}
         label=" 
         Is your mother in the U.S.?"
         formData={formData}
@@ -213,8 +214,8 @@ const Family = (props) => {
       />
       <hr className="my-9 sa-border-primary" />
       <h2 className="mb-5 text-xl font-bold"> Spouse Information </h2>
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        required={true}
         title={"partnerInfo.firstName"}
         helpText=""
         register={props.register}
@@ -225,8 +226,8 @@ const Family = (props) => {
         disabled={false}
         formData={formData}
       />
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        required={true}
         title={"partnerInfo.firstName"}
         helpText=""
         register={props.register}
@@ -257,8 +258,8 @@ const Family = (props) => {
         inline={true}
       />
 
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        required={true}
         title={"partnerInfo.birthCity"}
         helpText=""
         register={props.register}
@@ -302,8 +303,8 @@ const Family = (props) => {
         formData={formData}
       />
 
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        required={true}
         title={"tribeName"}
         helpText=""
         register={props.register}
@@ -331,7 +332,7 @@ const Family = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
       />
-     
+
       <AddLanguage
         register={register}
         type="text"
@@ -350,8 +351,8 @@ const Family = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
       />
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        required={true}
         title={"organizations"}
         helpText=""
         register={props.register}

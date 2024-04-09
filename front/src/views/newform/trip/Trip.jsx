@@ -71,7 +71,7 @@ const Trip = (props) => {
           isVisible={true}
           register={register}
           errors={errors}
-          title={"reasonForTripToUSSelect.valueInput"}
+          title={"reasonForTripToUSSelect.value"}
           data={reasonsForTravelData.reasons_for_travel}
           label=" Reason for the Trip"
           inline={true}
@@ -151,7 +151,10 @@ const Trip = (props) => {
         inline={true}
       />
       <InputText
-        title={"groupName"}
+      
+        refs={"groupName"}
+        name={"groupName"}
+        required={true}
         helpText=""
         register={props.register}
         type="text"

@@ -10,9 +10,7 @@ import InlineDrop from "../elements/InlineDrop";
 import InlineSwitch from "../elements/InlineSwitch";
 import InputRadio from "../elements/InputRadio";
 const FirstStep = (props) => {
-  const [state, setState] = useState(false);
-
-  const { fieldVisibility, formData, handleCheckboxChange } = props;
+  const { formData, handleCheckboxChange } = props;
 
   // const [fieldVisibility, setFieldVisibility] = useState({
   //   hasAdditionalNames: false,
@@ -56,8 +54,10 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1  lg:grid-cols-2  lg:gap-32">
         <InputText
-          title={"userEmail"}
-          helpText=" Please make sure you enter a valid email address. We will use
+          refs={"userEmail"}
+          name={"userEmail"}
+          required={true}
+          helpText="Please make sure you enter a valid email address. We will use
                   it to contact you about your application"
           register={props.register}
           type="email"
@@ -75,7 +75,9 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
-          title={"firstName"}
+          refs={"firstName"}
+          name={"firstName"}
+          required={true}
           helpText="Please ensure that the First name(s) on your passport or
                 travel document match exactly with the information you
                 provide."
@@ -88,7 +90,9 @@ const FirstStep = (props) => {
         />
 
         <InputText
-          title={"lastName"}
+          refs={"lastName"}
+          name={"lastName"}
+          required={true}
           helpText="Please ensure that the Family name(s) on your passport or
                 travel document match exactly with the information you
                 provide."
@@ -104,7 +108,9 @@ const FirstStep = (props) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <div>
           <InputText
-            title={"fullName"}
+            refs={"fullName"}
+            name={"fullName"}
+            required={true}
             helpText=""
             register={props.register}
             type="text"
@@ -121,10 +127,12 @@ const FirstStep = (props) => {
         </div>
         <div className="pt-5">
           <InlineSwitch
+            refs={"hasAdditionalNames"}
+            name={"hasAdditionalNames"}
+            required={true}
             register={props.register}
             formData={formData}
             isVisible={true}
-            title="hasAdditionalNames"
             label=" Have you used a four-letter code to represent your name in a
               communication system?"
             handleCheckboxChange={handleCheckboxChange}
@@ -135,7 +143,9 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
-          title={"additionalFirstName"}
+          refs={"additionalFirstName"}
+          name={"additionalFirstName"}
+          required={true}
           helpText=""
           register={props.register}
           type="text"
@@ -146,7 +156,9 @@ const FirstStep = (props) => {
           formData={formData}
         />
         <InputText
-          title={"additionalLastName"}
+          refs={"additionalLastName"}
+          name={"additionalLastName"}
+          required={true}
           helpText=""
           register={props.register}
           type="text"
@@ -171,7 +183,9 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
-          title={"telecodeFirstName"}
+          refs={"telecodeFirstName"}
+          name={"telecodeFirstName"}
+          required={true}
           helpText="Please enter the telecode for first/given name(s). "
           register={props.register}
           type="text"
@@ -181,7 +195,9 @@ const FirstStep = (props) => {
           disabled={false}
         />
         <InputText
-          title={"telecodeLastName"}
+          refs={"telecodeLastName"}
+          name={"telecodeLastName"}
+          required={true}
           helpText="Please enter the telecode for family name(s).  "
           register={props.register}
           type="text"
@@ -233,7 +249,9 @@ const FirstStep = (props) => {
         </div>
 
         <InputText
-          title={"birthCity"}
+          refs={"birthCity"}
+          name={"birthCity"}
+          required={true}
           helpText="If your place of birth is not listed on your passport, please enter the name of the city/town/village where you were born.  "
           register={props.register}
           type="text"
@@ -246,7 +264,9 @@ const FirstStep = (props) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <div>
           <InputText
-            title={"birthStateProvince"}
+            refs={"birthStateProvince"}
+            name={"birthStateProvince"}
+            required={true}
             helpText="If your place of birth is not listed on your passport, please enter the name of the city/town/village where you were born.  "
             register={props.register}
             type="text"

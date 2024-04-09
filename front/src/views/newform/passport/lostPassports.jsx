@@ -40,24 +40,24 @@ const LostPassports = (props) => {
           {formData.lostpassports &&
             formData.lostpassports.map((data, index) => (
               <div key={index}>
-                 <InlineInputText
-    required={true}
-                  title={`lostpassports.${index}.passportNumber`}
+                <InlineInputText
+                  required={true}
+                  title={`lostpassports[${index}].passportNumber`}
                   helpText=""
                   register={props.register}
                   type="text"
                   errors={props.errors}
                   label=" Passport/Travel Document Number"
                   isVisible={true}
-                  disabled={props.fieldVisibility["passportNumber"]}
+                  disabled={props.formData.lostpassports[index]["passportNumber_check"]}
                   condition={true}
                   handleCheckboxChange={props.handleCheckboxChange}
-                  check={`lostpassports.${index}.passportNumber_check`}
+                  check={`lostpassports[${index}].passportNumber_check`}
                   formData={formData}
                 />
 
                 <InlineDrop
-                  title={`lostpassports.${index}.passportIssueCountryInput`}
+                  title={`lostpassports.${index}.country`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
@@ -67,7 +67,6 @@ const LostPassports = (props) => {
                   data={dat.countries}
                   inline={true}
                   formData={formData}
-                  
                 />
 
                 <InputTextArea

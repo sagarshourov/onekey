@@ -47,9 +47,9 @@ const AddPhone = (props) => {
             formData.additionalPhones.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                   <InlineInputText
-    required={true}
-                    title={`additionalPhones.${index}`}
+                  <InlineInputText
+                    required={true}
+                    title={`additionalPhones[${index}]`}
                     helpText=""
                     register={register}
                     type="text"

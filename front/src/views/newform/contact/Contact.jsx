@@ -29,7 +29,7 @@ const Contact = (props) => {
 
       <InlineInputText
         required={true}
-        title={"streetAddress"}
+        title={"homeAddress.streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"

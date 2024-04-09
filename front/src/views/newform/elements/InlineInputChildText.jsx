@@ -27,7 +27,7 @@ const InlineInputChildText = (props) => {
           >
             <input
               {...props.register(`${parent}.${index}.${props.title}`)}
-              type={props.type}
+              type='text'
               placeholder={props.label}
               name={`${parent}.${index}.${props.title}`}
               defaultValue={formData[parent][index][props.title]}

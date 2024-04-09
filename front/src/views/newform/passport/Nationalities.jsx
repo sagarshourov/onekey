@@ -68,7 +68,7 @@ const Nationalities = (props) => {
                   Other Nationality # {index + 1}
                 </h3>
                 <InlineDropChid
-                  title={`nationalities.${index}.country`}
+                  title={`nationalities[${index}].country`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
