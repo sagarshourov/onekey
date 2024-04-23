@@ -1,14 +1,10 @@
-import { Litepicker, Tippy, Lucide } from "@/base-components";
 import "./form.css";
 import classnames from "classnames";
 import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
-import Toastify from "toastify-js";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ref, object, string, boolean } from "yup";
-import InputText from "./elements/InputText";
 import FirstStep from "./steps/FirstStep";
 import Passport from "./passport/Passport";
 import Contact from "./contact/Contact";
@@ -18,7 +14,6 @@ import Trip from "./trip/Trip";
 import Family from "./family/Family";
 import Security from "./security/Security";
 import Education from "./education/Education";
-import Review from "./review/Review";
 import axios from "axios";
 import { firstStepSchema } from "./steps/validationSchemas"; // Import the schema from the separate file
 
@@ -32,7 +27,7 @@ import { educationSchema } from "./education/educationSchema";
 
 import { familySchema } from "./family/familySchema";
 
-import { uscontactSchema } from "./uscontact/uscontactSchema";
+import { usContactSchema } from "./uscontact/usContactSchema";
 
 import { tripSchema } from "./trip/tripSchema";
 
@@ -41,8 +36,6 @@ import { AdditionalContactSchema } from "./AdditionalContact/AdditionalContactSc
 import { securitySchema } from "./security/securitySchema";
 import { getDsState } from "../../state/admin-atom";
 import {
-  useRecoilStateLoadable,
-  useRecoilState,
   useRecoilValueLoadable,
   useRecoilValue,
 } from "recoil";
@@ -241,7 +234,7 @@ const Main = (props) => {
     PerviousTravelsSchema,
     contactSchema,
     passportSchema,
-    uscontactSchema,
+    usContactSchema,
     familySchema,
     educationSchema,
     securitySchema,
