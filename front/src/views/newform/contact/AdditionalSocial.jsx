@@ -1,41 +1,40 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
+import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
 const AdditionalSocial = (props) => {
-  const { formData, isVisible, register, errors, setFormData } = props;
+  const {
+    formData,
+    isVisible,
+    handleCheckboxChange,
+    setFormData,
+  } = props;
   // console.log("key", props?.check);
 
-  const addSocial = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      additionalSocials: [
-        ...(formData.additionalSocials || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+  const addSocial = () => {
+    const currentNationalities = formData["additionalSocials"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        platform: "",
+        username: "",
+      },
+    ];
+    setFormData("additionalSocials", addLanguages, { shouldValidate: true });
   };
 
   const deleteSocial = (e) => {
     if (formData.additionalSocials && formData.additionalSocials.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        additionalSocials: formData.additionalSocials.filter(
-          (additionalSocial) => {
-            // Condition to filter out values
-            return additionalSocial.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.additionalSocials.filter(
+        (nationalities) => {
+          return nationalities.id !== e;
+        }
+      );
+
+      setFormData("additionalSocials", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -47,30 +46,40 @@ const AdditionalSocial = (props) => {
             formData.additionalSocials.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 ">
-                  <InlineInputText
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
-                    title={"platform"}
-                    helpText="   "
+                    title={`platform`}
+                    helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
-                    label="Additional Social Media Platform"
+                    label={index + 1 + ". Additional Social Media Platform"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
                     formData={formData}
+                    parent={"additionalSocials"}
+                    index={index}
                   />
 
-                  <InlineInputText
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
-                    title={"username"}
-                    helpText="   "
+                    title={`username`}
+                    helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
-                    label="Additional Social Media Handle"
+                    label={index + 1 + ". Additional Social Media Handle"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
                     formData={formData}
+                    parent={"additionalSocials"}
+                    index={index}
                   />
                 </div>
                 {formData.additionalSocials.length === index + 1 ? (

@@ -1,7 +1,8 @@
 import classnames from "classnames";
 
 const InlineDropChid = (props) => {
-  const { formData, parent, index, updateNationality } = props;
+  const { formData, setFormData, parent, index } = props;
+
   return (
     <>
       {props.isVisible && (

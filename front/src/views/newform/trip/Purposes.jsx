@@ -1,44 +1,59 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
-import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
+import InlineDropChidCondition from "../elements/InlineDropChidCondition";
+
+import InlineDropChid from "../elements/InlineDropChid";
+
 
 import reasonsForTravelData from "./reasonsForTravel.json";
 const Purposes = (props) => {
   const { formData, setFormData } = props;
 
-  const [option, setOption] = useState(0);
+  const [option, setOption] = useState(formData["purposes"]);
   // console.log("key", props?.check);
+
+  console.log("option", option);
+
   const addPurposes = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      purposes: [
-        ...(formData.purposes || []), // Ensure previous nationalities are included if they exist
-        { id: Date.now(), value: "" }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const oldPurposes = formData["purposes"];
+    const addPurposes = [
+      ...oldPurposes,
+      {
+        id: Date.now(),
+        mainPurpose: "",
+        specify: "",
+      },
+    ];
+    setFormData("purposes", addPurposes, { shouldValidate: true });
+
+    const updatedOptions = [...option];
+    updatedOptions.push({ id: Date.now(), specify: "", mainPurpose: "" });
+    setOption(updatedOptions);
   };
 
   const deletePurposes = (e) => {
     if (formData.purposes && formData.purposes.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        purposes: formData.purposes.filter((purposes) => {
-          // Condition to filter out values
-          return purposes.id !== e; // Replace idToDelete with the ID you want to delete
-        }),
-      }));
+      const newNationalities = formData.purposes.filter((nationalities) => {
+        // Condition to filter out values
+        return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+      });
+
+      setFormData("purposes", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
-  const handelSelect = (e) => {
-    setOption(e.target.value);
+  const handelSelect = (e, parent, index, name) => {
+    console.log("u", formData);
+    const updatedOptions = [...option];
+    updatedOptions[index][name] = e.target.value;
+    setOption(updatedOptions);
+
+    // setFormData("purposes", newNationalities, {
+    //     shouldValidate: true,
+    //   });
   };
 
   return (
@@ -51,8 +66,10 @@ const Purposes = (props) => {
                 <h3 className="text-xl font-bold">
                   Purpose of the trip to the US #{index + 1}
                 </h3>
-                <InlineDrop
-                  title={"purposes[" + index + "].mainPurpose"}
+                <InlineDropChidCondition
+                  formData={formData}
+                  setFormData={setFormData}
+                  title={"mainPurpose"}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
@@ -61,11 +78,15 @@ const Purposes = (props) => {
                   disabled={false}
                   data={reasonsForTravelData.mainPurpose}
                   inline={true}
+                  index={index}
+                  parent={"purposes"}
                   handelSelect={handelSelect}
                 />
 
-                <InlineDrop
-                  title={"purposes[" + index + "].specify"}
+                <InlineDropChid
+                  formData={formData}
+                  setFormData={setFormData}
+                  title={"specify"}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
@@ -73,9 +94,13 @@ const Purposes = (props) => {
                   isVisible={true}
                   disabled={false}
                   data={reasonsForTravelData.specify.filter(
-                    (specify) => specify.parent === option
+                    (specify) =>
+                      option[index] &&
+                      specify.parent == option[index].mainPurpose
                   )}
                   inline={true}
+                  index={index}
+                  parent={"purposes"}
                 />
                 <div className="flex gap-5">
                   {formData.purposes.length == index + 1 && (

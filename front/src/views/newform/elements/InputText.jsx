@@ -1,18 +1,39 @@
+import { Title } from "chart.js";
 import classnames from "classnames";
 
 const InputText = (props) => {
-  const { required, refs, name } = props;
+  const {
+    formData,
+    handleCheckboxChange,
+    setFormData,
+    disabled,
+    required,
+    refs,
+    name,
+    isVisible,
+    helpText,
+    label,
+    errors
+  } = props;
+
+  const handelCheck = (chkName, fieldName) => {
+    handleCheckboxChange(fieldName);
+    setFormData(chkName, !formData[chkName], { shouldValidate: true });
+
+    // clear errors
+  };
+
   return (
     <>
-      {props.isVisible && (
+      {isVisible && (
         <>
-          <div className={props.label ? "mt-5" : ""}>
-            {props.label && (
+          <div className={label ? "mt-5" : ""}>
+            {label && (
               <label
                 htmlFor="regular-form-3"
                 className="form-label sa-label w-full "
               >
-                {props.label}
+                {label}
                 {required && <span className="text-danger pl-1">*</span>}
               </label>
             )}
@@ -20,20 +41,21 @@ const InputText = (props) => {
               {...props.register(refs)}
               type="text"
               required={required}
-              placeholder={props.label}
+              placeholder={label}
               name={name}
               className={classnames({
                 "form-control": true,
-                "border-danger": props.errors[refs],
+                "border-danger": errors[refs],
               })}
-              disabled={props.formData ? props.formData[props.check] : false}
+              disabled={disabled}
+              // onChange={(e) => handleChange(e, name)}
             />
-            {props.errors[refs] && (
+            {errors[refs] && (
               <div className="text-danger mt-2">
-                {props.errors[refs].message}
+                {errors[refs].message}
               </div>
             )}
-            <div className="form-help">{props.helpText}</div>
+            <div className="form-help">{helpText}</div>
           </div>
 
           {props.condition && props.formData && (
@@ -43,7 +65,7 @@ const InputText = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 value=""
-                onChange={() => props.handleCheckboxChange(props.check)}
+                onChange={() => handelCheck(props.check, name)}
                 name={props.check}
                 checked={
                   props.formData[props.check] && props.formData[props.check]

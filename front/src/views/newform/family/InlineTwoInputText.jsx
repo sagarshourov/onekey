@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
 
 import InputText from "../elements/InputText";
 
@@ -16,6 +14,7 @@ const InlineTwoInputText = (props) => {
     secFieldLbl,
     register,
     formData,
+    setFormData
   } = props;
   return (
     <>
@@ -31,8 +30,8 @@ const InlineTwoInputText = (props) => {
           <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
             <div className="basis-6/12 ">
               <InputText
-                refs={title+".firstName"}
-                name={title+".firstName"}
+                refs={title + ".firstName"}
+                name={title + ".firstName"}
                 required={true}
                 helpText="  "
                 register={register}
@@ -40,18 +39,19 @@ const InlineTwoInputText = (props) => {
                 errors={errors}
                 label={firstFieldLbl}
                 isVisible={true}
-                disabled={false}
+                disabled={formData[title + "_firstname_checkbox"]}
                 checkLabel="Does not apply"
                 condition={true}
                 handleCheckboxChange={handleCheckboxChange}
                 formData={formData}
-                check={title+"_firstname_checkbox"}
+                check={title + "_firstname_checkbox"}
+                setFormData={setFormData}
               />
             </div>
             <div className="basis-6/12">
               <InputText
-                refs={title+".lastName"}
-                name={title+".firstName"}
+                refs={title + ".lastName"}
+                name={title + ".firstName"}
                 required={true}
                 helpText="  "
                 register={register}
@@ -59,12 +59,14 @@ const InlineTwoInputText = (props) => {
                 errors={errors}
                 label={secFieldLbl}
                 isVisible={true}
-                disabled={false}
+                disabled={formData[title + "_lastname_checkbox"]}
                 checkLabel="Does not apply"
                 condition={true}
                 handleCheckboxChange={handleCheckboxChange}
                 formData={formData}
-                check={title+"_lastname_checkbox"}
+                check={title + "_lastname_checkbox"}
+                
+                setFormData={setFormData}
               />
             </div>
           </div>

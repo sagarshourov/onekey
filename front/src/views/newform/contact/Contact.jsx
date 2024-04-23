@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react";
-import InputText from "../elements/InputText";
+import { useState } from "react";
 import InlineDrop from "../elements/InlineDrop";
-import classnames from "classnames";
-import { Litepicker, Tippy, Lucide } from "@/base-components";
 import InlineInputText from "../elements/InlineInputText";
 
 import InlineSwitch from "../elements/InlineSwitch";
@@ -11,25 +8,21 @@ import AddPhone from "./AddPhone";
 import AddEmail from "./AddEmail";
 import AdditionalSocial from "./AdditionalSocial";
 import SocialMedia from "./SocialMedia";
+import InlineInputChildText from "../elements/InlineInputChildText";
 const Contact = (props) => {
   const [date, setDate] = useState("");
-  const {
-    errors,
-    register,
-    fieldVisibility,
-    setFormData,
-    formData,
-    handleCheckboxChange,
-  } = props;
+  const { errors, register, setFormData, formData, handleCheckboxChange } =
+    props;
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Contact Information </h2>
 
       <hr className="my-5 sa-border-primary" />
 
-      <InlineInputText
+      <InlineInputChildText
+        setFormData={setFormData}
         required={true}
-        title={"homeAddress.streetAddress"}
+        title={"streetAddress"}
         helpText="  Please ensure the accuracy of your street address, as it will be used in the communication that will follow for security purposes. "
         register={props.register}
         type="text"
@@ -38,9 +31,12 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        parent={"homeAddress"}
+        index={0}
       />
       <InlineInputText
-        required={true}
+        setFormData={setFormData}
+        required={false}
         title={"homeAddress.streetAddress2"}
         helpText="   "
         register={props.register}
@@ -51,9 +47,10 @@ const Contact = (props) => {
         disabled={false}
         formData={formData}
       />
-      <InlineInputText
+      <InlineInputChildText
+        setFormData={setFormData}
         required={true}
-        title={"homeAddress.city"}
+        title={"city"}
         helpText="   "
         register={props.register}
         type="text"
@@ -62,10 +59,13 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        parent={"homeAddress"}
+        index={0}
       />
-      <InlineInputText
+      <InlineInputChildText
+        setFormData={setFormData}
         required={true}
-        title={"homeAddress.state"}
+        title={"state"}
         helpText="   "
         register={props.register}
         type="text"
@@ -75,11 +75,14 @@ const Contact = (props) => {
         formData={formData}
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
-        check="homeAddressState_checkbox"
+        check="state_checkbox"
         disabled={formData.homeAddressState_checkbox}
+        parent={"homeAddress"}
+        index={0}
       />
 
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"homeAddress.zipCode"}
         helpText="   "
@@ -91,11 +94,17 @@ const Contact = (props) => {
         formData={formData}
         condition={true}
         handleCheckboxChange={handleCheckboxChange}
-        check="homeAddress_ZipCode_checkbox"
         disabled={formData.homeAddress_ZipCode_checkbox}
+        check="ZipCode_checkbox"
+        parent={"homeAddress"}
+        index={0}
+
+
       />
 
       <InlineDrop
+        formData={formData}
+        setFormData={setFormData}
         title={"homeAddress.country"}
         helpText=""
         register={props.register}
@@ -108,6 +117,7 @@ const Contact = (props) => {
       />
 
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         title={"hasSameMailingAddressAsHome"}
         label="  Is your Mailing Address the same as your Home Address?"
@@ -119,6 +129,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"mailingAddress.streetAddress"}
         helpText="   "
@@ -131,6 +142,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"mailingAddress.streetAddress2"}
         helpText="   "
@@ -144,6 +156,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"mailingAddress.city"}
         helpText="   "
@@ -156,6 +169,7 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"mailingAddress.state"}
         helpText="   "
@@ -171,6 +185,7 @@ const Contact = (props) => {
         disabled={formData.mailingAddressState_checkbox}
       />
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"mailingAddress.zipCode"}
         helpText="   "
@@ -186,6 +201,8 @@ const Contact = (props) => {
         disabled={formData.mailingAddressZipCode_checkbox}
       />
       <InlineDrop
+        formData={formData}
+        setFormData={setFormData}
         title={"mailingAddress.country"}
         helpText=""
         register={props.register}
@@ -198,6 +215,7 @@ const Contact = (props) => {
       />
 
       <InlineInputText
+        setFormData={setFormData}
         required={true}
         title={"phonePrimary"}
         helpText="   "
@@ -211,7 +229,8 @@ const Contact = (props) => {
       />
 
       <InlineInputText
-        required={true}
+        setFormData={setFormData}
+        required={false}
         title={"phoneSecondary"}
         helpText="   "
         register={props.register}
@@ -223,7 +242,8 @@ const Contact = (props) => {
         formData={formData}
       />
       <InlineInputText
-        required={true}
+        setFormData={setFormData}
+        required={false}
         title={"phoneWork"}
         helpText="   "
         register={props.register}
@@ -236,6 +256,7 @@ const Contact = (props) => {
       />
 
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         title={"hasAdditionalPhoneNumbers"}
         label="Have you used any other phone number in the last five years?"
@@ -255,6 +276,7 @@ const Contact = (props) => {
       />
 
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         title={"hasAdditionalEmails"}
         label=" Have you used any other email address in the last five years?"
@@ -283,6 +305,7 @@ const Contact = (props) => {
       />
 
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         title={"hasAdditionalSocialMedia"}
         label=" Do you wish to provide information about any other websites or

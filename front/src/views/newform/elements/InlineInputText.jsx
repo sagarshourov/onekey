@@ -18,7 +18,16 @@ const InlineInputText = (props) => {
     errors,
     isVisible,
     handleCheckboxChange,
+    setFormData
   } = props;
+
+
+  const handelCheck = (chkName, fieldName) => {
+    handleCheckboxChange(fieldName);
+    setFormData(chkName, !formData[chkName], { shouldValidate: true });
+
+    // clear errors
+  };
   return (
     <>
       {isVisible && (
@@ -62,7 +71,7 @@ const InlineInputText = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 value=""
-                onChange={() => handleCheckboxChange(check)}
+                onChange={() => handelCheck(check)}
                 name={check}
                 checked={formData[check] && formData[check] ? true : false}
               />

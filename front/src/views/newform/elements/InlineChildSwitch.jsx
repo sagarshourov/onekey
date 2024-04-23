@@ -3,6 +3,10 @@ import classnames from "classnames";
 const InlineChildSwitch = (props) => {
   const { formData, setFormData, onChange, parent, index } = props;
 
+  const handelSwitch = (field, value) => {
+    setFormData(field, value, { shouldValidate: true });
+  };
+
   return (
     <>
       {props.isVisible && (
@@ -25,12 +29,6 @@ const InlineChildSwitch = (props) => {
               "basis-1/12": props.fullWidth,
             })}
           >
-            {/* <input
-              className="form-check-input "
-              type="checkbox"
-              onChange={() => props.handleCheckboxChange(props.title)}
-            /> */}
-
             <div
               className={`sa-toggle-${
                 formData &&
@@ -43,11 +41,7 @@ const InlineChildSwitch = (props) => {
               <div className="bubble"></div>
               <div
                 onClick={(e) =>
-                  onChange(
-                    formData[parent][index].id,
-                    { [props.title]: false },
-                    parent
-                  )
+                  handelSwitch(`${parent}.${index}.${props.title}`, false)
                 }
                 className="no"
               >
@@ -55,11 +49,7 @@ const InlineChildSwitch = (props) => {
               </div>
               <div
                 onClick={(e) =>
-                  onChange(
-                    formData[parent][index].id,
-                    { [props.title]: true },
-                    parent
-                  )
+                  handelSwitch(`${parent}.${index}.${props.title}`, true)
                 }
                 className="yes no-toggle"
               >

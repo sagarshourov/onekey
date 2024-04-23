@@ -11,7 +11,7 @@ const InputTextArea = (props) => {
             className="form-label basis-4/12  sa-label "
           >
             {label}
-            <span className="text-danger pl-1">*</span>
+            {props.required && <span className="text-danger pl-1">*</span>}
             {/* <Tippy
     tag="a"
     href="#"

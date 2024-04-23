@@ -1,40 +1,42 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
+import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineDropChid from "../elements/InlineDropChid";
 const SocialMedia = (props) => {
-  const { formData, isVisible, SocialMedia, register, errors, setFormData } =
-    props;
+  const {
+    formData,
+    isVisible,
+    SocialMedia,
+    register,
+    errors,
+    handleCheckboxChange,
+    setFormData,
+  } = props;
   // console.log("key", props?.check);
 
   const addSocial = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      socialsMedia: [
-        ...(formData.socialsMedia || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["socialsMedia"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        platform: "",
+        username: "",
+      },
+    ];
+    setFormData("socialsMedia", addLanguages, { shouldValidate: true });
   };
 
   const deleteSocial = (e) => {
     if (formData.socialsMedia && formData.socialsMedia.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        socialsMedia: formData.socialsMedia.filter((socialsMedia) => {
-          // Condition to filter out values
-          return socialsMedia.id !== e; // Replace idToDelete with the ID you want to delete
-        }),
-      }));
+      const newNationalities = formData.socialsMedia.filter((nationalities) => {
+        return nationalities.id !== e;
+      });
+
+      setFormData("socialsMedia", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -46,29 +48,42 @@ const SocialMedia = (props) => {
             formData.socialsMedia.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 ">
-                  <InlineDrop
-                    title={"platform"}
-                    helpText=""
-                    register={props.register}
-                    errors={props.errors}
-                    label="Social media provider/Platform"
-                    isVisible={true}
-                    disabled={false}
-                    data={SocialMedia}
-                    inline={true}
-                    formData={formData}
-                  />
-                  <InlineInputText
+                  <InlineDropChid
+                    setFormData={setFormData}
                     required={true}
-                    title={"username"}
-                    helpText="   "
+                    title={`platform`}
+                    helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
-                    label="Social Media Identifier"
+                    label={index + 1 + ". Social Media Platform"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
                     formData={formData}
+                    parent={"socialsMedia"}
+                    index={index}
+                    data={SocialMedia}
+                    inline={true}
+                  />
+
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={`username`}
+                    helpText=""
+                    register={props.register}
+                    type="text"
+                    errors={props.errors}
+                    label={index + 1 + ". Social Media Handle"}
+                    isVisible={true}
+                    disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
+                    formData={formData}
+                    parent={"socialsMedia"}
+                    index={index}
                   />
                 </div>
                 {formData.socialsMedia.length === index + 1 ? (

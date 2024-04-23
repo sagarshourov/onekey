@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InputText from "../elements/InputText";
-import { Lucide } from "@/base-components";
 
 import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
-import InlineInputDate from "../elements/InlineInputDate";
 
-import reasonsForTravelData from "./reasonsForTravel.json";
 import InlineInputText from "../elements/InlineInputText";
-import InlineChildSwitch from "../elements/InlineChildSwitch";
 import InlineSwitch from "../elements/InlineSwitch";
 const OtherPersonPayerInfo = (props) => {
   const {
@@ -24,18 +17,15 @@ const OtherPersonPayerInfo = (props) => {
   } = props;
   // console.log("key", props?.check);
 
-  const handelSelect = (e) => {
-    console.log(e);
-  };
-
   return (
     <>
       {isVisible && (
         <>
           <div className="mt-5 border p-5  border-blue-200 ">
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.name"}
+              title={"otherPayerInfo.name"}
               helpText="  "
               register={register}
               type="text"
@@ -44,12 +34,13 @@ const OtherPersonPayerInfo = (props) => {
               disabled={false}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
-              label="What is the first name of the person paying for the trip?"
+              label="What is the  name of the person paying for the trip?"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.name"}
-              helpText="What is the last name of the person paying for the trip? "
+              title={"otherPayerInfo.number"}
+              helpText=" "
               register={register}
               type="text"
               errors={errors}
@@ -60,9 +51,10 @@ const OtherPersonPayerInfo = (props) => {
               label="Telephone number"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.name"}
-              helpText="Telephone number "
+              title={"otherPayerInfo.relation"}
+              helpText=""
               register={register}
               type="text"
               errors={errors}
@@ -74,8 +66,9 @@ const OtherPersonPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.streetAddress"}
+              title={"otherPayerInfo.address.email"}
               helpText="  "
               register={register}
               type="text"
@@ -91,7 +84,9 @@ const OtherPersonPayerInfo = (props) => {
             />
 
             <InlineDrop
-              title={"companyPayerInfo.country"}
+              formData={formData}
+              setFormData={setFormData}
+              title={"otherPayerInfo.relation"}
               helpText=""
               register={props.register}
               errors={props.errors}
@@ -100,13 +95,13 @@ const OtherPersonPayerInfo = (props) => {
               disabled={false}
               data={dat.relation}
               inline={true}
-              handelSelect={handelSelect}
             />
 
             <InlineSwitch
+              setFormData={setFormData}
               isVisible={true}
               title="hasSameAddressAsMailingOrHome"
-              label="  Person paying for trip has same address"
+              label="Person paying for trip has same address"
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
               fullWidth={false}
@@ -114,13 +109,14 @@ const OtherPersonPayerInfo = (props) => {
               inline={true}
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.streetAddress2"}
+              title={"otherPayerInfo.address.streetAddress2"}
               helpText="  "
               register={register}
               type="text"
               errors={errors}
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={false}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
@@ -129,13 +125,14 @@ const OtherPersonPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.streetAddress2"}
+              title={"otherPayerInfo.address.streetAddress2"}
               helpText="  "
               register={register}
               type="text"
               errors={errors}
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={false}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
@@ -143,26 +140,28 @@ const OtherPersonPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.city"}
+              title={"otherPayerInfo.address.city"}
               helpText="  "
               register={register}
               type="text"
               errors={errors}
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={false}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
               label="City"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.city"}
+              title={"otherPayerInfo.address.city"}
               helpText="  "
               register={register}
               type="text"
               errors={errors}
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={formData.companyPayerInfo_city_checkbox}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
@@ -173,13 +172,14 @@ const OtherPersonPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
-              title={"companyPayerInfo.address.zipcode"}
+              title={"otherPayerInfo.address.zipcode"}
               helpText="  "
               register={register}
               type="text"
               errors={errors}
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={formData.personPayerInfo_zipcode_checkbox}
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
@@ -189,16 +189,17 @@ const OtherPersonPayerInfo = (props) => {
               checkLabel={"Does not apply"}
             />
             <InlineDrop
-              title={"companyPayerInfo.country"}
+              formData={formData}
+              setFormData={setFormData}
+              title={"otherPayerInfo.country"}
               helpText=""
               register={props.register}
               errors={props.errors}
               label=" Country/Region"
-              isVisible={formData.hasSameAddressAsMailingOrHome}
+              isVisible={!formData.hasSameAddressAsMailingOrHome}
               disabled={false}
               data={dat.countries}
               inline={true}
-              handelSelect={handelSelect}
             />
           </div>
         </>

@@ -1,41 +1,42 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
+import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
 const AddLanguage = (props) => {
-  const { formData, isVisible, register, errors, setFormData } = props;
+  const {
+    formData,
+    isVisible,
+    register,
+    errors,
+    handleCheckboxChange,
+    setFormData,
+  } = props;
   // console.log("key", props?.check);
 
   const addLang = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      additionalLanguage: [
-        ...(formData.additionalLanguage || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["additionalLanguage"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        otherSpeakingLanguages: "",
+      },
+    ];
+    setFormData("additionalLanguage", addLanguages, { shouldValidate: true });
   };
 
   const deleteLang = (e) => {
     if (formData.additionalLanguage && formData.additionalLanguage.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        additionalLanguage: formData.additionalLanguage.filter(
-          (additionalLanguage) => {
-            // Condition to filter out values
-            return additionalLanguage.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.additionalLanguage.filter(
+        (nationalities) => {
+          // Condition to filter out values
+          return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+        }
+      );
+
+      setFormData("additionalLanguage", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -47,16 +48,22 @@ const AddLanguage = (props) => {
             formData.additionalLanguage.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                   <InlineInputText
-    required={true}
-                    title={`additionalLanguage.${index}`}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={`otherSpeakingLanguages`}
                     helpText=""
-                    register={register}
+                    register={props.register}
                     type="text"
-                    errors={errors}
-                    label={index + 1 + ". Additional Languages"}
+                    errors={props.errors}
+                    label={index + 1 + ". Additional Language"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
+                    formData={formData}
+                    parent={"additionalLanguage"}
+                    index={index}
                   />
                 </div>
                 {formData.additionalLanguage.length === index + 1 ? (

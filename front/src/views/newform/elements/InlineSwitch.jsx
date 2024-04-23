@@ -1,7 +1,12 @@
 import classnames from "classnames";
 
 const InlineSwitch = (props) => {
-  const { formData } = props;
+  const { title, setFormData, formData } = props;
+
+  const handelSwitch = (fieldName) => {
+    setFormData(fieldName, !formData[fieldName], { shouldValidate: true });
+  };
+
   return (
     <>
       {props.isVisible && (
@@ -32,20 +37,16 @@ const InlineSwitch = (props) => {
 
             <div
               className={`sa-toggle-${
-                formData && formData[props.title] ? true : false
+                formData && formData[title] ? true : false
               } sa-toggle`}
               tabIndex="0"
             >
               <div className="bubble"></div>
-              <div
-                onClick={() => props.handleCheckboxChange(props.title)}
-                className="no"
-              
-              >
+              <div onClick={() => handelSwitch(title)} className="no">
                 No
               </div>
               <div
-                onClick={() => props.handleCheckboxChange(props.title)}
+                onClick={() => handelSwitch(title)}
                 className="yes no-toggle"
               >
                 Yes

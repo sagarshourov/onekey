@@ -1,49 +1,37 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
+import InlineDropChid from "../elements/InlineDropChid";
 import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
 const AddCountry = (props) => {
-  const { formData, isVisible, register, errors, setFormData } = props;
-  // console.log("key", props?.check);
-  const updateNationality = (id, newData) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      travelCountries: prevFormData.travelCountries.map((travelCountry) =>
-      travelCountry.id === id ? { ...travelCountry, ...newData } : travelCountry
-      ),
-    }));
+  const { setFormData, register, errors, formData, isVisible } = props;
+
+  const addCountry = (e) => {
+    const currentNationalities = formData["travelCountries"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        country: "",
+      },
+    ];
+    setFormData("travelCountries", addLanguages, { shouldValidate: true });
+    // const updatedOptions = [...option];
+    // updatedOptions.push({ specify: "", mainPurpose: "" });
+    // setOption(updatedOptions);
   };
 
-  const addLang = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      travelCountries: [
-        ...(formData.travelCountries || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
-  };
-
-  const deleteLang = (e) => {
+  const deleteCountry = (e) => {
     if (formData.travelCountries && formData.travelCountries.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        travelCountries: formData.travelCountries.filter(
-          (travelCountries) => {
-            // Condition to filter out values
-            return travelCountries.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.travelCountries.filter(
+        (nationalities) => {
+          // Condition to filter out values
+          return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+        }
+      );
+      setFormData("travelCountries", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -55,9 +43,10 @@ const AddCountry = (props) => {
             formData.travelCountries.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                   <InlineInputText
-    required={true}
-                    title={`travelCountries.${index}.country`}
+                  {/* <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={`country`}
                     helpText=""
                     register={register}
                     errors={errors}
@@ -66,16 +55,31 @@ const AddCountry = (props) => {
                     disabled={false}
                     data={dat.countries}
                     inline={true}
-                    updateNationality={updateNationality}
                     formData={formData}
                     parent={"travelCountries"}
-                    index={index} />
+                    index={index}
+                  /> */}
+
+                  <InlineDropChid
+                    formData={formData}
+                    setFormData={setFormData}
+                    isVisible={true}
+                    register={props.register}
+                    errors={props.errors}
+                    title={"jobAddress.country"}
+                    data={dat.countries}
+                    label="Country/Region"
+                    inline={true}
+                    condition={false}
+                    parent={"travelCountries"}
+                    index={index}
+                  />
                 </div>
                 {formData.travelCountries.length === index + 1 ? (
                   <div className="basis-1/12  grid  place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={addLang}
+                      onClick={addCountry}
                       className="btn bg-gray-300 btn-rounded p-2  hover:bg-primary hover:text-white "
                     >
                       <Lucide icon="Plus" className="w-7 h-7" />
@@ -85,7 +89,7 @@ const AddCountry = (props) => {
                   <div className="basis-1/12  grid   place-items-center  mt-5">
                     <button
                       type="button"
-                      onClick={() => deleteLang(data.id)}
+                      onClick={() => deleteCountry(data.id)}
                       className="btn bg-gray-300 btn-rounded p-2 hover:bg-danger hover:text-white"
                     >
                       <Lucide icon="X" className="w-7 h-7" />

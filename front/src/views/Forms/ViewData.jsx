@@ -1,13 +1,12 @@
-
 import { useState } from "react";
 //import { Form } from "react-formio";
 import { Lucide, LoadingIcon } from "@/base-components";
-import {Form} from '@formio/react';
+import { Form } from "@formio/react";
 import axios from "axios";
-import {useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import { formDataSelect } from "../../state/admin-atom";
 import { useParams } from "react-router-dom";
-import {getAdmin , getBaseApi } from "../../configuration";
+import { getAdmin, getBaseApi } from "../../configuration";
 import "./view_style.css";
 
 const AllForms = (props) => {
@@ -19,9 +18,7 @@ const AllForms = (props) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  const resetList = useRecoilRefresher_UNSTABLE(
-    formDataSelect(id)
-  );
+  const resetList = useRecoilRefresher_UNSTABLE(formDataSelect(id));
   const handelLoad = () => {
     let count = rowCount + 20;
 
@@ -60,33 +57,29 @@ const AllForms = (props) => {
     }
   };
 
-
-  console.log('form data',formData);
-
-
-
+  console.log("form data", formData);
 
   return (
     <>
       {/* <h2 className="intro-y text-lg font-medium mt-10">Form View</h2> */}
       <div className="grid grid-cols-12 gap-6 mt-5">
-      <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
           <div>
             <h2 className="intro-y text-lg font-medium mt-0">
               {formData?.contents?.title}
             </h2>
           </div>
           <div className="hidden md:block mx-auto text-slate-500">
-            {id !==0 && 
-            <a
-              className="flex items-center btn btn-success-soft"
-              href={getBaseApi() + "pdf/"+id }
-              target="_blank"
-            >
-              <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download As
-              PDF
-            </a>
-            }
+            {id !== 0 && (
+              <a
+                className="flex items-center btn btn-success-soft"
+                href={getBaseApi() + "pdf/" + id}
+                target="_blank"
+              >
+                <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download As
+                PDF
+              </a>
+            )}
           </div>
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
@@ -125,8 +118,10 @@ const AllForms = (props) => {
         </div>
         {/* BEGIN: Data List */}
 
-        <div id="pdf" className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-       
+        <div
+          id="pdf"
+          className="intro-y col-span-12 overflow-auto lg:overflow-visible"
+        >
           {formData.val && (
             <>
               {/* <FormGrid
@@ -162,14 +157,12 @@ const AllForms = (props) => {
 
           {formData.con && (
             <Form
-            
               options={{
                 readOnly: false,
                 renderMode: "flat",
                 buttonSettings: {
                   showSubmit: false,
                 },
-                
               }}
               submission={{ data: formData.val }}
               form={formData.con}

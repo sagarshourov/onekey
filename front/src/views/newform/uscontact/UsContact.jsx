@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputText from "../elements/InputText";
-import InlineDrop from "../elements/InlineDrop";
-import classnames from "classnames";
-import { Litepicker, Tippy, Lucide } from "@/base-components";
-import InlineInputText from "../elements/InlineInputText";
-import InputRadio from "../elements/InputRadio";
 const UsContact = (props) => {
-  const [radio, handleRadio] = useState(0);
+  const { formData, setFormData } = props;
+  const [radio, setRadio] = useState(
+    formData.us_contact ? formData.us_contact : 0
+  );
+
+  // formData.us_contact && setRadio(formData.us_contact);
+
+  const handleRadio = (e) => {
+    setRadio(e);
+    setFormData("us_contact", e, { shouldValidate: true });
+  };
+  console.log(formData.us_contact);
 
   return (
     <>
@@ -20,11 +26,12 @@ const UsContact = (props) => {
 
         <div className="form-check my-5">
           <input
-            className="form-check-input"
+            className="form-check-input-lg"
             type="radio"
             value="1"
             name="us_contact"
             onChange={() => handleRadio(1)}
+            defaultChecked={formData.us_contact == 1 ? true : false}
           />
           <label className="form-check-label" htmlFor="radio-switch-4">
             I know a Person
@@ -37,6 +44,7 @@ const UsContact = (props) => {
             value="2"
             name="us_contact"
             onChange={() => handleRadio(2)}
+            defaultChecked={formData.us_contact == 2 ? true : false}
           />
           <label className="form-check-label" htmlFor="radio-switch-5">
             I know a Organization
@@ -49,6 +57,7 @@ const UsContact = (props) => {
             value="3"
             name="us_contact"
             onChange={() => handleRadio(3)}
+            defaultChecked={formData.us_contact == 3 ? true : false}
           />
           <label className="form-check-label" htmlFor="radio-switch-5">
             I don't know any of them
@@ -59,6 +68,8 @@ const UsContact = (props) => {
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.firstName"}
               name={"uscontact.person.firstName"}
               required={true}
@@ -70,8 +81,9 @@ const UsContact = (props) => {
               isVisible={true}
               disabled={false}
             />
-
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.lastName"}
               name={"uscontact.person.lastName"}
               required={true}
@@ -87,6 +99,8 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.phoneNumber"}
               name={"uscontact.person.phoneNumber"}
               required={true}
@@ -100,6 +114,7 @@ const UsContact = (props) => {
             />
 
             <InputText
+              formData={formData}
               refs={"uscontact.person.email"}
               name={"uscontact.person.email"}
               required={true}
@@ -115,6 +130,8 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.streetAddress"}
               name={"uscontact.person.streetAddress"}
               required={true}
@@ -127,6 +144,8 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.streetAddress2"}
               name={"uscontact.person.streetAddress2"}
               required={true}
@@ -142,6 +161,7 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
               refs={"uscontact.person.city"}
               name={"uscontact.person.city"}
               required={true}
@@ -155,6 +175,8 @@ const UsContact = (props) => {
             />
 
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.state"}
               name={"uscontact.person.state"}
               required={true}
@@ -169,6 +191,8 @@ const UsContact = (props) => {
           </div>
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.person.zipcode"}
               name={"uscontact.person.zipcode"}
               required={true}
@@ -181,6 +205,7 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
+              formData={formData}
               refs={"uscontact.person.country"}
               name={"uscontact.person.country"}
               required={true}
@@ -200,6 +225,8 @@ const UsContact = (props) => {
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.organization.name"}
               name={"uscontact.organization.name"}
               required={true}
@@ -213,6 +240,7 @@ const UsContact = (props) => {
             />
 
             <InputText
+              formData={formData}
               refs={"uscontact.organization.phone"}
               name={"uscontact.organization.phone"}
               required={true}
@@ -228,6 +256,8 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
+              setFormData={setFormData}
               refs={"uscontact.organization.email"}
               name={"uscontact.organization.email"}
               required={true}
@@ -241,6 +271,7 @@ const UsContact = (props) => {
             />
 
             <InputText
+              formData={formData}
               refs={"uscontact.organization.streetAddress"}
               name={"uscontact.organization.streetAddress"}
               required={true}
@@ -256,6 +287,7 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
               refs={"uscontact.organization.streetAddress2"}
               name={"uscontact.organization.streetAddress2"}
               required={true}
@@ -268,6 +300,7 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
+              formData={formData}
               refs={"uscontact.organization.city"}
               name={"uscontact.organization.city"}
               required={true}
@@ -283,6 +316,7 @@ const UsContact = (props) => {
 
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
               refs={"uscontact.organization.state"}
               name={"uscontact.organization.state"}
               required={true}
@@ -295,6 +329,7 @@ const UsContact = (props) => {
               disabled={false}
             />
             <InputText
+              formData={formData}
               refs={"uscontact.organization.zipcode"}
               name={"uscontact.organization.zipcode"}
               required={true}
@@ -309,6 +344,7 @@ const UsContact = (props) => {
           </div>
           <div className="grid lg:grid-cols-2 lg:gap-32">
             <InputText
+              formData={formData}
               refs={"uscontact.organization.country"}
               name={"uscontact.organization.country"}
               required={true}

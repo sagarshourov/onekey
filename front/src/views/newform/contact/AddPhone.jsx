@@ -1,41 +1,41 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
+import InlineInputChildText from "../elements/InlineInputChildText";
 const AddPhone = (props) => {
-  const { formData, isVisible, register, errors, setFormData } = props;
+  const {
+    formData,
+    isVisible,
+    register,
+    errors,
+    handleCheckboxChange,
+    setFormData,
+  } = props;
   // console.log("key", props?.check);
 
   const addPhone = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      additionalPhones: [
-        ...(formData.additionalPhones || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["additionalPhones"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        number: "",
+      },
+    ];
+    setFormData("additionalPhones", addLanguages, { shouldValidate: true });
   };
 
   const deletePhone = (e) => {
     if (formData.additionalPhones && formData.additionalPhones.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        additionalPhones: formData.additionalPhones.filter(
-          (additionalPhone) => {
-            // Condition to filter out values
-            return additionalPhone.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.additionalPhones.filter(
+        (nationalities) => {
+          return nationalities.id !== e;
+        }
+      );
+
+      setFormData("additionalPhones", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -47,16 +47,22 @@ const AddPhone = (props) => {
             formData.additionalPhones.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                  <InlineInputText
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
-                    title={`additionalPhones[${index}]`}
+                    title={`phoneNumber`}
                     helpText=""
-                    register={register}
+                    register={props.register}
                     type="text"
-                    errors={errors}
+                    errors={props.errors}
                     label={index + 1 + ". Additional Phone Number"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
+                    formData={formData}
+                    parent={"additionalPhones"}
+                    index={index}
                   />
                 </div>
                 {formData.additionalPhones.length === index + 1 ? (

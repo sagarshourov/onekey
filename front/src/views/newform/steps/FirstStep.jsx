@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
 import InputText from "../elements/InputText";
-import classnames from "classnames";
-import { Litepicker, Tippy, Lucide } from "@/base-components";
 import InlineInputDate from "../elements/InlineInputDate";
 import data from "../elements/data.json";
 
@@ -10,50 +7,16 @@ import InlineDrop from "../elements/InlineDrop";
 import InlineSwitch from "../elements/InlineSwitch";
 import InputRadio from "../elements/InputRadio";
 const FirstStep = (props) => {
-  const { formData, handleCheckboxChange } = props;
-
-  // const [fieldVisibility, setFieldVisibility] = useState({
-  //   hasAdditionalNames: false,
-  //   hasBirthStateProvince: false,
-  //   // Add more fields if needed
-  // });
-  // const handleCheckboxChange = (fieldName) => {
-  //   setFieldVisibility({
-  //     ...fieldVisibility,
-  //     [fieldName]: !fieldVisibility[fieldName],
-  //   });
-  // };
-
-  //console.log('filed',fieldVisibility);
+  const { setFormData, formData, handleCheckboxChange } = props;
 
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> General Information </h2>
-
-      <div>
-        {/* <div className="toggle-container">
-          <div className={`sa-toggle-${state} sa-toggle`} tabIndex="0">
-            <div className="bubble"></div>
-            <div
-              onClick={() => setState(false)}
-              className="no"
-              htmlFor="hasAdditionalNames"
-            >
-              No
-            </div>
-            <div
-              onClick={() => setState(true)}
-              className="yes no-toggle"
-              htmlFor="hasAdditionalNames"
-            >
-              Yes
-            </div>
-          </div>
-        </div> */}
-      </div>
-
+      <hr className="my-5 sa-border-primary" />
       <div className="grid grid-cols-1  lg:grid-cols-2  lg:gap-32">
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"userEmail"}
           name={"userEmail"}
           required={true}
@@ -75,6 +38,8 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"firstName"}
           name={"firstName"}
           required={true}
@@ -90,6 +55,8 @@ const FirstStep = (props) => {
         />
 
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"lastName"}
           name={"lastName"}
           required={true}
@@ -108,6 +75,7 @@ const FirstStep = (props) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <div>
           <InputText
+            setFormData={setFormData}
             refs={"fullName"}
             name={"fullName"}
             required={true}
@@ -127,15 +95,13 @@ const FirstStep = (props) => {
         </div>
         <div className="pt-5">
           <InlineSwitch
-            refs={"hasAdditionalNames"}
-            name={"hasAdditionalNames"}
+            setFormData={setFormData}
+            title={"hasAdditionalNames"}
             required={true}
             register={props.register}
             formData={formData}
             isVisible={true}
-            label=" Have you used a four-letter code to represent your name in a
-              communication system?"
-            handleCheckboxChange={handleCheckboxChange}
+            label="Have you ever gone by other names, such as maiden, religious, professional, or alias names"
             fullWidth={true}
           />
         </div>
@@ -143,6 +109,7 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
+          setFormData={setFormData}
           refs={"additionalFirstName"}
           name={"additionalFirstName"}
           required={true}
@@ -156,6 +123,7 @@ const FirstStep = (props) => {
           formData={formData}
         />
         <InputText
+          setFormData={setFormData}
           refs={"additionalLastName"}
           name={"additionalLastName"}
           required={true}
@@ -171,10 +139,10 @@ const FirstStep = (props) => {
       </div>
       <div className="grid grid-cols-1 mt-5">
         <InlineSwitch
+          setFormData={setFormData}
           isVisible={true}
           title="hasTelecode"
           label=" Have you used a four-letter code to represent your name in a communication system?"
-          handleCheckboxChange={handleCheckboxChange}
           formData={formData}
           fullWidth={false}
           helpText="A telecode is a four-letter code that represents an individual's name and is used to save time and transmit data electronically. "
@@ -183,6 +151,8 @@ const FirstStep = (props) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"telecodeFirstName"}
           name={"telecodeFirstName"}
           required={true}
@@ -195,6 +165,8 @@ const FirstStep = (props) => {
           disabled={false}
         />
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"telecodeLastName"}
           name={"telecodeLastName"}
           required={true}
@@ -218,14 +190,17 @@ const FirstStep = (props) => {
             isVisible={true}
             register={props.register}
             inline={false}
+            setFormData={setFormData}
           />
         </div>
         <div className="mt-5">
           <InlineDrop
+            formData={formData}
+            setFormData={setFormData}
             isVisible={true}
             register={props.register}
             errors={props.errors}
-            title={"birthCountry"}
+            title={"maritalStatus"}
             data={data.married}
             label="Marital Status"
             helpText=" "
@@ -249,6 +224,8 @@ const FirstStep = (props) => {
         </div>
 
         <InputText
+          formData={formData}
+          setFormData={setFormData}
           refs={"birthCity"}
           name={"birthCity"}
           required={true}
@@ -264,6 +241,8 @@ const FirstStep = (props) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-32">
         <div>
           <InputText
+            formData={formData}
+            setFormData={setFormData}
             refs={"birthStateProvince"}
             name={"birthStateProvince"}
             required={true}
@@ -277,12 +256,13 @@ const FirstStep = (props) => {
             check="hasBirthStateProvince"
             checkLabel="Does not apply"
             condition={true}
-            fieldVisibility={formData}
             handleCheckboxChange={handleCheckboxChange}
           />
         </div>
         <div className="mt-5">
           <InlineDrop
+            formData={formData}
+            setFormData={setFormData}
             isVisible={true}
             register={props.register}
             errors={props.errors}

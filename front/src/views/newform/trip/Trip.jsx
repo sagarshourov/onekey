@@ -1,31 +1,15 @@
-import { useState, useEffect } from "react";
-import InputText from "../elements/InputText";
+import { useState } from "react";
 import InlineDrop from "../elements/InlineDrop";
-import classnames from "classnames";
-import { Litepicker, Tippy, Lucide } from "@/base-components";
 import InlineInputText from "../elements/InlineInputText";
 
-import InputTextArea from "../elements/InputTextArea";
 import reasonsForTravelData from "./reasonsForTravel.json";
-import InputRadio from "../elements/InputRadio";
-import InlineSwitch from "../elements/InlineSwitch";
 import Purposes from "./Purposes";
-import Travelers from "./Travelers";
-import PreviousVisit from "./PreviousVisit";
-import USDriverLicenses from "./USDriverLicenses";
-import data from "../elements/data.json";
 import InlineInputDate from "../elements/InlineInputDate";
 import CompanyPayerInfo from "./CompanyPayerInfo";
 import OtherPersonPayerInfo from "./OtherPersonPayerInfo";
 const Trip = (props) => {
-  const {
-    errors,
-    register,
-    fieldVisibility,
-    setFormData,
-    formData,
-    handleCheckboxChange,
-  } = props;
+  const { errors, register, setFormData, formData, handleCheckboxChange } =
+    props;
   const [date, setDate] = useState("");
   const [radio, setRadio] = useState(false);
   const [payingFor, setPayingFor] = useState(false);
@@ -43,31 +27,12 @@ const Trip = (props) => {
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Trip details </h2>
-
       <hr className="my-5 sa-border-primary" />
-
-      {/*  <InlineInputText
-    required={true}
-        title={"applicationCountryInput"}
-        helpText="Renewal with Interview Waiver: You can use this form to renew your valid U.S. visa without attending an embassy interview. In addition, if your visa has expired within the last 12 to 48 months (depending on your citizenship), you may be eligible for an interview waiver. "
-        register={register}
-        type="text"
-        errors={errors}
-        label="Choose an embassy location for your visa application interview"
-        isVisible={true}
-       
-        condition={true}
-        handleCheckboxChange={handleCheckboxChange}
-      
-        checkLabel="Need help choosing a location? Choose a location later"
-        formData={formData}
-        check="applicationCountryInput_check"
-        disabled={formData.applicationCountryInput_check}
-      />
-      <hr className="my-5 sa-border-primary" /> */}
 
       <div className="mt-5">
         <InlineDrop
+          formData={formData}
+          setFormData={setFormData}
           isVisible={true}
           register={register}
           errors={errors}
@@ -77,7 +42,7 @@ const Trip = (props) => {
           inline={true}
         />
       </div>
-      <div className="mt-5">
+      {/* <div className="mt-5">
         <InputRadio
           titleYes="Someone else"
           titleNo="Self"
@@ -96,8 +61,11 @@ const Trip = (props) => {
           label="Please provide a detailed explanation"
           isVisible={!radio}
           disabled={false}
+          required={false}
         />
         <InlineDrop
+          formData={formData}
+          setFormData={setFormData}
           isVisible={radio}
           register={register}
           errors={errors}
@@ -109,8 +77,7 @@ const Trip = (props) => {
           label="Who are you applying for?"
           inline={true}
         />
-      </div>
-
+      </div> */}
       <Purposes
         setFormData={setFormData}
         isVisible={true}
@@ -118,8 +85,9 @@ const Trip = (props) => {
         errors={errors}
         register={register}
       />
-
       <InlineDrop
+        formData={formData}
+        setFormData={setFormData}
         isVisible={true}
         register={register}
         errors={errors}
@@ -128,8 +96,78 @@ const Trip = (props) => {
         label=" Have you made any specific travel plans yet?"
         inline={true}
       />
+      {/* Date of Arrival */}
 
-      <InlineSwitch
+      <InlineInputDate
+        title="travelPlan.arrivalDate"
+        helpText=""
+        register={props.register}
+        errors={props.errors}
+        label="  Date of Arrival"
+        isVisible={formData.hasTravelPlansInput == "specific_plans"}
+        disabled={false}
+        inline={true}
+      />
+
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
+        title={"travelPlan.arrivalFlight"}
+        helpText="  "
+        register={register}
+        type="text"
+        errors={errors}
+        isVisible={formData.hasTravelPlansInput == "specific_plans"}
+        disabled={false}
+        handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
+        condition={false}
+        label="Arrival Flight"
+      />
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
+        title={"travelPlan.arrivalCity"}
+        helpText="  "
+        register={register}
+        type="text"
+        errors={errors}
+        isVisible={formData.hasTravelPlansInput == "specific_plans"}
+        disabled={false}
+        handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
+        condition={false}
+        label="Arrival City"
+      />
+      {/* Date Of Departure  */}
+      <InlineInputDate
+        title="travelPlan.departureDate"
+        helpText=""
+        register={props.register}
+        errors={props.errors}
+        label="  Date Of Departure"
+        isVisible={formData.hasTravelPlansInput == "specific_plans"}
+        disabled={false}
+        inline={true}
+      />
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
+        title={"travelPlan.departureFlight"}
+        helpText="  "
+        register={register}
+        type="text"
+        errors={errors}
+        isVisible={formData.hasTravelPlansInput == "specific_plans"}
+        disabled={false}
+        handleCheckboxChange={handleCheckboxChange}
+        formData={formData}
+        condition={false}
+        label="Departure Flight "
+      />
+
+      {/* <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         title="hasOtherTravelers"
         label=" Will anyone be traveling with you?"
@@ -139,8 +177,8 @@ const Trip = (props) => {
         helpText=" "
         inline={true}
       />
-
-      <InlineSwitch
+    <InlineSwitch
+        setFormData={setFormData}
         isVisible={formData.hasOtherTravelers}
         title="travelingWithOrganization"
         label=" Are you traveling as part of a group or organization?"
@@ -151,7 +189,7 @@ const Trip = (props) => {
         inline={true}
       />
       <InputText
-      
+        setFormData={setFormData}
         refs={"groupName"}
         name={"groupName"}
         required={true}
@@ -169,282 +207,11 @@ const Trip = (props) => {
         setFormData={setFormData}
         register={register}
         errors={errors}
-      />
-
-      <InlineSwitch
-        isVisible={true}
-        title="haveYouEverBeenToUS"
-        label=" Have you ever visited or traveled to the United States before?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <PreviousVisit
-        isVisible={formData.haveYouEverBeenToUS}
+      /> */}
+      
+      <InlineDrop
         formData={formData}
         setFormData={setFormData}
-        register={register}
-        errors={errors}
-        label="Length of Stay"
-      />
-
-      <InlineSwitch
-        isVisible={formData.haveYouEverBeenToUS}
-        title="hasUSDriversLicense"
-        label="Do you or did you ever hold a U.S. Driver's Licence?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <USDriverLicenses
-        isVisible={formData.hasUSDriversLicense && formData.haveYouEverBeenToUS}
-        formData={formData}
-        setFormData={setFormData}
-        register={register}
-        errors={errors}
-        label="Length of Stay"
-        handleCheckboxChange={handleCheckboxChange}
-      />
-      <InlineSwitch
-        isVisible={true}
-        title="hasIssuedVisa"
-        label=" Have you ever been issued a U.S. visa before?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineDrop
-        isVisible={formData.hasIssuedVisa}
-        register={register}
-        errors={errors}
-        title={"lastVisa.applicationCountry"}
-        data={data.countries}
-        label="Visa Issuing Post Name"
-        inline={true}
-      />
-
-      <InlineInputDate
-        title={"issueDate"}
-        helpText=""
-        register={register}
-        errors={errors}
-        label="Visa issue date"
-        isVisible={formData.hasIssuedVisa}
-        disabled={false}
-        inline={true}
-      />
-      <InlineInputDate
-        title={"expirationDate"}
-        helpText=""
-        register={register}
-        errors={errors}
-        label="Visa expiration date"
-        isVisible={formData.hasIssuedVisa}
-        disabled={false}
-        inline={true}
-      />
-
-      <InlineInputText
-        required={true}
-        title={"lastVisa.visaNumber"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hasIssuedVisa}
-        disabled={formData.visaNumber_checkbox}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        condition={true}
-        label="Visa Number"
-        checkLabel="Does not apply"
-        check="visaNumber_checkbox"
-      />
-
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="hasSameType"
-        label=" 
-        Are you applying for the same type of visa?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="lastVisa.sameCountry"
-        label=" 
-        Are you applying from the same country and is this your country of residence?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="lastVisa.tenPrinted"
-        label=" 
-        Have you been ten-printed?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="hadVisaLost"
-        label=" 
-        Has your U.S. Visa ever been lost or stolen?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineInputText
-        required={true}
-        title={"lastVisa.year"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hadVisaLost && formData.hasIssuedVisa}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Year"
-      />
-      <InlineInputText
-        required={true}
-        title={"lastVisa.explain"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hadVisaLost && formData.hasIssuedVisa}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Explain"
-      />
-
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="hasVisaCancelled"
-        label="
-        Has your U.S. Visa ever been cancelled or revoked?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineInputText
-        required={true}
-        title={"lastVisa.visaCancelledExplain"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hasVisaCancelled && formData.hasIssuedVisa}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Explain"
-      />
-      <InlineSwitch
-        isVisible={formData.hasIssuedVisa}
-        title="clearanceReceived"
-        label={`
-        The Visa that you're renewing has "Clearance received" or "212(a) waiver of ineligibility" annotated on the visa`}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineSwitch
-        isVisible={true}
-        title="hasBeenRefusedForVisa"
-        label=" 
-        Have you ever been denied a U.S. visa, entry to the United States, or withdrawn your application for entry at the port of entry?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-
-      <InlineInputText
-        required={true}
-        title={"lastVisa.year"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hasBeenRefusedForVisa}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Year"
-      />
-      <InlineInputText
-        required={true}
-        title={"lastVisa.explain"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hasBeenRefusedForVisa}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Explain"
-      />
-
-      <InlineSwitch
-        isVisible={true}
-        title="hasAnyoneEverFilledOnBehalf"
-        label=" 
-        Has anyone filed an immigrant petition for you with the United States Citizenship and Immigration Service?"
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        fullWidth={false}
-        helpText=" "
-        inline={true}
-      />
-      <InlineInputText
-        required={true}
-        title={"lastVisa.explain"}
-        helpText="  "
-        register={register}
-        type="text"
-        errors={errors}
-        isVisible={formData.hasAnyoneEverFilledOnBehalf}
-        disabled={false}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        label="Explain"
-      />
-
-      <InlineDrop
         isVisible={true}
         register={register}
         errors={errors}
@@ -452,19 +219,17 @@ const Trip = (props) => {
         data={reasonsForTravelData.personPayingForTrip}
         label="Who is paying for the trip?"
         inline={true}
-        handelSelect={handelPayingForTripSelect}
       />
       <CompanyPayerInfo
-        isVisible={payingFor == "company_organization"}
+        isVisible={formData.personPayingForTrip == "company_organization"}
         register={register}
         formData={formData}
         handleCheckboxChange={handleCheckboxChange}
         setFormData={setFormData}
         errors={errors}
       />
-
       <OtherPersonPayerInfo
-        isVisible={payingFor == "other_person"}
+        isVisible={formData.personPayingForTrip == "other_person"}
         register={register}
         formData={formData}
         handleCheckboxChange={handleCheckboxChange}

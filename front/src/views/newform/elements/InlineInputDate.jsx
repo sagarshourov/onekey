@@ -5,7 +5,15 @@ import data from "./data.json";
 const InlineInputDate = (props) => {
   // console.log("key", props?.check);
 
-  const {chkLbl}=props;
+  const { chkLbl, formData, register, setFormData, handleCheckboxChange } = props;
+
+  const handelCheck = (chkName, fieldName) => {
+    handleCheckboxChange(fieldName);
+    setFormData(chkName, !formData[chkName], { shouldValidate: true });
+
+    // clear errors
+  };
+
   return (
     <>
       {props.isVisible && (
@@ -24,10 +32,11 @@ const InlineInputDate = (props) => {
           <div className={props.condition ? "basis-6/12" : "basis-8/12"}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <select
+                {...register(`${props.title}.dayIndex`)}
                 className="form-select   w-full "
                 aria-label=".form-select-lg example"
                 disabled={props.disabled}
-                name={props.title + ".index"}
+                name={props.title + ".dayIndex"}
               >
                 {data.days.map((data, index) => (
                   <option key={index} value={data.value}>
@@ -36,6 +45,7 @@ const InlineInputDate = (props) => {
                 ))}
               </select>
               <select
+                {...register(`${props.title}.monthIndex`)}
                 className="form-select  w-full "
                 aria-label=".form-select-lg example"
                 disabled={props.disabled}
@@ -48,6 +58,7 @@ const InlineInputDate = (props) => {
                 ))}
               </select>
               <input
+                {...register(`${props.title}.yearIndex`)}
                 type="text"
                 name={props.title + ".yearIndex"}
                 className="form-control"
@@ -68,11 +79,11 @@ const InlineInputDate = (props) => {
                 className="form-check-input"
                 type="checkbox"
                 value=""
-                onChange={() => props.handleCheckboxChange(props.check)}
+                onChange={() => handelCheck(props.check, props.title)}
                 name={props.check}
               />
               <label className="form-check-label" htmlFor="checkbox-switch-3">
-             {chkLbl}
+                {chkLbl}
               </label>
             </div>
           )}

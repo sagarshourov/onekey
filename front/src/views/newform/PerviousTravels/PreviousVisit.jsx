@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InputText from "../elements/InputText";
-import { Lucide } from "@/base-components";
+import InlineInputChildText from "../elements/InlineInputChildText";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InlineInputDate from "../elements/InlineInputDate";
+import InlineInputChildDate from "../elements/InlineInputChildDate";
 
-import reasonsForTravelData from "./reasonsForTravel.json";
 const PreviousVisit = (props) => {
   const {
     isVisible,
@@ -20,31 +14,33 @@ const PreviousVisit = (props) => {
     errors,
   } = props;
   // console.log("key", props?.check);
+
   const addPreviousVisit = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      previousVisit: [
-        ...(formData.previousVisit || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          arrivalDate: "",
-          stayLengthValue: "",
-          stayLengthType: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["previousVisit"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        arrivalDate: "",
+        stayLengthValue: "",
+        stayLengthType: "",
+      },
+    ];
+    setFormData("previousVisit", addLanguages, { shouldValidate: true });
   };
 
   const deletePreviousVisit = (e) => {
     if (formData.previousVisit && formData.previousVisit.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        previousVisit: formData.previousVisit.filter((previousVisit) => {
+      const newNationalities = formData.previousVisit.filter(
+        (nationalities) => {
           // Condition to filter out values
-          return previousVisit.id !== e; // Replace idToDelete with the ID you want to delete
-        }),
-      }));
+          return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+        }
+      );
+
+      setFormData("previousVisit", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -58,7 +54,7 @@ const PreviousVisit = (props) => {
                 <h3 className="text-xl font-bold">
                   Previous visit #{index + 1}
                 </h3>
-                <InlineInputDate
+                <InlineInputChildDate
                   title={"arrivalDate"}
                   helpText=""
                   register={props.register}
@@ -67,6 +63,8 @@ const PreviousVisit = (props) => {
                   isVisible={true}
                   disabled={false}
                   inline={true}
+                  parent="previousVisit"
+                  index={index}
                 />
                 <div className="mt-5 gap-5 flex-none lg:flex lg:flex-row">
                   <label
@@ -78,11 +76,12 @@ const PreviousVisit = (props) => {
                   </label>
                   <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
                     <div className="basis-6/12 ">
-                      <InputText
+                      <InlineInputChildText
+                        setFormData={setFormData}
                         refs={"fatherInfo_firstName"}
-                        name={"fatherInfo.firstName"}
+                        name={"firstName"}
                         required={true}
-                        title={"fatherInfo.firstName"}
+                        title={"firstName"}
                         helpText="  "
                         register={register}
                         type="text"
@@ -92,15 +91,24 @@ const PreviousVisit = (props) => {
                         condition={false}
                         handleCheckboxChange={handleCheckboxChange}
                         formData={formData}
+                        parent={"fatherInfo"}
+                        index={index}
                       />
                     </div>
                     <div className="basis-6/12">
-                      <select className="form-control">
-                        <option>Years</option>
-                        <option>Months</option>
-                        <option>Weeks</option>
-                        <option>Days</option>
-                        <option>Less than 24 hours</option>
+                      <select
+                        {...register(`fatherInfo.${index}.stayLengthType`)}
+                        className="form-control "
+                        name={`fatherInfo.${index}.stayLengthType`}
+                        defaultValue={
+                          formData[index] ? formData[index]?.stayLengthType : ""
+                        }
+                      >
+                        <option value="yearly">Years</option>
+                        <option value="month">Months</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="days">Days</option>
+                        <option value="24_hours">Less than 24 hours</option>
                       </select>
                     </div>
                   </div>

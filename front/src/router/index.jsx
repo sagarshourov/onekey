@@ -37,9 +37,6 @@ const AllUsers = Loadable(lazy(() => import("../views/Users/Main")));
 const Trash = Loadable(lazy(() => import("../views/Users/Trash")));
 const Archived = Loadable(lazy(() => import("../views/Users/Archive/Main")));
 
-
-
-
 const Users = Loadable(lazy(() => import("../views/Users/Main")));
 
 const ToDoList = Loadable(lazy(() => import("../views/ToDoList/Main")));
@@ -88,18 +85,22 @@ const ViewForm = Loadable(lazy(() => import("../views/Forms/View")));
 const UserFrom = Loadable(lazy(() => import("../views/UserFroms/Main")));
 
 const ViewDataForm = Loadable(lazy(() => import("../views/Forms/ViewData")));
+const ViewDsDataForm = Loadable(lazy(() => import("../views/Forms/ViewDsData")));
 
-const ViewUserDataForm = Loadable(lazy(() => import("../views/Forms/ViewUserDataForm")));
+
+
+
+const ViewUserDataForm = Loadable(
+  lazy(() => import("../views/Forms/ViewUserDataForm"))
+);
 
 const NewForm = Loadable(lazy(() => import("../views/newform/Main")));
-
 
 const AdminStatusView = Loadable(
   lazy(() => import("../views/UserAppStatus/AdminStatusView"))
 );
 
 const Board = Loadable(lazy(() => import("../views/Board/Main")));
-
 
 const SingleBoard = Loadable(lazy(() => import("../views/Board/Profile")));
 
@@ -151,7 +152,6 @@ function Router() {
           element: <Archived />,
         },
 
-
         {
           path: "/app_status",
           element: <UserAppStatus />,
@@ -198,7 +198,14 @@ function Router() {
           element: <ViewDataForm />,
         },
 
-        
+        {
+          path: "/forms/viewdsdata/:id",
+          element: <ViewDsDataForm />,
+        },
+
+
+
+
         {
           path: "/form_view/:id/:u_id",
           element: <ViewUserDataForm />,
@@ -225,11 +232,9 @@ function Router() {
         },
 
         {
-          path: "/newform",
+          path: "/newform/:id",
           element: <NewForm />,
         },
-
-        
       ],
     },
 
@@ -398,6 +403,11 @@ function Router() {
         //   path: "/tasks",
         //   element: <ToDoList />,
         // },
+
+        {
+          path: "/newform/:id",
+          element: <NewForm />,
+        },
 
         {
           path: "/forms/:id",

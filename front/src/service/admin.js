@@ -115,6 +115,17 @@ export async function getEditForm(id) {
   }
 }
 
+export async function getDsForm(fid, id) {
+  const userApiUrl = getAdmin() + "get_ds_form/" + fid + "/" + id;
+  // ("userApiUrl", userApiUrl);
+  try {
+    const response = await axios.get(userApiUrl, { headers });
+    return response.data || [];
+  } catch (error) {
+    throw new Error(`Error in 'axiosGetJsonData(${userApiUrl})': 'Err`);
+  }
+}
+
 export async function getAllForms() {
   const userApiUrl = getBaseApi() + "forms";
   // ("userApiUrl", userApiUrl);

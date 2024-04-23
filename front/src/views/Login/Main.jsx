@@ -57,10 +57,7 @@ const Login = (props) => {
           JSON.stringify(response?.data?.data?.user)
         );
 
-        localStorage.setItem(
-          "email",
-          response?.data?.data?.user?.email
-        );
+        localStorage.setItem("email", response?.data?.data?.user?.email);
 
         localStorage.setItem(
           "first_name",
@@ -74,6 +71,10 @@ const Login = (props) => {
           "profile_image",
           response?.data?.data?.profile_image?.file_path
         );
+        localStorage.setItem(
+          "userId",
+          response?.data?.data?.user?.id
+        );
 
         setLoginState({
           profile_image: response?.data?.data?.profile_image?.file_path,
@@ -82,11 +83,12 @@ const Login = (props) => {
           last_name: response?.data?.data?.user?.last_name,
           isAdmin: parseInt(roles),
           token: accessToken,
+          userId: response?.data?.data?.user?.id,
         });
 
         window.location.reload();
 
-       // navigate("../", { replace: true });
+        // navigate("../", { replace: true });
       } else {
         setLoading(false);
 

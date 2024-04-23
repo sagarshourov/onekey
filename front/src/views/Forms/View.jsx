@@ -8,7 +8,7 @@ import { useState } from "react";
 
 import { useRecoilValue } from "recoil";
 import { formByIdSelect } from "../../state/admin-atom";
-import UsersTable from "./ViewTable";
+import ViewTable from "./ViewTable";
 import { useParams } from "react-router-dom";
 import { filter } from "lodash";
 
@@ -26,6 +26,8 @@ function applySortFilters(array, searchValue) {
 
 const AllForms = (props) => {
   let { id } = useParams();
+
+  console.log('form id',id);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
 
   const formData = useRecoilValue(formByIdSelect(id));
@@ -75,7 +77,7 @@ const AllForms = (props) => {
         {/* BEGIN: Data List */}
 
         <div className="intro-y col-span-12 overflow-auto lg:overflow-visible">
-          <UsersTable rowCount={rowCount} users={filterData} />
+          <ViewTable tblId={id} rowCount={rowCount} users={filterData} />
         </div>
         {/* END: Data List */}
         {/* BEGIN: Pagination */}

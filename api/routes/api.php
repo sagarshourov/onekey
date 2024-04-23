@@ -72,7 +72,6 @@ Route::group(["prefix" => "/", 'middleware' => 'auth:api', "name" => "user."], f
 
 
 
-
     Route::post('file_upload', 'App\Http\Controllers\FileController@file_upload');
     Route::get('events/{user_id?}', 'App\Http\Controllers\EventsController@all_events');
     Route::post('delete_file', 'App\Http\Controllers\FileController@delete_file');
@@ -163,9 +162,6 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('completed', 'App\Http\Controllers\Admin\FormController@completed');
     
 
-
-
-
     Route::post('save_form', 'App\Http\Controllers\Admin\FormController@save_form');
     Route::post('update_form', 'App\Http\Controllers\Admin\FormController@update_form');
 
@@ -186,17 +182,17 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin.
     Route::post('save_event', 'App\Http\Controllers\EventsController@save_event');
     Route::post('delete_event', 'App\Http\Controllers\EventsController@delete_event');
 
-
-
-
-
     Route::get('notifications', 'App\Http\Controllers\UserController@notifications');
-
 
     Route::post('delete_noti', 'App\Http\Controllers\UserController@delete_notification');
 
 
     Route::get('admin_files', 'App\Http\Controllers\FileController@admin_files');
+
+    //ds form
+    Route::get('get_ds_form/{fid}/{id}', 'App\Http\Controllers\Admin\FormController@get_ds_form');
+    Route::post('save_ds_form', 'App\Http\Controllers\Admin\FormController@save_ds_form');
+    Route::get('del_ds_form/{form_id}/{id}', 'App\Http\Controllers\FormController@del_ds_form');
 });
 
 

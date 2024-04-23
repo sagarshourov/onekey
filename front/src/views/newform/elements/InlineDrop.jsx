@@ -1,7 +1,13 @@
 import classnames from "classnames";
 
 const InlineDrop = (props) => {
-  const { handelSelect } = props;
+  const { title, setFormData, formData } = props;
+
+  const handelSelect = (e, fieldName) => {
+    setFormData(fieldName, e.target.value, { shouldValidate: true });
+    console.log("formdata", formData);
+  };
+
   return (
     <>
       {props.isVisible && (
@@ -23,7 +29,7 @@ const InlineDrop = (props) => {
               className="form-select w-full "
               aria-label=".form-select example"
               name={props.title}
-              onChange={(e) => handelSelect(e)}
+              onChange={(e) => handelSelect(e, title)}
             >
               {props.data &&
                 props.data.map((data, index) => (

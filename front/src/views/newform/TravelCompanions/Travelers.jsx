@@ -1,37 +1,36 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
+import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
+import InlineDropChid from "../elements/InlineDropChid";
 import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
 
-import reasonsForTravelData from "./reasonsForTravel.json";
 const Travelers = (props) => {
   const { formData, setFormData, isVisible, errors, register } = props;
   // console.log("key", props?.check);
   const addTravelers = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      travelers: [
-        ...(formData.travelers || []), // Ensure previous nationalities are included if they exist
-        { id: Date.now(), firstName: "", lastName: "", relation: "" }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["travelers"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        mainPurpose: "",
+        specify: "",
+      },
+    ];
+    setFormData("travelers", addLanguages, { shouldValidate: true });
   };
 
   const deleteTravelers = (e) => {
     if (formData.travelers && formData.travelers.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        travelers: formData.travelers.filter((traveler) => {
-          // Condition to filter out values
-          return traveler.id !== e; // Replace idToDelete with the ID you want to delete
-        }),
-      }));
+      const newNationalities = formData.travelers.filter((nationalities) => {
+        // Condition to filter out values
+        return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+      });
+
+      setFormData("travelers", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -43,7 +42,8 @@ const Travelers = (props) => {
             formData.travelers.map((data, index) => (
               <div className="flex flex-row gap-6" key={index}>
                 <div className="basis-11/12 ">
-                  <InlineInputText
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
                     title={"lastName"}
                     helpText="   "
@@ -54,30 +54,40 @@ const Travelers = (props) => {
                     isVisible={true}
                     disabled={false}
                     formData={formData}
+                    index={index}
+                    parent={"purposes"}
                   />
-                  <InlineInputText
+
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
-                    title={"relation"}
+                    title={"firstName"}
                     helpText="   "
                     register={register}
                     type="text"
                     errors={errors}
-                    label="What is your relationship with the person traveling with you?"
+                    label=" What are the first (given) name(s) of the person traveling with you?"
                     isVisible={true}
                     disabled={false}
                     formData={formData}
+                    index={index}
+                    parent={"purposes"}
                   />
-                  <InlineDrop
-                    title={"firstName"}
+
+                  <InlineDropChid
+                    formData={formData}
+                    setFormData={setFormData}
+                    title={"relation"}
                     helpText=""
                     register={register}
                     errors={errors}
-                    label="What are the first (given) name(s) of the person traveling with you?"
+                    label="What is your relationship with the person traveling with you?"
                     isVisible={true}
                     disabled={false}
                     data={dat.relation}
                     inline={true}
-                    formData={formData}
+                    index={index}
+                    parent={"purposes"}
                   />
                 </div>
                 {formData.travelers.length === index + 1 ? (

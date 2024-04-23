@@ -9,6 +9,7 @@ import {
   getAllForms,
   getEditForm,
   getForm,
+  getDsForm,
   getFormById,
   getFormData,
   getFormUsersData,
@@ -16,7 +17,7 @@ import {
   getAllNotificatioin,
   getAssignUsers,
   getTrash,
-  getArchived
+  getArchived,
 } from "../service/admin";
 
 /**
@@ -46,23 +47,18 @@ export const userIdState = atom({
   default: 0,
 });
 
-
-
-
-  export const singleDataSelect = selector({
-    key: "singleDataSelect",
-    get: async ({ get }) => {
-      try {
-        const response = await getFormData(get(userIdState));
-        return response.data || [];
-      } catch (error) {
-        console.error(`singleDataSelect -> singleDataSelect() ERROR: \n${error}`);
-        return [];
-      }
-    },
-  });
-
-
+export const singleDataSelect = selector({
+  key: "singleDataSelect",
+  get: async ({ get }) => {
+    try {
+      const response = await getFormData(get(userIdState));
+      return response.data || [];
+    } catch (error) {
+      console.error(`singleDataSelect -> singleDataSelect() ERROR: \n${error}`);
+      return [];
+    }
+  },
+});
 
 export const singleDataState = atom({
   key: "singleDataState",
@@ -119,7 +115,7 @@ export const formDataUserSelect = selectorFamily({
   get:
     (data) =>
     async ({ get }) => {
-     // console.log('user id',data);
+      // console.log('user id',data);
       try {
         const response = await getFormUsersData(data.id, data.u_id);
         return response.data || [];
@@ -183,6 +179,11 @@ export const formIdAtom = atomFamily({
 export const editFormState = atomFamily({
   key: "editFormState",
   default: async (id) => await getEditForm(id),
+});
+
+export const getDsState = atomFamily({
+  key: "getDsState",
+  default: async (data) => await getDsForm(data[0], data[1]),
 });
 
 export const adminUserState = selector({
@@ -306,13 +307,10 @@ export const trashSelect = selector({
   },
 });
 
-
-
 export const trashListState = atom({
   key: "trashListState",
   default: trashSelect,
 });
-
 
 export const archivedSelect = selector({
   key: "archivedSelect",
@@ -327,14 +325,10 @@ export const archivedSelect = selector({
   },
 });
 
-
 export const archivedListState = atom({
   key: "archivedListState",
   default: archivedSelect,
 });
-
-
-
 
 export const notificationListState = atom({
   key: "notificationListState",

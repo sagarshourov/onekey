@@ -1,38 +1,45 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
 
-import InlineDrop from "../elements/InlineDrop";
+import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineDropChid from "../elements/InlineDropChid";
 
 const ImmediateRelative = (props) => {
   // console.log("key", props?.check);
 
   const { formData, setFormData } = props;
+
   const addRelatives = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      immediateRelatives: [
-        ...(formData.immediateRelatives || []), // Ensure previous nationalities are included if they exist
-        { id: Date.now(), value: "" }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["immediateRelatives"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        mainPurpose: "",
+        specify: "",
+      },
+    ];
+    setFormData("immediateRelatives", addLanguages, { shouldValidate: true });
+
+    const updatedOptions = [...option];
+    updatedOptions.push({ specify: "", mainPurpose: "" });
+    setOption(updatedOptions);
   };
 
   const deleteRelatives = (e) => {
     if (formData.immediateRelatives && formData.immediateRelatives.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        immediateRelatives: formData.immediateRelatives.filter(
-          (immediateRelative) => {
-            // Condition to filter out values
-            return immediateRelative.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.immediateRelatives.filter(
+        (nationalities) => {
+          // Condition to filter out values
+          return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+        }
+      );
+
+      setFormData("immediateRelatives", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
+
   return (
     <>
       {props.isVisible && (
@@ -40,12 +47,15 @@ const ImmediateRelative = (props) => {
           {formData.immediateRelatives &&
             formData.immediateRelatives.map((data, index) => (
               <div key={index} className="mt-5 border p-5  border-blue-200">
-                <h3 className="text-xl font-bold">Immediate relative #{index+1} </h3>
+                <h3 className="text-xl font-bold">
+                  Immediate relative #{index + 1}{" "}
+                </h3>
 
                 <div className="mt-5">
-                   <InlineInputText
-    required={true}
-                    title={"immediateRelatives[0].firstName"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"firstName"}
                     helpText=""
                     register={props.register}
                     type="text"
@@ -53,13 +63,16 @@ const ImmediateRelative = (props) => {
                     label=" First (Given) Name(s)"
                     isVisible={true}
                     disabled={false}
-                    fieldVisibility={props.fieldVisibility}
-                    handleCheckboxChange={props.handleCheckboxChange}
+                    formData={formData}
+                    condition={false}
+                    parent="immediateRelatives"
+                    index={index}
                   />
 
-                   <InlineInputText
-    required={true}
-                    title={"immediateRelatives[0].lastName"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"lastName"}
                     helpText=""
                     register={props.register}
                     type="text"
@@ -67,15 +80,19 @@ const ImmediateRelative = (props) => {
                     label=" Family Name(s)"
                     isVisible={true}
                     disabled={false}
-                    fieldVisibility={props.fieldVisibility}
-                    handleCheckboxChange={props.handleCheckboxChange}
+                    formData={formData}
+                    condition={false}
+                    parent="immediateRelatives"
+                    index={index}
                   />
 
-                  <InlineDrop
+                  <InlineDropChid
+                    formData={formData}
+                    setFormData={setFormData}
                     isVisible={true}
                     register={props.register}
                     errors={props.errors}
-                    title={"motherInfo.relation"}
+                    title={"relation"}
                     data={[
                       { label: "SPOUSE", value: "SPOUSE" },
                       { label: "FIANCÉ/FIANCÉE", value: "FIANCE_FIANCEE" },
@@ -84,8 +101,13 @@ const ImmediateRelative = (props) => {
                     ]}
                     label="Relationship to You"
                     inline={true}
+                    condition={false}
+                    parent="immediateRelatives"
+                    index={index}
                   />
-                  <InlineDrop
+                  <InlineDropChid
+                    formData={formData}
+                    setFormData={setFormData}
                     isVisible={true}
                     register={props.register}
                     errors={props.errors}
@@ -104,11 +126,14 @@ const ImmediateRelative = (props) => {
                       },
                     ]}
                     label="Relative's status"
+                    condition={false}
+                    parent="immediateRelatives"
+                    index={index}
                   />
                 </div>
-               
+
                 <div className="flex gap-5">
-                  {formData.immediateRelatives.length == (index+1) && (
+                  {formData.immediateRelatives.length == index + 1 && (
                     <button
                       type="button"
                       onClick={addRelatives}

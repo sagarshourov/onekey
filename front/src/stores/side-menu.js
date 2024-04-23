@@ -114,6 +114,11 @@ let UsersideMenu = atom({
         pathname: "/forms/1",
       },
       {
+        icon: "FileText",
+        title: "New Ds 160 Form",
+        pathname: "/newform/25",
+      },
+      {
         icon: "Clipboard",
         title: "DS-160 For F-1 Student",
         pathname: "/forms/2",

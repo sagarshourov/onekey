@@ -82,26 +82,29 @@ class FormController extends BaseController
 
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content', 'complete']);
 
-
-            $val = [];
-            $return['complete'] = 0;
-            if ($forms[0]->content) {
-                foreach (json_decode($forms[0]->content) as $key => $v) {
-                    if (preg_match('/(date)/', strtolower($key)) && !is_array($v)) {
-                        $val[$key] =  $this->date_retrieve($v);
-                    } else {
-                        $val[$key] = $v;
+            if ($forms[0]->form_id == 25) {
+                return  $forms[0]->content;
+            } else {
+                $val = [];
+                $return['complete'] = 0;
+                if ($forms[0]->content) {
+                    foreach (json_decode($forms[0]->content) as $key => $v) {
+                        if (preg_match('/(date)/', strtolower($key)) && !is_array($v)) {
+                            $val[$key] =  $this->date_retrieve($v);
+                        } else {
+                            $val[$key] = $v;
+                        }
                     }
+
+                    $return['complete'] = $forms[0]->complete;
                 }
 
-                $return['complete'] = $forms[0]->complete;
+                $form_con =  Forms::find($forms[0]->form_id);
+                $return['form_id'] = $forms[0]->form_id;
+                $return['val'] = $val;
+
+                $return['con'] = json_decode($form_con->content);
             }
-
-            $form_con =  Forms::find($forms[0]->form_id);
-            $return['form_id'] = $forms[0]->form_id;
-            $return['val'] = $val;
-
-            $return['con'] = json_decode($form_con->content);
         } else {
             $user_id =  Auth::user()->id;
             $forms =  FormData::where(['form_id' => $id, 'user_id' => $user_id])->first(['id', 'user_id', 'form_id', 'content', 'complete']);
@@ -176,13 +179,13 @@ class FormController extends BaseController
         $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
 
         $pdf = PDF::loadView('data_pdf_submit', $return);
-        
+
 
 
 
         return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
-       // return view('data_pdf_submit', $return);
+        // return view('data_pdf_submit', $return);
         // return $this->sendResponse($return, 'Form by id successfully.');
     }
 
@@ -295,6 +298,43 @@ class FormController extends BaseController
 
         return $this->sendResponse(['success'], 'Users retrieved successfully.');
     }
+
+    public function get_ds_form($user_id, $fid)
+    {
+        $forms =   FormData::where('form_id', (int) $fid)
+            ->where('user_id', (int) $user_id)->first();
+        return $this->sendResponse($forms, 'Forms retrieved successfully.');
+    }
+
+    public function save_ds_form(Request $request)
+    {
+        $input = $request->all();
+        $user_id = Auth::id();
+        FormData::updateOrCreate([
+            'user_id'   =>   $user_id,
+            'form_id' => $input['form_id']
+        ], [
+            'user_id'   => $user_id,
+            'content' => json_encode($input),
+            'form_id' => $input['form_id'],
+            'complete' => 0
+        ]);
+
+
+
+        return $this->sendResponse(['success'], 'Users retrieved successfully.');
+    }
+
+    public function del_ds_form($id)
+    {
+    }
+
+
+
+
+
+
+
 
 
 

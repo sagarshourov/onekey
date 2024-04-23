@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InputText from "../elements/InputText";
-import { Lucide } from "@/base-components";
 
 import InlineDrop from "../elements/InlineDrop";
 import dat from "../elements/data.json";
-import InlineInputDate from "../elements/InlineInputDate";
 
-import reasonsForTravelData from "./reasonsForTravel.json";
 import InlineInputText from "../elements/InlineInputText";
 const CompanyPayerInfo = (props) => {
   const {
@@ -22,16 +16,15 @@ const CompanyPayerInfo = (props) => {
   } = props;
   // console.log("key", props?.check);
 
-  const handelSelect = (e) => {
-    console.log(e);
-  };
-
   return (
     <>
       {isVisible && (
         <>
           <div className="mt-5 border p-5  border-blue-200 ">
+
+        
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.name"}
               helpText="  "
@@ -45,9 +38,10 @@ const CompanyPayerInfo = (props) => {
               label="Company Payer Name"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.name"}
-              helpText="Phone number must contain country code (e.g. +1 231 231 1111).   "
+              helpText=" "
               register={register}
               type="text"
               errors={errors}
@@ -58,9 +52,10 @@ const CompanyPayerInfo = (props) => {
               label="Telephone number"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.name"}
-              helpText="Phone number must contain country code (e.g. +1 231 231 1111).   "
+              helpText=" "
               register={register}
               type="text"
               errors={errors}
@@ -72,6 +67,7 @@ const CompanyPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.address.streetAddress"}
               helpText="  "
@@ -86,6 +82,7 @@ const CompanyPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.address.streetAddress2"}
               helpText="  "
@@ -99,6 +96,7 @@ const CompanyPayerInfo = (props) => {
               label="Street address (Line 2)"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.address.city"}
               helpText="  "
@@ -112,6 +110,7 @@ const CompanyPayerInfo = (props) => {
               label="City"
             />
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.address.city"}
               helpText="  "
@@ -129,6 +128,7 @@ const CompanyPayerInfo = (props) => {
             />
 
             <InlineInputText
+              setFormData={setFormData}
               required={true}
               title={"companyPayerInfo.address.zipcode"}
               helpText="  "
@@ -145,6 +145,8 @@ const CompanyPayerInfo = (props) => {
               checkLabel={"Does not apply"}
             />
             <InlineDrop
+              formData={formData}
+              setFormData={setFormData}
               title={"companyPayerInfo.country"}
               helpText=""
               register={props.register}
@@ -154,7 +156,6 @@ const CompanyPayerInfo = (props) => {
               disabled={false}
               data={dat.countries}
               inline={true}
-              handelSelect={handelSelect}
             />
           </div>
         </>

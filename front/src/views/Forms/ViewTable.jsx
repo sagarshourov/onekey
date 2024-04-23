@@ -9,7 +9,7 @@ const formatDate = (dat) => {
   return dat.split("T")[0];
 };
 const ViewTable = (props) => {
-  const { users, rowCount } = props;
+  const { users, rowCount, tblId } = props;
 
   const [loading, setLoading] = useState(false);
 
@@ -55,9 +55,6 @@ const ViewTable = (props) => {
       <tbody>
         {users.slice(0, rowCount).map((user, key) => {
           let count = key + 1;
-          
-
-
 
           return (
             <tr key={key} className="intro-x">
@@ -68,26 +65,36 @@ const ViewTable = (props) => {
                 </a>
               </td>
 
-
               <td> {user?.user?.email}</td>
 
               <td></td>
 
               <td className="table-report__action w-auto">
                 <div className="flex justify-center items-center">
-                <a
+                  <a
                     className="flex items-center text-primary"
                     href={getBaseApi() + "pdf/" + user.id}
                     target="_blank"
                   >
                     <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download
                   </a>
-                  <Link
-                    className="flex items-center text-info  px-2"
-                    to={"/forms/viewdata/" + user?.id}
-                  >
-                    <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View Data
-                  </Link>
+
+                  {tblId == 25 ? (
+                    <Link
+                      className="flex items-center text-info  px-2"
+                      to={"/forms/viewdsdata/" + user?.id}
+                    >
+                      <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View Data
+                    </Link>
+                  ) : (
+                    <Link
+                      className="flex items-center text-info  px-2"
+                      to={"/forms/viewdata/" + user?.id}
+                    >
+                      <Lucide icon="Eye" className="w-4 h-4 mr-1" /> View Data
+                    </Link>
+                  )}
+
                   <a
                     className="flex items-center text-danger px-2"
                     href="#"

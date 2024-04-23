@@ -1,44 +1,42 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
 
 import InputTextArea from "../elements/InputTextArea";
 
-import InlineDrop from "../elements/InlineDrop";
-import InlineInputDate from "../elements/InlineInputDate";
-import data from "../elements/data.json";
+import InlineInputChildDate from "../elements/InlineInputChildDate";
+import dat from "../elements/data.json";
 
-import InlineSwitch from "../elements/InlineSwitch";
+import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineDropChid from "../elements/InlineDropChid";
+
 const PreviousJob = (props) => {
   // console.log("key", props?.check);
   const { isVisible, setFormData, formData } = props;
 
   const addPrevJob = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      previousJobs: [
-        ...(formData.previousJobs || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+    const currentNationalities = formData["previousJobs"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        mainPurpose: "",
+        specify: "",
+      },
+    ];
+    setFormData("previousJobs", addLanguages, { shouldValidate: true });
+    const updatedOptions = [...option];
+    updatedOptions.push({ specify: "", mainPurpose: "" });
+    setOption(updatedOptions);
   };
 
   const deletePrevJob = (e) => {
     if (formData.previousJobs && formData.previousJobs.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        previousJobs: formData.previousJobs.filter(
-          (previousJob) => {
-            // Condition to filter out values
-            return previousJob.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.previousJobs.filter((nationalities) => {
+        // Condition to filter out values
+        return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+      });
+      setFormData("previousJobs", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -49,12 +47,16 @@ const PreviousJob = (props) => {
           {formData.previousJobs &&
             formData.previousJobs.map((data, index) => (
               <div className="mt-5 border p-5  border-blue-200" key={index}>
-                <h3 className="text-xl font-bold"> Previous job #{index+1} </h3>
+                <h3 className="text-xl font-bold">
+                  {" "}
+                  Previous job #{index + 1}{" "}
+                </h3>
 
                 <div className="mt-5">
-                   <InlineInputText
-    required={true}
-                    title={"previousJobs[0].employer"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"employer"}
                     helpText=""
                     register={props.register}
                     type="text"
@@ -62,14 +64,17 @@ const PreviousJob = (props) => {
                     label=" Employer name"
                     isVisible={true}
                     disabled={false}
-                    fieldVisibility={formData}
                     handleCheckboxChange={props.handleCheckboxChange}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.streetAddress"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"streetAddress"}
                     helpText="   "
                     register={props.register}
                     type="text"
@@ -78,10 +83,14 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.streetAddress2"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"streetAddress2"}
                     helpText="   "
                     register={props.register}
                     type="text"
@@ -90,11 +99,15 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.city"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"city"}
                     helpText="   "
                     register={props.register}
                     type="text"
@@ -103,52 +116,66 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.state"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"state"}
                     helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
                     label=" State/Province"
                     isVisible={true}
-                    disabled={formData["jobAddress.state_checkbox"]}
+                    disabled={formData.previousJobs[index].state_checkbox}
                     condition={true}
                     handleCheckboxChange={props.handleCheckboxChange}
-                    check="jobAddress.state_checkbox"
+                    check="state_checkbox"
                     checkLabel="Does not apply"
                     formData={formData}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.zipCode"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"zipCode"}
                     helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
                     label=" Postal Zone/Zip Code"
                     isVisible={true}
-                    disabled={formData["jobAddress.zipCode_checkbox"]}
+                    disabled={formData.previousJobs[index].zipCode_checkbox}
                     condition={true}
                     handleCheckboxChange={props.handleCheckboxChange}
-                    check="jobAddress.zipCode_checkbox"
+                    check="zipCode_checkbox"
                     checkLabel="Does not apply"
                     formData={formData}
-                    fieldVisibility={formData}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                  <InlineDrop
+                  <InlineDropChid
+                    formData={formData}
+                    setFormData={setFormData}
                     isVisible={true}
                     register={props.register}
                     errors={props.errors}
-                    title={"jobAddress.country"}
-                    data={data.countries}
+                    title={"country"}
+                    data={dat.countries}
                     label="Country/Region"
                     inline={true}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                   <InlineInputText
-    required={true}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
                     title={"jobPhoneNumber"}
                     helpText="   "
                     register={props.register}
@@ -158,23 +185,30 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     disabled={false}
                     formData={formData}
-                    fieldVisibility={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.state"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"title"}
                     helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
                     label=" Job title"
                     isVisible={true}
-                    disabled={formData["jobAddress.state_checkbox"]}
+                    disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                   <InlineInputText
-    required={true}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
                     title={"jobAddress.state"}
                     helpText=""
                     register={props.register}
@@ -182,23 +216,30 @@ const PreviousJob = (props) => {
                     errors={props.errors}
                     label="Supervisor's Family Name(s)"
                     isVisible={true}
-                    disabled={formData["jobAddress.state_checkbox"]}
+                    disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                   <InlineInputText
-    required={true}
-                    title={"jobAddress.state"}
+                  <InlineInputChildText
+                    setFormData={setFormData}
+                    required={true}
+                    title={"state"}
                     helpText=""
                     register={props.register}
                     type="text"
                     errors={props.errors}
                     label="Supervisor's First (Given) Name(s)"
                     isVisible={true}
-                    disabled={formData["jobAddress.state_checkbox"]}
+                    disabled={false}
                     formData={formData}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
-                  <InlineInputDate
+                  <InlineInputChildDate
                     title={"jobStartDate"}
                     helpText=""
                     register={props.register}
@@ -207,8 +248,11 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     disabled={false}
                     inline={true}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
-                  <InlineInputDate
+                  <InlineInputChildDate
                     title={"jobStartDate"}
                     helpText=""
                     register={props.register}
@@ -217,6 +261,9 @@ const PreviousJob = (props) => {
                     isVisible={true}
                     inline={true}
                     disabled={false}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
 
                   <InputTextArea
@@ -227,6 +274,9 @@ const PreviousJob = (props) => {
                     label="Briefly describe your duties"
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    parent={"previousJobs"}
+                    index={index}
                   />
                 </div>
                 <div className="flex gap-5">

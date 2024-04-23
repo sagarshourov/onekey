@@ -84,15 +84,12 @@
   ],
 
   "hasTravelPlansInput": [
+    { "label": "NO, I have not made plans", "value": "no_plans" },
     {
-      "label": "Yes, I have made specific travel plans",
+      "label": "Yes, I have made plans",
       "value": "specific_plans"
     },
-    {
-      "label": "No, I have an idea of what I'd like to do",
-      "value": "idea_of_plans"
-    },
-    { "label": "No, I haven't made any plans at all", "value": "no_plans" },
+    
     { "label": "Skip/Answer Later", "value": "skip_or_answer_later" }
   ],
   "personPayingForTrip": [

@@ -4,20 +4,36 @@ import classnames from "classnames";
 
 const InlineInputChildText = (props) => {
   // console.log("key", props?.check);
-  const { formData, parent, index, updateNationality } = props;
+  const {
+    handleCheckboxChange,
+    setFormData,
+    formData,
+    parent,
+    index,
+    updateChange,
+  } = props;
 
-  console.log("errors", props.errors);
+  //console.log("errors", props.errors);
+
+  const handelCheck = (field, value, fieldName) => {
+    handleCheckboxChange(fieldName);
+    setFormData(field, value, { shouldValidate: true });
+
+    // clear errors
+  };
   return (
     <>
       {props.isVisible && (
         <div className="mt-5 gap-5 flex-none lg:flex lg:flex-row">
-          <label
-            htmlFor="regular-form-3"
-            className="form-label basis-12/12 lg:basis-4/12 sa-label"
-          >
-            {props.label}
-            <span className="text-danger pl-1">*</span>
-          </label>
+          {props.label && (
+            <label
+              htmlFor="regular-form-3"
+              className="form-label basis-12/12 lg:basis-4/12 sa-label"
+            >
+              {props.label}
+              <span className="text-danger pl-1">*</span>
+            </label>
+          )}
           <div
             className={
               props.condition
@@ -27,10 +43,12 @@ const InlineInputChildText = (props) => {
           >
             <input
               {...props.register(`${parent}.${index}.${props.title}`)}
-              type='text'
+              type="text"
               placeholder={props.label}
               name={`${parent}.${index}.${props.title}`}
-              defaultValue={formData[parent][index][props.title]}
+              defaultValue={
+                formData[parent] && formData[parent][index][props.title]
+              }
               className={classnames({
                 "form-control": true,
                 "border-danger":
@@ -56,11 +74,12 @@ const InlineInputChildText = (props) => {
                 {...props.register(props.check)}
                 className="form-check-input"
                 type="checkbox"
-                value=""
                 onChange={(e) =>
-                  updateNationality(formData[parent][index].id, {
-                    [props.title]: e.target.value,
-                  })
+                  handelCheck(
+                    `${parent}.${index}.${props.check}`,
+                    !formData[parent][index][props.check],
+                    props.title
+                  )
                 }
                 name={props.check}
               />

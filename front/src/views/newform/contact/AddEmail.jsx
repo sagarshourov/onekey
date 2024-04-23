@@ -1,41 +1,39 @@
-import { useState, useEffect } from "react";
 
-import classnames from "classnames";
-import InlineInputText from "../elements/InlineInputText";
+import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
 
-import InlineDrop from "../elements/InlineDrop";
-import dat from "../elements/data.json";
-import InputTextArea from "../elements/InputTextArea";
 const AddEmail = (props) => {
-  const { formData, isVisible, register, errors, setFormData } = props;
+  const {
+    formData,
+    isVisible,
+    handleCheckboxChange,
+    setFormData,
+  } = props;
   // console.log("key", props?.check);
 
-  const addEmail = (e) => {
-    setFormData((formData) => ({
-      ...formData,
-      additionalEmails: [
-        ...(formData.additionalEmails || []), // Ensure previous nationalities are included if they exist
-        {
-          id: Date.now(),
-          number: "",
-        }, // New data entry
-        // Add more data entries as needed
-      ],
-    }));
+  const addEmail = () => {
+    const currentNationalities = formData["additionalEmails"];
+    const addLanguages = [
+      ...currentNationalities,
+      {
+        id: Date.now(),
+        email: "",
+      },
+    ];
+    setFormData("additionalEmails", addLanguages, { shouldValidate: true });
   };
 
   const deleteEmail = (e) => {
     if (formData.additionalEmails && formData.additionalEmails.length > 1) {
-      setFormData((formData) => ({
-        ...formData,
-        additionalEmails: formData.additionalEmails.filter(
-          (additionalEmail) => {
-            // Condition to filter out values
-            return additionalEmail.id !== e; // Replace idToDelete with the ID you want to delete
-          }
-        ),
-      }));
+      const newNationalities = formData.additionalEmails.filter(
+        (nationalities) => {
+          return nationalities.id !== e;
+        }
+      );
+
+      setFormData("additionalEmails", newNationalities, {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -47,16 +45,22 @@ const AddEmail = (props) => {
             formData.additionalEmails.map((data, index) => (
               <div className="flex flex-row gap-5" key={index}>
                 <div className="basis-11/12 gap-5">
-                  <InlineInputText
+                  <InlineInputChildText
+                    setFormData={setFormData}
                     required={true}
-                    title={`additionalEmails.${index}`}
+                    title={`email`}
                     helpText=""
-                    register={register}
+                    register={props.register}
                     type="text"
-                    errors={errors}
-                    label={index + 1 + ". Additional Email "}
+                    errors={props.errors}
+                    label={index + 1 + ". Additional Email"}
                     isVisible={true}
                     disabled={false}
+                    condition={false}
+                    handleCheckboxChange={handleCheckboxChange}
+                    formData={formData}
+                    parent={"additionalEmails"}
+                    index={index}
                   />
                 </div>
                 {formData.additionalEmails.length === index + 1 ? (

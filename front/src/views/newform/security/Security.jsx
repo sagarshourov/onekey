@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InlineSwitch from "../elements/InlineSwitch";
 import InlineDrop from "../elements/InlineDrop";
-import classnames from "classnames";
-import { Litepicker, Tippy, Lucide } from "@/base-components";
 import InlineInputText from "../elements/InlineInputText";
 import InlineInputDate from "../elements/InlineInputDate";
 
@@ -11,19 +9,14 @@ import AddCountry from "./AddCountry";
 import Questions from "./Questions";
 const Security = (props) => {
   const [date, setDate] = useState("");
-  const {
-    errors,
-    register,
-    fieldVisibility,
-    setFormData,
-    formData,
-    handleCheckboxChange,
-  } = props;
+  const { errors, register, setFormData, formData, handleCheckboxChange } =
+    props;
   return (
     <>
       <h2 className="mb-5 text-xl font-bold"> Security Question</h2>
       <hr className="my-5 sa-border-primary" />
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         fullWidth={true}
         title="hasServedMilitary"
@@ -32,6 +25,8 @@ const Security = (props) => {
         formData={formData}
       />
       <InlineDrop
+        formData={formData}
+        setFormData={setFormData}
         isVisible={formData.hasServedMilitary}
         register={props.register}
         errors={props.errors}
@@ -40,8 +35,9 @@ const Security = (props) => {
         label="Country/Region"
         inline={true}
       />
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
         formData={formData}
         title={"militaryExperiences[0].service"}
         check=""
@@ -54,8 +50,9 @@ const Security = (props) => {
         register={register}
         errors={errors}
       />
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
         formData={formData}
         title={"militaryExperiences[0].rank"}
         check=""
@@ -68,8 +65,9 @@ const Security = (props) => {
         register={register}
         errors={errors}
       />
-       <InlineInputText
-    required={true}
+      <InlineInputText
+        setFormData={setFormData}
+        required={true}
         formData={formData}
         title={"militaryExperiences[0].speciality"}
         check=""
@@ -103,6 +101,7 @@ const Security = (props) => {
         inline={true}
       />
       <InlineSwitch
+        setFormData={setFormData}
         isVisible={true}
         fullWidth={true}
         formData={formData}
@@ -118,7 +117,8 @@ Have you traveled outside your country (not including the United States) in the 
         errors={errors}
         setFormData={setFormData}
       />
-      {/* <InlineSwitch
+      {/*  <InlineSwitch
+          setFormData={setFormData}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -128,6 +128,7 @@ Have you traveled outside your country (not including the United States) in the 
 Do you have any specialized skills or training, such as firearms, explosives, nuclear, biological, or chemical experience?"
       /> */}
       <Questions
+        setFormData={setFormData}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -138,6 +139,7 @@ Do you have any specialized skills or training, such as firearms, explosives, nu
         label="Do you have any specialized skills or training, such as firearms, explosives, nuclear, biological, or chemical experience?"
       />
       <Questions
+        setFormData={setFormData}
         isVisible={true}
         formData={formData}
         fullWidth={true}
@@ -148,6 +150,7 @@ Do you have any specialized skills or training, such as firearms, explosives, nu
         label="Have you ever served in, been a member of, or been involved with a paramilitary unit, vigilante unit, rebel group, guerrilla group, or insurgent organization?"
       />
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -157,6 +160,7 @@ Do you have any specialized skills or training, such as firearms, explosives, nu
         label="Do you have a communicable disease of public health significance? (Communicable diseases of public significance include chancroid, gonorrhea, granuloma inguinale, infectious leprosy, lymphogranuloma venereum, infectious stage syphilis, active tuberculosis, and other diseases as determined by the Department of Health and Human Services.?"
       />
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -168,6 +172,7 @@ Do you have any specialized skills or training, such as firearms, explosives, nu
 Do you have a mental or physical disorder that poses or is likely to pose a threat to the safety or welfare of yourself or others?"
       />
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -179,6 +184,7 @@ Do you have a mental or physical disorder that poses or is likely to pose a thre
 Are you or have you ever been a drug abuser or addict?"
       />
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -190,6 +196,7 @@ Are you or have you ever been a drug abuser or addict?"
 Have you ever been arrested or convicted for any offense or crime, even though subject of a pardon, amnesty, or other similar action?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -201,6 +208,7 @@ Have you ever been arrested or convicted for any offense or crime, even though s
 Have you ever violated, or engaged in a conspiracy to violate, any law relating to controlled substances?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -212,6 +220,7 @@ Have you ever violated, or engaged in a conspiracy to violate, any law relating 
 Are you coming to the United States to engage in prostitution or unlawful commercialized vice or have you been engaged in prostitution or procuring prostitutes within the past 10 years?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -223,6 +232,7 @@ Are you coming to the United States to engage in prostitution or unlawful commer
 Have you ever been involved in, or do you seek to engage in, money laundering?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -234,6 +244,7 @@ Have you ever been involved in, or do you seek to engage in, money laundering?"
 Have you ever committed or conspired to commit a human trafficking offense in the United States or outside the United States?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -245,6 +256,7 @@ Have you ever committed or conspired to commit a human trafficking offense in th
 Have you ever knowingly aided, abetted, assisted or colluded with an individual who has committed, or conspired to commit a severe human trafficking offense in the United States or outside the United States?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -256,6 +268,7 @@ Have you ever knowingly aided, abetted, assisted or colluded with an individual 
 Are you the spouse, son, or daughter of an individual who has committed or conspired to commit a human trafficking offense in the United States or outside the United States and have you within the last five years, knowingly benefited from the trafficking activities?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -267,6 +280,7 @@ Are you the spouse, son, or daughter of an individual who has committed or consp
 Do you seek to engage in espionage, sabotage, export control violations, or any other illegal activity while in the United States?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -278,6 +292,7 @@ Do you seek to engage in espionage, sabotage, export control violations, or any 
 Do you seek to engage in terrorist activities while in the United States or have you ever engaged in terrorist activities?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -289,6 +304,7 @@ Do you seek to engage in terrorist activities while in the United States or have
 Have you ever or do you intend to provide financial assistance or other support to terrorists or terrorist organizations?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -300,6 +316,7 @@ Have you ever or do you intend to provide financial assistance or other support 
 Are you a member or representative of a terrorist organization?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -311,6 +328,7 @@ Are you a member or representative of a terrorist organization?"
 Have you ever ordered, incited, committed, assisted, or otherwise participated in genocide?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         formData={formData}
@@ -322,6 +340,7 @@ Have you ever ordered, incited, committed, assisted, or otherwise participated i
 Have you ever committed, ordered, incited, assisted, or otherwise participated in torture?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         formData={formData}
@@ -333,6 +352,7 @@ Have you ever committed, ordered, incited, assisted, or otherwise participated i
 Have you committed, ordered, incited, assisted, or otherwise participated in extrajudicial killings, political killings, or other acts of violence?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         formData={formData}
@@ -344,6 +364,7 @@ Have you committed, ordered, incited, assisted, or otherwise participated in ext
 Have you ever engaged in the recruitment or the use of child soldiers?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         formData={formData}
@@ -355,6 +376,7 @@ Have you ever engaged in the recruitment or the use of child soldiers?"
 Have you, while serving as a government official, been responsible for or directly carried out, at any time, particularly severe violations of religious freedom?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -366,6 +388,7 @@ Have you, while serving as a government official, been responsible for or direct
 Have you ever been directly involved in the establishment or enforcement of population controls forcing a woman to undergo an abortion against her free choice or a man or a woman to undergo sterilization against his or her free will?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -377,6 +400,7 @@ Have you ever been directly involved in the establishment or enforcement of popu
 Have you ever been directly involved in the coercive transplantation of human organs or bodily tissue?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -388,6 +412,7 @@ Have you ever been directly involved in the coercive transplantation of human or
 Have you ever sought to obtain or assist others to obtain a visa, entry into the United States, or any other United States immigration benefit by fraud or willful misrepresentation or other unlawful means?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -399,6 +424,7 @@ Have you ever sought to obtain or assist others to obtain a visa, entry into the
 Have you ever withheld custody of a U.S. citizen child outside the United States from a person granted legal custody by a U.S. court?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -410,6 +436,7 @@ Have you ever withheld custody of a U.S. citizen child outside the United States
 Have you voted in the United States in violation of any law or regulation?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -421,6 +448,7 @@ Have you voted in the United States in violation of any law or regulation?"
 Have you ever renounced United States citizenship for the purposes of avoiding taxation?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
@@ -432,6 +460,7 @@ Have you ever renounced United States citizenship for the purposes of avoiding t
 Are you the spouse, son, or daughter of an individual who has engaged in terrorist activity, including providing financial assistance or other support to terrorists or terrorist organizations, in the last five years?"
       />{" "}
       <Questions
+        setFormData={setFormData}
         register={register}
         errors={errors}
         isVisible={true}
