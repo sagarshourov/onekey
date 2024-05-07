@@ -66,7 +66,7 @@ const Family = (props) => {
       />
 
       <InlineInputDate
-        title={"fatherInfo.birthDate"}
+        title={"fatherInfo_birthDate"}
         helpText=""
         register={props.register}
         errors={props.errors}

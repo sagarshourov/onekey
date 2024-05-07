@@ -18,6 +18,16 @@ const InlineInputChildDate = (props) => {
     parent,
     index,
   } = props;
+
+  const generateYearList = (startYear) => {
+    var endYear = new Date().getFullYear();
+
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year);
+    }
+    return years;
+  };
   return (
     <>
       {isVisible && (
@@ -61,13 +71,20 @@ const InlineInputChildDate = (props) => {
                   </option>
                 ))}
               </select>
-              <input
-                type="text"
+
+              <select
                 {...register(`${parent}.${index}.${props.title}.yearIndex`)}
-                name={`${parent}.${index}.${props.title}.yearIndex`}
-                className="form-control"
+                className="form-select  w-full "
+                aria-label=".form-select-lg example"
                 disabled={disabled}
-              />
+                name={`${parent}.${index}.${props.title}.yearIndex`}
+              >
+                {generateYearList(1970).map((data, index) => (
+                  <option key={index} value={data}>
+                    {data}
+                  </option>
+                ))}
+              </select>
             </div>
             {errors[title] && (
               <div className="text-danger mt-2">{errors[title].message}</div>

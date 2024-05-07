@@ -12,7 +12,7 @@ function removeArr(array, index) {
 const Residents = (props) => {
   const { formData, setFormData } = props;
 
-  console.log("formdata", formData);
+ // console.log("formdata", formData);
 
   const addNationalities = (e) => {
     const currentNationalities = formData["residents"];

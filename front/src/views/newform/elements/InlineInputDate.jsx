@@ -2,16 +2,27 @@ import { useState, useEffect } from "react";
 
 import classnames from "classnames";
 import data from "./data.json";
+
 const InlineInputDate = (props) => {
   // console.log("key", props?.check);
 
-  const { chkLbl, formData, register, setFormData, handleCheckboxChange } = props;
+  const { chkLbl, formData, register, setFormData, handleCheckboxChange } =
+    props;
 
   const handelCheck = (chkName, fieldName) => {
     handleCheckboxChange(fieldName);
     setFormData(chkName, !formData[chkName], { shouldValidate: true });
 
     // clear errors
+  };
+  const generateYearList = (startYear) => {
+    var endYear = new Date().getFullYear();
+
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year);
+    }
+    return years;
   };
 
   return (
@@ -57,13 +68,26 @@ const InlineInputDate = (props) => {
                   </option>
                 ))}
               </select>
-              <input
+              {/* <input
                 {...register(`${props.title}.yearIndex`)}
                 type="text"
                 name={props.title + ".yearIndex"}
                 className="form-control"
                 disabled={props.disabled}
-              />
+              /> */}
+              <select
+                {...register(`${props.title}.yearIndex`)}
+                className="form-select  w-full "
+                aria-label=".form-select-lg example"
+                disabled={props.disabled}
+                name={props.title + ".yearIndex"}
+              >
+                {generateYearList(1970).map((data, index) => (
+                  <option key={index} value={data}>
+                    {data}
+                  </option>
+                ))}
+              </select>
             </div>
             {props.errors[props.title] && (
               <div className="text-danger mt-2">

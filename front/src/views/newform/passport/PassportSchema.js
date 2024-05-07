@@ -7,7 +7,7 @@ export const passportSchema = object({
   passportBookNumber: string().when("passportBookNumber_checkbox", {
     is: false,
     then: (schema) => schema.required("Passport Book Number required "),
-    otherwise: (schema) => schema.min(0), // or any other validation rules for when it's false
+    otherwise: (schema) => string().nullable(), // or any other validation rules for when it's false
   }),
 
   // nationalities: array().of(

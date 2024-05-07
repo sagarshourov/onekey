@@ -18,7 +18,7 @@ const InlineSwitch = (props) => {
               "basis-4/12": !props.fullWidth,
               "basis-11/12": props.fullWidth,
             })}
-            htmlFor="checkbox-switch-7"
+            htmlFor={title}
           >
             {props.label}
             <div className="form-help">{props?.helpText}</div>

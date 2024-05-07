@@ -49,7 +49,7 @@ const Passport = (props) => {
         />
         <InlineInputText
           setFormData={setFormData}
-          required={true}
+          required={false}
           title={"passportBookNumber"}
           helpText=""
           register={props.register}

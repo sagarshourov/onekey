@@ -1,4 +1,3 @@
-
 import InlineInputChildText from "../elements/InlineInputChildText";
 import { Lucide } from "@/base-components";
 import InlineDropChid from "../elements/InlineDropChid";
@@ -14,7 +13,7 @@ function removeArr(array, index) {
 const Nationalities = (props) => {
   const { formData, setFormData } = props;
 
-  console.log("formdata", formData);
+  //console.log("formdata", formData);
 
   const addNationalities = (e) => {
     const currentNationalities = formData["nationalities"];

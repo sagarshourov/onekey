@@ -78,10 +78,10 @@ const PreviousVisit = (props) => {
                     <div className="basis-6/12 ">
                       <InlineInputChildText
                         setFormData={setFormData}
-                        refs={"fatherInfo_firstName"}
-                        name={"firstName"}
+                        refs={"previousVisit_stayLengthValue"}
+                        name={"stayLengthValue"}
                         required={true}
-                        title={"firstName"}
+                        title={"stayLengthValue"}
                         helpText="  "
                         register={register}
                         type="text"
@@ -91,15 +91,15 @@ const PreviousVisit = (props) => {
                         condition={false}
                         handleCheckboxChange={handleCheckboxChange}
                         formData={formData}
-                        parent={"fatherInfo"}
+                        parent={"previousVisit"}
                         index={index}
                       />
                     </div>
                     <div className="basis-6/12">
                       <select
-                        {...register(`fatherInfo.${index}.stayLengthType`)}
+                        {...register(`previousVisit.${index}.stayLengthType`)}
                         className="form-control "
-                        name={`fatherInfo.${index}.stayLengthType`}
+                        name={`previousVisit.${index}.stayLengthType`}
                         defaultValue={
                           formData[index] ? formData[index]?.stayLengthType : ""
                         }

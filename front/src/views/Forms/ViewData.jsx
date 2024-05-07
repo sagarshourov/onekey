@@ -57,7 +57,7 @@ const AllForms = (props) => {
     }
   };
 
-  console.log("form data", formData);
+  //console.log("form data", formData);
 
   return (
     <>

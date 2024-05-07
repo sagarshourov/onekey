@@ -74,7 +74,7 @@ const PerviousTravels = (props) => {
         isVisible={formData.hasIssuedVisa}
         register={register}
         errors={errors}
-        title={"lastVisa.applicationCountry"}
+        title={"lastVisa.postName"}
         data={data.countries}
         label="Visa Issuing Post Name"
         inline={true}

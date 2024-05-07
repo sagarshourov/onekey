@@ -45,6 +45,7 @@ Route::post('register_api', 'App\Http\Controllers\AuthController@register_api');
 Route::post('forgot_password', 'App\Http\Controllers\AuthController@forgot_password');
 
 Route::get('/pdf/{formId}', [FormController::class, 'createPDF']);
+Route::get('/dspdf/{formId}', [FormController::class, 'createDsPDF']);
 
 //Route::get('has/{pass}', 'App\Http\Controllers\UserController@has_pass');
 

@@ -99,8 +99,8 @@ const PersonalInformation = (props) => {
         <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
           <div className="basis-6/12 ">
             <InputText
-              refs={"addInfo.address"}
-              name={"addInfo.address"}
+              refs={"addInfo.state"}
+              name={"addInfo.state"}
               required={true}
               helpText="  "
               register={register}
@@ -276,8 +276,8 @@ const PersonalInformation = (props) => {
         <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
           <div className="basis-6/12 ">
             <InputText
-              refs={"secondInfo.address"}
-              name={"secondInfo.address"}
+              refs={"secondInfo.state"}
+              name={"secondInfo.state"}
               required={true}
               helpText="  "
               register={register}

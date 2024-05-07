@@ -71,13 +71,25 @@ const ViewTable = (props) => {
 
               <td className="table-report__action w-auto">
                 <div className="flex justify-center items-center">
-                  <a
-                    className="flex items-center text-primary"
-                    href={getBaseApi() + "pdf/" + user.id}
-                    target="_blank"
-                  >
-                    <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download
-                  </a>
+                  {tblId == 25 ? (
+                    <a
+                      className="flex items-center text-primary"
+                      href={getBaseApi() + "dspdf/" + user.id}
+                      target="_blank"
+                    >
+                      <Lucide icon="Download" className="w-4 h-4 mr-1" />{" "}
+                      Download
+                    </a>
+                  ) : (
+                    <a
+                      className="flex items-center text-primary"
+                      href={getBaseApi() + "pdf/" + user.id}
+                      target="_blank"
+                    >
+                      <Lucide icon="Download" className="w-4 h-4 mr-1" />{" "}
+                      Download
+                    </a>
+                  )}
 
                   {tblId == 25 ? (
                     <Link

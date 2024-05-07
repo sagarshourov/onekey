@@ -35,10 +35,7 @@ import { PerviousTravelsSchema } from "./PerviousTravels/PerviousTravelsSchema";
 import { AdditionalContactSchema } from "./AdditionalContact/AdditionalContactSchema";
 import { securitySchema } from "./security/securitySchema";
 import { getDsState } from "../../state/admin-atom";
-import {
-  useRecoilValueLoadable,
-  useRecoilValue,
-} from "recoil";
+import { useRecoilValueLoadable, useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
 import PersonalInformation from "./PersonalInformation/PersonalInformation";
 import PerviousTravels from "./PerviousTravels/PerviousTravels";
@@ -51,15 +48,16 @@ import { getAdmin } from "../../configuration";
 const Main = (props) => {
   const login = useRecoilValue(loginState);
 
-  console.log('login',login);
+  console.log("login", login);
 
   let { id } = useParams();
   const data = useRecoilValueLoadable(getDsState([login.userId, id]));
 
   const [currentStep, setCurrentStep] = useState(0);
+
   const [formData, setFormData] = useState({
-    hasAdditionalNames: false,
-    hasTelecode: false,
+    hasAdditionalNames: true,
+    hasTelecode: true,
     currentStep: 0,
     stepsCompleted: [],
     userEmail: "",
@@ -71,9 +69,9 @@ const Main = (props) => {
     lostpassports: [
       {
         id: Date.now(),
-        passportNumber: "",
-        passportIssueCountryInput: "",
-        Explain: "",
+        passportNumber: null,
+        passportIssueCountryInput: null,
+        Explain: null,
         passportNumber_check: false,
       },
     ],
@@ -81,48 +79,41 @@ const Main = (props) => {
       {
         id: Date.now(),
         country: "",
-        passportNumber: "",
+        passportNumber: 0,
         hasPassportNumber: false,
       },
     ],
-    residents: [
-      {
-        id: Date.now(),
-        permanentResidents: "",
-      },
-    ],
+    residents: [{ id: Date.now(), permanentResidents: null, country: "" }],
     hasSameMailingAddressAsHome: true,
     hasAdditionalPhoneNumbers: false,
     hasAdditionalEmails: false,
-    hasAdditionalSocialMedia: false,
+    hasAdditionalSocialMedia: true,
     hasOtherTravelers: false,
-    travelingWithOrganization: false,
-    haveYouEverBeenToUS: false,
-    hasIssuedVisa: false,
-    hasBeenRefusedForVisa: false,
-    hasAnyoneEverFilledOnBehalf: false,
-    hasWorkedToOrganization: false,
-    hasOtherSpeakingLanguages: false,
-    belongsToTribe: false,
+    travelingWithOrganization: true,
+    haveYouEverBeenToUS: true,
+    hasIssuedVisa: true,
+    hasBeenRefusedForVisa: true,
+    hasAnyoneEverFilledOnBehalf: true,
+    hasWorkedToOrganization: true,
+    hasOtherSpeakingLanguages: true,
+    belongsToTribe: true,
     hasImmediateRelativesInUS: false,
-
     fatherInfo: [
       {
         id: Date.now(),
-        hasBirthDate: false,
-        isInUS: false,
+        hasBirthDate: true,
+        isInUS: true,
+        status: "",
       },
     ],
     motherInfo: [
       {
         id: Date.now(),
-        hasBirthDate: false,
-        isInUS: false,
+        hasBirthDate: true,
+        isInUS: true,
+        status: "",
       },
     ],
-
-    // trip details
-
     travelers: [
       {
         id: Date.now(),
@@ -130,100 +121,495 @@ const Main = (props) => {
         lastName: "",
         relation: "",
       },
+      {
+        id: Date.now(),
+        lastName: "",
+        firstName: "",
+        relation: "",
+      },
     ],
     previousVisit: [
       {
         id: Date.now(),
-        arrivalDate: "",
-        stayLengthValue: "",
+        arrivalDate: {
+          dayIndex: 0,
+          monthIndex: 0,
+          yearIndex: 0,
+        },
+        stayLengthValue: 0,
+        stayLengthType: "",
+      },
+      {
+        id: Date.now(),
+        arrivalDate: {
+          dayIndex: 0,
+          monthIndex: 0,
+          yearIndex: 0,
+        },
+        stayLengthValue: 0,
         stayLengthType: "",
       },
     ],
     USDriverLicenses: [
       {
-        id: Date.now(),
-        licenseId: "",
-        state: "",
+        id: 0,
+        licenseId: 0,
+        state: null,
         licenseId_checkbox: false,
       },
     ],
-    hasBeenPreviouslyEmployed: false,
-    hasAttendedEducationalInstitutions: false,
-    personPayingForTrip: "self",
-    additionalPhones: [
-      {
-        id: Date.now(),
-        phoneNumber: "",
-      },
-    ],
-    additionalEmails: [
-      {
-        id: Date.now(),
-        email: "",
-      },
-    ],
-
-    socialsMedia: [
-      {
-        id: Date.now(),
-        platform: "",
-        username: "",
-      },
-    ],
-
-    additionalSocials: [
-      {
-        id: Date.now(),
-        platform: "",
-        username: "",
-      },
-    ],
-    purposes: [
-      {
-        id: Date.now(),
-        mainPurpose: "",
-        specify: "",
-      },
-    ],
-
+    hasBeenPreviouslyEmployed: true,
+    hasAttendedEducationalInstitutions: true,
+    personPayingForTrip: "",
+    additionalPhones: [{ id: Date.now(), phoneNumber: null }],
+    additionalEmails: [{ id: Date.now(), email: null }],
+    socialsMedia: [{ id: Date.now(), platform: 0, username: 0 }],
+    additionalSocials: [{ id: Date.now(), platform: 0, username: 0 }],
+    purposes: [{ id: Date.now(), mainPurpose: 0, specify: null }],
     immediateRelatives: [
       {
         id: Date.now(),
         firstName: "",
         lastName: "",
         relation: "",
-        status: "",
-        hasImmediateRelativesInUS: false,
+        status: null,
+        hasImmediateRelativesInUS: true,
+        motherInfo: { statusInput: "" },
       },
     ],
-    additionalLanguage: [
-      {
-        id: Date.now(),
-        otherSpeakingLanguages: "",
-      },
-    ],
+    additionalLanguage: [{ id: Date.now(), otherSpeakingLanguages: "" }],
     previousJobs: [
       {
         id: Date.now(),
         employer: "",
+        streetAddress: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        jobPhoneNumber: "",
+        title: "",
+        jobAddress: { state: "" },
+        jobStartDate: {
+          dayIndex: 0,
+          monthIndex: 0,
+          yearIndex: 0,
+        },
       },
     ],
     educationalInstitution: [
       {
         id: Date.now(),
         name: "",
+        streetAddress1: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        jobPhoneNumber: "",
+        startDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+        endDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
       },
     ],
-
-    hasTraveledWithinFiveYear: false,
+    hasTraveledWithinFiveYear: true,
     hasSameAddressAsMailingOrHome: true,
     travelCountries: [
-      {
-        id: Date.now(),
+      { id: Date.now(), country: null, jobAddress: { country: "" } },
+      { id: Date.now(), country: null, jobAddress: { country: "" } },
+    ],
+    firstName: "",
+    lastName: "",
+    fullName: "",
+    hasFullName: false,
+    gender: 0,
+    birthDate: { dayIndex: 1, monthIndex: 0, yearIndex: 0 },
+    birthCity: "",
+    birthStateProvince: "",
+    hasBirthStateProvince: false,
+    birthCountry: "",
+    nationalId: "",
+    nationalId_check: false,
+    USSocialSecurityAreaNumber: "",
+    USSocialSecurityAreaNumber_check: true,
+    USTaxpayerIdNumber: "",
+    USTaxpayerIdNumber_check: false,
+    reasonForTripToUSSelect: { value: "" },
+    hasTravelPlansInput: "",
+    addInfo: {
+      lastName: "",
+      firstName: "",
+      address: "",
+      city: "",
+      postCode: "",
+      country: "",
+      phone: "",
+      email: "",
+      state: "",
+    },
+    secondInfo: {
+      lastName: "",
+      firstName: "",
+      address: "",
+      city: "",
+      postCode: "",
+      country: "",
+      phone: "",
+      email: "",
+      state: "",
+    },
+    form_id: 0,
+    fatherInfo_firstname_checkbox: false,
+    fatherInfo_lastName: "",
+    fatherInfo_lastname_checkbox: false,
+    motherInfo_firstName: "",
+    motherInfo_firstname_checkbox: false,
+    motherInfo_lastName: "",
+    motherInfo_lastname_checkbox: false,
+    partnerInfo: {
+      firstName: "",
+      birthDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+      nationalityCountryInput: "",
+      birthCity: "",
+      birthCity_checkbox: false,
+      birthCountry: "",
+      addressType: "",
+    },
+    speakingLanguagesInput: "",
+    fatherInfo_firstName: "",
+    telecodeFirstName: "",
+    telecodeLastName: "",
+    additionalLastName: "",
+    hasUSDriversLicense: true,
+    licenseId_checkbox: false,
+    lastVisa: {
+      postName: "",
+      visaNumber: 0,
+      year: 0,
+      explain: "",
+      visaCancelledExplain: "",
+    },
+    issueDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+    expirationDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+    visaNumber_checkbox: false,
+    hasSameType: true,
+    sameCountry: true,
+    tenPrinted: true,
+    hadVisaLost: true,
+    hasVisaCancelled: true,
+    clearanceReceived: true,
+    homeAddress: [{ streetAddress: 0, city: 0, state: 0, zipCode: 0 }],
+    state_checkbox: false,
+    ZipCode_checkbox: false,
+    phonePrimary: 0,
+    phoneSecondary: 0,
+    phoneWork: 0,
+    passportType: 0,
+    passportNumber: 0,
+    passportBookNumber: 0,
+    passportBookNumber_checkbox: false,
+    passportIssueCountry: "",
+    passportCity: 0,
+    passportState: 0,
+    passportCountry: "",
+    passportIssueDate: {
+      dayIndex: 0,
+      monthIndex: 0,
+      yearIndex: 0,
+    },
+    passportExpiryDate: {
+      dayIndex: 0,
+      monthIndex: 0,
+      yearIndex: 0,
+    },
+    nationalityInput: "",
+    us_contact: 0,
+    uscontact: {
+      person: {
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: 0,
+        streetAddress: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        zipcode: "",
         country: "",
       },
+    },
+    fatherInfo_birthDate: {
+      dayIndex: 0,
+      monthIndex: 0,
+      yearIndex: 0,
+    },
+    tribeName: "",
+    organizations: "",
+    jobTypeInput: "",
+    jobEmployer: "",
+    jobAddress: {
+      streetAddress: "",
+      streetAddress2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+    },
+    jobAddress_state_checkbox: false,
+    jobAddress_zipCode_checkbox: false,
+    jobPhoneNumber: "",
+    jobStartDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+    jobMonthlyIncome: "",
+    hasJobMonthlyIncome_checkbox: false,
+    jobDescribe: "",
+    zipCode_checkbox: false,
+    hasServedMilitary: true,
+    militaryExperiences: [
+      {
+        country: "",
+        service: "",
+        rank: "",
+        speciality: "",
+        dateStart: { dayIndex: 1, monthIndex: 0, yearIndex: 1970 },
+        dateEnd: { dayIndex: 1, monthIndex: 4, yearIndex: 1974 },
+      },
     ],
+    hasExplosiveExperience: true,
+    hasExplosiveExperienceExplain: "",
+    insurgentOrganizationMember: true,
+    insurgentOrganizationMemberExplain: null,
+    communicableDisease: true,
+    communicableDiseaseExplain: null,
+    disorder: true,
+    disorderExplain: null,
+    moneyLaundering: true,
+    moneyLaunderingExplain: null,
+    prostitution: true,
+    prostitutionExplain: null,
+    controlledSubstances: true,
+    controlledSubstancesExplain: null,
+    arrested: true,
+    arrestedExplain: null,
+    drugAddict: true,
+    drugAddictExplain: null,
+    trafficking: true,
+    traffickingExplain: null,
+    assistedTrafficking: true,
+    assistedTraffickingExplain: null,
+    relativeTrafficking: true,
+    relativeTraffickingExplain: null,
+    illegalActivity: true,
+    illegalActivityExplain: "",
+    terroristActivity: true,
+    terroristActivityExplain: "",
+    financingTerrorists: true,
+    financingTerroristsExplain: null,
+    terroristMember: true,
+    terroristMemberExplain: null,
+    genocide: true,
+    genocideExplain: null,
+    torture: true,
+    tortureExplain: null,
+    killings: true,
+    killingsExplain: "",
+    childSoldier: true,
+    childSoldierExplain: "",
+    religiousFreedom: true,
+    religiousFreedomExplain: "",
+    sterilization: true,
+    sterilizationExplain: "",
+    transplantation: true,
+    transplantationExplain: "",
+    visaFraud: true,
+    visaFraudExplain: "",
+    withheldCustody: true,
+    withheldCustodyExplain: "",
+    voted: true,
+    votedExplain: "",
+    avoidTax: true,
+    avoidTaxExplain: "",
+    hasTerroristRelative: true,
+    hasTerroristRelativeExplain: "",
+    wasDeported: true,
+    wasDeportedExplain: "",
   });
+
+  // const [formData, setFormData] = useState({
+  //   hasAdditionalNames: false,
+  //   hasTelecode: false,
+  //   currentStep: 0,
+  //   stepsCompleted: [],
+  //   userEmail: "",
+  //   maritalStatus: "",
+  //   additionalFirstName: "",
+  //   hasEverLostPassport: false,
+  //   hasMultipleNationalities: false,
+  //   hasMultiplePermanentResidents: false,
+  //   lostpassports: [
+  //     {
+  //       id: Date.now(),
+  //       passportNumber: "",
+  //       passportIssueCountryInput: "",
+  //       Explain: "",
+  //       passportNumber_check: false,
+  //     },
+  //   ],
+  //   nationalities: [
+  //     {
+  //       id: Date.now(),
+  //       country: "",
+  //       passportNumber: "",
+  //       hasPassportNumber: false,
+  //     },
+  //   ],
+  //   residents: [
+  //     {
+  //       id: Date.now(),
+  //       country: "",
+  //     },
+  //   ],
+  //   hasSameMailingAddressAsHome: true,
+  //   hasAdditionalPhoneNumbers: false,
+  //   hasAdditionalEmails: false,
+  //   hasAdditionalSocialMedia: false,
+  //   hasOtherTravelers: false,
+  //   travelingWithOrganization: false,
+  //   haveYouEverBeenToUS: false,
+  //   hasIssuedVisa: false,
+  //   hasBeenRefusedForVisa: false,
+  //   hasAnyoneEverFilledOnBehalf: false,
+  //   hasWorkedToOrganization: false,
+  //   hasOtherSpeakingLanguages: false,
+  //   belongsToTribe: false,
+  //   hasImmediateRelativesInUS: false,
+
+  //   fatherInfo: [
+  //     {
+  //       id: Date.now(),
+  //       hasBirthDate: false,
+  //       isInUS: false,
+  //       stayLengthType:'',
+  //       firstName:'',
+  //       lastName:'',
+
+  //     },
+  //   ],
+  //   motherInfo: [
+  //     {
+  //       id: Date.now(),
+  //       hasBirthDate: false,
+  //       isInUS: false,
+  //       stayLengthType:'',
+  //       firstName:'',
+  //       lastName:'',
+
+  //     },
+  //   ],
+
+  //   // trip details
+
+  //   travelers: [
+  //     {
+  //       id: Date.now(),
+  //       firstName: "",
+  //       lastName: "",
+  //       relation: "",
+  //     },
+  //   ],
+  //   previousVisit: [
+  //     {
+  //       id: Date.now(),
+  //       arrivalDate: "",
+  //       stayLengthValue: "",
+  //       stayLengthType: "",
+  //     },
+  //   ],
+  //   USDriverLicenses: [
+  //     {
+  //       id: Date.now(),
+  //       licenseId: "",
+  //       state: "",
+  //       licenseId_checkbox: false,
+  //     },
+  //   ],
+  //   hasBeenPreviouslyEmployed: false,
+  //   hasAttendedEducationalInstitutions: false,
+  //   personPayingForTrip: "self",
+  //   additionalPhones: [
+  //     {
+  //       id: Date.now(),
+  //       phoneNumber: "",
+  //     },
+  //   ],
+  //   additionalEmails: [
+  //     {
+  //       id: Date.now(),
+  //       email: "",
+  //     },
+  //   ],
+
+  //   socialsMedia: [
+  //     {
+  //       id: Date.now(),
+  //       platform: "",
+  //       username: "",
+  //     },
+  //   ],
+
+  //   additionalSocials: [
+  //     {
+  //       id: Date.now(),
+  //       platform: "",
+  //       username: "",
+  //     },
+  //   ],
+  //   purposes: [
+  //     {
+  //       id: Date.now(),
+  //       mainPurpose: "",
+  //       specify: "",
+  //     },
+  //   ],
+
+  //   immediateRelatives: [
+  //     {
+  //       id: Date.now(),
+  //       firstName: "",
+  //       lastName: "",
+  //       relation: "",
+  //       status: "",
+  //       hasImmediateRelativesInUS: false,
+  //     },
+  //   ],
+  //   additionalLanguage: [
+  //     {
+  //       id: Date.now(),
+  //       otherSpeakingLanguages: "",
+  //     },
+  //   ],
+  //   previousJobs: [
+  //     {
+  //       id: Date.now(),
+  //       employer: "",
+  //     },
+  //   ],
+  //   educationalInstitution: [
+  //     {
+  //       id: Date.now(),
+  //       name: "",
+  //     },
+  //   ],
+
+  //   hasTraveledWithinFiveYear: false,
+  //   hasSameAddressAsMailingOrHome: true,
+  //   travelCountries: [
+  //     {
+  //       id: Date.now(),
+  //       country: "",
+  //     },
+  //   ],
+  // });
   const [loading, setLoading] = useState(true);
 
   const validationSchemas = [
@@ -266,7 +652,12 @@ const Main = (props) => {
         data.contents.data.content &&
         reset(JSON.parse(data.contents.data.content));
 
-      //  console.log("after ", dat.userEmail);
+      data.contents &&
+        data.contents.data &&
+        data.contents.data.content &&
+        setFormData(JSON.parse(data.contents.data.content));
+
+      //console.log("after ", JSON.parse(data.contents.data.content));
     }
 
     // console.log("before loaded", data.contents.data.content );
@@ -324,29 +715,39 @@ const Main = (props) => {
       //   return updatedFormData;
       // });
 
-      const isStepAlreadyCompleted = (
-        getValues().stepsCompleted || []
-      ).includes(getValues().currentStep);
+      console.log("after submit", formData);
 
-      if (!isStepAlreadyCompleted) {
-        setValue(
-          "stepsCompleted",
-          [...(getValues().stepsCompleted || []), getValues().currentStep],
-          {
-            shouldValidate: true,
-          }
-        );
+      if (formData.complete == 1) {
+        setCurrentStep(currentStep + 1);
+        var nextStep = getValues().currentStep + 1;
+        setValue("currentStep", nextStep, {
+          shouldValidate: true,
+        });
+      } else {
+        const isStepAlreadyCompleted = (
+          getValues().stepsCompleted || []
+        ).includes(getValues().currentStep);
+
+        if (!isStepAlreadyCompleted) {
+          setValue(
+            "stepsCompleted",
+            [...(getValues().stepsCompleted || []), getValues().currentStep],
+            {
+              shouldValidate: true,
+            }
+          );
+        }
+
+        //  console.log("current step _on submit", currentStep);
+
+        submitDataServer(getValues());
+
+        setCurrentStep(currentStep + 1);
+        var nextStep = getValues().currentStep + 1;
+        setValue("currentStep", nextStep, {
+          shouldValidate: true,
+        });
       }
-
-      //  console.log("current step _on submit", currentStep);
-
-      submitDataServer(getValues());
-
-      setCurrentStep(currentStep + 1);
-      var nextStep = getValues().currentStep + 1;
-      setValue("currentStep", nextStep, {
-        shouldValidate: true,
-      });
     })();
   };
 

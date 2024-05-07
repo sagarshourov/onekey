@@ -30,8 +30,8 @@ const InlineTwoInputText = (props) => {
           <div className="basis-8/12 flex-none lg:gap-5 lg:flex lg:flex-row">
             <div className="basis-6/12 ">
               <InputText
-                refs={title + ".firstName"}
-                name={title + ".firstName"}
+                refs={title + "_firstName"}
+                name={title + "_firstName"}
                 required={true}
                 helpText="  "
                 register={register}
@@ -50,8 +50,8 @@ const InlineTwoInputText = (props) => {
             </div>
             <div className="basis-6/12">
               <InputText
-                refs={title + ".lastName"}
-                name={title + ".firstName"}
+                refs={title + "_lastName"}
+                name={title + "_lastName"}
                 required={true}
                 helpText="  "
                 register={register}

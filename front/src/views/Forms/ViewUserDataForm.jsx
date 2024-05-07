@@ -10,7 +10,10 @@ import axios from "axios";
 import "./view_style.css";
 
 import { Lucide, LoadingIcon } from "@/base-components";
-import { getAdmin , getBaseApi } from "../../configuration";
+import { getAdmin, getBaseApi } from "../../configuration";
+
+import DsViewData from "./DsViewData/DsViewData";
+
 const ViewUserDataForm = (props) => {
   const [loading, setLoading] = useState(false);
 
@@ -20,8 +23,7 @@ const ViewUserDataForm = (props) => {
 
   const formData = useRecoilValueLoadable(formDataUserSelect({ id, u_id }));
 
-
-  //console.log('formData',formData);
+  console.log("formData", formData);
 
   let clientData = [];
 
@@ -37,7 +39,7 @@ const ViewUserDataForm = (props) => {
           clientData.contents.con.components[2],
         ],
       };
-        console.log("client data", clientData);
+      console.log("client data", clientData);
     }
   }
 
@@ -84,16 +86,16 @@ const ViewUserDataForm = (props) => {
             </h2>
           </div>
           <div className="hidden md:block mx-auto text-slate-500">
-            {formData?.contents?.id !==0 && 
-            <a
-              className="flex items-center btn btn-success-soft"
-              href={getBaseApi() + "pdf/"+formData?.contents?.id }
-              target="_blank"
-            >
-              <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download As
-              PDF
-            </a>
-            }
+            {formData?.contents?.id !== 0 && (
+              <a
+                className="flex items-center btn btn-success-soft"
+                href={getBaseApi() + "pdf/" + formData?.contents?.id}
+                target="_blank"
+              >
+                <Lucide icon="Download" className="w-4 h-4 mr-1" /> Download As
+                PDF
+              </a>
+            )}
           </div>
 
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
@@ -168,7 +170,7 @@ const ViewUserDataForm = (props) => {
               />
             )} */}
 
-          {formData.state == "hasValue" ? (
+          {formData.state == "hasValue" && formData.contents.con ? (
             <Form
               options={{
                 readOnly: false,
@@ -180,6 +182,10 @@ const ViewUserDataForm = (props) => {
               submission={{ data: formData.contents.val }}
               form={formData.contents.con}
             />
+          ) : formData.state == "hasValue" &&
+            formData.contents &&
+            formData.contents.val ? (
+            <DsViewData data={formData.contents.val} />
           ) : (
             <h1 className="m-5">Loading...</h1>
           )}

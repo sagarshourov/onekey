@@ -81,10 +81,10 @@ const Contact = (props) => {
         index={0}
       />
 
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"homeAddress.zipCode"}
+        title={"zipCode"}
         helpText="   "
         register={props.register}
         type="text"

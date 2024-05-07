@@ -19,24 +19,24 @@ export const firstStepSchema = object({
   telecodeFirstName: string().when("hasTelecode", {
     is: true,
     then: (schema) => schema.required("Must enter"),
-    otherwise: (schema) => schema.min(0), // or any other validation rules for when it's false
+    otherwise:  (schema) => string().nullable(),// or any other validation rules for when it's false
   }),
   telecodeLastName: string().when("hasTelecode", {
     is: true,
     then: (schema) => schema.required("Must enter"),
-    otherwise: (schema) => schema.min(0), // or any other validation rules for when it's false
+    otherwise:(schema) => string().nullable(),// or any other validation rules for when it's false
   }),
   birthCity: string().required().min(2),
 
   birthStateProvince: string().when("hasBirthStateProvince", {
     is: false,
     then: (schema) => schema.required("Birth State/Province Required!").min(2),
-    otherwise: (schema) => schema.min(0),
+    otherwise:  (schema) => string().nullable(),
   }),
   fullName: string().when("hasFullName", {
     is: false,
     then: (schema) => schema.required("Full Name is  Required!").min(2),
-    otherwise: (schema) => schema.min(0),
+    otherwise: (schema) => string().nullable(),
   }),
   maritalStatus: string().required("Marital Status Required!"),
   birthCountry: string().required("Country of Birth Required!").min(2),

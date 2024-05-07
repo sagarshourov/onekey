@@ -1,11 +1,9 @@
 import { useState } from "react";
 
-
 import InlineInputText from "../elements/InlineInputText";
 import Nationalities from "./Nationalities";
 import Residents from "./Residents";
 import InlineSwitch from "../elements/InlineSwitch";
-
 
 const PersonalInformation = (props) => {
   const [date, setDate] = useState("");

@@ -113,11 +113,7 @@ let UsersideMenu = atom({
         title: "Client Form",
         pathname: "/forms/1",
       },
-      {
-        icon: "FileText",
-        title: "New Ds 160 Form",
-        pathname: "/newform/25",
-      },
+      
       {
         icon: "Clipboard",
         title: "DS-160 For F-1 Student",
@@ -212,6 +208,11 @@ let UsersideMenu = atom({
         pathname: "/my_doc",
         title: "Download Docs",
       },
+      {
+        icon: "FileText",
+        title: "Ds 160",
+        pathname: "/newform/25",
+      }
       // {
       //   icon: "ListChecks",
       //   pathname: "/tasks",

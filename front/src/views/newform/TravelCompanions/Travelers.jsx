@@ -14,8 +14,9 @@ const Travelers = (props) => {
       ...currentNationalities,
       {
         id: Date.now(),
-        mainPurpose: "",
-        specify: "",
+        lastName: "",
+        firstName: "",
+        relation:""
       },
     ];
     setFormData("travelers", addLanguages, { shouldValidate: true });
@@ -23,9 +24,9 @@ const Travelers = (props) => {
 
   const deleteTravelers = (e) => {
     if (formData.travelers && formData.travelers.length > 1) {
-      const newNationalities = formData.travelers.filter((nationalities) => {
+      const newNationalities = formData.travelers.filter((travels) => {
         // Condition to filter out values
-        return nationalities.id !== e; // Replace idToDelete with the ID you want to delete
+        return travels.id !== e; // Replace idToDelete with the ID you want to delete
       });
 
       setFormData("travelers", newNationalities, {
@@ -55,7 +56,7 @@ const Travelers = (props) => {
                     disabled={false}
                     formData={formData}
                     index={index}
-                    parent={"purposes"}
+                    parent={"travelers"}
                   />
 
                   <InlineInputChildText
@@ -71,7 +72,7 @@ const Travelers = (props) => {
                     disabled={false}
                     formData={formData}
                     index={index}
-                    parent={"purposes"}
+                    parent={"travelers"}
                   />
 
                   <InlineDropChid
@@ -87,7 +88,7 @@ const Travelers = (props) => {
                     data={dat.relation}
                     inline={true}
                     index={index}
-                    parent={"purposes"}
+                    parent={"travelers"}
                   />
                 </div>
                 {formData.travelers.length === index + 1 ? (

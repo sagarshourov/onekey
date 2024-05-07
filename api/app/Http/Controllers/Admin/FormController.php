@@ -83,7 +83,7 @@ class FormController extends BaseController
             $forms =  FormData::where('id', $id)->get(['id', 'user_id', 'form_id', 'content', 'complete']);
 
             if ($forms[0]->form_id == 25) {
-                return  $forms[0]->content;
+                return  $forms[0];
             } else {
                 $val = [];
                 $return['complete'] = 0;
@@ -180,13 +180,28 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('data_pdf_submit', $return);
 
-
-
-
         return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
         // return view('data_pdf_submit', $return);
         // return $this->sendResponse($return, 'Form by id successfully.');
+    }
+
+    public function createDsPDF($formId)
+    {
+
+        $forms =  FormData::where('id', $formId)->get(['id', 'user_id', 'form_id', 'content']);
+
+        $return['data'] = json_decode($forms[0]->content, true);
+
+        $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
+
+        //print_r($return);
+
+         $pdf = PDF::loadView('ds_pdf_submit', $return);
+
+         return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+
+        //return view('ds_pdf_submit',  $return);
     }
 
 
