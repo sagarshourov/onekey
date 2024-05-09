@@ -12,7 +12,7 @@
             <tr>
                 <td> <b> Street address (Line 2)</b></td>
                 <td>
-                    @if(isset($data['homeAddress']['streetAddress2'])) $data['homeAddress']['streetAddress2'] @endif
+                    @if(isset($data['homeAddress'][0]['streetAddress2'])) {{$data['homeAddress'][0]['streetAddress2']}} @endif
 
 
                 </td>
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td> <b> Country/Region*</b></td>
-                <td> @if(isset($data['homeAddress']['country'])) {{$data['homeAddress']['country']}} @endif</td>
+                <td> @if(isset($data['homeAddress'][0]['country']))  {{ getLabelByValue($selectData,'countries', $data['homeAddress'][0], 'country') }}  @endif</td>
             </tr>
 
             <tr>
@@ -44,9 +44,58 @@
               
 
                 <td>{{rYes($data,'hasSameMailingAddressAsHome')}}</td>
-
-                
+  
             </tr>
+
+            @if($data['hasSameMailingAddressAsHome']==0)
+
+            <tr>
+                <td> <b> Street address (Line 1)*</b></td>
+              
+
+                <td>{{$data['mailingAddress']['streetAddress']}}</td>
+  
+            </tr>
+            <tr>
+                <td> <b> Street address (Line 2)**</b></td>
+              
+
+                <td>{{$data['mailingAddress']['streetAddress2']}}</td>
+  
+            </tr>
+            <tr>
+                <td> <b> City</b></td>
+              
+
+                <td>{{$data['mailingAddress']['city']}}</td>
+  
+            </tr>
+            <tr>
+                <td> <b> State/Province</b></td>
+              
+
+                <td>{{$data['mailingAddress']['state']}}</td>
+  
+            </tr>
+            <tr>
+                <td> <b> Postal Zone/Zip Code</b></td>
+              
+
+                <td>{{$data['mailingAddress']['zipCode']}}</td>
+  
+            </tr>
+            <tr>
+                <td> <b>  Country/Region*</b></td>
+              
+
+                <td> {{ getLabelByValue($selectData,'countries',$data['mailingAddress'],'country') }}</td>
+  
+            </tr>
+
+
+            @endif
+
+
 
             <tr>
                 <td> <b> Primary Phone Number*</b></td>
@@ -66,23 +115,42 @@
           
                 <td>{{rYes($data,'hasAdditionalPhoneNumbers')}}</td>
             </tr>
+            @foreach($data['additionalPhones'] as $key => $addPhone)
+
+                <tr>
+                    <td> <b> {{$key+1}}. Additional Phone Number*</b></td>
+                    <td>{{$addPhone['phoneNumber']}}</td>
+                </tr>
+
+            @endforeach
+
             <tr>
                 <td> <b> Have you used any other email address in the last five years?</b></td>
                     
                 <td>{{rYes($data,'hasAdditionalEmails')}}</td>
             </tr>
+            @foreach($data['additionalEmails'] as $key => $addEmail)
+
+                <tr>
+                    <td> <b> {{$key+1}}. Additional Email*</b></td>
+                    <td>{{$addEmail['email']}}</td>
+                </tr>
+
+            @endforeach
+
         </table>
 
-        @foreach($data['travelers'] as $traveler)
+        @foreach($data['socialsMedia'] as $key => $traveler)
         <table class="table table-bordered">
             <tr>
-                <td>1. Social Media Platform*</td>
-                <td></td>
+                <td>{{$key+1}}. Social Media Platform*</td>
+                <td>{{$traveler['platform']}}</td>
 
             </tr>
             <tr>
-                <td>1. Social Media Handle*</td>
-                <td></td>
+                <td>{{$key+1}}. Social Media Handle*</td>
+                <td>{{$traveler['username']}}</td>
+                
 
             </tr>
         </table>
@@ -91,11 +159,29 @@
 
         <table>
             <tr>
-                <td> Do you wish to provide information about any other websites or applications you have used within the last five years to create or share content, such as photos, videos, or status updates?</td>
+                <td> <b>Do you wish to provide information about any other websites or applications you have used within the last five years to create or share content, such as photos, videos, or status updates? </b></td>
           
                 <td>{{rYes($data,'hasAdditionalSocialMedia')}}</td>
             </tr>
+
+
         </table>
+        @foreach($data['additionalSocials'] as $key => $addSocial)
+        <table class="table table-bordered">
+            <tr>
+                <td>{{$key+1}}. Additional Social Media Platform</td>
+                <td>{{$addSocial['platform']}}</td>
+
+            </tr>
+            <tr>
+                <td>{{$key+1}}. Additional Social Media Handler</td>
+                <td>{{$addSocial['username']}}</td>
+                
+
+            </tr>
+        </table>
+
+        @endforeach
 
     </div>
 </div>

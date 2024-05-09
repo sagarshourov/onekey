@@ -9,6 +9,7 @@ import AddEmail from "./AddEmail";
 import AdditionalSocial from "./AdditionalSocial";
 import SocialMedia from "./SocialMedia";
 import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineDropChid from "../elements/InlineDropChid";
 const Contact = (props) => {
   const [date, setDate] = useState("");
   const { errors, register, setFormData, formData, handleCheckboxChange } =
@@ -34,10 +35,10 @@ const Contact = (props) => {
         parent={"homeAddress"}
         index={0}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={false}
-        title={"homeAddress.streetAddress2"}
+        title={"streetAddress2"}
         helpText="   "
         register={props.register}
         type="text"
@@ -46,6 +47,8 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        parent={"homeAddress"}
+        index={0}
       />
       <InlineInputChildText
         setFormData={setFormData}
@@ -102,10 +105,10 @@ const Contact = (props) => {
 
       />
 
-      <InlineDrop
+      <InlineDropChid
         formData={formData}
         setFormData={setFormData}
-        title={"homeAddress.country"}
+        title={"country"}
         helpText=""
         register={props.register}
         errors={props.errors}
@@ -114,6 +117,8 @@ const Contact = (props) => {
         disabled={false}
         data={dat.countries}
         inline={true}
+        parent={"homeAddress"}
+        index={0}
       />
 
       <InlineSwitch

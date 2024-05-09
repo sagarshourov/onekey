@@ -5,7 +5,7 @@
         <table class="table table-bordered">
             <tr>
                 <td> <b> Type of passport/travel document*</b></td>
-                <td>{{$data['passportType']}}</td>
+                <td> {{ getLabelByValue($selectData,'passportType', $data, 'passportType') }}</td>
             </tr>
             <tr>
                 <td> <b> Passport/Travel Document Number*</b></td>
@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td> <b> Issuing country/authority of the passport/travel document*</b></td>
-                <td>{{$data['passportIssueCountry']}}</td>
+                <td> {{ getLabelByValue($selectData,'countries', $data, 'passportIssueCountry') }}</td>
             </tr>
             <tr>
                 <td> <b> City*</b></td>
@@ -32,28 +32,49 @@
 
             <tr>
                 <td> <b> Country/Region*</b></td>
-                <td>{{$data['passportCountry']}}</td>
+                <td> {{ getLabelByValue($selectData,'countries', $data, 'passportCountry') }}</td>
             </tr>
 
             <tr>
                 <td> <b> Passport Issuance Date*</b></td>
-                <td>{{dateFormat($data,'passportIssueDate')}}</td>
+                <td>{{dateFormat($data['passportIssueDate'])}}</td>
             </tr>
 
             <tr>
                 <td> <b> Passport Expiration Date*</b></td>
-                <td>{{dateFormat($data,'passportExpiryDate')}}</td>
+                <td>{{dateFormat($data['passportExpiryDate'])}}</td>
             </tr>
             <tr>
                 <td> <b> Have you ever lost a passport or had one stolen?</b></td>
-
-
                 <td>{{rYes($data,'hasEverLostPassport')}}</td>
-                
             </tr>
+
+            @if($data['hasEverLostPassport']==1)
+
+              @foreach($data['lostpassports'] as $lostpassport)
+                <tr>
+                    <td> <b> Passport/Travel Document Number*</b></td>
+                    <td>{{$lostpassport['passportNumber']}}</td>
+                </tr>
+
+
+                <tr>
+                    <td>Issuing country/authority of the passport/travel document*</td>
+                    <td> {{ getLabelByValue($selectData,'countries', $lostpassport,'country') }}</td>
+                </tr>
+
+                <tr>
+                    <td>Explain</td>
+                    <td> {{ $lostpassport['Explain'] }}</td>
+                </tr>
+                @endforeach
+            @endif
+
+
             <tr>
                 <td> <b>Country/Region of Origin (Nationality)*</b></td>
-                <td>{{rYes($data,'nationalityInput')}}</td>
+              
+                <td> {{ getLabelByValue($selectData,'countries', $data,'nationalityInput') }}</td>
             </tr>
 
         </table>

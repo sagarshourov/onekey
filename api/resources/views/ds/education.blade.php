@@ -39,11 +39,11 @@
             </tr>
             <tr>
                 <td> <b> Country/Region* </b></td>
-                <td>{{$data['jobAddress']['country']}}</td>
+                <td>{{ getLabelByValue($selectData,'countries', $data['jobAddress'], 'country') }}</td>
             </tr>
             <tr>
                 <td> <b>Start Date* </b></td>
-                <td> {{dateFormat($data,'jobStartDate')}}</td>
+                <td> {{dateFormat($data['jobStartDate'])}}</td>
             </tr>
             <tr>
                 <td> <b>Monthly Income In Local Currency*</b></td>

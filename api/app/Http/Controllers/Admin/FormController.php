@@ -189,19 +189,27 @@ class FormController extends BaseController
     public function createDsPDF($formId)
     {
 
+
+        $jsContent = file_get_contents(public_path('data.json'));
+
+        $selectData = json_decode($jsContent, true);
+
+
         $forms =  FormData::where('id', $formId)->get(['id', 'user_id', 'form_id', 'content']);
 
         $return['data'] = json_decode($forms[0]->content, true);
 
         $return['user'] = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
+        $return['selectData'] = $selectData;
+
 
         //print_r($return);
 
-         $pdf = PDF::loadView('ds_pdf_submit', $return);
+        $pdf = PDF::loadView('ds_pdf_submit', $return);
 
          return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
-        //return view('ds_pdf_submit',  $return);
+       // return view('ds_pdf_submit',  $return);
     }
 
 

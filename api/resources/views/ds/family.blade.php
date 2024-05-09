@@ -17,13 +17,29 @@
 
             <tr>
                 <td> <b> Do you know your Father's date of birth?</b></td>
-                <td>{{$data['fatherInfo'][0]['hasBirthDate']}}</td>
-                
+                <td>{{ rYes($data['fatherInfo'][0],'hasBirthDate')}}</td>
+
             </tr>
+
+            @if($data['fatherInfo'][0]['hasBirthDate']==1)
+            <tr>
+                <td>What is your father's birth date?*</td>
+                <td>{{dateFormat($data['fatherInfo_birthDate'])}}</td>
+            </tr>
+            @endif
             <tr>
                 <td> <b> Is your father in the U.S.?</b></td>
                 <td>{{ rYes($data['fatherInfo'][0],'isInUS') }}</td>
             </tr>
+
+            @if($data['fatherInfo'][0]['isInUS']==1)
+            <tr>
+                <td> <b> Father's status*</b></td>
+                <td>{{ $data['fatherInfo'][0]['status'] }}</td>
+            </tr>
+            @endif
+
+
             <tr>
                 <td> <b> Mother's First (Given) Name(s)*</b></td>
                 <td>@if(isset($data['motherInfo_firstName'])) {{ $data['motherInfo_firstName'] }} @endif </td>
@@ -34,35 +50,91 @@
             </tr>
             <tr>
                 <td> <b> Do you know your mother's date of birth?</b></td>
-              
+
                 <td>{{ rYes($data['motherInfo'][0],'hasBirthDate') }}</td>
             </tr>
+            @if($data['motherInfo'][0]['hasBirthDate']==1)
+            <tr>
+                <td>What is your mather's birth date?*</td>
+                <td>{{dateFormat($data['fatherInfo_birthDate'])}}</td>
+            </tr>
+            @endif
             <tr>
                 <td> <b> Is your mother in the U.S.?</b></td>
-            
+
                 <td>{{ rYes($data['motherInfo'][0],'isInUS') }}</td>
             </tr>
+
+            @if($data['motherInfo'][0]['isInUS']==1)
+            <tr>
+                <td> <b> Mather's status*</b></td>
+                <td>{{ $data['motherInfo'][0]['status'] }}</td>
+            </tr>
+            @endif
             <tr>
                 <td> <b> Do you have any immediate relatives, excluding parents, in the United States? </b></td>
                 <td>{{ rYes($data['immediateRelatives'][0],'hasImmediateRelativesInUS') }}</td>
             </tr>
+            @if($data['immediateRelatives'][0]['hasImmediateRelativesInUS']==1)
+                @foreach($data['immediateRelatives'] as $key => $immRelative)
+                    <tr>
+                        <td colspan="2">
+                            <div class="card p-0">
+                                <h6 class="card-header p-1">Immediate relative # {{ $key+1}}</h6>
+                                <div class="card-body p-0">
+                                    <table class="table mb-0 table-bordered">
+                                        <tr>
+                                            <td> <b> First (Given) Name(s)</b></td>
+                                            <td> {{ $immRelative['firstName'] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>  Family Name(s)*</b></td>
+                                            <td> {{ $immRelative['lastName'] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Relationship to You</td>
+                                            <td> {{ getLabelByValue($selectData,'relation', $immRelative,'relation') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Relative's status</td>
+                                            <td> {{ getLabelByValue($selectData,'status', $immRelative,'statusInput') }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+
+
+
+
+
+
             <tr>
                 <td> <b> Do you belong to a clan or tribe? </b></td>
-                <td>{{$data['belongsToTribe']}}</td>
+                <td>{{rYes($data,'belongsToTribe')}}</td>
             </tr>
+            @if($data['belongsToTribe']==1)
+            <tr>
+                <td> <b>  Clan or Tribe Name*</b></td>
+                <td>{{ $data['tribeName'] }}</td>
+            </tr>
+            @endif
             <tr>
                 <td> <b> Languages known*</b></td>
                 <td>{{$data['speakingLanguagesInput']}}</td>
             </tr>
             <tr>
                 <td> <b> Other languages you speak - Not listed above</b></td>
-             
+
                 <td>{{rYes($data,'hasOtherSpeakingLanguages')}}</td>
-                
+
             </tr>
             <tr>
                 <td> <b> Have you worked for any organizations, such as professional, social, or charitable ones?</b></td>
-        
+
                 <td>{{rYes($data,'hasWorkedToOrganization')}}</td>
             </tr>
 

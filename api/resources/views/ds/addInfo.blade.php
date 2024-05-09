@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <td> <b> Country </b></td>
-                <td>{{$data['addInfo']['country']}}</td>
+                <td> {{  $data['addInfo']['country'] }}</td>
             </tr>
 
             <tr>
@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <td> <b> Country </b></td>
-                <td>{{$data['secondInfo']['country']}}</td>
+                <td> {{ getLabelByValue($selectData,'countries', $data['secondInfo'], 'country') }}</td>
             </tr>
 
             <tr>

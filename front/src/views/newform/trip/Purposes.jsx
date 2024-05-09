@@ -13,7 +13,7 @@ const Purposes = (props) => {
   const [option, setOption] = useState(formData["purposes"]);
   // console.log("key", props?.check);
 
-  console.log("option", option);
+
 
   const addPurposes = (e) => {
     const oldPurposes = formData["purposes"];

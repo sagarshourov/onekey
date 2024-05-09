@@ -50,7 +50,7 @@ const OtherPersonPayerInfo = (props) => {
               formData={formData}
               label="Telephone number"
             />
-            <InlineInputText
+            {/* <InlineInputText
               setFormData={setFormData}
               required={true}
               title={"otherPayerInfo.relation"}
@@ -63,7 +63,7 @@ const OtherPersonPayerInfo = (props) => {
               handleCheckboxChange={handleCheckboxChange}
               formData={formData}
               label="Relationship to you"
-            />
+            /> */}
 
             <InlineInputText
               setFormData={setFormData}
@@ -111,7 +111,7 @@ const OtherPersonPayerInfo = (props) => {
             <InlineInputText
               setFormData={setFormData}
               required={true}
-              title={"otherPayerInfo.address.streetAddress2"}
+              title={"otherPayerInfo.address.streetAddress1"}
               helpText="  "
               register={register}
               type="text"
@@ -156,7 +156,7 @@ const OtherPersonPayerInfo = (props) => {
             <InlineInputText
               setFormData={setFormData}
               required={true}
-              title={"otherPayerInfo.address.city"}
+              title={"otherPayerInfo.address.state"}
               helpText="  "
               register={register}
               type="text"
@@ -191,7 +191,7 @@ const OtherPersonPayerInfo = (props) => {
             <InlineDrop
               formData={formData}
               setFormData={setFormData}
-              title={"otherPayerInfo.country"}
+              title={"otherPayerInfo.address.country"}
               helpText=""
               register={props.register}
               errors={props.errors}

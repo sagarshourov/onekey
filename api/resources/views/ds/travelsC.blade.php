@@ -1,5 +1,5 @@
 <div style="margin-top: 100px; margin-bottom: 20px;  border: 1px solid #eee; box-shadow: 0 1px 1px rgba(0,0,0,.05);  width : 100%; clear : both; ">
-    <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 5px 10px; border-bottom: 1px solid transparent;">  Travel Companions  </div>
+    <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 5px 10px; border-bottom: 1px solid transparent;"> Travel Companions </div>
     <div style="padding: 8px; overflow : auto;  ">
 
         <table class="table table-bordered">
@@ -21,12 +21,14 @@
                                     <td>{{$traveler['lastName']}}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>  What are the first (given) name(s) of the person traveling with you?* </b></td>
+                                    <td><b> What are the first (given) name(s) of the person traveling with you?* </b></td>
                                     <td>{{$traveler['firstName']}}</td>
                                 </tr>
                                 <tr>
                                     <td><b> What is your relationship with the person traveling with you?* </b></td>
-                                    <td>{{$traveler['relation']}}</td>
+
+
+                                    <td> {{ getLabelByValue($selectData,'relation',$traveler,'relation') }}</td>
                                 </tr>
 
                             </table>

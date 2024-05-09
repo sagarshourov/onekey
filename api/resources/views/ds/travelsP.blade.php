@@ -9,19 +9,19 @@
                 <td> {{rYes($data,'haveYouEverBeenToUS')}} </td>
             </tr>
 
-            @foreach($data['previousVisit'] as $traveler)
+            @foreach($data['previousVisit'] as $key => $traveler)
 
             <tr>
                 <td colspan="2">
                     <div class="card p-0">
-                        <h6 class="card-header p-1">Previous visit #1</h6>
+                        <h6 class="card-header p-1">Previous visit #{{$key+1}}</h6>
                         <div class="card-body p-0">
                             <table class="table mb-0 table-bordered">
                                 <tr>
                                     <td> <b>Date Arrived*</b></td>
                                     <td> {{dateFormat($traveler['arrivalDate'])}} </td>
 
-                                    <td> {{ optional($data)['country'] }}</td>
+
 
                                 </tr>
                                 <tr>
@@ -90,13 +90,10 @@
                 <td>
                     <b> Visa Issuing Post Name*</b>
                 </td>
-                <td>
-              
 
 
-                    {{ $data['lastVisa']['postName'] }}
 
-                  
+                <td> {{ getLabelByValue($selectData,'countries', $data['lastVisa'],'postName') }}
                 </td>
             </tr>
 
@@ -104,14 +101,15 @@
                 <td>
                     <b> Visa issue date*</b>
                 </td>
-                <td> {{dateFormat($data,'issueDate')}} </td>
+                <td> {{dateFormat($data['issueDate'])}} </td>
             </tr>
 
             <tr>
                 <td>
                     <b> Visa expiration date*</b>
                 </td>
-                <td> {{dateFormat($data,'issueDate')}} </td>
+                <td> {{dateFormat($data['expirationDate'])}} </td>
+             
             </tr>
             <tr>
                 <td>

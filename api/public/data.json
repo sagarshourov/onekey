@@ -612,5 +612,14 @@
     { "label": "Present Employer", "value": "present_employer" },
     { "label": "Self", "value": "self" },
     { "label": "Employer in the U.S.", "value": "employer_in_us" }
+  ],
+  "status": [
+    { "label": "U.S. CITIZEN", "value": "US_CITIZEN" },
+    {
+      "label": "U.S. LEGAL PERMANENT RESIDENT (LPR)",
+      "value": "US_PERMANENT_RESIDENT"
+    },
+    { "label": "NONIMMIGRANT", "value": "NONIMMIGRANT" },
+    { "label": "OTHER/I DON'T KNOW", "value": "OTHER_OR_UNKNOWN" }
   ]
 }

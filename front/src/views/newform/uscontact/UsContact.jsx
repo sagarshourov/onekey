@@ -1,5 +1,7 @@
 import { useState } from "react";
 import InputText from "../elements/InputText";
+import dat from "../elements/data.json";
+import InlineDrop from "../elements/InlineDrop";
 const UsContact = (props) => {
   const { formData, setFormData } = props;
   const [radio, setRadio] = useState(
@@ -217,6 +219,19 @@ const UsContact = (props) => {
               isVisible={true}
               disabled={false}
             />
+            <InlineDrop
+              formData={formData}
+              setFormData={setFormData}
+              title={"uscontact.person.country"}
+              helpText=""
+              register={props.register}
+              errors={props.errors}
+              label=" Country/Region"
+              isVisible={true}
+              disabled={false}
+              data={dat.countries}
+              inline={true}
+            />
           </div>
         </div>
       )}
@@ -343,18 +358,18 @@ const UsContact = (props) => {
             />
           </div>
           <div className="grid lg:grid-cols-2 lg:gap-32">
-            <InputText
+            <InlineDrop
               formData={formData}
-              refs={"uscontact.organization.country"}
-              name={"uscontact.organization.country"}
-              required={true}
-              helpText=" "
+              setFormData={setFormData}
+              title={"uscontact.organization.country"}
+              helpText=""
               register={props.register}
-              type="text"
               errors={props.errors}
-              label=" Country/Region "
+              label=" Country/Region"
               isVisible={true}
               disabled={false}
+              data={dat.countries}
+              inline={true}
             />
           </div>
         </div>

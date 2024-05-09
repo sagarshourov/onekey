@@ -1,21 +1,39 @@
 @php 
 
-function rYes($dat,$key){
+if (!function_exists("rYes")) {
 
-    if(isset($dat[$key]) && $dat[$key]==1){
-        return 'Yes';
-    }else{
-        return 'No';
+    function rYes($dat,$key){
+
+        if(isset($dat[$key]) && $dat[$key]==1){
+            return 'Yes';
+        }else{
+            return 'No';
+        }
     }
 }
+if (!function_exists("dateFormat")) {
+    function dateFormat($date){
+        
+        if(isset($date['dayIndex']) && isset($date['monthIndex']) && isset($date['yearIndex'])){
+            $date = $date['dayIndex'].'/'.$date['monthIndex'].'/'.$date['yearIndex'];
+            return  date('jS  F Y', strtotime($date)) ;
+        }else{
+            return '';
+        }
+    }
+}
+if (!function_exists("getLabelByValue")) {
+    function getLabelByValue($selectData, $key, $data, $value){
+        if(isset($data[$value])){
+            foreach ($selectData[$key] as $keys => $type) {
+                if ($type['value'] == $data[$value]) {
+                    return $type['label'];
+                }
 
-function dateFormat($date){
-    
-    if(isset($date['dayIndex']) && isset($date['monthIndex']) && isset($date['yearIndex'])){
-        $date = $date['dayIndex'].'/'.$date['monthIndex'].'/'.$date['yearIndex'];
-        return  date('d-m-Y', strtotime($date)) ;
-    }else{
-        return '';
+        
+            }
+        }
+        return null;  
     }
 }
 
@@ -106,23 +124,49 @@ function dateFormat($date){
                 </tr>
                 <tr>
                     <td><b> Have you ever gone by other names, such as maiden, religious, professional, or alias names </b></td>
-                    <td>No</td>
+                    <td>{{rYes($data,'hasAdditionalNames')}}</td>
+                </tr>
+                @if($data['hasAdditionalNames']==1) 
+                
+                <tr>
+                    <td><b> Additional given name(s)*</b></td>
+                    <td>{{$data['additionalFirstName']}}</td>
                 </tr>
                 <tr>
-                    <td><b> Have you used a four-letter code to represent your name in a communication system?</b></td>
-                    <td>No</td>
+                    <td><b> Additional family name(s)*</b></td>
+                    <td>{{$data['additionalLastName']}}</td>
                 </tr>
+                
+                @endif
+                <tr>
+                    <td><b> Have you used a four-letter code to represent your name in a communication system?</b></td>
+                    <td>{{rYes($data,'hasTelecode')}}</td>
+                </tr>
+                @if($data['hasTelecode']==1) 
+                
+                <tr>
+                    <td><b>  Telecode for first/given name(s)*</b></td>
+                    <td>{{$data['telecodeFirstName']}}</td>
+                </tr>
+                <tr>
+                    <td><b>  Telecode for family name(s)*</b></td>
+                    <td>{{$data['telecodeLastName']}}</td>
+                </tr>
+                
+                @endif
+
+
                 <tr>
                     <td><b> Gender </b></td>
                     <td>{{ $data['gender'] }}</td>
                 </tr>
                 <tr>
                     <td> <b> Marital Status </b></td>
-                    <td>{{ $data['maritalStatus'] }}</td>
+                    <td> {{getLabelByValue($selectData,'married', $data, 'maritalStatus')}}</td>
                 </tr>
                 <tr>
                     <td><b> Date of Birth </b></td>
-                    <td></td>
+                    <td>{{dateFormat($data['birthDate'])}}</td>
                 </tr>
                 <tr>
                     <td> <b> City of Birth </b></td>
@@ -134,7 +178,7 @@ function dateFormat($date){
                 </tr>
                 <tr>
                     <td><b> Country of Birth </b></td>
-                    <td>{{ $data['birthCountry'] }}</td>
+                    <td> {{ getLabelByValue($selectData,'countries', $data, 'birthCountry') }} </td>
                 </tr>
 
 

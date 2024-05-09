@@ -111,7 +111,7 @@ const ImmediateRelative = (props) => {
                     isVisible={true}
                     register={props.register}
                     errors={props.errors}
-                    title={"motherInfo.statusInput"}
+                    title={"statusInput"}
                     inline={true}
                     data={[
                       { label: "U.S. CITIZEN", value: "US_CITIZEN" },

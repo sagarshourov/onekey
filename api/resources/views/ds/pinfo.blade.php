@@ -8,6 +8,8 @@
                 <td> {{rYes($data,'hasMultipleNationalities')}} </td>
             </tr>
 
+
+
             @foreach($data['nationalities'] as $nationality)
 
             <tr>
@@ -19,7 +21,7 @@
                             <table class="table mb-0 table-bordered">
                                 <tr>
                                     <td> <b>Other Country/Region of Origin (Nationality)*</b></td>
-                                    <td>{{ $nationality['country'] }}</td>
+                                    <td>{{ getLabelByValue($selectData,'countries', $nationality, 'country') }}</td>
                                 </tr>
                                 <tr>
                                     <td><b> Do you hold a passport for the other country/region of origin (nationality) above? </b></td>
@@ -57,7 +59,7 @@
                             <table class="table mb-0 table-bordered">
                                 <tr>
                                     <td> <b> Other Permanent Resident Country/Region*</b></td>
-                                    <td> {{ optional($data)['country'] }}</td>
+                                    <td> {{ getLabelByValue($selectData,'countries', $data,'country') }}</td>
                                 </tr>
 
                             </table>
