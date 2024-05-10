@@ -180,10 +180,10 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('data_pdf_submit', $return);
 
-        return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
+      //  return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
-        // return view('data_pdf_submit', $return);
-        // return $this->sendResponse($return, 'Form by id successfully.');
+         return view('data_pdf_submit', $return);
+         return $this->sendResponse($return, 'Form by id successfully.');
     }
 
     public function createDsPDF($formId)
@@ -207,9 +207,9 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('ds_pdf_submit', $return);
 
-         return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+//         return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
-       // return view('ds_pdf_submit',  $return);
+        return view('ds_pdf_submit',  $return);
     }
 
 
