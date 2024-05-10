@@ -144,7 +144,9 @@
         <table class="table table-bordered">
             <tr>
                 <td>{{$key+1}}. Social Media Platform*</td>
-                <td>{{$traveler['platform']}}</td>
+     
+                <td>{{ getLabelByValue($selectData,'socialMediaOptions', $traveler,'platform') }}</td>
+
 
             </tr>
             <tr>

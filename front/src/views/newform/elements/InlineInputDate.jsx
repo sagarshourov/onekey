@@ -49,6 +49,7 @@ const InlineInputDate = (props) => {
                 disabled={props.disabled}
                 name={props.title + ".dayIndex"}
               >
+                <option>Select...</option>
                 {data.days.map((data, index) => (
                   <option key={index} value={data.value}>
                     {data.label}
@@ -62,6 +63,7 @@ const InlineInputDate = (props) => {
                 disabled={props.disabled}
                 name={props.title + ".monthIndex"}
               >
+                <option>Select...</option>
                 {data.months.map((data, index) => (
                   <option key={index} value={data.value}>
                     {data.label}
@@ -82,6 +84,7 @@ const InlineInputDate = (props) => {
                 disabled={props.disabled}
                 name={props.title + ".yearIndex"}
               >
+                <option>Select...</option>
                 {generateYearList(1970).map((data, index) => (
                   <option key={index} value={data}>
                     {data}

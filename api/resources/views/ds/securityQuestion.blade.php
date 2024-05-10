@@ -7,6 +7,46 @@
                 <td> <b> Have you ever served in the military?</b></td>
                 <td>{{rYes($data,'hasServedMilitary')}}</td>
             </tr>
+            @if($data['hasServedMilitary']==1)
+                
+                
+                    <tr>
+                        <td>Country/Region*</td>
+                     
+                    
+                        <td> {{ getLabelByValue($selectData,'countries', $data['militaryExperiences'][0],'country') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Branch of Service*</td>
+                   
+                        <td>{{ $data['militaryExperiences'][0]['service']}}</td>
+                    </tr>
+                    <tr>
+                        <td>Rank/Position*</td>
+                      
+                        <td>{{ $data['militaryExperiences'][0]['rank']}}</td>
+                    </tr>
+                    <tr>
+                        <td>Military Specialty*</td>
+                      
+                        <td>{{ $data['militaryExperiences'][0]['speciality']}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of Service From*</td>
+                        <td>{{ dateFormat($data['militaryExperiences'][0]['dateStart'])}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of Service To*</td>
+                        <td>{{ dateFormat($data['militaryExperiences'][0]['dateEnd'])}}</td>
+                    </tr>
+                    
+
+                                            
+        
+                         
+                
+            @endif
+
             <tr>
                 <td> <b> Have you traveled outside your country (not including the United States) in the last 5 years?</b></td>
              

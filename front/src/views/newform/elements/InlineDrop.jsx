@@ -31,6 +31,7 @@ const InlineDrop = (props) => {
               name={props.title}
               onChange={(e) => handelSelect(e, title)}
             >
+              <option>Select...</option>
               {props.data &&
                 props.data.map((data, index) => (
                   <option key={index} value={data.value}>

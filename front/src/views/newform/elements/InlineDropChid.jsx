@@ -25,6 +25,7 @@ const InlineDropChid = (props) => {
               aria-label=".form-select example"
               name={`${parent}.${index}.${props.title}`}
             >
+              <option>Select...</option>
               {props.data &&
                 props.data.map((data, index) => (
                   <option key={index} value={data.value}>

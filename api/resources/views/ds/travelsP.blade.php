@@ -9,38 +9,40 @@
                 <td> {{rYes($data,'haveYouEverBeenToUS')}} </td>
             </tr>
 
-            @foreach($data['previousVisit'] as $key => $traveler)
+            @if($data['haveYouEverBeenToUS']==1)
 
-            <tr>
-                <td colspan="2">
-                    <div class="card p-0">
-                        <h6 class="card-header p-1">Previous visit #{{$key+1}}</h6>
-                        <div class="card-body p-0">
-                            <table class="table mb-0 table-bordered">
-                                <tr>
-                                    <td> <b>Date Arrived*</b></td>
-                                    <td> {{dateFormat($traveler['arrivalDate'])}} </td>
+                @foreach($data['previousVisit'] as $key => $traveler)
 
-
-
-                                </tr>
-                                <tr>
-                                    <td><b> Length of Stay*</b></td>
-                                    <td>{{ $traveler['stayLengthValue'] }} {{ $traveler['stayLengthType'] }}</td>
-                                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="card p-0">
+                            <h6 class="card-header p-1">Previous visit #{{$key+1}}</h6>
+                            <div class="card-body p-0">
+                                <table class="table mb-0 table-bordered">
+                                    <tr>
+                                        <td> <b>Date Arrived*</b></td>
+                                        <td> {{dateFormat($traveler['arrivalDate'])}} </td>
 
 
-                            </table>
+
+                                    </tr>
+                                    <tr>
+                                        <td><b> Length of Stay*</b></td>
+                                        <td>{{ $traveler['stayLengthValue'] }} {{ $traveler['stayLengthType'] }}</td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
 
-            @endforeach
+                @endforeach
 
-
+            @endif
         </table>
 
         <table class="table table-bordered">
@@ -49,31 +51,30 @@
 
                 <td> {{rYes($data,'hasUSDriversLicense')}} </td>
             </tr>
+            @if($data['hasUSDriversLicense']==1)
+                @foreach($data['USDriverLicenses'] as $licenses)
 
-            @foreach($data['USDriverLicenses'] as $licenses)
-
-            <tr>
-                <td colspan="2">
-                    <div class="card p-0">
-                        <h6 class="card-header p-1">Previous US licence #1</h6>
-                        <div class="card-body p-0">
-                            <table class="table mb-0 table-bordered">
-                                <tr>
-                                    <td> <b>Driver's Licence Number**</b></td>
-                                    <td>{{ $licenses['licenseId']}} </td>
-                                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="card p-0">
+                            <h6 class="card-header p-1">Previous US licence #1</h6>
+                            <div class="card-body p-0">
+                                <table class="table mb-0 table-bordered">
+                                    <tr>
+                                        <td> <b>Driver's Licence Number**</b></td>
+                                        <td>{{ $licenses['licenseId']}} </td>
+                                    </tr>
 
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                </td>
+                    </td>
 
-            </tr>
-
-            @endforeach
-
+                </tr>
+                @endforeach
+        @endif
 
         </table>
 
@@ -86,55 +87,60 @@
                 <td> {{rYes($data,'hasIssuedVisa')}} </td>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <b> Visa Issuing Post Name*</b>
-                </td>
+
+            @if($data['hasIssuedVisa']==1)
+                <tr>
+                    <td>
+                        <b> Visa Issuing Post Name*</b>
+                    </td>
 
 
 
-                <td> {{ getLabelByValue($selectData,'countries', $data['lastVisa'],'postName') }}
-                </td>
-            </tr>
+                    <td> {{ getLabelByValue($selectData,'countries', $data['lastVisa'],'postName') }}
+                    </td>
+                </tr>
 
-            <tr>
-                <td>
-                    <b> Visa issue date*</b>
-                </td>
-                <td> {{dateFormat($data['issueDate'])}} </td>
-            </tr>
+                <tr>
+                    <td>
+                        <b> Visa issue date*</b>
+                    </td>
+                    <td> {{dateFormat($data['issueDate'])}} </td>
+                </tr>
 
-            <tr>
-                <td>
-                    <b> Visa expiration date*</b>
-                </td>
-                <td> {{dateFormat($data['expirationDate'])}} </td>
-             
-            </tr>
-            <tr>
-                <td>
-                    <b> Visa Number*</b>
-                </td>
-                <td>
+                <tr>
+                    <td>
+                        <b> Visa expiration date*</b>
+                    </td>
+                    <td> {{dateFormat($data['expirationDate'])}} </td>
+                
+                </tr>
+                <tr>
+                    <td>
+                        <b> Visa Number*</b>
+                    </td>
+                    <td>
 
-                    {{$data['lastVisa']['visaNumber']}}
+                        {{$data['lastVisa']['visaNumber']}}
 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <b> Are you applying for the same type of visa?</b>
-                </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b> Are you applying for the same type of visa?</b>
+                    </td>
 
-                <td> {{rYes($data,'hasSameType')}} </td>
+                    <td> {{rYes($data,'hasSameType')}} </td>
 
-            </tr>
+                </tr>
+
+            @endif
             <tr>
                 <td>
                     <b> Are you applying from the same country and is this your country of residence?</b>
                 </td>
                 <td> {{rYes($data,'sameCountry')}} </td>
             </tr>
+            
             <tr>
                 <td>
                     <b> Have you been ten-printed?</b>

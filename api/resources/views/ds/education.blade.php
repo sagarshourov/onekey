@@ -64,6 +64,71 @@
                 <td>{{rYes($data,'hasAttendedEducationalInstitutions')}}</td>
             </tr>
 
+            @if($data['hasAttendedEducationalInstitutions']==1)
+                @foreach($data['educationalInstitution'] as $inst)
+                    <tr>
+                        <td colspan="2">
+                            <div class="card p-0">
+                                <h6 class="card-header p-1">Previous Institution #1 </h6>
+                                <div class="card-body p-0">
+                                    <table class="table mb-0 table-bordered">
+                                        
+                                        
+                                            <tr>
+                                                <td>Name of the Institution</td>
+                                                <td>{{ $inst['name']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Street address (Line 1)</td>
+                                                <td>{{ $inst['streetAddress1']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Street address (Line 2)</td>
+                                                <td>{{ $inst['streetAddress2']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>City</td>
+                                                <td>{{ $inst['city']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>State</td>
+                                                <td>{{ $inst['state']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Postal Zone/Zip Code</td>
+                                                <td>{{ $inst['zipCode']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Country/Region</td>
+                                                <td>{{ $inst['country']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Course of Study</td>
+                                                <td>{{ $inst['jobPhoneNumber']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Date of Attendance From</td>
+                                                <td>{{ dateFormat($inst['startDate'])}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Date of Attendance To</td>
+                                                <td>{{ dateFormat($inst['endDate'])}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Briefly describe your duties</td>
+                                                <td>{{ dateFormat($inst['endDate'])}}</td>
+                                            </tr>
+
+                                            
+        
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+
 
 
 

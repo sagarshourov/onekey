@@ -107,9 +107,63 @@
                 @endforeach
             @endif
 
+            
+            @if(array_search($data['maritalStatus'], array("MARRIED", "DIVORCED", "WIDOWED") ))
+            <tr>
+                <td colspan="2">
+                    <div class="card p-0">
+                        <h6 class="card-header p-1">Spouse Information </h6>
+                        <div class="card-body p-0">
+                            <table class="table mb-0 table-bordered">
+                                <tr>
+                                    <td> <b> Spouse's Given Names (include Maiden Name)</b></td>
+                                    <td> {{ $data['partnerInfo']['firstName'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td> <b>  Spouse’s Last Names</b></td>
+                                    <td> {{$data['partnerInfo']['lastName'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Spouse's Date of Birth</td>
+                                    <td> {{dateFormat($data['partnerInfo']['birthDate']) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Spouse's Country/Region of Origin (Nationality)</td>
+                                    <td> {{ getLabelByValue($selectData,'countries', $data['partnerInfo'],'nationalityCountryInput') }}</td>
+                                </tr>
 
+                                <tr>
+                                    <td>City of Spouse's Birth</td>
+                                    <td> {{  $data['partnerInfo']['birthCity']}} </td>
+                                </tr>
 
+                                <tr>
+                                    <td>Country/Region of Spouse's birth</td>
+                                    <td> {{ getLabelByValue($selectData,'countries', $data['partnerInfo'],'birthCountry') }}</td>
+                                </tr>
+                                
 
+                                <tr>
+                                    <td>Spouse's Address</td>
+                                    <td> {{ getLabelByValue($selectData,'belongsToTribe', $data['partnerInfo'],'addressType') }}</td>
+                                </tr>
+
+                                @if( $data['partnerInfo']['addressType'] == 'OTHER_SPECIFY_ADDRESS')
+                                
+                                <tr>
+                                    <td>Address</td>
+                                    <td> {{ getLabelByValue($selectData,'status', $immRelative,'statusInput') }}</td>
+                                </tr>
+                                @endif
+                                
+                                
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        @endif
 
 
             <tr>
@@ -132,6 +186,14 @@
                 <td>{{rYes($data,'hasOtherSpeakingLanguages')}}</td>
 
             </tr>
+            @if($data['hasOtherSpeakingLanguages']==1)
+                @foreach($data['additionalLanguage'] as $key => $language)
+                <tr>
+                    <td> <b> {{$key+1}} .Additional Language</b></td>
+                    <td>{{ $language['otherSpeakingLanguages'] }}</td>
+                </tr>
+                @endforeach
+            @endif
             <tr>
                 <td> <b> Have you worked for any organizations, such as professional, social, or charitable ones?</b></td>
 

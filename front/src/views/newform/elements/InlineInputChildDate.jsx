@@ -52,6 +52,7 @@ const InlineInputChildDate = (props) => {
                 name={`${parent}.${index}.${props.title}.dayIndex`}
                 disabled={disabled}
               >
+                <option>Select...</option>
                 {data.days.map((data, index) => (
                   <option key={index} value={data.value}>
                     {data.label}
@@ -65,6 +66,7 @@ const InlineInputChildDate = (props) => {
                 {...register(`${parent}.${index}.${props.title}.monthIndex`)}
                 name={`${parent}.${index}.${props.title}.monthIndex`}
               >
+                <option>Select...</option>
                 {data.months.map((data, index) => (
                   <option key={index} value={data.value}>
                     {data.label}
@@ -79,6 +81,7 @@ const InlineInputChildDate = (props) => {
                 disabled={disabled}
                 name={`${parent}.${index}.${props.title}.yearIndex`}
               >
+                <option>Select...</option>
                 {generateYearList(1970).map((data, index) => (
                   <option key={index} value={data}>
                     {data}

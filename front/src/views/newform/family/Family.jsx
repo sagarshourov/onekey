@@ -241,7 +241,7 @@ const Family = (props) => {
           <InlineInputText
             setFormData={setFormData}
             required={true}
-            title={"partnerInfo.firstName"}
+            title={"partnerInfo.lastName"}
             helpText=""
             register={props.register}
             type="text"
@@ -376,7 +376,7 @@ const Family = (props) => {
         register={register}
         type="text"
         errors={errors}
-        label=" Enter Additional Languages"
+        label="Enter Additional Languages"
         isVisible={formData.hasOtherSpeakingLanguages}
         disabled={false}
         formData={formData}

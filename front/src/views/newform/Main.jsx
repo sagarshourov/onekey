@@ -283,7 +283,9 @@ const Main = (props) => {
     motherInfo_lastName: "",
     motherInfo_lastname_checkbox: false,
     partnerInfo: {
+      addressSpecify: "",
       firstName: "",
+      lastName: "",
       birthDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
       nationalityCountryInput: "",
       birthCity: "",
