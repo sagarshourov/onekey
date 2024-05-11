@@ -146,4 +146,26 @@ class MailController extends Controller
 
         return $em;
     }
+    public function ds_form_submit(Request $request)
+    {
+
+        $user =  $request->user;
+        $data =  $request->data;
+        $con =   $request->con;
+
+       // return $request;
+    
+       $title = ucfirst($user['first_name']).' has submitted the ' . $request->title;
+
+        $assignAmin = $request->assignAmin;
+
+        $em = Mail::send('email.ds_form_submit', ['user' => $user, 'title' => $title, 'data' => $data , 'con'=> $con], function ($message) use ($title, $assignAmin) {
+
+            $subject = $title . ' has been Submitted';
+            $message->to($assignAmin, 'Admin')->subject($subject);
+            $message->from("onyroy@gmail.com", 'Admin');
+        });
+
+        return $em;
+    }
 }
