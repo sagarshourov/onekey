@@ -25,6 +25,7 @@ if (!function_exists("usContact")) {
                 <td> <b> Do you know a person or organization that you want to list as your point of contact in the U.S.?</b></td>
                 <td>{{ usContact($data['us_contact']) }} </td>
             </tr>
+            @if($data['us_contact']==1)
             <tr>
                 <td> <b> First Name, *</b></td>
                 <td>{{$data['uscontact']['person']['firstName']}}</td>
@@ -67,7 +68,51 @@ if (!function_exists("usContact")) {
                 <td> <b> Country/Region*</b></td>
                 <td>{{ getLabelByValue($selectData,'countries', $data['uscontact']['person'], 'country')}} </td>
             </tr>
+            @endif
+            @if($data['us_contact']==2)
+            <tr>
+                <td> <b> Organization  Name, *</b></td>
+                <td>{{$data['uscontact']['organization']['firstName']}}</td>
+            </tr>
 
+
+            <tr>
+                <td> <b> Last Name *</b></td>
+                <td>{{$data['uscontact']['organization']['lastName']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Phone Number *</b></td>
+                <td>{{$data['uscontact']['organization']['phoneNumber']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Email Address *</b></td>
+                <td>{{$data['uscontact']['organization']['email']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Street address (Line 1)*</b></td>
+                <td>{{$data['uscontact']['organization']['streetAddress']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Street address (Line 2) *</b></td>
+                <td>{{$data['uscontact']['organization']['streetAddress2']}}</td>
+            </tr>
+            <tr>
+                <td> <b> City*</b></td>
+                <td>{{$data['uscontact']['organization']['city']}}</td>
+            </tr>
+            <tr>
+                <td> <b> State/Province </b></td>
+                <td>{{$data['uscontact']['organization']['state']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Postal Zone/Zip Code* </b></td>
+                <td>{{$data['uscontact']['organization']['zipcode']}}</td>
+            </tr>
+            <tr>
+                <td> <b> Country/Region*</b></td>
+                <td>{{ getLabelByValue($selectData,'countries', $data['uscontact']['organization'], 'country')}} </td>
+            </tr>
+            @endif
         </table>
 
 

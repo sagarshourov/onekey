@@ -116,6 +116,7 @@
                 </td>
 
             </tr>
+            @if($data['hasSameAddressAsMailingOrHome'] == 1)
             <tr>
                 <td>
                     Street address (Line 1 )*
@@ -162,7 +163,7 @@
             </tr>
 
 
-
+            @endif
 
 
 

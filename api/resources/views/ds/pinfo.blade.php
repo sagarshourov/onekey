@@ -9,7 +9,7 @@
             </tr>
 
 
-
+        @if($data['hasMultipleNationalities']==1)
             @foreach($data['nationalities'] as $nationality)
 
             <tr>
@@ -41,7 +41,7 @@
             </tr>
 
             @endforeach
-
+        @endif
 
         </table>
 
@@ -50,26 +50,28 @@
                 <td> <b>Are you a permanent resident of a country/region other than your country/region of origin (nationality) as indicated above? </b></td>
                 <td> {{rYes($data,'hasMultiplePermanentResidents')}} </td>
             </tr>
-            @foreach($data['residents'] as $resident)
-            <tr>
-                <td colspan="2">
-                    <div class="card p-0">
-                        <h6 class="card-header p-1">Other Permanent Resident # 1</h6>
-                        <div class="card-body p-0">
-                            <table class="table mb-0 table-bordered">
-                                <tr>
-                                    <td> <b> Other Permanent Resident Country/Region*</b></td>
-                                    <td> {{ getLabelByValue($selectData,'countries', $data,'country') }}</td>
-                                </tr>
+            @if($data['hasMultiplePermanentResidents']==1)
+                @foreach($data['residents'] as $resident)
+                <tr>
+                    <td colspan="2">
+                        <div class="card p-0">
+                            <h6 class="card-header p-1">Other Permanent Resident # 1</h6>
+                            <div class="card-body p-0">
+                                <table class="table mb-0 table-bordered">
+                                    <tr>
+                                        <td> <b> Other Permanent Resident Country/Region*</b></td>
+                                        <td> {{ getLabelByValue($selectData,'countries', $data,'country') }}</td>
+                                    </tr>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                </td>
+                    </td>
 
-            </tr>
-            @endforeach
+                </tr>
+                @endforeach
+            @endif
         </table>
 
         <table class="table table-bordered">

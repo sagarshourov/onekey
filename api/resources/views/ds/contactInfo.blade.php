@@ -115,6 +115,7 @@
           
                 <td>{{rYes($data,'hasAdditionalPhoneNumbers')}}</td>
             </tr>
+            @if($data['hasAdditionalPhoneNumbers']==1)
             @foreach($data['additionalPhones'] as $key => $addPhone)
 
                 <tr>
@@ -123,20 +124,22 @@
                 </tr>
 
             @endforeach
-
+            @endif
             <tr>
                 <td> <b> Have you used any other email address in the last five years?</b></td>
                     
                 <td>{{rYes($data,'hasAdditionalEmails')}}</td>
             </tr>
-            @foreach($data['additionalEmails'] as $key => $addEmail)
+            @if($data['hasAdditionalEmails']==1)
+                @foreach($data['additionalEmails'] as $key => $addEmail)
 
-                <tr>
-                    <td> <b> {{$key+1}}. Additional Email*</b></td>
-                    <td>{{$addEmail['email']}}</td>
-                </tr>
+                    <tr>
+                        <td> <b> {{$key+1}}. Additional Email*</b></td>
+                        <td>{{$addEmail['email']}}</td>
+                    </tr>
 
-            @endforeach
+                @endforeach
+            @endif
 
         </table>
 
@@ -168,6 +171,7 @@
 
 
         </table>
+        @if($data['hasAdditionalSocialMedia']==1)
         @foreach($data['additionalSocials'] as $key => $addSocial)
         <table class="table table-bordered">
             <tr>
@@ -184,6 +188,6 @@
         </table>
 
         @endforeach
-
+        @endif
     </div>
 </div>

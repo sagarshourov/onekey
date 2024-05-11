@@ -7,7 +7,7 @@
                 <td> <b> Are you traveling with anyone else?</b></td>
                 <td> {{rYes($data,'travelingWithOrganization')}} </td>
             </tr>
-
+            @if($data['travelingWithOrganization']==1)
             @foreach($data['travelers'] as $traveler)
 
             <tr>
@@ -40,6 +40,7 @@
             </tr>
 
             @endforeach
+            @endif
 
 
         </table>
