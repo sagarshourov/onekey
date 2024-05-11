@@ -15,8 +15,32 @@ if (!function_exists("dateFormat")) {
     function dateFormat($date){
         
         if(isset($date['dayIndex']) && isset($date['monthIndex']) && isset($date['yearIndex'])){
-            $date = $date['dayIndex'].'/'.$date['monthIndex'].'/'.$date['yearIndex'];
-            return  date('jS  F Y', strtotime($date)) ;
+           $day = (int) $date['dayIndex'];
+           $month = (int) $date['monthIndex'];
+           $year = (int) $date['yearIndex'];
+
+
+            $months = array(
+                    0 => "January", 1 => "February", 2 => "March", 3 => "April", 
+                    4 => "May", 5 => "June", 6 => "July", 7 => "August", 
+                    8 => "September", 9 => "October", 10 => "November", 11 => "December"
+                );
+
+                // Add ordinal suffix to the day
+                if ($day >= 10 && $day <= 20) {
+                    $suffix = "th";
+                } elseif ($day % 10 == 1) {
+                    $suffix = "st";
+                } elseif ($day % 10 == 2) {
+                    $suffix = "nd";
+                } elseif ($day % 10 == 3) {
+                    $suffix = "rd";
+                } else {
+                    $suffix = "th";
+                }
+                //return $day.'-'.$month.'-'.$year;
+                // Return formatted date string
+                return "{$day}{$suffix} {$months[$month]} {$year}";
         }else{
             return '';
         }
