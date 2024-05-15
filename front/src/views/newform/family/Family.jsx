@@ -147,7 +147,7 @@ const Family = (props) => {
       />
 
       <InlineInputDate
-        title={"motherInfo.birthDate"}
+        title={"motherInfo_birthDate"}
         helpText=""
         register={props.register}
         errors={props.errors}
