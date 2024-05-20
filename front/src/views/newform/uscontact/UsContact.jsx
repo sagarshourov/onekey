@@ -49,7 +49,7 @@ const UsContact = (props) => {
             defaultChecked={formData.us_contact == 2 ? true : false}
           />
           <label className="form-check-label" htmlFor="radio-switch-5">
-            I know a Organization
+            I know an Organization
           </label>
         </div>
         <div className="form-check my-5">

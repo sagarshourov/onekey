@@ -26,7 +26,7 @@ const Trip = (props) => {
 
   return (
     <>
-      <h2 className="mb-5 text-xl font-bold"> Trip details </h2>
+      <h2 className="mb-5 text-xl font-bold"> Trip Details </h2>
       <hr className="my-5 sa-border-primary" />
 
       <div className="mt-5">

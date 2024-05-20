@@ -232,7 +232,6 @@ const Main = (props) => {
     hasSameAddressAsMailingOrHome: false,
     travelCountries: [
       { id: Date.now(), country: null, jobAddress: { country: "" } },
-      { id: Date.now(), country: null, jobAddress: { country: "" } },
     ],
     firstName: "",
     lastName: "",

@@ -56,7 +56,7 @@
             @if($data['motherInfo'][0]['hasBirthDate']==1)
             <tr>
                 <td>What is your mather's birth date?*</td>
-                <td>{{dateFormat($data['fatherInfo_birthDate'])}}</td>
+                <td>{{dateFormat($data['motherInfo_birthDate'])}}</td>
             </tr>
             @endif
             <tr>

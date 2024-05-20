@@ -101,7 +101,7 @@ const FirstStep = (props) => {
             register={props.register}
             formData={formData}
             isVisible={true}
-            label="Have you ever gone by other names, such as maiden, religious, professional, or alias names"
+            label="Have you ever gone by other names, such as maiden, religious, professional, or alias names ?"
             fullWidth={true}
           />
         </div>

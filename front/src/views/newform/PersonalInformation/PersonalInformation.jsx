@@ -80,7 +80,7 @@ const PersonalInformation = (props) => {
         register={props.register}
         type="text"
         errors={props.errors}
-        label=" U.S. Social Security area number"
+        label=" U.S. Social Security Number"
         isVisible={true}
         disabled={formData.USSocialSecurityAreaNumber_check}
         condition={true}
