@@ -10,6 +10,7 @@ import InputTextArea from "../elements/InputTextArea";
 import PreviousJob from "./PreviousJob";
 import InlineSwitch from "../elements/InlineSwitch";
 import Institution from "./Institution";
+import AddLanguage from "./AddLanguage";
 
 const Education = (props) => {
   const [date, setDate] = useState("");
