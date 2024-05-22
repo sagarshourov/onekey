@@ -19,3 +19,18 @@ Route::get('/', function () {
 
 
 Route::get('form/{id}', 'App\Http\Controllers\Admin\FormController@createPdf');
+
+Route::get('clear', function () {
+
+	\Artisan::call('config:clear');
+
+	\Artisan::call('cache:clear');
+
+	\Artisan::call('config:cache');
+
+	\Artisan::call('view:clear');
+
+	\Artisan::call('route:clear');
+
+	dd('cleared');
+});

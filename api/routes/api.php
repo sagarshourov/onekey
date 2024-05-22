@@ -212,7 +212,7 @@ Route::group(["prefix" => "send_mail", "name" => "send_mail."], function () {
     Route::post('stage_notes', 'App\Http\Controllers\MailController@stage_notes');
     Route::post('form_submit', 'App\Http\Controllers\MailController@form_submit');
     
-    Route::get('ds_form_submit', 'App\Http\Controllers\MailController@ds_form_submit');
+    Route::post('ds_form_submit', 'App\Http\Controllers\MailController@ds_form_submit');
 
     
 
