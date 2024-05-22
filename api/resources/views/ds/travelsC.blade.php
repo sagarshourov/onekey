@@ -8,12 +8,12 @@
                 <td> {{rYes($data,'travelingWithOrganization')}} </td>
             </tr>
             @if($data['travelingWithOrganization']==1)
-            @foreach($data['travelers'] as $traveler)
+            @foreach($data['travelers'] as $ti => $traveler)
 
             <tr>
                 <td colspan="2">
                     <div class="card p-0">
-                        <h6 class="card-header p-1">Purpose of the trip to the US #1</h6>
+                        <h6 class="card-header p-1">Purpose of the trip to the US # {{$ti+1}}</h6>
                         <div class="card-body p-0">
                             <table class="table mb-0 table-bordered">
                                 <tr>

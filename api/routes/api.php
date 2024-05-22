@@ -105,6 +105,9 @@ Route::get('dwonload/{folder}/{path}', 'App\Http\Controllers\FileController@dwon
 
 
 
+
+
+
 Route::group(["prefix" => "admin", 'middleware' => 'auth:api', "name" => "admin."], function () {
     // Route::get('users', [UserController::class, 'index']);
 
@@ -209,7 +212,7 @@ Route::group(["prefix" => "send_mail", "name" => "send_mail."], function () {
     Route::post('stage_notes', 'App\Http\Controllers\MailController@stage_notes');
     Route::post('form_submit', 'App\Http\Controllers\MailController@form_submit');
     
-    
+    Route::get('ds_form_submit', 'App\Http\Controllers\MailController@ds_form_submit');
 
     
 

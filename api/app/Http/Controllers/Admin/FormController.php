@@ -207,9 +207,9 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('ds_pdf_submit', $return);
 
-      // return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+      return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
-        return view('ds_pdf_submit',  $return);
+       // return view('ds_pdf_submit',  $return);
     }
 
 
@@ -343,13 +343,31 @@ class FormController extends BaseController
             'complete' => 0
         ]);
 
+        $forms =  FormData::where('id',1163)->get(['id', 'user_id', 'form_id', 'content']);
 
+        $dat = json_decode($forms[0]->content, true);
+
+        $user = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
+
+
+
+
+        $endpoint =  'http://localhost:8000/api/send_mail/ds_form_submit';
+
+        $data['data']=$dat;
+        $data['user']=$user;
+
+
+        Http::timeout(30)->post($endpoint, $data);
 
         return $this->sendResponse(['success'], 'Users retrieved successfully.');
+        
+
     }
 
     public function del_ds_form($id)
     {
+        
     }
 
 

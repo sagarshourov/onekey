@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\FormData;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class MailController extends Controller
 {
@@ -127,16 +128,16 @@ class MailController extends Controller
 
         $data =  $request->data;
         $con =   $request->con;
-        
 
-       // return $request;
-        
 
-       $title = ucfirst($user['first_name']).' has submitted the ' . $request->title;
+        // return $request;
+
+
+        $title = ucfirst($user['first_name']) . ' has submitted the ' . $request->title;
 
         $assignAmin = $request->assignAmin;
 
-        $em = Mail::send('email.data_form_submit', ['user' => $user, 'title' => $title, 'data' => $data , 'con'=> $con], function ($message) use ($title, $assignAmin) {
+        $em = Mail::send('email.data_form_submit', ['user' => $user, 'title' => $title, 'data' => $data, 'con' => $con], function ($message) use ($title, $assignAmin) {
 
             $subject = $title . ' has been Submitted';
 
@@ -148,22 +149,23 @@ class MailController extends Controller
     }
     public function ds_form_submit(Request $request)
     {
+        $jsContent = file_get_contents(public_path('data.json'));
+
+        $selectData = json_decode($jsContent, true);
 
         $user =  $request->user;
+
         $data =  $request->data;
-        $con =   $request->con;
 
-       // return $request;
-    
-       $title = ucfirst($user['first_name']).' has submitted the ' . $request->title;
+        $title = 'sagar';
 
-        $assignAmin = $request->assignAmin;
+        $assignAmin = 'onyroy@gmail.com';
 
-        $em = Mail::send('email.ds_form_submit', ['user' => $user, 'title' => $title, 'data' => $data , 'con'=> $con], function ($message) use ($title, $assignAmin) {
+        $em = Mail::send('ds_pdf_submit', ['user' => $user, 'title' => $title, 'data' => $data, 'selectData' => $selectData], function ($message) use ($title, $assignAmin) {
 
             $subject = $title . ' has been Submitted';
             $message->to($assignAmin, 'Admin')->subject($subject);
-            $message->from("onyroy@gmail.com", 'Admin');
+            $message->from("info@onekeyclient.us", 'Admin');
         });
 
         return $em;
