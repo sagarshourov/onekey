@@ -352,7 +352,8 @@ class FormController extends BaseController
 
 
 
-        $endpoint =  'http://localhost:8000/api/send_mail/ds_form_submit';
+      //  $endpoint =  'http://localhost:8000/api/send_mail/ds_form_submit';
+        $endpoint = config('app.mail_url') . '/ds_form_submit';
 
         $data['data']=$dat;
         $data['user']=$user;
