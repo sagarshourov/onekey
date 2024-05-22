@@ -180,10 +180,10 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('data_pdf_submit', $return);
 
-      //  return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
+        //  return $pdf->download($form_con->title . "-" . $return['user']->first_name . '.pdf');
 
-         return view('data_pdf_submit', $return);
-         return $this->sendResponse($return, 'Form by id successfully.');
+        return view('data_pdf_submit', $return);
+        return $this->sendResponse($return, 'Form by id successfully.');
     }
 
     public function createDsPDF($formId)
@@ -207,9 +207,9 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('ds_pdf_submit', $return);
 
-      return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+        return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
-       // return view('ds_pdf_submit',  $return);
+        // return view('ds_pdf_submit',  $return);
     }
 
 
@@ -333,42 +333,52 @@ class FormController extends BaseController
     {
         $input = $request->all();
         $user_id = Auth::id();
-        FormData::updateOrCreate([
+
+        $complete = 0;
+        if (count($input['stepsCompleted']) == 11) {
+            $complete = 1;
+        }
+
+
+
+
+
+
+
+        $ins = FormData::updateOrCreate([
             'user_id'   =>   $user_id,
             'form_id' => $input['form_id']
         ], [
             'user_id'   => $user_id,
             'content' => json_encode($input),
             'form_id' => $input['form_id'],
-            'complete' => 0
+            'complete' => $complete
         ]);
 
-        $forms =  FormData::where('id', (int) $input['form_id'])->get(['id', 'user_id', 'form_id', 'content']);
-
-        $dat = json_decode($forms[0]->content, true);
-
-        $user = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
 
 
+        if (count($input['stepsCompleted']) == 12 && $input['currentStep'] == 11) {
 
+            $assignAmin = $this->assignAdminEmail($user_id);
+            $forms =  FormData::where('id', (int) $ins->id)->get(['id', 'user_id', 'form_id', 'content']);
+            $dat = json_decode($forms[0]->content, true);
+            $user = User::where('id', $forms[0]->user_id)->first(['first_name', 'email']);
 
-      //  $endpoint =  'http://localhost:8000/api/send_mail/ds_form_submit';
-        $endpoint = config('app.mail_url') . '/ds_form_submit';
+            //  $endpoint =  'http://localhost:8000/api/send_mail/ds_form_submit';
+            $endpoint = config('app.mail_url') . '/ds_form_submit';
+            $data['data'] = $dat;
+            $data['user'] = $user;
+            $data['assignAmin'] = $assignAmin;
+            
 
-        $data['data']=$dat;
-        $data['user']=$user;
+            $re =  Http::timeout(30)->post($endpoint, $data);
+        }
 
-
-         $re =  Http::timeout(30)->post($endpoint, $data);
-
-        return $this->sendResponse(['email'], $re);
-        
-
+        return $this->sendResponse(['success'], 'Saved successfully.');
     }
 
     public function del_ds_form($id)
     {
-        
     }
 
 

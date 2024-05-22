@@ -157,13 +157,14 @@ class MailController extends Controller
 
         $data =  $request->data;
 
-        $title = 'sagar';
+    
+        $title = ucfirst($user['first_name']) . ' has submitted the DS-160 form';
 
-        $assignAmin = 'onyroy@gmail.com';
+        $assignAmin = $request->assignAmin;
 
         $em = Mail::send('ds_pdf_submit', ['user' => $user, 'title' => $title, 'data' => $data, 'selectData' => $selectData], function ($message) use ($title, $assignAmin) {
 
-            $subject = $title . ' has been Submitted';
+            $subject = $title ;
             $message->to($assignAmin, 'Admin')->subject($subject);
             $message->from("info@onekeyclient.us", 'Admin');
         });
