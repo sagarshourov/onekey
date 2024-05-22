@@ -343,7 +343,7 @@ class FormController extends BaseController
             'complete' => 0
         ]);
 
-        $forms =  FormData::where('id',1163)->get(['id', 'user_id', 'form_id', 'content']);
+        $forms =  FormData::where('id', (int) $input['form_id'])->get(['id', 'user_id', 'form_id', 'content']);
 
         $dat = json_decode($forms[0]->content, true);
 
@@ -359,9 +359,9 @@ class FormController extends BaseController
         $data['user']=$user;
 
 
-        Http::timeout(30)->post($endpoint, $data);
+         $re =  Http::timeout(30)->post($endpoint, $data);
 
-        return $this->sendResponse(['success'], 'Users retrieved successfully.');
+        return $this->sendResponse(['email'], $re);
         
 
     }
