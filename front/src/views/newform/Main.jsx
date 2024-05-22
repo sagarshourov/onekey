@@ -121,12 +121,6 @@ const Main = (props) => {
         lastName: "",
         relation: "",
       },
-      {
-        id: Date.now(),
-        lastName: "",
-        firstName: "",
-        relation: "",
-      },
     ],
     previousVisit: [
       {
