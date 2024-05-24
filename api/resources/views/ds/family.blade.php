@@ -93,7 +93,7 @@
                                         </tr>
                                         <tr>
                                             <td>Relationship to You</td>
-                                            <td> {{ getLabelByValue($selectData,'relation', $immRelative,'relation') }}</td>
+                                            <td> {{$immRelative['relation']}}</td>
                                         </tr>
                                         <tr>
                                             <td>Relative's status</td>
@@ -107,8 +107,7 @@
                 @endforeach
             @endif
 
-            
-            @if(array_search($data['maritalStatus'], array("MARRIED", "DIVORCED", "WIDOWED") ))
+            @if(in_array($data['maritalStatus'], array("MARRIED", "DIVORCED", "WIDOWED") ))
             <tr>
                 <td colspan="2">
                     <div class="card p-0">

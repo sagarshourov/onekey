@@ -60,7 +60,7 @@
                                 <table class="table mb-0 table-bordered">
                                     <tr>
                                         <td> <b> Other Permanent Resident Country/Region*</b></td>
-                                        <td> {{ getLabelByValue($selectData,'countries', $data,'country') }}</td>
+                                        <td> {{ getLabelByValue($selectData,'countries', $resident,'country') }}</td>
                                     </tr>
 
                                 </table>

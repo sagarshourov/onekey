@@ -209,7 +209,7 @@ const PreviousJob = (props) => {
                   <InlineInputChildText
                     setFormData={setFormData}
                     required={true}
-                    title={"jobAddress.state"}
+                    title={"supervisor_last_name"}
                     helpText=""
                     register={props.register}
                     type="text"
@@ -225,7 +225,7 @@ const PreviousJob = (props) => {
                   <InlineInputChildText
                     setFormData={setFormData}
                     required={true}
-                    title={"state"}
+                    title={"supervisor_first_name"}
                     helpText=""
                     register={props.register}
                     type="text"
@@ -253,7 +253,7 @@ const PreviousJob = (props) => {
                     index={index}
                   />
                   <InlineInputChildDate
-                    title={"jobStartDate"}
+                    title={"jobEndDate"}
                     helpText=""
                     register={props.register}
                     errors={props.errors}
@@ -266,7 +266,7 @@ const PreviousJob = (props) => {
                     index={index}
                   />
 
-                  <InputTextArea
+                  <InlineInputChildText
                     title="jobDescribe"
                     helpText=""
                     register={props.register}
@@ -277,6 +277,7 @@ const PreviousJob = (props) => {
                     condition={false}
                     parent={"previousJobs"}
                     index={index}
+                    formData={formData}
                   />
                 </div>
                 <div className="flex gap-5">

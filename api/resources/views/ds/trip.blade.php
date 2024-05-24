@@ -67,6 +67,7 @@
                 <td> Departure Flight </td>
                 <td>{{$data['travelPlan']['departureFlight']}}</td>
             </tr>
+            @endif
             <tr>
                 <td> Who is paying for the trip?* </td>
                 <td>{{ getLabelByValue($selectData,'personPayingForTrip', $data,'personPayingForTrip') }}</td>
@@ -101,22 +102,22 @@
             @endif
 
 
-            @endif
+           
 
 
 
 
             <tr>
                 <td>
-                    Person paying for trip has same address
+                  <b>  Person paying for trip has same address </b>
 
                 </td>
                 <td>
-                    {{ rYes($data,'hasSameAddressAsMailingOrHome')}}
+                    <b> {{ rYes($data,'hasSameAddressAsMailingOrHome')}} </b>
                 </td>
 
             </tr>
-            @if($data['hasSameAddressAsMailingOrHome'] == 1)
+            @if($data['hasSameAddressAsMailingOrHome'] == 0)
             <tr>
                 <td>
                     Street address (Line 1 )*

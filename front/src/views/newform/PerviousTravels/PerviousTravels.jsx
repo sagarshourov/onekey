@@ -168,7 +168,7 @@ const PerviousTravels = (props) => {
       <InlineInputText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.year"}
+        title={"lostVisa.year"}
         helpText="  "
         register={register}
         type="text"
@@ -182,7 +182,7 @@ const PerviousTravels = (props) => {
       <InlineInputText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.explain"}
+        title={"lostVisa.explain"}
         helpText="  "
         register={register}
         type="text"
@@ -287,7 +287,7 @@ const PerviousTravels = (props) => {
       <InlineInputText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.explain"}
+        title={"hasAnyoneEverFilledOnBehalfExplain"}
         helpText="  "
         register={register}
         type="text"

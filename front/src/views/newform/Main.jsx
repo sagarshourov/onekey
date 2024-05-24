@@ -133,16 +133,7 @@ const Main = (props) => {
         stayLengthValue: 0,
         stayLengthType: "",
       },
-      {
-        id: Date.now(),
-        arrivalDate: {
-          dayIndex: 0,
-          monthIndex: 0,
-          yearIndex: 0,
-        },
-        stayLengthValue: 0,
-        stayLengthType: "",
-      },
+      
     ],
     USDriverLicenses: [
       {
@@ -199,12 +190,23 @@ const Main = (props) => {
         country: "",
         jobPhoneNumber: "",
         title: "",
-        jobAddress: { state: "" },
+        supervisor_first_name:"",
+        supervisor_last_name : "",
+        jobDescribe:"",
+
         jobStartDate: {
           dayIndex: 0,
           monthIndex: 0,
           yearIndex: 0,
         },
+        jobEndDate: {
+          dayIndex: 0,
+          monthIndex: 0,
+          yearIndex: 0,
+        },
+
+
+        
       },
     ],
     educationalInstitution: [
@@ -220,6 +222,7 @@ const Main = (props) => {
         jobPhoneNumber: "",
         startDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
         endDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+        jobDescribe : ""
       },
     ],
     hasTraveledWithinFiveYear: false,
@@ -245,6 +248,7 @@ const Main = (props) => {
     USTaxpayerIdNumber_check: false,
     reasonForTripToUSSelect: { value: "" },
     hasTravelPlansInput: "",
+    hasAnyoneEverFilledOnBehalfExplain : "",
     addInfo: {
       lastName: "",
       firstName: "",
@@ -300,6 +304,11 @@ const Main = (props) => {
       explain: "",
       visaCancelledExplain: "",
     },
+    lostVisa: {
+      year: 0,
+      explain: "",
+    },
+
     issueDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
     expirationDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
     visaNumber_checkbox: false,

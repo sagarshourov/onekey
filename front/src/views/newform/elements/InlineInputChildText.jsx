@@ -47,7 +47,7 @@ const InlineInputChildText = (props) => {
               placeholder={props.label}
               name={`${parent}.${index}.${props.title}`}
               defaultValue={
-                formData[parent] && formData[parent][index][props.title]
+                formData[parent] && formData[parent][index] &&  formData[parent][index][props.title]
               }
               className={classnames({
                 "form-control": true,

@@ -182,7 +182,7 @@ if (!function_exists("getLabelByValue")) {
 
                 <tr>
                     <td><b> Gender </b></td>
-                    <td>{{ $data['gender'] }}</td>
+                    <td> @if($data['gender']==1) Male @else Female  @endif</td>
                 </tr>
                 <tr>
                     <td> <b> Marital Status </b></td>
