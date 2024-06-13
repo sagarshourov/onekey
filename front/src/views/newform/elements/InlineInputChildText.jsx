@@ -24,7 +24,7 @@ const InlineInputChildText = (props) => {
   return (
     <>
       {props.isVisible && (
-        <div className="mt-5 gap-5 flex-none lg:flex lg:flex-row">
+        <div className="mt-5 w-full gap-5 flex-none lg:flex lg:flex-row">
           {props.label && (
             <label
               htmlFor="regular-form-3"

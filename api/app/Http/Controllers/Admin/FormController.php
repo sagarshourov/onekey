@@ -207,9 +207,9 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('ds_pdf_submit', $return);
 
-        return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+     //   return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
-        // return view('ds_pdf_submit',  $return);
+     return view('ds_pdf_submit',  $return);
     }
 
 

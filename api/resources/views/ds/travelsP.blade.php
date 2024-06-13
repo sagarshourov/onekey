@@ -154,6 +154,16 @@
 
                 <td> {{rYes($data,'hadVisaLost')}} </td>
             </tr>
+            @if($data['hadVisaLost']==1)
+            <tr>
+                <td><small>Year</small></td>
+                <td><small>{{$data['lostVisa']['year']}}</small></td>
+            </tr>
+            <tr>
+                <td><small>Explain </small></td>
+                <td><small>{{$data['lostVisa']['explain']}}</small></td>
+            </tr>
+            @endif
             <tr>
                 <td>
                     <b> Has your U.S. Visa ever been cancelled or revoked?</b>
@@ -161,6 +171,13 @@
 
                 <td> {{rYes($data,'hasVisaCancelled')}} </td>
             </tr>
+            @if($data['hasVisaCancelled']==1)
+            
+                <tr>
+                    <td><small>Explain </small></td>
+                    <td><small>{{$data['lastVisa']['visaCancelledExplain']}}</small></td>
+                </tr>
+            @endif
             <tr>
                 <td>
                     <b> The Visa that you're renewing has "Clearance received" or "212(a) waiver of ineligibility" annotated on the visa</b>
@@ -168,7 +185,7 @@
 
                 <td> {{rYes($data,'clearanceReceived')}} </td>
             </tr>
-
+            
             <tr>
                 <td>
                     <b> Have you ever been denied a U.S. visa, entry to the United States, or withdrawn your application for entry at the port of entry?</b>
@@ -178,6 +195,16 @@
                     {{rYes($data,'hasBeenRefusedForVisa')}}
                 </td>
             </tr>
+            @if($data['hasBeenRefusedForVisa']==1)
+            <tr>
+                    <td><small>Year </small></td>
+                    <td><small>{{$data['lastVisa']['year']}}</small></td>
+                </tr>
+                <tr>
+                    <td><small>Explain </small></td>
+                    <td><small>{{$data['lastVisa']['explain']}}</small></td>
+                </tr>
+            @endif
             <tr>
                 <td>
                     <b> Has anyone filed an immigrant petition for you with the United States Citizenship and Immigration Service?</b>
@@ -187,6 +214,13 @@
                     {{rYes($data,'hasAnyoneEverFilledOnBehalf')}}
                 </td>
             </tr>
+            @if($data['hasAnyoneEverFilledOnBehalf']==1)
+            
+                <tr>
+                    <td><small>Explain </small></td>
+                    <td><small>{{$data['hasAnyoneEverFilledOnBehalfExplain']}}</small></td>
+                </tr>
+            @endif
         </table>
 
     </div>

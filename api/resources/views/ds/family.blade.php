@@ -165,39 +165,7 @@
         @endif
 
 
-            <tr>
-                <td> <b> Do you belong to a clan or tribe? </b></td>
-                <td>{{rYes($data,'belongsToTribe')}}</td>
-            </tr>
-            @if($data['belongsToTribe']==1)
-            <tr>
-                <td> <b>  Clan or Tribe Name*</b></td>
-                <td>{{ $data['tribeName'] }}</td>
-            </tr>
-            @endif
-            <tr>
-                <td> <b> Languages known*</b></td>
-                <td>{{$data['speakingLanguagesInput']}}</td>
-            </tr>
-            <tr>
-                <td> <b> Other languages you speak - Not listed above</b></td>
-
-                <td>{{rYes($data,'hasOtherSpeakingLanguages')}}</td>
-
-            </tr>
-            @if($data['hasOtherSpeakingLanguages']==1)
-                @foreach($data['additionalLanguage'] as $key => $language)
-                <tr>
-                    <td> <b> {{$key+1}} .Additional Language</b></td>
-                    <td>{{ $language['otherSpeakingLanguages'] }}</td>
-                </tr>
-                @endforeach
-            @endif
-            <tr>
-                <td> <b> Have you worked for any organizations, such as professional, social, or charitable ones?</b></td>
-
-                <td>{{rYes($data,'hasWorkedToOrganization')}}</td>
-            </tr>
+            
 
 
 

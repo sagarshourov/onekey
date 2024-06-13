@@ -1,8 +1,59 @@
 <div style="margin-top: 100px; margin-bottom: 20px;  border: 1px solid #eee; box-shadow: 0 1px 1px rgba(0,0,0,.05);  width : 100%; clear : both; ">
     <div style="color: #333; background-color: #f5f5f5; border-color: #ddd; padding: 5px 10px; border-bottom: 1px solid transparent;"> Employment / Education </div>
     <div style="padding: 8px; overflow : auto;  ">
+   
+
+
+
 
         <table class="table table-bordered">
+        <tr>
+                <td> <b> Do you belong to a clan or tribe? </b></td>
+                <td>{{rYes($data,'belongsToTribe')}}</td>
+            </tr>
+            @if($data['belongsToTribe']==1)
+            <tr>
+                <td> <b>  Clan or Tribe Name*</b></td>
+                <td>{{ $data['tribeName'] }}</td>
+            </tr>
+            @endif
+            <tr>
+                <td> <b> Languages known*</b></td>
+         
+                <td>{{getLabelByValue($selectData,'languageOptions', $data, 'speakingLanguagesInput')}}</td>
+            </tr>
+            <tr>
+                <td> <b> Other languages you speak - Not listed above</b></td>
+
+                <td>{{rYes($data,'hasOtherSpeakingLanguages')}}</td>
+
+            </tr>
+            @if($data['hasOtherSpeakingLanguages']==1)
+                @foreach($data['additionalLanguage'] as $key => $language)
+                <tr>
+                    <td> <b> {{$key+1}} .Additional Language</b></td>
+                    <td>  {{$language['otherSpeakingLanguages']}} </td>
+                </tr>
+                @endforeach
+            @endif
+            <tr>
+                <td> <b> Have you worked for any organizations, such as professional, social, or charitable ones?</b></td>
+
+                <td>{{rYes($data,'hasWorkedToOrganization')}}</td>
+            </tr>
+
+            @if($data['hasWorkedToOrganization']==1)
+           
+                <tr>
+                    <td> <b> Organization Name</b></td>
+                    <td>{{ $data['organizations'] }}</td>
+                </tr>
+         
+            @endif
+
+
+
+
             <tr>
                 <td> <b> Primary Occupation*</b></td>
                 <td>{{$data['jobTypeInput']}}</td>
@@ -94,7 +145,7 @@
                                 </tr>
                                 <tr>
                                     <td>Country/Region</td>
-                                    <td> getLabelByValue($selectData,'countries', $jobs,'country')</td>
+                                    <td> {{getLabelByValue($selectData,'countries', $jobs,'country')}}</td>
                                 </tr>
                                 <tr>
                                     <td>Telephone number</td>
@@ -187,7 +238,7 @@
                                 </tr>
                                 <tr>
                                     <td>Country/Region</td>
-                                    <td> getLabelByValue($selectData,'countries', $inst,'country')</td>
+                                    <td>{{ getLabelByValue($selectData,'countries', $inst,'country')}}</td>
                                 </tr>
                                 <tr>
                                     <td>Course of Study</td>

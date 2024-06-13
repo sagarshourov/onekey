@@ -66,7 +66,7 @@ const PreviousVisit = (props) => {
                   parent="previousVisit"
                   index={index}
                 />
-                <div className="mt-5 gap-5 flex-none lg:flex lg:flex-row">
+                <div className=" gap-5 flex-none lg:flex lg:flex-row">
                   <label
                     htmlFor="regular-form-3"
                     className="form-label  basis-4/12 sa-label"
@@ -97,8 +97,9 @@ const PreviousVisit = (props) => {
                     </div>
                     <div className="basis-6/12">
                       <select
+
                         {...register(`previousVisit.${index}.stayLengthType`)}
-                        className="form-control "
+                        className="form-control mt-5"
                         name={`previousVisit.${index}.stayLengthType`}
                         defaultValue={
                           formData[index] ? formData[index]?.stayLengthType : ""

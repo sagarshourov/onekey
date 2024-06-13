@@ -53,7 +53,7 @@ const Education = (props) => {
         register={props.register}
         errors={props.errors}
         title={"speakingLanguagesInput"}
-        data={data.languageOptions}
+        data={dat.languageOptions}
         label="Languages known"
         inline={true}
       />
