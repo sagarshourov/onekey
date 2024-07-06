@@ -37,7 +37,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   className: "",
-  value: {},
+  value: [],
   readOnly: false,
   changeFunc: () => {},
   name: "",

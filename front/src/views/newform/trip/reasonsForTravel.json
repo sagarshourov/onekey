@@ -1,5 +1,6 @@
 {
   "reasons_for_travel": [
+    { "value": "", "label": "" },
     { "value": "vacation", "label": "Vacation or tourism" },
     {
       "value": "business_meeting",
@@ -46,6 +47,7 @@
   ],
 
   "mainPurpose": [
+    { "label": "", "value": "" },
     { "label": "TEMP. BUSINESS PLEASURE VISITOR (B)", "value": "0" },
     { "label": "ALIEN IN TRANSIT (C)", "value": "1" },
     { "label": "CREWMEMBER (D)", "value": "2" },

@@ -46,7 +46,7 @@ const Purposes = (props) => {
   };
 
   const handelSelect = (e, parent, index, name) => {
-    console.log("u", formData);
+  //  console.log("u", formData);
     const updatedOptions = [...option];
     updatedOptions[index][name] = e.target.value;
     setOption(updatedOptions);

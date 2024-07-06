@@ -37,6 +37,7 @@ const InlineChildSwitch = (props) => {
                 formData[parent][index][props.title]
               } sa-toggle`}
               tabIndex="0"
+              title={props.title}
             >
               <div className="bubble"></div>
               <div

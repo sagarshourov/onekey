@@ -6,14 +6,14 @@ const PersonalInformation = (props) => {
     props;
   return (
     <>
-      <h2 className="mb-5 text-xl font-bold">
+      <h2 className="mb-5 text-xl font-bolder">
         {" "}
         Additional Point of Contact Information{" "}
       </h2>
 
       <hr className="my-5 sa-border-primary" />
 
-      <h5 className="mb-5 text font-bold">
+      <h5 className="mb-5  font-extrabold text-red-500">
         List at least two contacts in your country of residence who can verify
         the information that you have provided on this application. Do not list
         immediate family members or other relatives.

@@ -28,6 +28,8 @@ const InlineInputChildDate = (props) => {
     }
     return years;
   };
+
+
   return (
     <>
       {isVisible && (
@@ -41,57 +43,92 @@ const InlineInputChildDate = (props) => {
             className="form-label basis-4/12  sa-label"
           >
             {label}
-            <span className="text-danger pl-1">*</span>
+            {props.required && <span className="text-danger pl-1">*</span>}
           </label>
           <div className={condition ? "basis-6/12" : "basis-8/12"}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <select
-                {...register(`${parent}.${index}.${props.title}.dayIndex`)}
-                className="form-select w-full "
-                aria-label=".form-select example"
-                name={`${parent}.${index}.${props.title}.dayIndex`}
-                disabled={disabled}
-              >
-                <option>Select...</option>
-                {data.days.map((data, index) => (
-                  <option key={index} value={data.value}>
-                    {data.label}
-                  </option>
-                ))}
-              </select>
-              <select
-                className="form-select  w-full "
-                aria-label=".form-select-lg example"
-                disabled={disabled}
-                {...register(`${parent}.${index}.${props.title}.monthIndex`)}
-                name={`${parent}.${index}.${props.title}.monthIndex`}
-              >
-                <option>Select...</option>
-                {data.months.map((data, index) => (
-                  <option key={index} value={data.value}>
-                    {data.label}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                {...register(`${parent}.${index}.${props.title}.yearIndex`)}
-                className="form-select  w-full "
-                aria-label=".form-select-lg example"
-                disabled={disabled}
-                name={`${parent}.${index}.${props.title}.yearIndex`}
-              >
-                <option>Select...</option>
-                {generateYearList(1970).map((data, index) => (
-                  <option key={index} value={data}>
-                    {data}
-                  </option>
-                ))}
-              </select>
+              <div>
+                <select
+                  {...register(`${parent}.${index}.${props.title}.0.dayIndex`)}
+                  className="form-select w-full "
+                  aria-label=".form-select example"
+                  name={`${parent}.${index}.${props.title}.0.dayIndex`}
+                  disabled={disabled}
+                >
+                  <option value="">Select...</option>
+                  {data.days.map((data, index) => (
+                    <option key={index} value={data.value}>
+                      {data.label}
+                    </option>
+                  ))}
+                </select>
+                {errors[parent] &&
+                  errors[parent][index] &&
+                  errors[parent][index][title] &&
+                  errors[parent][index][title][0] &&
+                  errors[parent][index][title][0].dayIndex &&
+                  (
+                  <div className="text-danger mt-2">
+                    {errors[parent][index][title][0].dayIndex.message}
+                  </div>
+                )}
+              </div>
+              <div>
+                <select
+                  className="form-select  w-full "
+                  aria-label=".form-select-lg example"
+                  disabled={disabled}
+                  {...register(
+                    `${parent}.${index}.${props.title}.0.monthIndex`
+                  )}
+                  name={`${parent}.${index}.${props.title}.0.monthIndex`}
+                >
+                  <option value="">Select...</option>
+                  {data.months.map((data, index) => (
+                    <option key={index} value={data.value}>
+                      {data.label}
+                    </option>
+                  ))}
+                </select>
+                {errors[parent] &&
+                  errors[parent][index] &&
+                  errors[parent][index][title] &&
+                  errors[parent][index][title][0] &&
+                  errors[parent][index][title][0].monthIndex &&
+                  (
+                    <div className="text-danger mt-2">
+                      {errors[parent][index][title][0].monthIndex.message}
+                    </div>
+                  )}
+              </div>
+              <div>
+                <select
+                  {...register(`${parent}.${index}.${props.title}.0.yearIndex`)}
+                  className="form-select  w-full "
+                  aria-label=".form-select-lg example"
+                  disabled={disabled}
+                  name={`${parent}.${index}.${props.title}.0.yearIndex`}
+                >
+                  <option value="">Select...</option>
+                  {generateYearList(1950).map((data, index) => (
+                    <option key={index} value={data}>
+                      {data}
+                    </option>
+                  ))}
+                </select>
+                {errors[parent] &&
+                  errors[parent][index] &&
+                  errors[parent][index][title] &&
+                  errors[parent][index][title][0] &&
+                  errors[parent][index][title][0].yearIndex &&
+                  (
+                  <div className="text-danger mt-2">
+                    {errors[parent][index][title][0].yearIndex.message}
+                  </div>
+                )}
+              </div>
             </div>
-            {errors[title] && (
-              <div className="text-danger mt-2">{errors[title].message}</div>
-            )}
+
             <div className="form-help">{helpText}</div>
           </div>
 

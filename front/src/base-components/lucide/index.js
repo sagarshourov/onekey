@@ -18,14 +18,14 @@ function Lucide(props) {
   }
 }
 
-Lucide.propTypes = {
-  icon: PropTypes.string,
-  className: PropTypes.string,
-};
+// Lucide.propTypes = {
+//   icon: PropTypes.string,
+//   className: PropTypes.string,
+// };
 
-Lucide.defaultProps = {
-  icon: "",
-  className: "",
-};
+// Lucide.defaultProps = {
+//   icon: "",
+//   className: "",
+// };
 
 export default Lucide;

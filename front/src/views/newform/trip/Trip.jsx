@@ -36,7 +36,7 @@ const Trip = (props) => {
           isVisible={true}
           register={register}
           errors={errors}
-          title={"reasonForTripToUSSelect.value"}
+          title={"reasonForTripToUSSelect"}
           data={reasonsForTravelData.reasons_for_travel}
           label=" Reason for the Trip"
           inline={true}
@@ -107,6 +107,7 @@ const Trip = (props) => {
         isVisible={formData.hasTravelPlansInput == "specific_plans"}
         disabled={false}
         inline={true}
+         endYear="current"
       />
 
       <InlineInputText
@@ -149,6 +150,7 @@ const Trip = (props) => {
         isVisible={formData.hasTravelPlansInput == "specific_plans"}
         disabled={false}
         inline={true}
+         endYear="current"
       />
       <InlineInputText
         setFormData={setFormData}

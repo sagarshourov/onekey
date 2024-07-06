@@ -28,14 +28,16 @@ const PersonalInformation = (props) => {
         />
       </div>
 
-      <Nationalities
-        register={props.register}
-        errors={props.errors}
-        isVisible={formData.hasMultipleNationalities}
-        handleCheckboxChange={handleCheckboxChange}
-        formData={formData}
-        setFormData={setFormData}
-      />
+      {formData.hasMultipleNationalities && (
+        <Nationalities
+          register={props.register}
+          errors={props.errors}
+          isVisible={true}
+          handleCheckboxChange={handleCheckboxChange}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
       <InlineSwitch
         setFormData={setFormData}
         isVisible={true}

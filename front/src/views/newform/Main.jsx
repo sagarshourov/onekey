@@ -48,7 +48,7 @@ import { getAdmin } from "../../configuration";
 const Main = (props) => {
   const login = useRecoilValue(loginState);
 
-  console.log("login", login);
+  // console.log("login", login);
 
   let { id } = useParams();
   const data = useRecoilValueLoadable(getDsState([login.userId, id]));
@@ -68,22 +68,20 @@ const Main = (props) => {
     hasMultiplePermanentResidents: false,
     lostpassports: [
       {
-        id: Date.now(),
         passportNumber: null,
         passportIssueCountryInput: null,
-        Explain: null,
+        explain: null,
         passportNumber_check: false,
       },
     ],
     nationalities: [
       {
-        id: Date.now(),
         country: "",
-        passportNumber: 0,
+        passportNumber: "",
         hasPassportNumber: false,
       },
     ],
-    residents: [{ id: Date.now(), permanentResidents: null, country: "" }],
+    residents: [{ permanentResidents: null, country: "" }],
     hasSameMailingAddressAsHome: false,
     hasAdditionalPhoneNumbers: false,
     hasAdditionalEmails: false,
@@ -100,7 +98,6 @@ const Main = (props) => {
     hasImmediateRelativesInUS: false,
     fatherInfo: [
       {
-        id: Date.now(),
         hasBirthDate: false,
         isInUS: false,
         status: "",
@@ -108,7 +105,6 @@ const Main = (props) => {
     ],
     motherInfo: [
       {
-        id: Date.now(),
         hasBirthDate: false,
         isInUS: false,
         status: "",
@@ -116,7 +112,6 @@ const Main = (props) => {
     ],
     travelers: [
       {
-        id: Date.now(),
         firstName: "",
         lastName: "",
         relation: "",
@@ -124,51 +119,52 @@ const Main = (props) => {
     ],
     previousVisit: [
       {
-        id: Date.now(),
-        arrivalDate: {
-          dayIndex: 0,
-          monthIndex: 0,
-          yearIndex: 0,
-        },
-        stayLengthValue: 0,
+        arrivalDate: [
+          {
+            dayIndex: 0,
+            monthIndex: 0,
+            yearIndex: 0,
+          },
+        ],
+        stayLengthValue: "",
         stayLengthType: "",
       },
-      
     ],
     USDriverLicenses: [
       {
         id: 0,
-        licenseId: 0,
+        licenseId: "",
         state: null,
         licenseId_checkbox: false,
       },
     ],
-    otherPayerInfo: {
-      name: "",
-      number: "",
-      relation: "",
-      address: {
-        email: "",
-        streetAddress2: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        streetAddress1: "",
+    otherPayerInfo: [
+      {
+        name: "",
+        number: "",
+        relation: "",
+        address: {
+          email: "",
+          streetAddress2: "",
+          city: "",
+          state: "",
+          zipcode: "",
+          streetAddress1: "",
+          country: "",
+        },
         country: "",
       },
-      country: "",
-    },
+    ],
     hasBeenPreviouslyEmployed: false,
     hasAttendedEducationalInstitutions: false,
     personPayingForTrip: "",
-    additionalPhones: [{ id: Date.now(), phoneNumber: null }],
-    additionalEmails: [{ id: Date.now(), email: null }],
-    socialsMedia: [{ id: Date.now(), platform: 0, username: 0 }],
-    additionalSocials: [{ id: Date.now(), platform: 0, username: 0 }],
-    purposes: [{ id: Date.now(), mainPurpose: 0, specify: null }],
+    additionalPhones: [{ phoneNumber: null }],
+    additionalEmails: [{ email: null }],
+    socialsMedia: [{ platform: "", username: "" }],
+    additionalSocials: [{ platform: "", username: "" }],
+    purposes: [{ mainPurpose: "", specify: null }],
     immediateRelatives: [
       {
-        id: Date.now(),
         firstName: "",
         lastName: "",
         relation: "",
@@ -177,10 +173,9 @@ const Main = (props) => {
         statusInput: "",
       },
     ],
-    additionalLanguage: [{ id: Date.now(), otherSpeakingLanguages: "" }],
+    additionalLanguage: [{ otherSpeakingLanguages: "" }],
     previousJobs: [
       {
-        id: Date.now(),
         employer: "",
         streetAddress: "",
         streetAddress2: "",
@@ -190,28 +185,28 @@ const Main = (props) => {
         country: "",
         jobPhoneNumber: "",
         title: "",
-        supervisor_first_name:"",
-        supervisor_last_name : "",
-        jobDescribe:"",
+        supervisor_first_name: "",
+        supervisor_last_name: "",
+        jobDescribe: "",
 
-        jobStartDate: {
-          dayIndex: 0,
-          monthIndex: 0,
-          yearIndex: 0,
-        },
-        jobEndDate: {
-          dayIndex: 0,
-          monthIndex: 0,
-          yearIndex: 0,
-        },
-
-
-        
+        jobStartDate: [
+          {
+            dayIndex: 0,
+            monthIndex: 0,
+            yearIndex: 0,
+          },
+        ],
+        jobEndDate: [
+          {
+            dayIndex: 0,
+            monthIndex: 0,
+            yearIndex: 0,
+          },
+        ],
       },
     ],
     educationalInstitution: [
       {
-        id: Date.now(),
         name: "",
         streetAddress1: "",
         streetAddress2: "",
@@ -220,22 +215,21 @@ const Main = (props) => {
         zipCode: "",
         country: "",
         jobPhoneNumber: "",
-        startDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
-        endDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
-        jobDescribe : ""
+        startDate: [{ dayIndex: "", monthIndex: "", yearIndex: "" }],
+        endDate: [{ dayIndex: "", monthIndex: "", yearIndex: "" }],
+        jobDescribe: "",
+        degree:""
       },
     ],
     hasTraveledWithinFiveYear: false,
     hasSameAddressAsMailingOrHome: false,
-    travelCountries: [
-      { id: Date.now(), country: null, jobAddress: { country: "" } },
-    ],
+    travelCountries: [{ country: null, jobAddress: { country: "" } }],
     firstName: "",
     lastName: "",
     fullName: "",
     hasFullName: false,
     gender: 0,
-    birthDate: { dayIndex: 1, monthIndex: 0, yearIndex: 0 },
+    birthDate: [{ dayIndex: 1, monthIndex: 0, yearIndex: 0 }],
     birthCity: "",
     birthStateProvince: "",
     hasBirthStateProvince: false,
@@ -246,31 +240,35 @@ const Main = (props) => {
     USSocialSecurityAreaNumber_check: false,
     USTaxpayerIdNumber: "",
     USTaxpayerIdNumber_check: false,
-    reasonForTripToUSSelect: { value: "" },
+    reasonForTripToUSSelect: "",
     hasTravelPlansInput: "",
-    hasAnyoneEverFilledOnBehalfExplain : "",
-    addInfo: {
-      lastName: "",
-      firstName: "",
-      address: "",
-      city: "",
-      postCode: "",
-      country: "",
-      phone: "",
-      email: "",
-      state: "",
-    },
-    secondInfo: {
-      lastName: "",
-      firstName: "",
-      address: "",
-      city: "",
-      postCode: "",
-      country: "",
-      phone: "",
-      email: "",
-      state: "",
-    },
+    hasAnyoneEverFilledOnBehalfExplain: "",
+    addInfo: [
+      {
+        lastName: "",
+        firstName: "",
+        address: "",
+        city: "",
+        postCode: "",
+        country: "",
+        phone: "",
+        email: "",
+        state: "",
+      },
+    ],
+    secondInfo: [
+      {
+        lastName: "",
+        firstName: "",
+        address: "",
+        city: "",
+        postCode: "",
+        country: "",
+        phone: "",
+        email: "",
+        state: "",
+      },
+    ],
     form_id: 0,
     fatherInfo_firstname_checkbox: false,
     fatherInfo_lastName: "",
@@ -279,17 +277,19 @@ const Main = (props) => {
     motherInfo_firstname_checkbox: false,
     motherInfo_lastName: "",
     motherInfo_lastname_checkbox: false,
-    partnerInfo: {
-      addressSpecify: "",
-      firstName: "",
-      lastName: "",
-      birthDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
-      nationalityCountryInput: "",
-      birthCity: "",
-      birthCity_checkbox: false,
-      birthCountry: "",
-      addressType: "",
-    },
+    partnerInfo: [
+      {
+        addressSpecify: "",
+        firstName: "",
+        lastName: "",
+        birthDate: [{ dayIndex: "", monthIndex: "", yearIndex: "" }],
+        nationalityCountryInput: "",
+        birthCity: "",
+        birthCity_checkbox: false,
+        birthCountry: "",
+        addressType: "",
+      },
+    ],
     speakingLanguagesInput: "",
     fatherInfo_firstName: "",
     telecodeFirstName: "",
@@ -297,20 +297,29 @@ const Main = (props) => {
     additionalLastName: "",
     hasUSDriversLicense: false,
     licenseId_checkbox: false,
-    lastVisa: {
-      postName: "",
-      visaNumber: 0,
-      year: 0,
-      explain: "",
-      visaCancelledExplain: "",
-    },
-    lostVisa: {
-      year: 0,
-      explain: "",
-    },
+    lastVisa: [
+      {
+        postName: "",
+        visaNumber: "",
+        year: 0,
+        explain: "",
+        visaCancelledExplain: "",
+      },
+    ],
+    lostVisa: [
+      {
+        year: 0,
+        explain: "",
+      },
+    ],
+    filledVisa: [
+      {
+        explain: "",
+      },
+    ],
 
-    issueDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
-    expirationDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+    issueDate: [{ dayIndex: 0, monthIndex: 0, yearIndex: 0 }],
+    expirationDate: [{ dayIndex: 0, monthIndex: 0, yearIndex: 0 }],
     visaNumber_checkbox: false,
     hasSameType: false,
     sameCountry: false,
@@ -330,64 +339,77 @@ const Main = (props) => {
     ],
     state_checkbox: false,
     ZipCode_checkbox: false,
-    phonePrimary: 0,
-    phoneSecondary: 0,
-    phoneWork: 0,
-    passportType: 0,
-    passportNumber: 0,
-    passportBookNumber: 0,
+    phonePrimary: "",
+    phoneSecondary: "",
+    phoneWork: "",
+    passportType: "",
+    passportNumber: "",
+    passportBookNumber: "",
     passportBookNumber_checkbox: false,
     passportIssueCountry: "",
-    passportCity: 0,
-    passportState: 0,
+    passportCity: "",
+    passportState: "",
     passportCountry: "",
-    passportIssueDate: {
-      dayIndex: 0,
-      monthIndex: 0,
-      yearIndex: 0,
-    },
-    passportExpiryDate: {
-      dayIndex: 0,
-      monthIndex: 0,
-      yearIndex: 0,
-    },
+    passportIssueDate: [
+      {
+        dayIndex: 0,
+        monthIndex: 0,
+        yearIndex: 0,
+      },
+    ],
+    passportExpiryDate: [
+      {
+        dayIndex: 0,
+        monthIndex: 0,
+        yearIndex: 0,
+      },
+    ],
     nationalityInput: "",
-    us_contact: 0,
-    uscontact: {
-      person: {
-        firstName: "",
-        lastName: "",
-        phoneNumber: "",
-        email: 0,
+    us_contact: "",
+    uscontact: [
+      {
+        person: [
+          {
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            email: "",
+            streetAddress: "",
+            streetAddress2: "",
+            city: "",
+            state: "",
+            zipcode: "",
+            country: "",
+          },
+        ],
+      },
+    ],
+    fatherInfo_birthDate: [
+      {
+        dayIndex: "",
+        monthIndex: "",
+        yearIndex: "",
+      },
+    ],
+    tribeName: "",
+    organizations: "",
+    jobTypeInput: "",
+    not_employed_explain: "",
+    jobEmployer: "",
+    jobAddress: [
+      {
         streetAddress: "",
         streetAddress2: "",
         city: "",
         state: "",
-        zipcode: "",
+        zipCode: "",
         country: "",
       },
-    },
-    fatherInfo_birthDate: {
-      dayIndex: 0,
-      monthIndex: 0,
-      yearIndex: 0,
-    },
-    tribeName: "",
-    organizations: "",
-    jobTypeInput: "",
-    jobEmployer: "",
-    jobAddress: {
-      streetAddress: "",
-      streetAddress2: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-    },
+    ],
     jobAddress_state_checkbox: false,
     jobAddress_zipCode_checkbox: false,
     jobPhoneNumber: "",
-    jobStartDate: { dayIndex: 0, monthIndex: 0, yearIndex: 0 },
+    jobStartDate: [{ dayIndex: 0, monthIndex: 0, yearIndex: 0 }],
     jobMonthlyIncome: "",
     hasJobMonthlyIncome_checkbox: false,
     jobDescribe: "",
@@ -399,8 +421,8 @@ const Main = (props) => {
         service: "",
         rank: "",
         speciality: "",
-        dateStart: { dayIndex: 1, monthIndex: 0, yearIndex: 1970 },
-        dateEnd: { dayIndex: 1, monthIndex: 4, yearIndex: 1974 },
+        dateStart: [{ dayIndex: 1, monthIndex: 0, yearIndex: 1950 }],
+        dateEnd: [{ dayIndex: 1, monthIndex: 4, yearIndex: 1950 }],
       },
     ],
     hasExplosiveExperience: false,
@@ -463,38 +485,48 @@ const Main = (props) => {
     wasDeportedExplain: "",
 
     payerInfo_email_checkbox: false,
-    companyPayerInfo: {
-      name: null,
-      address: {
-        streetAddress: null,
-        streetAddress2: null,
-        city: null,
-        zipcode: null,
+    companyPayerInfo: [
+      {
+        name: null,
+        address: [
+          {
+            streetAddress: null,
+            streetAddress2: null,
+            city: null,
+            zipcode: null,
+          },
+        ],
+        country: null,
       },
-      country: null,
-    },
+    ],
     companyPayerInfo_city_checkbox: false,
     companyPayerInfo_zipcode_checkbox: false,
-    travelPlan: {
-      arrivalDate: { dayIndex: 1, monthIndex: 0, yearIndex: 1970 },
-      arrivalFlight: "",
-      arrivalCity: "",
-      departureDate: {
-        dayIndex: "",
-        monthIndex: "",
-        yearIndex: "",
+    travelPlan: [
+      {
+        arrivalDate: [{ dayIndex: 1, monthIndex: 0, yearIndex: 1950 }],
+        arrivalFlight: "",
+        arrivalCity: "",
+        departureDate: [
+          {
+            dayIndex: "",
+            monthIndex: "",
+            yearIndex: "",
+          },
+        ],
+        departureFlight: "",
       },
-      departureFlight: "",
-    },
+    ],
     personPayerInfo_zipcode_checkbox: false,
-    mailingAddress: {
-      streetAddress: "",
-      streetAddress2: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      country: "",
-    },
+    mailingAddress: [
+      {
+        streetAddress: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+      },
+    ],
     mailingAddressState_checkbox: false,
     mailingAddressZipCode_checkbox: false,
     passportNumber_check: false,
@@ -532,6 +564,7 @@ const Main = (props) => {
   });
 
   useEffect(() => {
+    console.log("console log", errors);
     if (data.state === "hasValue" && loading) {
       setLoading(false);
       // console.log("after loaded", JSON.parse(data.contents.data.content));
@@ -565,14 +598,14 @@ const Main = (props) => {
 
     data.currentStep = currentStep;
 
-    console.log("form data", data);
+    // console.log("form data", data);
     try {
       const response = await axios.post(URL, data, {
         headers,
       });
 
       if (response?.data?.success) {
-        console.log(response);
+        console.log("success");
       }
     } catch (err) {
       console.log(err);
@@ -605,7 +638,7 @@ const Main = (props) => {
       //   return updatedFormData;
       // });
 
-      console.log("after submit", formData);
+      // console.log("after submit", formData);
 
       if (formData.complete == 1) {
         setCurrentStep(currentStep + 1);

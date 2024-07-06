@@ -130,6 +130,7 @@ const Passport = (props) => {
           disabled={false}
           inline={true}
           formData={formData}
+          endYear="current"
         />
 
         <InlineInputDate
@@ -147,6 +148,7 @@ const Passport = (props) => {
           formData={formData}
           chkLbl="No Expiration"
           setFormData={setFormData}
+          endYear={2044}
         />
 
         <div className="mt-5 ">

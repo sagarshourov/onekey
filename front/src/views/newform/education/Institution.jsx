@@ -182,13 +182,13 @@ const Institution = (props) => {
                     register={props.register}
                     type="text"
                     errors={props.errors}
-                    label=" Course of Study"
+                    label="What is Your Degree and Major?"
                     isVisible={true}
                     disabled={false}
                     formData={formData}
                     parent="educationalInstitution"
                     index={index}
-                    title={"jobPhoneNumber"}
+                    title={"degree"}
                   />
 
                   <InlineInputChildDate

@@ -1,6 +1,5 @@
-
 import { Lucide } from "@/base-components";
-import InlineDrop from "../elements/InlineDrop";
+import InlineDropChid from "../elements/InlineDropChid";
 import { filter } from "lodash";
 import dat from "../elements/data.json";
 function removeArr(array, index) {
@@ -12,7 +11,7 @@ function removeArr(array, index) {
 const Residents = (props) => {
   const { formData, setFormData } = props;
 
- // console.log("formdata", formData);
+  // console.log("formdata", formData);
 
   const addNationalities = (e) => {
     const currentNationalities = formData["residents"];
@@ -50,18 +49,21 @@ const Residents = (props) => {
                   {" "}
                   Other Permanent Resident # {index + 1}
                 </h3>
-                <InlineDrop
-                  formData={formData}
-                  setFormData={setFormData}
-                  title={"residents[" + index + "].country"}
+                
+
+                <InlineDropChid
+                  title={`country`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}
-                  label="Other Permanent Resident Country/Region"
+                  label="Other Country/Region of Origin (Nationality)"
                   isVisible={true}
                   disabled={false}
                   data={dat.countries}
                   inline={true}
+                  formData={formData}
+                  parent={"residents"}
+                  index={index}
                 />
 
                 <div className="flex justify-end mt-5">

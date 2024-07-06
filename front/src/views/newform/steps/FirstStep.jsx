@@ -220,6 +220,7 @@ const FirstStep = (props) => {
             isVisible={true}
             disabled={false}
             inline={false}
+             endYear="current"
           />
         </div>
 

@@ -4,9 +4,9 @@
  * will cause our Recoil app state to be synchronized.
  */
 
-  export const getBaseApi = () => `http://localhost:8000/api/`;
+  // export const getBaseApi = () => `http://localhost:8000/api/`;
 
-  export const getAdmin = () => `http://localhost:8000/api/admin/`;
+  // export const getAdmin = () => `http://localhost:8000/api/admin/`;
 
 
 
@@ -15,9 +15,9 @@
 
 
 
-// export const getBaseApi = () => `https://api.onekeyclients.info/api/`;
+export const getBaseApi = () => `https://api.onekeyclients.info/api/`;
 
-// export const getAdmin = () => `https://api.onekeyclients.info/api/admin/`;
+export const getAdmin = () => `https://api.onekeyclients.info/api/admin/`;
 
 
 

@@ -16,7 +16,7 @@ const InlineDropChid = (props) => {
             className="form-label basis-2/6 sa-label"
           >
             {props.label}
-            <span className="text-danger pl-1">*</span>
+           {props.required && <span className="text-danger pl-1">*</span> }
           </label>
           <div className="basis-4/6">
             <select

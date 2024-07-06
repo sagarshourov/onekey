@@ -13,7 +13,7 @@ use App\Models\Notifications;
 use App\Models\User;
 
 use PDF;
-use Illuminate\Support\Facades\Mail;
+
 
 use Illuminate\Support\Facades\Http;
 
@@ -39,26 +39,7 @@ class FormController extends BaseController
 
 
         $forms =  FormData::with(['user', 'form'])->where('form_id', $id)->get(['id', 'user_id', 'form_id']);
-        // return $this->sendResponse($assign, 'Formby id successfully.');
-        // $assign = $this->assignUsers();
-        // if ($assign) {
-
-        //     $filterClause = function ($query) use ($assign) {
-        //         return $query->whereIn('id', $assign);
-        //     };
-
-        //     $forms = FormData::with(['user' => $filterClause,'form'])
-        //         ->whereHas('user', $filterClause)
-        //         ->where('form_id', $id)
-        //         ->get();
-        // } else {
-        //     $forms =  FormData::with(['user', 'form'])->where('form_id', $id)->get(['id', 'user_id', 'form_id']);
-        // }
-
-
-
-
-
+       
 
         return $this->sendResponse($forms, 'Form Retrieve id successfully.');
     }
@@ -207,7 +188,7 @@ class FormController extends BaseController
 
         $pdf = PDF::loadView('ds_pdf_submit', $return);
 
-     //   return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
+      return $pdf->download("DS 160 -" . $return['user']->first_name . '.pdf');
 
      return view('ds_pdf_submit',  $return);
     }

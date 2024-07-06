@@ -1,8 +1,10 @@
-
 import InlineInputChildText from "../elements/InlineInputChildText";
 
 import InlineInputChildDate from "../elements/InlineInputChildDate";
 
+import InlineDropChid from "../elements/InlineDropChid";
+
+import dat from "./previousTravel.json";
 const PreviousVisit = (props) => {
   const {
     isVisible,
@@ -96,21 +98,21 @@ const PreviousVisit = (props) => {
                       />
                     </div>
                     <div className="basis-6/12">
-                      <select
-
-                        {...register(`previousVisit.${index}.stayLengthType`)}
-                        className="form-control mt-5"
-                        name={`previousVisit.${index}.stayLengthType`}
-                        defaultValue={
-                          formData[index] ? formData[index]?.stayLengthType : ""
-                        }
-                      >
-                        <option value="yearly">Years</option>
-                        <option value="month">Months</option>
-                        <option value="weeks">Weeks</option>
-                        <option value="days">Days</option>
-                        <option value="24_hours">Less than 24 hours</option>
-                      </select>
+                      <InlineDropChid
+                        title={`stayLengthType`}
+                        helpText=""
+                        register={register}
+                        errors={errors}
+                        label=""
+                        isVisible={true}
+                        disabled={false}
+                        data={dat.stayLengthType}
+                        inline={true}
+                        formData={formData}
+                        parent={"previousVisit"}
+                        index={index}
+                        required={false}
+                      />
                     </div>
                   </div>
                 </div>

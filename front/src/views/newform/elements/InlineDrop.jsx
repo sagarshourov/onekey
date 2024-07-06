@@ -5,7 +5,7 @@ const InlineDrop = (props) => {
 
   const handelSelect = (e, fieldName) => {
     setFormData(fieldName, e.target.value, { shouldValidate: true });
-    console.log("formdata", formData);
+    //console.log("formdata", formData);
   };
 
   return (
@@ -31,7 +31,6 @@ const InlineDrop = (props) => {
               name={props.title}
               onChange={(e) => handelSelect(e, title)}
             >
-              <option>Select...</option>
               {props.data &&
                 props.data.map((data, index) => (
                   <option key={index} value={data.value}>

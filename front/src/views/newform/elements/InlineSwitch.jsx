@@ -34,12 +34,13 @@ const InlineSwitch = (props) => {
               type="checkbox"
               onChange={() => props.handleCheckboxChange(props.title)}
             /> */}
-
+            <input type="hidden"  name={title} value={formData[title]} />
             <div
               className={`sa-toggle-${
                 formData && formData[title] ? true : false
               } sa-toggle`}
               tabIndex="0"
+              title={title}
             >
               <div className="bubble"></div>
               <div onClick={() => handelSwitch(title)} className="no">

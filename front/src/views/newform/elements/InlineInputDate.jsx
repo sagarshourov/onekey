@@ -6,8 +6,15 @@ import data from "./data.json";
 const InlineInputDate = (props) => {
   // console.log("key", props?.check);
 
-  const { chkLbl, formData, register, setFormData, handleCheckboxChange } =
-    props;
+  const {
+    endYear,
+    chkLbl,
+    formData,
+    register,
+    setFormData,
+    handleCheckboxChange,
+    parent,
+  } = props;
 
   const handelCheck = (chkName, fieldName) => {
     handleCheckboxChange(fieldName);
@@ -15,8 +22,8 @@ const InlineInputDate = (props) => {
 
     // clear errors
   };
-  const generateYearList = (startYear) => {
-    var endYear = new Date().getFullYear();
+  const generateYearList = (startYear, endYear) => {
+    var endYear = endYear != "current" ? endYear : new Date().getFullYear();
 
     const years = [];
     for (let year = startYear; year <= endYear; year++) {
@@ -47,7 +54,7 @@ const InlineInputDate = (props) => {
                 className="form-select   w-full "
                 aria-label=".form-select-lg example"
                 disabled={props.disabled}
-                name={props.title + ".dayIndex"}
+                name={props.title + ".0.dayIndex"}
               >
                 <option>Select...</option>
                 {data.days.map((data, index) => (
@@ -61,7 +68,7 @@ const InlineInputDate = (props) => {
                 className="form-select  w-full "
                 aria-label=".form-select-lg example"
                 disabled={props.disabled}
-                name={props.title + ".monthIndex"}
+                name={props.title + ".0.monthIndex"}
               >
                 <option>Select...</option>
                 {data.months.map((data, index) => (
@@ -82,10 +89,10 @@ const InlineInputDate = (props) => {
                 className="form-select  w-full "
                 aria-label=".form-select-lg example"
                 disabled={props.disabled}
-                name={props.title + ".yearIndex"}
+                name={props.title + ".0.yearIndex"}
               >
                 <option>Select...</option>
-                {generateYearList(1970).map((data, index) => (
+                {generateYearList(1950, endYear).map((data, index) => (
                   <option key={index} value={data}>
                     {data}
                   </option>

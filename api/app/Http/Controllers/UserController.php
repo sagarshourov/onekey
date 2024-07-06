@@ -146,16 +146,6 @@ class UserController extends BaseController
             $message->from("info@onekeyclient.us", 'OneKey Client Portal');
         });
 
-
-
-        // $noti =  Notifications::create([
-        //     'user_id' =>   $user_id,
-        //     'title' => 'Form Submitted',
-        //     'notification' =>  $user->first_name . ' has submitted ' . $input['title'] . ' form',
-        //     'is_read' => 0,
-        //     'reciver' => 1
-        // ]);
-
         return $this->sendResponse($users, 'Files retrieved successfully.');
     }
 

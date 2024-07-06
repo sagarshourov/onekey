@@ -13,6 +13,8 @@ import data from "../elements/data.json";
 import AddLanguage from "./AddLanguage";
 import InlineDropChid from "../elements/InlineDropChid";
 import InputTextArea from "../elements/InputTextArea";
+import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineInputChildDate from "../elements/InlineInputChildDate";
 const Family = (props) => {
   const [date, setDate] = useState("");
   const { errors, register, setFormData, formData, handleCheckboxChange } =
@@ -74,6 +76,7 @@ const Family = (props) => {
         isVisible={props.formData?.fatherInfo[0]?.hasBirthDate}
         disabled={false}
         inline={true}
+        endYear="current"
       />
 
       <InlineChildSwitch
@@ -155,6 +158,7 @@ const Family = (props) => {
         isVisible={props.formData?.motherInfo[0]?.hasBirthDate}
         disabled={false}
         inline={true}
+        endYear="current"
       />
 
       <InlineChildSwitch
@@ -225,10 +229,10 @@ const Family = (props) => {
           <hr className="my-9 sa-border-primary" />
           <h2 className="mb-5 text-xl font-bold"> Spouse Information </h2>
 
-          <InlineInputText
+          <InlineInputChildText
             setFormData={setFormData}
             required={true}
-            title={"partnerInfo.firstName"}
+            title={"firstName"}
             helpText=""
             register={props.register}
             type="text"
@@ -237,11 +241,13 @@ const Family = (props) => {
             isVisible={true}
             disabled={false}
             formData={formData}
+            index={0}
+            parent={"partnerInfo"}
           />
-          <InlineInputText
+          <InlineInputChildText
             setFormData={setFormData}
             required={true}
-            title={"partnerInfo.lastName"}
+            title={"lastName"}
             helpText=""
             register={props.register}
             type="text"
@@ -250,9 +256,11 @@ const Family = (props) => {
             isVisible={true}
             disabled={false}
             formData={formData}
+            index={0}
+            parent={"partnerInfo"}
           />
-          <InlineInputDate
-            title={"partnerInfo.birthDate"}
+          <InlineInputChildDate
+            title={"birthDate"}
             helpText=""
             register={props.register}
             errors={props.errors}
@@ -260,23 +268,28 @@ const Family = (props) => {
             isVisible={true}
             disabled={false}
             inline={true}
+            endYear="current"
+            parent={"partnerInfo"}
+            index={0}
           />
-          <InlineDrop
+          <InlineDropChid
             formData={formData}
             setFormData={setFormData}
             isVisible={true}
             register={props.register}
             errors={props.errors}
-            title={"partnerInfo.nationalityCountryInput"}
+            title={"nationalityCountryInput"}
             data={data.countries}
             label="Spouse's Country/Region of Origin (Nationality)"
             inline={true}
+            index={0}
+            parent={"partnerInfo"}
           />
 
-          <InlineInputText
+          <InlineInputChildText
             setFormData={setFormData}
             required={true}
-            title={"partnerInfo.birthCity"}
+            title={"birthCity"}
             helpText=""
             register={props.register}
             type="text"
@@ -286,31 +299,37 @@ const Family = (props) => {
             disabled={formData["partnerInfo.birthCity_checkbox"]}
             condition={true}
             handleCheckboxChange={handleCheckboxChange}
-            check="partnerInfo.birthCity_checkbox"
+            check="birthCity_checkbox"
             checkLabel="Does not apply"
             formData={formData}
+            index={0}
+            parent={"partnerInfo"}
           />
-          <InlineDrop
+          <InlineDropChid
             formData={formData}
             setFormData={setFormData}
             isVisible={true}
             register={props.register}
             errors={props.errors}
-            title={"partnerInfo.birthCountry"}
+            title={"birthCountry"}
             data={data.countries}
             label="Country/Region of Spouse's birth"
             inline={true}
+            index={0}
+            parent={"partnerInfo"}
           />
-          <InlineDrop
+          <InlineDropChid
             formData={formData}
             setFormData={setFormData}
             isVisible={true}
             register={props.register}
             errors={props.errors}
-            title={"partnerInfo.addressType"}
+            title={"addressType"}
             data={data.belongsToTribe}
             label="Spouse's Address"
             inline={true}
+            index={0}
+            parent={"partnerInfo"}
           />
           <InputTextArea
             formData={formData}
@@ -320,14 +339,14 @@ const Family = (props) => {
             }
             register={props.register}
             errors={props.errors}
-            title={"partnerInfo.addressSpecify"}
+            title={"addressSpecify"}
             label="Address"
             inline={true}
+            index={0}
+            parent={"partnerInfo"}
           />
         </>
       )}
-
-      
     </>
   );
 };

@@ -80,7 +80,7 @@ const LostPassports = (props) => {
                 />
 
                 <InputTextArea
-                  title={`lostpassports.${index}.Explain`}
+                  title={`lostpassports.${index}.explain`}
                   helpText=""
                   register={props.register}
                   errors={props.errors}

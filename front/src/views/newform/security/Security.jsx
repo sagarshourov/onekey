@@ -89,6 +89,7 @@ const Security = (props) => {
         isVisible={formData.hasServedMilitary}
         disabled={false}
         inline={true}
+         endYear="current"
       />
       <InlineInputDate
         title={"militaryExperiences[0].dateEnd"}
@@ -99,6 +100,7 @@ const Security = (props) => {
         isVisible={formData.hasServedMilitary}
         disabled={false}
         inline={true}
+         endYear="current"
       />
       <InlineSwitch
         setFormData={setFormData}

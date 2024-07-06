@@ -6,6 +6,9 @@ import USDriverLicenses from "./USDriverLicenses";
 import InlineInputDate from "../elements/InlineInputDate";
 import PreviousVisit from "./PreviousVisit";
 import data from "../elements/data.json";
+import InlineInputChildText from "../elements/InlineInputChildText";
+import InlineDropChid from "../elements/InlineDropChid";
+import InlineInputChildDate from "../elements/InlineInputChildDate";
 const PerviousTravels = (props) => {
   const [date, setDate] = useState("");
   const { errors, register, setFormData, formData, handleCheckboxChange } =
@@ -68,19 +71,21 @@ const PerviousTravels = (props) => {
         helpText=" "
         inline={true}
       />
-      <InlineDrop
+      <InlineDropChid
         formData={formData}
         setFormData={setFormData}
         isVisible={formData.hasIssuedVisa}
         register={register}
         errors={errors}
-        title={"lastVisa.postName"}
+        title={"postName"}
         data={data.countries}
         label="Visa Issuing Post Name"
         inline={true}
+        index={0}
+        parent={'lastVisa'}
       />
 
-      <InlineInputDate
+      <InlineInputChildDate
         title={"issueDate"}
         helpText=""
         register={register}
@@ -89,21 +94,28 @@ const PerviousTravels = (props) => {
         isVisible={formData.hasIssuedVisa}
         disabled={false}
         inline={true}
+        endYear="current"
+        index={0}
+        parent={'lastVisa'}
       />
-      <InlineInputDate
+      <InlineInputChildDate
         title={"expirationDate"}
         helpText=""
+        required={false}
         register={register}
         errors={errors}
         label="Visa expiration date"
         isVisible={formData.hasIssuedVisa}
         disabled={false}
         inline={true}
+        endYear="current"
+        index={0}
+        parent={'lastVisa'}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.visaNumber"}
+        title={"visaNumber"}
         helpText="  "
         register={register}
         type="text"
@@ -116,6 +128,8 @@ const PerviousTravels = (props) => {
         label="Visa Number"
         checkLabel="Does not apply"
         check="visaNumber_checkbox"
+        index={0}
+        parent="lastVisa"
       />
       <InlineSwitch
         setFormData={setFormData}
@@ -165,10 +179,10 @@ const PerviousTravels = (props) => {
         helpText=" "
         inline={true}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lostVisa.year"}
+        title={"year"}
         helpText="  "
         register={register}
         type="text"
@@ -178,11 +192,13 @@ const PerviousTravels = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
         label="Year"
+        index={0}
+        parent={'lostVisa'}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lostVisa.explain"}
+        title={"explain"}
         helpText="  "
         register={register}
         type="text"
@@ -192,6 +208,8 @@ const PerviousTravels = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
         label="Explain"
+        index={0}
+        parent={'lostVisa'}
       />
       <InlineSwitch
         setFormData={setFormData}
@@ -205,10 +223,10 @@ const PerviousTravels = (props) => {
         helpText=" "
         inline={true}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.visaCancelledExplain"}
+        title={"visaCancelledExplain"}
         helpText="  "
         register={register}
         type="text"
@@ -218,6 +236,9 @@ const PerviousTravels = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
         label="Explain"
+
+        index={0}
+        parent={'canceledVisa'}
       />
       <InlineSwitch
         setFormData={setFormData}
@@ -243,10 +264,10 @@ const PerviousTravels = (props) => {
         helpText=" "
         inline={true}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.year"}
+        title={"year"}
         helpText="  "
         register={register}
         type="text"
@@ -256,11 +277,13 @@ const PerviousTravels = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
         label="Year"
+        index={0}
+        parent={'refusedVisa'}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"lastVisa.explain"}
+        title={"explain"}
         helpText="  "
         register={register}
         type="text"
@@ -270,6 +293,9 @@ const PerviousTravels = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         formData={formData}
         label="Explain"
+
+        index={0}
+        parent={'refusedVisa'}
       />
       <InlineSwitch
         setFormData={setFormData}

@@ -101,8 +101,6 @@ const Contact = (props) => {
         check="ZipCode_checkbox"
         parent={"homeAddress"}
         index={0}
-
-
       />
 
       <InlineDropChid
@@ -133,10 +131,10 @@ const Contact = (props) => {
         inline={true}
       />
 
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"mailingAddress.streetAddress"}
+        title={"streetAddress"}
         helpText="   "
         register={props.register}
         type="text"
@@ -145,11 +143,13 @@ const Contact = (props) => {
         isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
+        parent={"mailingAddress"}
+        index={0}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"mailingAddress.streetAddress2"}
+        title={"streetAddress2"}
         helpText="   "
         register={props.register}
         type="text"
@@ -158,12 +158,14 @@ const Contact = (props) => {
         isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
+        parent={"mailingAddress"}
+        index={0}
       />
 
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"mailingAddress.city"}
+        title={"city"}
         helpText="   "
         register={props.register}
         type="text"
@@ -172,11 +174,13 @@ const Contact = (props) => {
         isVisible={!props.formData?.hasSameMailingAddressAsHome}
         disabled={false}
         formData={formData}
+        parent={"mailingAddress"}
+        index={0}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"mailingAddress.state"}
+        title={"state"}
         helpText="   "
         register={props.register}
         type="text"
@@ -188,11 +192,13 @@ const Contact = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         check="mailingAddressState_checkbox"
         disabled={formData.mailingAddressState_checkbox}
+        parent={"mailingAddress"}
+        index={0}
       />
-      <InlineInputText
+      <InlineInputChildText
         setFormData={setFormData}
         required={true}
-        title={"mailingAddress.zipCode"}
+        title={"zipCode"}
         helpText="   "
         register={props.register}
         type="text"
@@ -204,11 +210,13 @@ const Contact = (props) => {
         handleCheckboxChange={handleCheckboxChange}
         check="mailingAddressZipCode_checkbox"
         disabled={formData.mailingAddressZipCode_checkbox}
+        parent={"mailingAddress"}
+        index={0}
       />
-      <InlineDrop
+      <InlineDropChid
         formData={formData}
         setFormData={setFormData}
-        title={"mailingAddress.country"}
+        title={"country"}
         helpText=""
         register={props.register}
         errors={props.errors}
@@ -217,6 +225,8 @@ const Contact = (props) => {
         disabled={false}
         data={dat.countries}
         inline={true}
+        parent={"mailingAddress"}
+        index={0}
       />
 
       <InlineInputText
@@ -231,6 +241,7 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        index={0}
       />
 
       <InlineInputText
@@ -245,10 +256,11 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        index={0}
       />
       <InlineInputText
         setFormData={setFormData}
-        required={false}
+        required={true}
         title={"phoneWork"}
         helpText="   "
         register={props.register}
@@ -258,6 +270,7 @@ const Contact = (props) => {
         isVisible={true}
         disabled={false}
         formData={formData}
+        index={0}
       />
 
       <InlineSwitch
