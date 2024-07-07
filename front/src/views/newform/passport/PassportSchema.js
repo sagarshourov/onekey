@@ -23,7 +23,7 @@ export const passportSchema = object({
         object().shape({
           passportNumber: string().required("Platform Required!"),
           country: string().required("Username Required!"),
-          Explain: string().required("Username Required!"),
+          explain: string().required("Explain Required!"),
           
         })
       ),

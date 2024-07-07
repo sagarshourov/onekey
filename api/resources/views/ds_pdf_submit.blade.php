@@ -114,11 +114,11 @@ if (!function_exists("getLabelByValue")) {
     <table class="table">
         <tr>
             <td>Name :</td>
-            <td>{{ $user['first_name'] }}</td>
+            <td>{{$user['first_name'] ?? $user['first_name'] }}</td>
         </tr>
         <tr>
             <td>Email :</td>
-            <td>{{ $user['email'] }}</td>
+            <td>{{$user['email'] ?? $user['email'] }}</td>
         </tr>
     </table>
 

@@ -8,7 +8,7 @@
                 <td>{{ getLabelByValue($selectData,'reasons_for_travel', $data['reasonForTripToUSSelect'],'value') }}</td>
             </tr>
 
-            @foreach($data['purposes'] as $key => $purpose)
+            isset($data['purposes']) && @foreach($data['purposes'] as $key => $purpose)
 
             <tr>
                 <td colspan="2">
@@ -102,14 +102,14 @@
             @endif
 
 
-           
+
 
 
 
 
             <tr>
                 <td>
-                  <b>  Person paying for trip has same address </b>
+                    <b> Person paying for trip has same address </b>
 
                 </td>
                 <td>
